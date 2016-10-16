@@ -2,14 +2,14 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 
-namespace Cake.Core
+namespace Cake.Extensions
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
     using System.Linq;
     using Cake.Common.Solution;
     using Cake.Common.Solution.Project;
+    using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
@@ -91,7 +91,7 @@ namespace Cake.Core
                     $"Cannot get target assemblies, {target.FullPath} is not a solution file");
 
             var result = context.ParseSolution(target);
-            return result.GetProjects().Select(x => x.GetAssemblyFilePath(context.ParseProject(x.Path, configuration)));
+            return result.GetProjects().Select(x => context.GetProjectAssembly(x.Path, configuration));
         }
 
         [CakeMethodAlias]
@@ -101,7 +101,7 @@ namespace Cake.Core
                 throw new ArgumentException(
                     $"Cannot get target assembly, {target.FullPath} is not a project file");
 
-            return context.ParseProject(target).GetAssemblyFilePath();
+            return context.ParseProject(target, configuration).GetAssemblyFilePath();
         }
     }
 }

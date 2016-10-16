@@ -1,7 +1,8 @@
-﻿namespace Cake.Core
+﻿namespace Cake.Extensions
 {
     using System;
     using Cake.Common.Solution.Project;
+    using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 

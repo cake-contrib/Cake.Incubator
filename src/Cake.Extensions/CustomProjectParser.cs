@@ -1,10 +1,11 @@
-﻿namespace Cake.Core
+﻿namespace Cake.Extensions
 {
     using System;
     using System.Globalization;
     using System.Linq;
     using System.Xml.Linq;
     using Cake.Common.Solution.Project;
+    using Cake.Core;
     using Cake.Core.IO;
 
     /// <summary>

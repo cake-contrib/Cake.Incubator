@@ -1,4 +1,4 @@
-﻿namespace Cake.Core
+﻿namespace Cake.Extensions
 {
     using System;
     using System.Collections.Generic;

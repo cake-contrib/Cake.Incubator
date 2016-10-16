@@ -7,7 +7,7 @@
     <ProjectGuid>{0FFF7585-010F-4ACD-B5D3-D1F9EBAA6E7A}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cake.Core</RootNamespace>
+    <RootNamespace>Cake.Extensions</RootNamespace>
     <AssemblyName>Cake.Extensions</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -21,6 +21,8 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>
+    </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -29,6 +31,7 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\Cake.Extensions.XML</DocumentationFile>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Cake.Common, Version=0.16.2.0, Culture=neutral, processorArchitecture=MSIL">
@@ -49,6 +52,7 @@
   <ItemGroup>
     <Compile Include="AssertExtensions.cs" />
     <None Include="Cake.Extensions.nuspec" />
+    <Compile Include="NamespaceDoc.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="CustomProjectParser.cs" />
     <Compile Include="DotNetBuildSettingsExtensions.cs" />

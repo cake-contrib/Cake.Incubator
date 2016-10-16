@@ -1,6 +1,19 @@
 # Cake Extensions
 
+[![Build status](https://ci.appveyor.com/api/projects/status/2wn5r21h6hkpuyrx/branch/master?svg=true)](https://ci.appveyor.com/project/MacLeanElectrical/cake-extensions/branch/master)
+[![NuGet version](https://badge.fury.io/nu/Cake.Extensions.svg)](https://badge.fury.io/nu/Cake.Extensions)
+
 A set of extension methods and aliases for [Cake](http://cakebuild.net)
+
+###
+
+Usage: inside build.cake
+
+```csharp
+#addin "Cake.Extensions"
+// or
+#addin "nuget?package=Cake.Extensions"
+```
 
 ### Assertion Extensions
 
@@ -76,3 +89,19 @@ projects.GetProjects(); // returns proj1.csproj, proj2.csproj
 ```
 
 ### Project Extensions
+
+```csharp
+// is dll or console app?
+ParseProject(new FilePath("test.csproj")).IsLibrary();         
+```
+
+```csharp
+// returns {outputDir}/{AssemblyName}.[dll|exe]
+ParseProject(new FilePath("test.csproj")).GetAssemblyFilePath();         
+```
+
+```csharp
+// Alias : ParseProject(FilePath project, string configuration)
+// overload that returns config specific project info
+ParseProject(new FilePath("test.csproj"), "Release");
+```
