@@ -79,7 +79,20 @@ get project assembly filepath
 IEnumerable<FilePath> filePaths = GetProjectAssembly(new FilePath("test.sln"), "Debug"); // throws ArgumentException("not a project file")
 IEnumerable<FilePath> filePaths = GetProjectAssembly(new FilePath("test.csproj"), "Release"); // returns solution output dll/exe FilePath for 'Release' configuration
 ```
+get files with the same name but different extensions in the same directory
+```csharp
+// Alias : GetMatchingFiles(FilePath file)
+// file: output/file.dll
+// file: output/file.xml
+// file: output/file.pdb
+// file: output/another.dll
 
+IEnumerable<FilePath> matchingFiles = GetMatchingFiles(assemblies);
+
+matchingFiles[0]; // output/file.xml
+matchingFiles[1]; // output/file.pdb
+
+```
 ### Solution Extensions
 
 identify solution folders
