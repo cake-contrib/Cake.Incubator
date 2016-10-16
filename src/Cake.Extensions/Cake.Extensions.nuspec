@@ -12,7 +12,7 @@
     <description>Provides extensions and additional aliases for Cake.Build scripts</description>
     <releaseNotes>Initial Release</releaseNotes>
     <copyright>Copyright 2016</copyright>
-    <tags>Cake Build</tags>
+    <tags>Cake Build Script Extensions Project Solution</tags>
     <dependencies>
       <dependency id="Cake.Common" version="[0.0.16.2, 1)" />
     </dependencies>

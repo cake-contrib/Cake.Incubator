@@ -6,6 +6,7 @@ namespace Cake.Extensions
 {
     /// <summary>
     /// MSBuild Project Xml Element XNames
+    /// original source: https://github.com/cake-build/cake/blob/main/src/Cake.Common/Solution/Project/ProjectXElement.cs
     /// </summary>
     public static class ProjectXElement
     {

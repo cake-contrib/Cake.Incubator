@@ -1,4 +1,8 @@
-﻿namespace Cake.Extensions
+﻿// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+
+namespace Cake.Extensions
 {
     using System;
     using System.Globalization;
@@ -10,6 +14,7 @@
 
     /// <summary>
     /// The MSBuild project file parser.
+    /// customised from original: https://github.com/cake-build/cake/blob/main/src/Cake.Common/Solution/Project/ProjectParser.cs
     /// </summary>
     public class CustomProjectParser
     {
@@ -36,7 +41,7 @@
         }
 
         /// <summary>
-        /// Parses a project file.
+        /// Parses a project file for a specific configuration.
         /// </summary>
         /// <param name="projectPath">The project path.</param>
         /// <param name="config">The project configuration</param>

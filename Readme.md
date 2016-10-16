@@ -117,3 +117,11 @@ get config specific project information
 // overload that returns config specific project info
 ParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
 ```
+
+### DotnetBuildSettings extensions
+
+Add multiple targets
+```csharp
+var settings = new DotNetBuildSettings()
+				.WithTargets(new[] { "Clean", "Build", "Publish" });
+```
