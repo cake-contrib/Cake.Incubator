@@ -37,23 +37,28 @@ items.Each(item => action(item))
 
 ### FilePath Extensions
 
+identify solution filepaths
 ```csharp
 new FilePath("test.sln").IsSolution(); // true
 ```
 
+identify project filepaths
 ```csharp
 new FilePath("test.csproj").IsProject(); //true;
 ```
 
+identify filepaths by filename
 ```csharp
 new FilePath("/folder/testing.cs").HasFileName("testing.cs"); // true
 ```
 
+multiple file globs
 ```csharp
 // Alias : GetFiles(params string[] patterns) accepts multiple globs
 IEnumerable<FilePath> filePaths = GetFiles("**/*.sln", "**/*.csproj");
 ```
 
+get solution or project assembly filepaths
 ```csharp
 // Alias : GetOutputAssemblies(FilePath solutionOrProject, string configuration)
 IEnumerable<FilePath> filePaths = GetOutputAssemblies(new FilePath("test.cs"), "Debug"); // throws ArgumentException("not a project or solution file")
@@ -61,12 +66,14 @@ IEnumerable<FilePath> filePaths = GetOutputAssemblies(new FilePath("test.sln"), 
 IEnumerable<FilePath> filePaths = GetOutputAssemblies(new FilePath("test.csproj", "Custom"); // returns project output dll/exe's FilePath[] for 'Custom' configuration
 ```
 
+get solution assembly filepaths
 ```csharp
 // Alias : GetSolutionAssemblies(FilePath solution, string configuration)
 IEnumerable<FilePath> filePaths = GetSolutionAssemblies(new FilePath("test.csproj", "Debug"); // throws ArgumentException("not a solution file")
 IEnumerable<FilePath> filePaths = GetSolutionAssemblies(new FilePath("test.sln", "Release"); // returns solution output dll/exe's FilePath[] for 'Release' configuration
 ```
 
+get project assembly filepath 
 ```csharp
 // Alias : GetProjectAssembly(FilePath solution, string configuration)
 IEnumerable<FilePath> filePaths = GetProjectAssembly(new FilePath("test.sln"), "Debug"); // throws ArgumentException("not a project file")
@@ -75,6 +82,7 @@ IEnumerable<FilePath> filePaths = GetProjectAssembly(new FilePath("test.csproj")
 
 ### Solution Extensions
 
+identify solution folders
 ```csharp
 // test.sln { proj1.csproj, solutionFolder }
 var projects = ParseSolution(new FilePath("test.sln")).Projects;
@@ -82,6 +90,7 @@ projects[0].IsSolutionFolder(); // false
 projects[1].IsSolutionFolder(); // true
 ```
 
+filter out solution folders
 ```csharp
 // test.sln { proj1.csproj, solutionFolder, solutionFolder/proj2.csproj }
 var projects = ParseSolution(new FilePath("test.sln")).Projects;
@@ -90,18 +99,21 @@ projects.GetProjects(); // returns proj1.csproj, proj2.csproj
 
 ### Project Extensions
 
+identify library projects
 ```csharp
 // is dll or console app?
 ParseProject(new FilePath("test.csproj")).IsLibrary();         
 ```
 
+get project assembly filepath
 ```csharp
 // returns {outputDir}/{AssemblyName}.[dll|exe]
-ParseProject(new FilePath("test.csproj")).GetAssemblyFilePath();         
+FilePath assemblyPath = ParseProject(new FilePath("test.csproj")).GetAssemblyFilePath();         
 ```
 
+get config specific project information
 ```csharp
 // Alias : ParseProject(FilePath project, string configuration)
 // overload that returns config specific project info
-ParseProject(new FilePath("test.csproj"), "Release");
+ParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
 ```
