@@ -17,17 +17,22 @@ namespace Cake.Extensions
     {
         public static bool IsSolution(this FilePath filePath)
         {
-            return filePath.GetExtension().Equals(".sln", StringComparison.InvariantCultureIgnoreCase);
+            return filePath.HasExtension && filePath.GetExtension().Equals(".sln", StringComparison.InvariantCultureIgnoreCase);
         }
 
         public static bool IsProject(this FilePath filePath)
         {
-            return filePath.GetExtension().Equals(".csproj", StringComparison.InvariantCultureIgnoreCase);
+            return filePath.HasExtension && filePath.GetExtension().Equals(".csproj", StringComparison.InvariantCultureIgnoreCase);
         }
 
         public static bool HasFileName(this FilePath path, string fileName)
         {
-            return path.GetFilename().ToString().Equals(fileName, StringComparison.InvariantCultureIgnoreCase);
+            fileName.ThrowIfNullOrEmpty(nameof(fileName));
+
+            return
+                path.GetFilenameWithoutExtension()
+                    .ToString()
+                    .EqualsIgnoreCase(System.IO.Path.GetFileNameWithoutExtension(fileName));
         }
 
         /// <summary>

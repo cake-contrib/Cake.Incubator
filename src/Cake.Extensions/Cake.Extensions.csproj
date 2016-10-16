@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertExtensions.cs" />
+    <Compile Include="StringExtensions.cs" />
     <None Include="Cake.Extensions.nuspec" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="EnumerableExtensions.cs" />
