@@ -28,16 +28,8 @@ namespace Cake.Extensions
         /// <param name="environment">The environment.</param>
         public CustomProjectParser(IFileSystem fileSystem, ICakeEnvironment environment)
         {
-            if (fileSystem == null)
-            {
-                throw new ArgumentNullException(nameof(fileSystem));
-            }
-            if (environment == null)
-            {
-                throw new ArgumentNullException(nameof(environment));
-            }
-            _fileSystem = fileSystem;
-            _environment = environment;
+            _fileSystem = fileSystem.ThrowIfNull(nameof(fileSystem));
+            _environment = environment.ThrowIfNull(nameof(environment));
         }
 
         /// <summary>
@@ -72,18 +64,15 @@ namespace Cake.Extensions
             var projectProperties =
             (from project in document.Elements(ProjectXElement.Project)
                 from propertyGroup in project.Elements(ProjectXElement.PropertyGroup)
-                let configuration = propertyGroup
-                    .Elements(ProjectXElement.Configuration)
-                    .Where(cfg => cfg.Attributes().Any(x => x.Name.LocalName.Equals(config, StringComparison.CurrentCultureIgnoreCase)))
-                    .Select(cfg => cfg.Value)
-                    .FirstOrDefault()
+                let configuration = config
                 let platform = propertyGroup
                     .Elements(ProjectXElement.Platform)
                     .Select(cfg => cfg.Value)
                     .FirstOrDefault()
                 let configPropertyGroups = project.Elements(ProjectXElement.PropertyGroup)
                     .Where(x => x.Elements(ProjectXElement.OutputPath).Any() && x.Attribute("Condition") != null)
-                    .Where(x => x.Attribute("Condition").Value.Contains(string.Concat("== '", configuration, "|", platform, "'")))
+                    .Where(x => x.Attribute("Condition").Value.ToLowerInvariant().Contains($"== '{config}|{platform}'".ToLowerInvariant()))
+                    //'$(Configuration)|$(Platform)' == 'Debug|AnyCPU' "
                 where !string.IsNullOrWhiteSpace(configuration)
                 select new
                 {
