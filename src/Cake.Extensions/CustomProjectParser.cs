@@ -4,7 +4,6 @@
 
 namespace Cake.Extensions
 {
-    using System;
     using System.Globalization;
     using System.Linq;
     using System.Xml.Linq;
@@ -38,7 +37,7 @@ namespace Cake.Extensions
         /// <param name="projectPath">The project path.</param>
         /// <param name="config">The project configuration</param>
         /// <returns>The parsed project.</returns>
-        public ProjectParserResult Parse(FilePath projectPath, string config)
+        public CustomProjectParserResult Parse(FilePath projectPath, string config)
         {
             projectPath.ThrowIfNull(nameof(projectPath));
             if (projectPath.IsRelative)
@@ -81,6 +80,10 @@ namespace Cake.Extensions
                     ProjectGuid = propertyGroup
                         .Elements(ProjectXElement.ProjectGuid)
                         .Select(projectGuid => projectGuid.Value)
+                        .FirstOrDefault(),
+                    ProjectTypeGuid = propertyGroup
+                        .Elements(ProjectXElement.ProjectTypeGuids)
+                        .Select(projectTypeGuid => projectTypeGuid.Value)
                         .FirstOrDefault(),
                     OutputType = propertyGroup
                         .Elements(ProjectXElement.OutputType)
@@ -182,10 +185,11 @@ namespace Cake.Extensions
                         ? null : rootPath.CombineWithFilePath(packageElement.Value)
                 }).ToArray();
 
-            return new ProjectParserResult(
+            return new CustomProjectParserResult(
                 projectProperties.Configuration,
                 projectProperties.Platform,
                 projectProperties.ProjectGuid,
+                projectProperties.ProjectTypeGuid?.Split(';'),
                 projectProperties.OutputType,
                 projectProperties.OutputPath,
                 projectProperties.RootNameSpace,

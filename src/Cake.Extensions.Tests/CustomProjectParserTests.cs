@@ -5,7 +5,6 @@ namespace Cake.Extensions.Tests
 {
     using System.IO;
     using System.Text;
-    using System.Xml;
     using Cake.Core;
     using Cake.Core.IO;
     using FakeItEasy;
@@ -15,10 +14,10 @@ namespace Cake.Extensions.Tests
 
     public class CustomProjectParserTests
     {
-        private IFileSystem fileSystem;
-        private ICakeEnvironment environment;
-        private CustomProjectParser parser;
-        private FakeFile validFile;
+        private readonly IFileSystem fileSystem;
+        private readonly ICakeEnvironment environment;
+        private readonly CustomProjectParser parser;
+        private readonly FakeFile validFile;
 
         public CustomProjectParserTests()
         {
@@ -51,6 +50,20 @@ namespace Cake.Extensions.Tests
 
             result.Configuration.Should().Be("reLEAse");
             result.OutputPath.ToString().Should().Be("bin/Release");
+        }
+
+        [Fact]
+        public void CustomProjectParser_CanParseProjectTypeGuids()
+        {
+            var path = new FilePath("/a");
+
+            A.CallTo(() => fileSystem.GetFile(path)).Returns(validFile);
+
+            var result = parser.Parse(path, "Debug");
+
+            result.IsType(ProjectType.CSharp).Should().BeTrue();
+            result.IsType(ProjectType.PortableClassLibrary).Should().BeTrue();
+            result.IsType(ProjectType.FSharp).Should().BeFalse();
         }
     }
 

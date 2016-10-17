@@ -5,34 +5,39 @@
 namespace Cake.Extensions
 {
     using System;
-    using Cake.Common.Solution.Project;
+    using System.Linq;
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
     public static class ProjectParserExtensions
     {
-        public static bool IsLibrary(this ProjectParserResult projectParserResult)
+        public static bool IsLibrary(this CustomProjectParserResult projectParserResult)
         {
             return projectParserResult.OutputType.Equals("Library", StringComparison.InvariantCultureIgnoreCase);
         }
 
-        public static string GetExtension(this ProjectParserResult projectParserResult)
+        public static string GetExtension(this CustomProjectParserResult projectParserResult)
         {
             return projectParserResult.IsLibrary()
                 ? ".dll"
                 : ".exe";
         }
 
-        public static FilePath GetAssemblyFilePath(this ProjectParserResult projectParserResult)
+        public static FilePath GetAssemblyFilePath(this CustomProjectParserResult projectParserResult)
         {
             return
                 projectParserResult.OutputPath.CombineWithFilePath(projectParserResult.AssemblyName +
                                                                    projectParserResult.GetExtension());
         }
 
+        public static bool IsType(this CustomProjectParserResult projectParserResult, ProjectType projectType)
+        {
+            return projectParserResult.ProjectTypeGuids.Any(x => x.EqualsIgnoreCase(SolutionParserExtensions.Types[projectType]));
+        }
+
         [CakeMethodAlias]
-        public static ProjectParserResult ParseProject(this ICakeContext context, FilePath project, string configuration)
+        public static CustomProjectParserResult ParseProject(this ICakeContext context, FilePath project, string configuration)
         {
             project.ThrowIfNull(nameof(project));
             configuration.ThrowIfNullOrEmpty(nameof(configuration));

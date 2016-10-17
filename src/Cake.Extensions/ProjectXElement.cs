@@ -88,6 +88,11 @@ namespace Cake.Extensions
         internal const string ProjectGuid = "{" + XmlNamespace + "}ProjectGuid";
 
         /// <summary>
+        /// Gets the namespace for the project type GUID.
+        /// </summary>
+        internal const string ProjectTypeGuids = "{" + XmlNamespace + "}ProjectTypeGuids";
+
+        /// <summary>
         /// Gets the namespace for the bootstrapper package element.
         /// </summary>
         internal const string BootstrapperPackage = "{" + XmlNamespace + "}BootstrapperPackage";

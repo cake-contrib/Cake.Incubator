@@ -103,6 +103,14 @@ projects[0].IsSolutionFolder(); // false
 projects[1].IsSolutionFolder(); // true
 ```
 
+identify solutionproject type
+```csharp
+// test.sln { proj1.csproj, solutionFolder }
+var projects = ParseSolution(new FilePath("test.sln")).Projects;
+projects[0].IsType(ProjectTypes.CSharp); // true
+projects[1].IsType(ProjectTypes.SolutionFolder); // true
+```
+
 filter out solution folders
 ```csharp
 // test.sln { proj1.csproj, solutionFolder, solutionFolder/proj2.csproj }
@@ -118,6 +126,12 @@ identify library projects
 ParseProject(new FilePath("test.csproj")).IsLibrary();         
 ```
 
+identify project types
+```csharp
+// Detect the project type/s
+ParseProject(new FilePath("test.csproj")).IsType(ProjectTypes.CSharp);         
+```
+
 get project assembly filepath
 ```csharp
 // returns {outputDir}/{AssemblyName}.[dll|exe]
@@ -128,7 +142,7 @@ get config specific project information
 ```csharp
 // Alias : ParseProject(FilePath project, string configuration)
 // overload that returns config specific project info
-ParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
 ```
 
 ### DotnetBuildSettings extensions

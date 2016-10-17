@@ -51,6 +51,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AssertExtensions.cs" />
+    <Compile Include="CustomProjectParserResult.cs" />
+    <Compile Include="ProjectTypes.cs" />
     <Compile Include="StringExtensions.cs" />
     <None Include="Cake.Extensions.nuspec" />
     <Compile Include="NamespaceDoc.cs" />
