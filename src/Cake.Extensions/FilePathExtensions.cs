@@ -13,18 +13,35 @@ namespace Cake.Extensions
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
+    [CakeAliasCategory("FilePath Helpers")]
     public static class FilePathExtensions
     {
+        /// <summary>
+        /// Checks if the FilePath is a solution file
+        /// </summary>
+        /// <param name="filePath">the path to check</param>
+        /// <returns>true if sln file</returns>
         public static bool IsSolution(this FilePath filePath)
         {
             return filePath.HasExtension && filePath.GetExtension().EqualsIgnoreCase(".sln");
         }
 
+        /// <summary>
+        /// Checks if the FilePath is a csproj file
+        /// </summary>
+        /// <param name="filePath">the path to check</param>
+        /// <returns>true if csproj file</returns>
         public static bool IsProject(this FilePath filePath)
         {
             return filePath.HasExtension && filePath.GetExtension().EqualsIgnoreCase(".csproj");
         }
 
+        /// <summary>
+        /// Checks if the path has a specific filename and extension
+        /// </summary>
+        /// <param name="path">the path to check</param>
+        /// <param name="fileName">the file name and extension</param>
+        /// <returns>true if filename and extension matches</returns>
         public static bool HasFileName(this FilePath path, string fileName)
         {
             fileName.ThrowIfNullOrEmpty(nameof(fileName));
@@ -38,9 +55,9 @@ namespace Cake.Extensions
         /// <summary>
         /// Filters FilePathCollection by filenames, in the order specified
         /// </summary>
-        /// <param name="filePathCollection"></param>
-        /// <param name="fileNames"></param>
-        /// <returns></returns>
+        /// <param name="filePathCollection">the collection to filter</param>
+        /// <param name="fileNames">the file names to filter by</param>
+        /// <returns>the filtered list</returns>
         public static IEnumerable<FilePath> Filter(this FilePathCollection filePathCollection, params string[] fileNames)
         {
             return
@@ -53,8 +70,8 @@ namespace Cake.Extensions
         /// <summary>
         /// Returns files in the same directory that have the same name but different extensions
         /// </summary>
-        /// <param name="context"></param>
-        /// <param name="files"></param>
+        /// <param name="context">the cake context</param>
+        /// <param name="files">the files to return matches for</param>
         /// <returns>a list of matching files</returns>
         [CakeMethodAlias]
         public static IEnumerable<IFile> GetMatchingFiles(this ICakeContext context, IEnumerable<FilePath> files)
@@ -66,6 +83,12 @@ namespace Cake.Extensions
                         .Where(f => !f.Path.Equals(x)));
         }
 
+        /// <summary>
+        /// Gets FliePaths using glob patterns
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="patterns">the glob patterns</param>
+        /// <returns>the files matching the glob patterns</returns>
         [CakeMethodAlias]
         public static FilePathCollection GetFiles(this ICakeContext context, params string[] patterns)
         {
@@ -76,6 +99,13 @@ namespace Cake.Extensions
                             current + context.Globber.GetFiles(pattern));
         }
 
+        /// <summary>
+        /// Gets the output assembly paths for solution or project files for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the solution or project file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <returns>the list of output assembly paths</returns>
         [CakeMethodAlias]
         public static IEnumerable<FilePath> GetOutputAssemblies(this ICakeContext context, FilePath target, string configuration)
         {
@@ -88,6 +118,13 @@ namespace Cake.Extensions
                     : new[] { context.GetProjectAssembly(target, configuration) };
         }
 
+        /// <summary>
+        /// Gets the output assembly paths for a solution file for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the solution file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <returns>the list of output assembly paths</returns>
         [CakeMethodAlias]
         public static IEnumerable<FilePath> GetSolutionAssemblies(this ICakeContext context, FilePath target, string configuration)
         {
@@ -99,6 +136,13 @@ namespace Cake.Extensions
             return result.GetProjects().Select(x => context.GetProjectAssembly(x.Path, configuration));
         }
 
+        /// <summary>
+        /// Gets the output assembly path for a project file
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the project file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <returns>the output assembly path</returns>
         [CakeMethodAlias]
         public static FilePath GetProjectAssembly(this ICakeContext context, FilePath target, string configuration)
         {

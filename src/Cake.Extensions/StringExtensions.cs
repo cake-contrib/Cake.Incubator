@@ -7,6 +7,12 @@ namespace Cake.Extensions
 
     public static class StringExtensions
     {
+        /// <summary>
+        /// Case-insensitive String.Equals
+        /// </summary>
+        /// <param name="source">the source string</param>
+        /// <param name="value">the string to compare</param>
+        /// <returns>true if strings are the same</returns>
         public static bool EqualsIgnoreCase(this string source, string value)
         {
             return source.Equals(value, StringComparison.InvariantCultureIgnoreCase);

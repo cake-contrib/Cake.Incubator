@@ -11,21 +11,43 @@ namespace Cake.Extensions
 
     public static class SolutionParserExtensions
     {
+        /// <summary>
+        /// Checks if a SolutionProject is of type SolutionFolder
+        /// </summary>
+        /// <param name="project">the solutionproject</param>
+        /// <returns>true if the project is a solution folder</returns>
         public static bool IsSolutionFolder(this SolutionProject project)
         {
             return project.Type.EqualsIgnoreCase(ProjectTypes.SolutionFolder);
         }
 
+        /// <summary>
+        /// Checks the SolutionProject type
+        /// </summary>
+        /// <param name="project">The solutionproject</param>
+        /// <param name="projectType">The type to check</param>
+        /// <returns>true if the project type matches</returns>
         public static bool IsType(this SolutionProject project, ProjectType projectType)
         {
             return project.Type.EqualsIgnoreCase(Types[projectType]);
         }
 
+        /// <summary>
+        /// Gets the SolutionProjects, excluding any SolutionFolders
+        /// </summary>
+        /// <param name="projects">The SolutionProject collection</param>
+        /// <returns>The SolutionProjects</returns>
         public static IEnumerable<SolutionProject> GetProjects(this SolutionParserResult projects)
         {
             return projects.Projects.Where(x => !IsSolutionFolder(x));
         }
 
+        /// <summary>
+        /// Gets the output assembly path for a SolutionProject
+        /// </summary>
+        /// <param name="solutionProject">The solutionproject</param>
+        /// <param name="project">The parsed project</param>
+        /// <returns>The SolutionProject output assembly path</returns>
         public static FilePath GetAssemblyFilePath(this SolutionProject solutionProject, CustomProjectParserResult project)
         {
             solutionProject.ThrowIfNull(nameof(solutionProject));

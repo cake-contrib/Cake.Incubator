@@ -11,6 +11,7 @@ namespace Cake.Extensions
     using static Cake.Common.IO.DirectoryAliases;
     using static Cake.Common.IO.FileAliases;
 
+    [CakeAliasCategory("Directory Helpers")]
     public static class DirectoryExtensions
     {
         /// <summary>
