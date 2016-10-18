@@ -19,3 +19,9 @@ This addin is designed to be used inside of cake scripts. To start using it, fir
 ```
 
 When the cake script is run, this will download the latest version of the `Cake.Extensions` nuget package and will now be available to use inside of the script.
+
+
+### Contributions
+
+Feel free to submit your PR's with your handy aliases or extensions. 
+The only requirement is that they do not introduce additional dependencies to the package.
