@@ -8,7 +8,6 @@ namespace Cake.Extensions
     using System.Collections.Generic;
     using System.Linq;
     using Cake.Common.Solution;
-    using Cake.Common.Solution.Project;
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
@@ -151,6 +150,39 @@ namespace Cake.Extensions
                     $"Cannot get target assembly, {target.FullPath} is not a project file");
 
             return context.ParseProject(target, configuration).GetAssemblyFilePath();
+        }
+
+        /// <summary>
+        /// Moves a file
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="source">the source file</param>
+        /// <param name="destination">the destination file path</param>
+        [CakeMethodAlias]
+        public static void Move(this ICakeContext context, FilePath source, FilePath destination)
+        {
+            source.ThrowIfNull(nameof(source));
+            destination.ThrowIfNull(nameof(destination));
+
+            if(!context.FileSystem.Exist(source)) throw new CakeException($"{source.FullPath} does not exist");
+
+            var file = context.FileSystem.GetFile(source);
+            file.Move(destination);
+        }
+
+        [CakeMethodAlias]
+        public static void Move(this ICakeContext context, IEnumerable<FilePath> source, DirectoryPath destination)
+        {
+            var sourceFiles = source.ThrowIfNull(nameof(source));
+            destination.ThrowIfNull(nameof(destination));
+
+            sourceFiles.Each(f =>
+            {
+                if (!context.FileSystem.Exist(f)) throw new CakeException($"{f.FullPath} does not exist");
+
+                var file = context.FileSystem.GetFile(f);
+                file.Move(destination.CombineWithFilePath(f.GetFilename()));
+            });
         }
     }
 }

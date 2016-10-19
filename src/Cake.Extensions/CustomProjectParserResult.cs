@@ -52,7 +52,7 @@
 
         /// <summary>Gets the project content files.</summary>
         /// <value>The files.</value>
-        public ICollection<ProjectFile> Files { get; }
+        public ICollection<CustomProjectFile> Files { get; }
 
         /// <summary>Gets the references.</summary>
         /// <value>The references.</value>
@@ -68,6 +68,7 @@
         /// <param name="configuration">The build configuration.</param>
         /// <param name="platform">The target platform.</param>
         /// <param name="projectGuid">The unique project identifier.</param>
+        /// <param name="projectTypeGuids">The project type identifiers</param>
         /// <param name="outputType">The compiler output type.</param>
         /// <param name="outputPath">The compiler output path</param>
         /// <param name="rootNameSpace">The default root namespace.</param>
@@ -77,7 +78,7 @@
         /// <param name="files">The project content files.</param>
         /// <param name="references">The references.</param>
         /// <param name="projectReferences">The references to other projects.</param>
-        public CustomProjectParserResult(string configuration, string platform, string projectGuid, string[] projectTypeGuids, string outputType, DirectoryPath outputPath, string rootNameSpace, string assemblyName, string targetFrameworkVersion, string targetFrameworkProfile, IEnumerable<ProjectFile> files, IEnumerable<ProjectAssemblyReference> references, IEnumerable<ProjectReference> projectReferences)
+        public CustomProjectParserResult(string configuration, string platform, string projectGuid, string[] projectTypeGuids, string outputType, DirectoryPath outputPath, string rootNameSpace, string assemblyName, string targetFrameworkVersion, string targetFrameworkProfile, IEnumerable<CustomProjectFile> files, IEnumerable<ProjectAssemblyReference> references, IEnumerable<ProjectReference> projectReferences)
         {
             this.Configuration = configuration;
             this.Platform = platform;

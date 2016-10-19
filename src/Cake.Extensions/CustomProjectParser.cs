@@ -4,6 +4,7 @@
 
 namespace Cake.Extensions
 {
+    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Xml.Linq;
@@ -130,8 +131,8 @@ namespace Cake.Extensions
                 from include in element.Attributes("Include")
                 let value = include.Value
                 where !string.IsNullOrEmpty(value)
-                let filePath = rootPath.CombineWithFilePath(value)
-                select new ProjectFile
+                let filePath = rootPath.CombineWithProjectPath(value)
+                select new CustomProjectFile
                 {
                     FilePath = filePath,
                     RelativePath = value,
@@ -199,6 +200,46 @@ namespace Cake.Extensions
                 projectFiles,
                 references,
                 projectReferences);
+        }
+    }
+
+    public class ProjectPath
+    {
+        public ProjectPath(string path)
+        {
+            Path = path;
+        }
+
+        public string Path { get; set; }
+
+        public bool IsFile => Path.Contains("*");
+    }
+
+    /// <summary>Represents a MSBuild project file.</summary>
+    public sealed class CustomProjectFile
+    {
+        /// <summary>Gets or sets the project file path.</summary>
+        /// <value>The project file path.</value>
+        public ProjectPath FilePath { get; set; }
+
+        /// <summary>Gets or sets the relative path to the project file.</summary>
+        /// <value>The relative path to the project file.</value>
+        public string RelativePath { get; set; }
+
+        /// <summary>
+        /// Gets or sets a value indicating whether this <see cref="T:Cake.Common.Solution.Project.ProjectFile" /> is compiled.
+        /// </summary>
+        /// <value>
+        ///   <c>true</c> if compiled; otherwise, <c>false</c>.
+        /// </value>
+        public bool Compile { get; set; }
+    }
+
+    public static class ProjectPathExtensions
+    {
+        public static ProjectPath CombineWithProjectPath(this DirectoryPath basePath, string path)
+        {
+            return new ProjectPath(System.IO.Path.Combine(basePath.FullPath, path));
         }
     }
 }
