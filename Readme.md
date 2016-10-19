@@ -6,7 +6,7 @@
 A set of extension methods and aliases for [Cake](http://cakebuild.net)
 
 * Repository: [http://github.org/wwwlicious/cake.extensions](http://github.org/wwwlicious/cake.extensions)
-* Docs: [https://wwwlicious.gitbooks.io/cake-extensions/](https://wwwlicious.gitbooks.io/cake-extensions/)
+* Docs: [https://wwwlicious.gitbooks.io/cake-extensions/](https://wwwlicious.gitbooks.io/cake-extensions/content/)
 
 ### Usage: inside build.cake
 
