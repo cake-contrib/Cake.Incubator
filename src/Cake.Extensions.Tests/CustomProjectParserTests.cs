@@ -3,8 +3,10 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 namespace Cake.Extensions.Tests
 {
+    using System;
     using System.IO;
     using System.Text;
+
     using Cake.Core;
     using Cake.Core.IO;
     using FakeItEasy;
@@ -18,6 +20,7 @@ namespace Cake.Extensions.Tests
         private readonly ICakeEnvironment environment;
         private readonly CustomProjectParser parser;
         private readonly FakeFile validFile;
+        private readonly FakeFile anotherValidFile;
 
         public CustomProjectParserTests()
         {
@@ -25,6 +28,7 @@ namespace Cake.Extensions.Tests
             environment = A.Fake<ICakeEnvironment>();
             parser = new CustomProjectParser(fileSystem, environment);
             validFile = new FakeFile(Resources.CsProj_ValidFile);
+            anotherValidFile = new FakeFile(Resources.AnotherCSProj);
         }
 
         [Fact]
@@ -65,15 +69,45 @@ namespace Cake.Extensions.Tests
             result.IsType(ProjectType.PortableClassLibrary).Should().BeTrue();
             result.IsType(ProjectType.FSharp).Should().BeFalse();
         }
+
+        [Fact]
+        public void CanGetProjectType_WhenProjectTypeGuidsIsNull()
+        {
+            var result = new TestProjectParserResult { ProjectTypeGuids = null };
+            result.IsType(ProjectType.Undefined).Should().BeTrue();
+        }
+
+        [Fact]
+        public void CanGetProjectTypeFromMulitple()
+        {
+            var result = new TestProjectParserResult()
+                             {
+                                 ProjectTypeGuids =
+                                     new[] { ProjectTypes.CSharp, ProjectTypes.AspNetMvc1 }
+                             };
+
+            result.IsType(ProjectType.Undefined).Should().BeFalse();
+            result.IsType(ProjectType.CSharp).Should().BeTrue();
+            result.IsType(ProjectType.AspNetMvc1).Should().BeTrue();
+        }
+        
     }
 
-    public class FakeFile : IFile
+    internal class TestProjectParserResult : CustomProjectParserResult
     {
-        private readonly string _content;
+        public TestProjectParserResult()
+            : base("Debug", "x86", Guid.NewGuid().ToString(), new []{ ProjectTypes.CSharp }, "Library", "/bin/Debug", "RootNamespace", "AssemblyName", "v4.5", null, null, null, null)
+        {
+        }
+    }
+
+    internal class FakeFile : IFile
+    {
+        private readonly string content;
 
         public FakeFile(string content)
         {
-            _content = content;
+            this.content = content;
             Exists = true;
             Path = "a.sln";
         }
@@ -95,7 +129,7 @@ namespace Cake.Extensions.Tests
 
         public Stream Open(FileMode fileMode, FileAccess fileAccess, FileShare fileShare)
         {
-            return new MemoryStream(Encoding.UTF8.GetBytes(_content));
+            return new MemoryStream(Encoding.UTF8.GetBytes(content));
         }
 
         public FilePath Path { get; }

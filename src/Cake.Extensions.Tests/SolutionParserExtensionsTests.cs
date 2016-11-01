@@ -17,7 +17,47 @@ namespace Cake.Extensions.Tests
         [Fact]
         public void IsSolutionFolder_ReturnsTrue_ForSolutionFolder()
         {
-            new SolutionProject("1", "test", new FilePath("/a"), ProjectTypes.SolutionFolder).IsSolutionFolder().Should().BeTrue();
+            var solutionProject = new SolutionProject("1", "test", new FilePath("/a"), ProjectTypes.SolutionFolder);
+
+            solutionProject.IsSolutionFolder().Should().BeTrue();
+        }
+
+        [Fact]
+        public void IsType_ReturnsTrue_ForCorrectType()
+        {
+            var solutionProject = new SolutionProject("1", "test", new FilePath("/a"), ProjectTypes.CSharp);
+
+            solutionProject.IsType(ProjectType.CSharp).Should().BeTrue();
+        }
+
+        [Fact]
+        public void CanGetSolutionProjects_WithoutSolutionFolders()
+        {
+            var result = GetSolutionParserResult();
+
+            result.Projects.Should().HaveCount(2);
+            result.GetProjects()
+                .Should()
+                .HaveCount(1)
+                .And.Contain(x => x.Type == ProjectTypes.CSharp);
+        }
+
+        private SolutionParserResult GetSolutionParserResult()
+        {
+            var projects = new[]
+                               {
+                                   new SolutionProject(
+                                       "1",
+                                       "test",
+                                       "/a.csproj",
+                                       ProjectTypes.CSharp),
+                                   new SolutionProject(
+                                       "2",
+                                       "folder",
+                                       "/b",
+                                       ProjectTypes.SolutionFolder)
+                               };
+            return new SolutionParserResult("1", "1", "1", projects);
         }
     }
 }

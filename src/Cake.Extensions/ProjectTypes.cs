@@ -67,15 +67,8 @@ namespace Cake.Extensions
         XamarinIos,
         XnaWindows,
         XnaXbox,
-        XnaZune
-    }
-
-    public static class ProjectTypeExtensions
-    {
-        public static bool HasFlag(this ProjectType value, ProjectType flag)
-        {
-            return (value & flag) != 0;
-        }
+        XnaZune,
+        Undefined
     }
 
     public static class ProjectTypes
