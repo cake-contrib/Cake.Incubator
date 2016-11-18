@@ -53,6 +53,7 @@
     <Compile Include="AssertExtensions.cs" />
     <Compile Include="CustomProjectParserResult.cs" />
     <Compile Include="DirectoryExtensions.cs" />
+    <Compile Include="DotNetCoreTestExtensions.cs" />
     <Compile Include="ProjectTypes.cs" />
     <Compile Include="StringExtensions.cs" />
     <None Include="Cake.Extensions.nuspec" />
