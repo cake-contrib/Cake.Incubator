@@ -19,7 +19,8 @@ namespace Cake.Extensions.Tests
         private readonly IFileSystem fileSystem;
         private readonly ICakeEnvironment environment;
         private readonly CustomProjectParser parser;
-        private readonly FakeFile validFile;
+        private readonly FakeFile validCsProjFile;
+        private readonly FakeFile validXProjFile;
         private readonly FakeFile anotherValidFile;
 
         public CustomProjectParserTests()
@@ -27,15 +28,16 @@ namespace Cake.Extensions.Tests
             fileSystem = A.Fake<IFileSystem>();
             environment = A.Fake<ICakeEnvironment>();
             parser = new CustomProjectParser(fileSystem, environment);
-            validFile = new FakeFile(Resources.CsProj_ValidFile);
+            validCsProjFile = new FakeFile(Resources.CsProj_ValidFile);
+            validXProjFile = new FakeFile(Resources.XProj_ValidFile);
             anotherValidFile = new FakeFile(Resources.AnotherCSProj);
         }
 
         [Fact]
-        public void CustomProjectParser_CanParseSampleFile_ForDebugConfig()
+        public void CustomProjectParser_CanParseSampleCsProjFile_ForDebugConfig()
         {
-            var path = new FilePath("/a");
-            A.CallTo(() => fileSystem.GetFile(path)).Returns(validFile);
+            var path = new FilePath("/a.csproj");
+            A.CallTo(() => fileSystem.GetFile(path)).Returns(validCsProjFile);
 
             var result = parser.Parse(path, "debug");
 
@@ -44,11 +46,11 @@ namespace Cake.Extensions.Tests
         }
 
         [Fact]
-        public void CustomProjectParser_CanParseSampleFile_ForReleaseConfig()
+        public void CustomProjectParser_CanParseSampleCsProjFile_ForReleaseConfig()
         {
-            var path = new FilePath("/a");
+            var path = new FilePath("/a.csproj");
 
-            A.CallTo(() => fileSystem.GetFile(path)).Returns(validFile);
+            A.CallTo(() => fileSystem.GetFile(path)).Returns(validCsProjFile);
 
             var result = parser.Parse(path, "reLEAse");
 
@@ -57,17 +59,29 @@ namespace Cake.Extensions.Tests
         }
 
         [Fact]
-        public void CustomProjectParser_CanParseProjectTypeGuids()
+        public void CustomProjectParser_CanParseSampleCsProjProjectTypeGuids()
         {
-            var path = new FilePath("/a");
+            var path = new FilePath("/a.csproj");
 
-            A.CallTo(() => fileSystem.GetFile(path)).Returns(validFile);
+            A.CallTo(() => fileSystem.GetFile(path)).Returns(validCsProjFile);
 
             var result = parser.Parse(path, "Debug");
 
             result.IsType(ProjectType.CSharp).Should().BeTrue();
             result.IsType(ProjectType.PortableClassLibrary).Should().BeTrue();
             result.IsType(ProjectType.FSharp).Should().BeFalse();
+        }
+
+        [Fact]
+        public void CustomProjectParser_CanParseSampleXProjFile()
+        {
+            var path = new FilePath("/a.xproj");
+
+            A.CallTo(() => fileSystem.GetFile(path)).Returns(validXProjFile);
+
+            var result = parser.Parse(path, "Debug");
+
+            result.RootNameSpace.Should().Be("Cake.Common");
         }
 
         [Fact]

@@ -48,8 +48,6 @@ namespace Cake.Extensions
 
             var extension = projectPath.GetExtension().ToLower();
 
-            Console.WriteLine($"Extension is {extension}");
-
             switch (extension)
             {                
                 case ".xproj":
