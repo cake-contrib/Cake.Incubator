@@ -76,6 +76,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AssertExtensionTests.cs" />
     <Compile Include="CustomProjectParserTests.cs" />
     <Compile Include="DotNetBuildSettingsExtensionsTests.cs" />
     <Compile Include="FilePathExtensionTests.cs" />
