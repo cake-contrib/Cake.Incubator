@@ -6,9 +6,7 @@ namespace Cake.Extensions
     using System.Collections;
     using System.ComponentModel;
     using System.Text;
-    using Core.Annotations;
 
-    [CakeAliasCategory("Logging")]
     public static class LoggingExtensions
     {
         /// <summary>
@@ -17,7 +15,6 @@ namespace Cake.Extensions
         /// <typeparam name="T">Type of object</typeparam>
         /// <param name="obj">Object to generate string representation of</param>
         /// <returns>String representation of object in format in format "Prop: PropValue\r\nArrayProp: ArrayVal1, ArrayVal2"</returns>
-        [CakeMethodAlias]
         public static string Dump<T>(this T obj)
         {
             if (obj == null) return null;
