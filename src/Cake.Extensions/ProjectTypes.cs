@@ -67,7 +67,8 @@ namespace Cake.Extensions
         XamarinIos,
         XnaWindows,
         XnaXbox,
-        XnaZune
+        XnaZune,
+        Unspecified
     }
 
     public static class ProjectTypeExtensions

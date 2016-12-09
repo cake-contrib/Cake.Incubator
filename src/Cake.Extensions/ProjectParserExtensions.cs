@@ -54,6 +54,9 @@ namespace Cake.Extensions
         /// <returns>true if the project type matches</returns>
         public static bool IsType(this CustomProjectParserResult projectParserResult, ProjectType projectType)
         {
+            if (projectType.HasFlag(ProjectType.Unspecified))
+                return projectParserResult.ProjectTypeGuids == null || projectParserResult.ProjectTypeGuids.Length == 0;
+
             return projectParserResult.ProjectTypeGuids.Any(x => x.EqualsIgnoreCase(SolutionParserExtensions.Types[projectType]));
         }
 
