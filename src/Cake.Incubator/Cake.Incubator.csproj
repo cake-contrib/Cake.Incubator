@@ -54,6 +54,7 @@
     <Compile Include="CustomProjectParserResult.cs" />
     <Compile Include="DirectoryExtensions.cs" />
     <Compile Include="DotNetCoreTestExtensions.cs" />
+    <Compile Include="EnvironmentExtensions.cs" />
     <Compile Include="LoggingExtensions.cs" />
     <Compile Include="ProjectTypes.cs" />
     <Compile Include="StringExtensions.cs" />

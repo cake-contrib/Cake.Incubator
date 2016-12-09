@@ -80,6 +80,7 @@
     <Compile Include="CustomProjectParserTests.cs" />
     <Compile Include="DotNetBuildSettingsExtensionsTests.cs" />
     <Compile Include="EnumerableExtensionsTests.cs" />
+    <Compile Include="EnvironmentExtensionsTests.cs" />
     <Compile Include="FilePathExtensionTests.cs" />
     <Compile Include="LoggingExtensionsTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
