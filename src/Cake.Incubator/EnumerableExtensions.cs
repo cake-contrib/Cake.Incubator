@@ -6,6 +6,7 @@ namespace Cake.Incubator
 {
     using System;
     using System.Collections.Generic;
+    using System.Linq;
 
     public static class EnumerableExtensions
     {
@@ -24,5 +25,29 @@ namespace Cake.Incubator
                 action(item);
             }
         }
+
+        /// <summary>
+        /// Checks whether specified IEnumerable is null or contains no elements
+        /// </summary>
+        /// <typeparam name="T">the item type</typeparam>
+        /// <param name="source">the collection</param>
+        /// <returns>true if element null or empty, else false</returns>
+        public static bool IsNullOrEmpty<T>(this IEnumerable<T> source) => source == null || !source.Any();
+
+        /// <summary>
+        /// Checks whether specified IList is null or contains no elements
+        /// </summary>
+        /// <typeparam name="T">the item type</typeparam>
+        /// <param name="source">the collection</param>
+        /// <returns>true if element null or empty, else false</returns>
+        public static bool IsNullOrEmpty<T>(this IList<T> source) => source == null || source.Count == 0;
+
+        /// <summary>
+        /// Checks whether specified array is null or contains no elements
+        /// </summary>
+        /// <typeparam name="T">the item type</typeparam>
+        /// <param name="source">the array</param>
+        /// <returns>true if element null or empty, else false</returns>
+        public static bool IsNullOrEmpty<T>(this T[] source) => source == null || source.Length == 0;
     }
 }
