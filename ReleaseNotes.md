@@ -9,5 +9,11 @@
 ### 1.0.33
 
 - Renamed package from Cake.Extensions ot Cake.Incubator
-- Added .Dump(object) alias
+- Added .Dump(object) alias for outputting objects and collections to strings for logging
 - Added optional message to .ThrowIfNullOrEmpty(obj, message)
+
+### 1.0.34
+
+- Adding strong typing environment variable alias `EnvironmentVariable<T>(name)` for parity with `Argument<T>`
+- Adding `IEnumerable<T>.IsNullOrEmpty()` convenience extension
+
