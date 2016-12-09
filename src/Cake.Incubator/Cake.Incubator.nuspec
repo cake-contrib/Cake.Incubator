@@ -5,7 +5,7 @@
     <version>$version$</version>
     <title>Cake.Incubator</title>
     <authors>Scott Mackay (@wwwlicious)</authors>
-    <owners>Scott Mackay (@wwwlicious)</owners>
+    <owners>Scott Mackay (@wwwlicious), cake-contrib</owners>
     <projectUrl>https://github.com/cake-contrib/Cake.Incubator</projectUrl>
     <licenseUrl>https://opensource.org/licenses/MPL-2.0</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
