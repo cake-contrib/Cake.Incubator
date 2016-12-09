@@ -16,6 +16,14 @@ namespace Cake.Extensions
             return obj;
         }
 
+        public static T ThrowIfNull<T>(this T obj, string varName, string message)
+        {
+            if (obj == null)
+                throw new ArgumentNullException(varName ?? "object", message);
+
+            return obj;
+        }
+
         public static string ThrowIfNullOrEmpty(this string strValue, string varName)
         {
             if (string.IsNullOrEmpty(strValue))

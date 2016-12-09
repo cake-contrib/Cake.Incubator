@@ -23,7 +23,7 @@ namespace Cake.Extensions
         /// <exception cref="CakeException">Throws if source directory does not exist</exception>
         /// <exception cref="CakeException">Throws if destination directory does exist</exception>
         [CakeMethodAlias]
-        public static void MoveDirectory(this ICakeContext context, DirectoryPath source, DirectoryPath destination)
+        public static void TransferDirectory(this ICakeContext context, DirectoryPath source, DirectoryPath destination)
         {
             context.ThrowIfNull(nameof(context));
             source.ThrowIfNull(nameof(source));

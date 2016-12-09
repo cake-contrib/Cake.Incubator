@@ -9,6 +9,7 @@ namespace Cake.Extensions
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
+    using Common.Diagnostics;
 
     public static class ProjectParserExtensions
     {
@@ -55,7 +56,8 @@ namespace Cake.Extensions
         public static bool IsType(this CustomProjectParserResult projectParserResult, ProjectType projectType)
         {
             if (projectType.HasFlag(ProjectType.Unspecified))
-                return projectParserResult.ProjectTypeGuids == null || projectParserResult.ProjectTypeGuids.Length == 0;
+                return projectParserResult.ProjectTypeGuids == null
+                       || projectParserResult.ProjectTypeGuids.Length == 0;
 
             return projectParserResult.ProjectTypeGuids.Any(x => x.EqualsIgnoreCase(SolutionParserExtensions.Types[projectType]));
         }
@@ -75,7 +77,11 @@ namespace Cake.Extensions
 
             // get config specific
             var parser = new CustomProjectParser(context.FileSystem, context.Environment);
-            return parser.Parse(project, configuration);
+            var customProjectParserResult = parser.Parse(project, configuration);
+            
+            context.Debug("Parsed project file {0}\r\n{1}", project, customProjectParserResult.Dump());
+            
+            return customProjectParserResult;
         }
     }
 }
