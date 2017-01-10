@@ -35,9 +35,15 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
-        public void IsProject_ReturnsTrue_ForProject()
+        public void IsProject_ReturnsTrue_ForCSProject()
         {
             new FilePath("a.csproj").IsProject().Should().BeTrue();
+        }
+
+        [Fact]
+        public void IsProject_ReturnsTrue_ForFSProject()
+        {
+            new FilePath("a.fsproj").IsProject().Should().BeTrue();
         }
 
         [Theory]
