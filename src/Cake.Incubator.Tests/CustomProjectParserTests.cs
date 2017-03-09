@@ -21,6 +21,9 @@ namespace Cake.Incubator.Tests
         private readonly FakeFile validCsProjFile;
         private readonly FakeFile validXProjFile;
         private readonly FakeFile anotherValidFile;
+        private readonly FakeFile valid2017CsProjFile;
+        private readonly FakeFile valid2017CsProjNetcoreFile;
+        private readonly FakeFile valid2017CsProjNetstandardFile;
 
         public CustomProjectParserTests()
         {
@@ -29,6 +32,9 @@ namespace Cake.Incubator.Tests
             parser = new CustomProjectParser(fileSystem, environment);
             validCsProjFile = new FakeFile(Resources.CsProj_ValidFile);
             validXProjFile = new FakeFile(Resources.XProj_ValidFile);
+            valid2017CsProjFile = new FakeFile(Resources.VS2017_CsProj_ValidFile);
+            valid2017CsProjNetcoreFile = new FakeFile(Resources.VS2017_CsProj_NetCoreDefault);
+            valid2017CsProjNetstandardFile = new FakeFile(Resources.VS2017_CsProj_NetStandard_ValidFile);
             anotherValidFile = new FakeFile(Resources.AnotherCSProj);
         }
 
@@ -42,6 +48,60 @@ namespace Cake.Incubator.Tests
 
             result.Configuration.Should().Be("debug");
             result.OutputPath.ToString().Should().Be("bin/Debug");
+        }
+
+        [Fact]
+        public void CustomProjectParser_CanParseSample2017CsProjFile_ForDebugConfig()
+        {
+            var path = new FilePath("/a.csproj");
+            A.CallTo(() => fileSystem.GetFile(path)).Returns(valid2017CsProjFile);
+
+            var result = parser.Parse(path, "debug");
+
+            result.Configuration.Should().Be("debug");
+            result.OutputPath.ToString().Should().Be("bin/Debug");
+        }
+
+        [Fact]
+        public void CustomProjectParser_CanParseSample2017CsProjNetCoreFile_ForDebugConfig()
+        {
+            var path = new FilePath("/a.csproj");
+            A.CallTo(() => fileSystem.GetFile(path)).Returns(valid2017CsProjNetcoreFile);
+
+            var result = parser.Parse(path, "debug");
+
+            result.Configuration.Should().Be("debug");
+            result.OutputPath.ToString().Should().Be("bin/custom");
+            result.OutputType.Should().Be("Exe");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/a.exe");
+        }
+
+        [Fact]
+        public void CustomProjectParser_CanParseSample2017CsProjNetCoreFile_ForReleaseConfig()
+        {
+            var path = new FilePath("/a.csproj");
+            A.CallTo(() => fileSystem.GetFile(path)).Returns(valid2017CsProjNetcoreFile);
+
+            var result = parser.Parse(path, "release");
+
+            result.Configuration.Should().Be("release");
+            result.OutputPath.ToString().Should().Be("bin/release/netcoreapp1.1");
+            result.OutputType.Should().Be("Exe");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/release/netcoreapp1.1/a.exe");
+        }
+
+        [Fact]
+        public void CustomProjectParser_CanParseSample2017CsProjNetStandardFile_ForReleaseConfig()
+        {
+            var path = new FilePath("/a.csproj");
+            A.CallTo(() => fileSystem.GetFile(path)).Returns(valid2017CsProjNetstandardFile);
+
+            var result = parser.Parse(path, "debug");
+
+            result.Configuration.Should().Be("debug");
+            result.OutputPath.ToString().Should().Be("bin/wayhey");
+            result.OutputType.Should().Be("Library");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/wayhey/a.dll");
         }
 
         [Fact]
@@ -91,7 +151,7 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
-        public void CanGetProjectTypeFromMulitple()
+        public void CanGetProjectTypeFromMultiple()
         {
             var result = new TestProjectParserResult()
                              {

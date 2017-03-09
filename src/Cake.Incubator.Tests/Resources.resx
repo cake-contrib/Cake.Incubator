@@ -636,6 +636,114 @@
   &lt;Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" /&gt;
 &lt;/Project&gt;</value>
   </data>
+  <data name="VS2017_CsProj_NetCoreDefault" xml:space="preserve">
+    <value>&lt;Project Sdk="Microsoft.NET.Sdk"&gt;
+
+  &lt;PropertyGroup&gt;
+    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
+    &lt;TargetFramework&gt;netcoreapp1.1&lt;/TargetFramework&gt;
+  &lt;/PropertyGroup&gt;
+
+  &lt;PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'"&gt;
+    &lt;OutputPath&gt;bin\custom\&lt;/OutputPath&gt;
+  &lt;/PropertyGroup&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;None Remove="TextFile1.txt" /&gt;
+  &lt;/ItemGroup&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;Content Include="TextFile1.txt"&gt;
+      &lt;CopyToOutputDirectory&gt;PreserveNewest&lt;/CopyToOutputDirectory&gt;
+    &lt;/Content&gt;
+  &lt;/ItemGroup&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;Compile Update="Resource1.Designer.cs"&gt;
+      &lt;DesignTime&gt;True&lt;/DesignTime&gt;
+      &lt;AutoGen&gt;True&lt;/AutoGen&gt;
+      &lt;DependentUpon&gt;Resource1.resx&lt;/DependentUpon&gt;
+    &lt;/Compile&gt;
+  &lt;/ItemGroup&gt;
+
+  &lt;ItemGroup&gt;
+    &lt;EmbeddedResource Update="Resource1.resx"&gt;
+      &lt;Generator&gt;ResXFileCodeGenerator&lt;/Generator&gt;
+      &lt;LastGenOutput&gt;Resource1.Designer.cs&lt;/LastGenOutput&gt;
+    &lt;/EmbeddedResource&gt;
+  &lt;/ItemGroup&gt;
+
+&lt;/Project&gt;</value>
+  </data>
+  <data name="VS2017_CsProj_NetStandard_ValidFile" xml:space="preserve">
+    <value>&lt;Project Sdk="Microsoft.NET.Sdk"&gt;
+
+  &lt;PropertyGroup&gt;
+    &lt;TargetFramework&gt;netstandard1.6&lt;/TargetFramework&gt;
+  &lt;/PropertyGroup&gt;
+
+  &lt;PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" /&gt;
+
+  &lt;PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'"&gt;
+    &lt;OutputPath&gt;bin\wayhey\&lt;/OutputPath&gt;
+  &lt;/PropertyGroup&gt;
+
+&lt;/Project&gt;</value>
+  </data>
+  <data name="VS2017_CsProj_ValidFile" xml:space="preserve">
+    <value>&lt;?xml version="1.0" encoding="utf-8"?&gt;
+&lt;Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"&gt;
+  &lt;Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" /&gt;
+  &lt;PropertyGroup&gt;
+    &lt;Configuration Condition=" '$(Configuration)' == '' "&gt;Debug&lt;/Configuration&gt;
+    &lt;Platform Condition=" '$(Platform)' == '' "&gt;AnyCPU&lt;/Platform&gt;
+    &lt;ProjectGuid&gt;{B544B360-9299-4069-A2D7-E7FAAD68B18A}&lt;/ProjectGuid&gt;
+    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
+    &lt;RootNamespace&gt;ConsoleApp2&lt;/RootNamespace&gt;
+    &lt;AssemblyName&gt;ConsoleApp2&lt;/AssemblyName&gt;
+    &lt;TargetFrameworkVersion&gt;v4.5.2&lt;/TargetFrameworkVersion&gt;
+    &lt;FileAlignment&gt;512&lt;/FileAlignment&gt;
+    &lt;AutoGenerateBindingRedirects&gt;true&lt;/AutoGenerateBindingRedirects&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' "&gt;
+    &lt;PlatformTarget&gt;AnyCPU&lt;/PlatformTarget&gt;
+    &lt;DebugSymbols&gt;true&lt;/DebugSymbols&gt;
+    &lt;DebugType&gt;full&lt;/DebugType&gt;
+    &lt;Optimize&gt;false&lt;/Optimize&gt;
+    &lt;OutputPath&gt;bin\Debug\&lt;/OutputPath&gt;
+    &lt;DefineConstants&gt;DEBUG;TRACE&lt;/DefineConstants&gt;
+    &lt;ErrorReport&gt;prompt&lt;/ErrorReport&gt;
+    &lt;WarningLevel&gt;4&lt;/WarningLevel&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' "&gt;
+    &lt;PlatformTarget&gt;AnyCPU&lt;/PlatformTarget&gt;
+    &lt;DebugType&gt;pdbonly&lt;/DebugType&gt;
+    &lt;Optimize&gt;true&lt;/Optimize&gt;
+    &lt;OutputPath&gt;bin\Release\&lt;/OutputPath&gt;
+    &lt;DefineConstants&gt;TRACE&lt;/DefineConstants&gt;
+    &lt;ErrorReport&gt;prompt&lt;/ErrorReport&gt;
+    &lt;WarningLevel&gt;4&lt;/WarningLevel&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;Reference Include="System" /&gt;
+    &lt;Reference Include="System.Core" /&gt;
+    &lt;Reference Include="System.Xml.Linq" /&gt;
+    &lt;Reference Include="System.Data.DataSetExtensions" /&gt;
+    &lt;Reference Include="Microsoft.CSharp" /&gt;
+    &lt;Reference Include="System.Data" /&gt;
+    &lt;Reference Include="System.Net.Http" /&gt;
+    &lt;Reference Include="System.Xml" /&gt;
+  &lt;/ItemGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;Compile Include="Program.cs" /&gt;
+    &lt;Compile Include="Properties\AssemblyInfo.cs" /&gt;
+  &lt;/ItemGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;None Include="App.config" /&gt;
+  &lt;/ItemGroup&gt;
+  &lt;Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" /&gt;
+&lt;/Project&gt;</value>
+  </data>
   <data name="XProj_ValidFile" xml:space="preserve">
     <value>&lt;?xml version="1.0" encoding="utf-8"?&gt;
 &lt;Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"&gt;

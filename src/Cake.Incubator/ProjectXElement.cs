@@ -73,6 +73,11 @@ namespace Cake.Incubator
         internal const string TargetFrameworkProfile = "{" + XmlNamespace + "}TargetFrameworkProfile";
 
         /// <summary>
+        /// Gets the target framework element.
+        /// </summary>
+        internal const string TargetFramework = "TargetFramework";
+
+        /// <summary>
         /// Gets the namespace for the configuration element.
         /// </summary>
         internal const string Configuration = "{" + XmlNamespace + "}Configuration";

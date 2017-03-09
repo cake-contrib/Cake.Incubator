@@ -106,6 +106,69 @@ namespace Cake.Incubator.Tests {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
+        ///
+        ///  &lt;PropertyGroup&gt;
+        ///    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
+        ///    &lt;TargetFramework&gt;netcoreapp1.1&lt;/TargetFramework&gt;
+        ///  &lt;/PropertyGroup&gt;
+        ///
+        ///  &lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|AnyCPU&apos;&quot;&gt;
+        ///    &lt;OutputPath&gt;bin\custom\&lt;/OutputPath&gt;
+        ///  &lt;/PropertyGroup&gt;
+        ///
+        ///  &lt;ItemGroup&gt;
+        ///    &lt;None Remove=&quot;TextFile1.txt&quot; /&gt;
+        ///  &lt;/ItemGroup&gt;
+        ///
+        ///  &lt;ItemGroup&gt;
+        ///    &lt;Content Include=&quot;TextFile1.txt&quot;&gt;
+        ///      &lt;CopyToOutputDirectory&gt;PreserveNewest&lt;/CopyToOutputDirectory&gt;
+        ///    &lt;/Conte [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string VS2017_CsProj_NetCoreDefault {
+            get {
+                return ResourceManager.GetString("VS2017_CsProj_NetCoreDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
+        ///
+        ///  &lt;PropertyGroup&gt;
+        ///    &lt;TargetFramework&gt;netstandard1.6&lt;/TargetFramework&gt;
+        ///  &lt;/PropertyGroup&gt;
+        ///
+        ///  &lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;&quot; /&gt;
+        ///
+        ///  &lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|AnyCPU&apos;&quot;&gt;
+        ///    &lt;OutputPath&gt;bin\wayhey\&lt;/OutputPath&gt;
+        ///  &lt;/PropertyGroup&gt;
+        ///
+        ///&lt;/Project&gt;.
+        /// </summary>
+        internal static string VS2017_CsProj_NetStandard_ValidFile {
+            get {
+                return ResourceManager.GetString("VS2017_CsProj_NetStandard_ValidFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Project ToolsVersion=&quot;15.0&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
+        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///  &lt;PropertyGroup&gt;
+        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///    &lt;ProjectGuid&gt;{B544B360 [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string VS2017_CsProj_ValidFile {
+            get {
+                return ResourceManager.GetString("VS2017_CsProj_ValidFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Project ToolsVersion=&quot;14.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
         ///  &lt;PropertyGroup&gt;
