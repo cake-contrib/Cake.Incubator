@@ -58,6 +58,7 @@
     <Compile Include="LoggingExtensions.cs" />
     <Compile Include="ProjectTypes.cs" />
     <Compile Include="StringExtensions.cs" />
+    <Compile Include="XDocumentExtensions.cs" />
     <None Include="Cake.Incubator.nuspec" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="EnumerableExtensions.cs" />

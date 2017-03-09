@@ -27,7 +27,7 @@ namespace Cake.Incubator
         /// Returns the parsed projects output assembly extension
         /// </summary>
         /// <param name="projectParserResult">the parsed project</param>
-        /// <returns>the output assemblys file extnesion</returns>
+        /// <returns>the output assembly's file extension</returns>
         public static string GetExtension(this CustomProjectParserResult projectParserResult)
         {
             return projectParserResult.IsLibrary()
