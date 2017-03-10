@@ -17,3 +17,8 @@
 - Adding strong typing environment variable alias `EnvironmentVariable<T>(name)` for parity with `Argument<T>`
 - Adding `IEnumerable<T>.IsNullOrEmpty()` convenience extension
 
+### 1.0.47
+
+- #10 Initial support for parsing VS2017 .NetStandard and .NetCore project files. 
+- #12 Adding support to include conditional references and added reference name without version as a fallback to the `CustomProjectParserResult.Name` property
+
