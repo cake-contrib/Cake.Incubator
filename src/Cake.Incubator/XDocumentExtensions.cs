@@ -1,6 +1,7 @@
 namespace Cake.Incubator
 {
     using System;
+    using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
 
@@ -30,6 +31,20 @@ namespace Cake.Incubator
         public static bool IsDotNetSdk(this XDocument document)
         {
             return document.Root?.Attribute("Sdk")?.Value != null;
+        }
+
+        public static IEnumerable<TSource> Distinct<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> getKey)
+        {
+            var dictionary = new HashSet<TKey>();
+
+            foreach (var item in source)
+            {
+                var key = getKey(item);
+                if (dictionary.Add(key))
+                {
+                    yield return item;
+                }
+            }
         }
     }
 }

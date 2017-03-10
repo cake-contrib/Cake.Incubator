@@ -78,6 +78,23 @@ namespace Cake.Incubator.Tests {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Project ToolsVersion=&quot;14.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
+        ///  &lt;PropertyGroup&gt;
+        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///    &lt;ProjectGuid&gt;{8BB3C584-CA27-4CC1-84E8-512EF6A2851D}&lt;/ProjectGuid&gt;
+        ///    &lt;OutputType&gt;Library&lt;/OutputType&gt;
+        ///    &lt;AppDesignerFolder&gt;Properties&lt;/AppDesignerFolder&gt;
+        ///    &lt;RootNamespace&gt;Cake.VsM [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CsProj_ConditionReference_ValidFile {
+            get {
+                return ResourceManager.GetString("CsProj_ConditionReference_ValidFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to &lt;Project ToolsVersion=&quot;12.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
         ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
         ///  &lt;PropertyGroup&gt;

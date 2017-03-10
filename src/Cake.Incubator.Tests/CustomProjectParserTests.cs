@@ -5,6 +5,7 @@ namespace Cake.Incubator.Tests
 {
     using System;
     using System.IO;
+    using System.Linq;
     using System.Text;
     using Cake.Core;
     using Cake.Core.IO;
@@ -24,6 +25,7 @@ namespace Cake.Incubator.Tests
         private readonly FakeFile valid2017CsProjFile;
         private readonly FakeFile valid2017CsProjNetcoreFile;
         private readonly FakeFile valid2017CsProjNetstandardFile;
+        private readonly FakeFile validCsProjConditionalReferenceFile;
 
         public CustomProjectParserTests()
         {
@@ -35,6 +37,7 @@ namespace Cake.Incubator.Tests
             valid2017CsProjFile = new FakeFile(Resources.VS2017_CsProj_ValidFile);
             valid2017CsProjNetcoreFile = new FakeFile(Resources.VS2017_CsProj_NetCoreDefault);
             valid2017CsProjNetstandardFile = new FakeFile(Resources.VS2017_CsProj_NetStandard_ValidFile);
+            validCsProjConditionalReferenceFile = new FakeFile(Resources.CsProj_ConditionReference_ValidFile);
             anotherValidFile = new FakeFile(Resources.AnotherCSProj);
         }
 
@@ -104,6 +107,17 @@ namespace Cake.Incubator.Tests
             result.GetAssemblyFilePath().FullPath.Should().Be("bin/wayhey/a.dll");
         }
 
+        [Fact]
+        public void CustomProjectParser_CanParseCsProjWithConditionalReferences()
+        {
+            var path = new FilePath("/a.csproj");
+            A.CallTo(() => fileSystem.GetFile(path)).Returns(validCsProjConditionalReferenceFile);
+
+            var result = parser.Parse(path, "debug");
+
+            result.References.Should().HaveCount(8).And.Contain(x => x.Name.Equals("Microsoft.VisualStudio.QualityTools.UnitTestFramework"));
+        }
+        
         [Fact]
         public void CustomProjectParser_CanParseSampleCsProjFile_ForReleaseConfig()
         {

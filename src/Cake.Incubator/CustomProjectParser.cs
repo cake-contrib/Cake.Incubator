@@ -170,31 +170,28 @@ namespace Cake.Incubator
                     Compile = element.Name == ProjectXElement.Compile
                 }).ToArray();
 
-            var references =
-            (from project in document.Elements(ProjectXElement.Project)
-                from itemGroup in project.Elements(ProjectXElement.ItemGroup)
-                from element in itemGroup.Elements()
-                where element.Name == ProjectXElement.Reference
-                from include in element.Attributes("Include")
+            var references = 
+            (from reference in document.Descendants(ProjectXElement.Reference)
+                from include in reference.Attributes("Include")
                 let includeValue = include.Value
-                let hintPathElement = element.Element(ProjectXElement.HintPath)
-                let nameElement = element.Element(ProjectXElement.Name)
-                let fusionNameElement = element.Element(ProjectXElement.FusionName)
-                let specificVersionElement = element.Element(ProjectXElement.SpecificVersion)
-                let aliasesElement = element.Element(ProjectXElement.Aliases)
-                let privateElement = element.Element(ProjectXElement.Private)
+                let hintPathElement = reference.Element(ProjectXElement.HintPath)
+                let nameElement = reference.Element(ProjectXElement.Name)
+                let fusionNameElement = reference.Element(ProjectXElement.FusionName)
+                let specificVersionElement = reference.Element(ProjectXElement.SpecificVersion)
+                let aliasesElement = reference.Element(ProjectXElement.Aliases)
+                let privateElement = reference.Element(ProjectXElement.Private)
                 select new ProjectAssemblyReference
                 {
                     Include = includeValue,
                     HintPath = string.IsNullOrEmpty(hintPathElement?.Value)
                         ? null
                         : rootPath.CombineWithFilePath(hintPathElement.Value),
-                    Name = nameElement?.Value,
+                    Name = nameElement?.Value ?? includeValue?.Split(',')?.FirstOrDefault(),
                     FusionName = fusionNameElement?.Value,
-                    SpecificVersion = specificVersionElement == null ? (bool?) null : bool.Parse(specificVersionElement.Value),
+                    SpecificVersion = specificVersionElement == null ? (bool?)null : bool.Parse(specificVersionElement.Value),
                     Aliases = aliasesElement?.Value,
-                    Private = privateElement == null ? (bool?) null : bool.Parse(privateElement.Value)
-                }).ToArray();
+                    Private = privateElement == null ? (bool?)null : bool.Parse(privateElement.Value)
+                }).Distinct(x => x.Name).ToArray();
 
             var projectReferences =
             (from project in document.Elements(ProjectXElement.Project)
