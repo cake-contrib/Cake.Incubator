@@ -6,7 +6,9 @@ namespace Cake.Incubator
     using System.Collections;
     using System.ComponentModel;
     using System.Text;
+    using Cake.Core.Annotations;
 
+    [CakeAliasCategory("Logging")]
     public static class LoggingExtensions
     {
         /// <summary>
@@ -14,7 +16,34 @@ namespace Cake.Incubator
         /// </summary>
         /// <typeparam name="T">Type of object</typeparam>
         /// <param name="obj">Object to generate string representation of</param>
-        /// <returns>String representation of object in format in format "Prop: PropValue\r\nArrayProp: ArrayVal1, ArrayVal2"</returns>
+        /// <returns>String representation of object in format in format `Prop: PropValue\r\nArrayProp: ArrayVal1, ArrayVal2`</returns>
+        /// <example>
+        /// Generates a string representation of objects public properties and values.
+        /// <code>
+        /// var person = new Person { Name = "Bob", Age = 24, Food = new[] { "Lasagne", "Pizza"} };
+        /// var data = person.Dump();
+        ///
+        /// // output:
+        /// "Name: Bob\r\nAge: 24\r\nFood: Lasagne, Pizza";
+        /// </code>
+        /// 
+        /// Useful in for logging objects, e.g.
+        /// <code>
+        /// var gitVersionResults = GitVersion(new GitVersionSettings());
+        /// Information("GitResults -&gt; {0}", gitVersionResults.Dump());
+        ///
+        /// // output:
+        /// GitResults -&gt; Major: 0
+        /// Minor: 1
+        /// Patch: 0
+        /// PreReleaseTag: dev-19.1
+        /// PreReleaseTagWithDash: -dev-19.1
+        /// PreReleaseLabel: dev-19
+        /// PreReleaseNumber: 1
+        /// BuildMetaData: 26
+        /// ..snip..
+        /// </code>
+        /// </example>
         public static string Dump<T>(this T obj)
         {
             if (obj == null) return null;
@@ -35,7 +64,7 @@ namespace Cake.Incubator
             
             return dump.ToString().Remove(0, 2);
         }
-
+        
         private static void ProcessEnumerable(object value, StringBuilder sb, MemberDescriptor descriptor)
         {
             // Is a collection, iterate and spit out value for each

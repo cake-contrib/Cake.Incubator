@@ -8,15 +8,19 @@
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
+    /// <summary>
+    /// Contains aliases for dotnet test cli
+    /// </summary>
+    [CakeAliasCategory("DotNetCore")]
     public static class DotNetCoreTestExtensions
     {
         /// <summary>
-        /// Runs DotNetCoreTest using the given Xunit Settings
+        /// Runs <see cref="DotNetCoreTest(Cake.Core.ICakeContext,Cake.Core.IO.FilePath,Cake.Common.Tools.XUnit.XUnit2Settings)"/> using the given <see cref="XUnit2Settings"/>
         /// </summary>
         /// <param name="context">The Cake Context</param>
-        /// <param name="project">DotNetCore Test Project Path</param>
+        /// <param name="project">DotNetCore Test Project File Path</param>
         /// <param name="xunitSettings">XUnit2 DotNetCore Test Settings Configurer</param>
-        /// <returns></returns>
+        [CakeAliasCategory("Test")]
         [CakeMethodAlias]
         public static void DotNetCoreTest(
             this ICakeContext context,
@@ -28,14 +32,14 @@
 
 
         /// <summary>
-        /// Appends XUnit2Settings to DotNetCoreTestSettings instance
+        /// Appends <see cref="XUnit2Settings"/> to an <see cref="DotNetCoreTestSettings"/> instance
         /// </summary>
         /// <param name="context">The Cake Context</param>
         /// <param name="settings">DotNetCore Test Settings</param>
         /// <param name="project">DotNetCore Test Project Path</param>
         /// <param name="xunitSettings">XUnit2 DotNetCore Test Settings Configurer</param>
-        /// <returns></returns>
         [CakeMethodAlias]
+        [CakeAliasCategory("Test")]
         public static void DotNetCoreTest(
             this ICakeContext context,            
             DotNetCoreTestSettings settings,

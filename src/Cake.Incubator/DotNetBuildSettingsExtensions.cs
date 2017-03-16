@@ -6,11 +6,13 @@ namespace Cake.Incubator
 {
     using System.Collections.Generic;
     using Cake.Common.Tools;
+    using Cake.Core.Annotations;
 
+    [CakeAliasCategory("DotNetBuild")]
     public static class DotNetBuildSettingsExtensions
     {
         /// <summary>
-        /// Adds .NET build targets to the configuration.
+        /// Adds multiple .NET build targets to the configuration.
         /// </summary>
         /// <param name="settings">The settings.</param>
         /// <param name="targets">The .NET build targets.</param>

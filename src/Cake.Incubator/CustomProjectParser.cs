@@ -10,12 +10,14 @@ namespace Cake.Incubator
     using System.Xml.Linq;
     using Cake.Common.Solution.Project;
     using Cake.Core;
+    using Cake.Core.Annotations;
     using Cake.Core.IO;
 
     /// <summary>
     /// The MSBuild project file parser.
-    /// customised from original: https://github.com/cake-build/cake/blob/main/src/Cake.Common/Solution/Project/ProjectParser.cs
+    /// customized from the original: https://github.com/cake-build/cake/blob/main/src/Cake.Common/Solution/Project/ProjectParser.cs
     /// </summary>
+    [CakeAliasCategory("MSBuild Resource")]
     public class CustomProjectParser
     {
         private readonly IFileSystem _fileSystem;
@@ -57,7 +59,7 @@ namespace Cake.Incubator
             }
         }
 
-        public CustomProjectParserResult ParseCsProjFile(FilePath projectPath, string config)
+        private CustomProjectParserResult ParseCsProjFile(FilePath projectPath, string config)
         {
             // Get the project file.
             var file = _fileSystem.GetFile(projectPath);
@@ -246,7 +248,7 @@ namespace Cake.Incubator
         }
 
         [Obsolete("XProj format has been deprecated")]
-        public CustomProjectParserResult ParseXprojFile(FilePath projectPath, string config)
+        private CustomProjectParserResult ParseXprojFile(FilePath projectPath, string config)
         {
             // Get the project file.
             var file = _fileSystem.GetFile(projectPath);

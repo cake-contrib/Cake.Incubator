@@ -6,9 +6,6 @@ namespace Cake.Incubator
 {
     using System.Runtime.CompilerServices;
 
-    /// <summary>
-    /// for importing namespace into cake script
-    /// </summary>
     [CompilerGenerated]
     internal class NamespaceDoc
     {
