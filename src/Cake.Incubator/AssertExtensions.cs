@@ -8,7 +8,7 @@ namespace Cake.Incubator
     using Cake.Core.Annotations;
 
     /// <summary>
-    /// Contains functionality for guard clauses
+    /// Contains extensions for guard clauses
     /// </summary>
     [CakeAliasCategory("Guard")]
     public static class AssertExtensions

@@ -11,6 +11,7 @@ namespace Cake.Incubator
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
+    [CakeAliasCategory("MSBuild Resource")]
     public static class ProjectParserExtensions
     {
         /// <summary>
@@ -63,13 +64,14 @@ namespace Cake.Incubator
         }
 
         /// <summary>
-        /// Parses a csproj file into a strongly typed CustomProjectParserResult object
+        /// Parses a csproj file into a strongly typed <see cref="CustomProjectParserResult"/> object
         /// </summary>
         /// <param name="context">the cake context</param>
         /// <param name="project">the project filepath</param>
-        /// <param name="configuration">the buidl configuration</param>
+        /// <param name="configuration">the build configuration</param>
         /// <returns>The parsed project</returns>
         [CakeMethodAlias]
+        [CakeAliasCategory("General")]
         public static CustomProjectParserResult ParseProject(this ICakeContext context, FilePath project, string configuration)
         {
             project.ThrowIfNull(nameof(project));

@@ -6,6 +6,9 @@ namespace Cake.Incubator
 {
     using System;
 
+    /// <summary>
+    /// Visual Studio project types
+    /// </summary>
     [Flags]
     public enum ProjectType
     {

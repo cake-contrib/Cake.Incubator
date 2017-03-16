@@ -7,7 +7,9 @@ namespace Cake.Incubator
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Cake.Core.Annotations;
 
+    [CakeAliasCategory("Collection Helpers")]
     public static class EnumerableExtensions
     {
         /// <summary>
@@ -16,6 +18,19 @@ namespace Cake.Incubator
         /// <typeparam name="T">The item type</typeparam>
         /// <param name="source">the collection</param>
         /// <param name="action">the action to perform</param>
+        /// <example>
+        /// Replace the following
+        /// <code>
+        /// foreach(var item in items) 
+        /// {
+        ///   Debug.WriteLine(item);
+        /// }
+        /// </code>
+        /// with
+        /// <code>
+        /// items.Each(item =&gt; Debug,WriteLine(item));
+        /// </code>
+        /// </example>
         public static void Each<T>(this IEnumerable<T> source, Action<T> action)
         {
             source.ThrowIfNull(nameof(source));
@@ -32,6 +47,12 @@ namespace Cake.Incubator
         /// <typeparam name="T">the item type</typeparam>
         /// <param name="source">the collection</param>
         /// <returns>true if element null or empty, else false</returns>
+        /// <example>
+        /// Replace
+        /// <code>collection == null || !collection.Any()</code>
+        /// with
+        /// <code>collection.IsNullOrEmpty()</code>
+        /// </example>
         public static bool IsNullOrEmpty<T>(this IEnumerable<T> source) => source == null || !source.Any();
 
         /// <summary>
@@ -40,6 +61,12 @@ namespace Cake.Incubator
         /// <typeparam name="T">the item type</typeparam>
         /// <param name="source">the collection</param>
         /// <returns>true if element null or empty, else false</returns>
+        /// <example>
+        /// Replace
+        /// <code>collection == null || collection.Count == 0</code>
+        /// with
+        /// <code>collection.IsNullOrEmpty()</code>
+        /// </example>
         public static bool IsNullOrEmpty<T>(this IList<T> source) => source == null || source.Count == 0;
 
         /// <summary>
@@ -48,6 +75,26 @@ namespace Cake.Incubator
         /// <typeparam name="T">the item type</typeparam>
         /// <param name="source">the array</param>
         /// <returns>true if element null or empty, else false</returns>
+        /// <example>
+        /// Replace
+        /// <code>collection == null || collection.Length == 0</code>
+        /// with
+        /// <code>collection.IsNullOrEmpty()</code>
+        /// </example>
         public static bool IsNullOrEmpty<T>(this T[] source) => source == null || source.Length == 0;
+
+        public static IEnumerable<TSource> Distinct<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> getKey)
+        {
+            var dictionary = new HashSet<TKey>();
+
+            foreach (var item in source)
+            {
+                var key = getKey(item);
+                if (dictionary.Add(key))
+                {
+                    yield return item;
+                }
+            }
+        }
     }
 }

@@ -3,6 +3,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 namespace Cake.Incubator
 {
+    using System;
     using Cake.Common.IO;
     using Cake.Core;
     using Cake.Core.Annotations;
@@ -20,6 +21,7 @@ namespace Cake.Incubator
         /// <exception cref="CakeException">Throws if source directory does not exist</exception>
         /// <exception cref="CakeException">Throws if destination directory does exist</exception>
         [CakeMethodAlias]
+        [Obsolete("Use Cake.Common.IO.CopyDirectory(this ICakeContext context, DirectoryPath source, DirectoryPath destination) instead")]
         public static void TransferDirectory(this ICakeContext context, DirectoryPath source, DirectoryPath destination)
         {
             context.ThrowIfNull(nameof(context));
