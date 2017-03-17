@@ -12,9 +12,6 @@ namespace Cake.Incubator
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
-    /// <summary>
-    /// Contains aliases for working with files
-    /// </summary>
     [CakeAliasCategory("File Operations")]
     public static class FileExtensions
     {
@@ -55,7 +52,6 @@ namespace Cake.Incubator
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        [CakeAliasCategory("General")]
         public static IEnumerable<IFile> GetMatchingFiles(this ICakeContext context, IEnumerable<FilePath> files)
         {
             return files.SelectMany(
@@ -87,7 +83,6 @@ namespace Cake.Incubator
         /// </code>
         /// </example>
         [CakeMethodAlias]
-        [CakeAliasCategory("General")]
         public static FilePathCollection GetFiles(this ICakeContext context, params string[] patterns)
         {
             return
@@ -106,7 +101,8 @@ namespace Cake.Incubator
         /// <returns>the list of output assembly paths</returns>
         /// <exception cref="ArgumentException">Throws if the file is not a recognizable solution or project file</exception>
         /// <example>
-        /// The project or solution's <see cref="FilePath"/> and the build configuration will return the output file/s (dll or exe) for the project and return as an <see cref="IEnumerable{FilePath}"/>
+        /// The project or solution's <see cref="FilePath"/> and the build configuration will 
+        /// return the output file/s (dll or exe) for the project and return as an <see cref="IEnumerable{FilePath}"/>
         /// The alias expects a valid `.sln` or a `csproj` file.
         ///
         /// For a solution
@@ -144,7 +140,8 @@ namespace Cake.Incubator
         /// <returns>the list of output assembly paths</returns>
         /// <exception cref="ArgumentException">Throws if the file is not a recognizable solution file</exception>
         /// <example>
-        /// The Solution's <see cref="FilePath"/> and the build configuration will return the output files (dll or exe) for the projects and return as an <see cref="IEnumerable{FilePath}"/>
+        /// The Solution's <see cref="FilePath"/> and the build configuration will return the 
+        /// output files (dll or exe) for the projects and return as an <see cref="IEnumerable{FilePath}"/>
         /// The alias expects a valid `.sln` file.
         /// <code>
         /// // Solution project's output dll/exe's for the 'Release' configuration
@@ -175,7 +172,8 @@ namespace Cake.Incubator
         /// <returns>the output assembly path</returns>
         /// <exception cref="ArgumentException">Throws if the file is not a recognizable project file</exception>
         /// <example>
-        /// The project's <see cref="FilePath"/> and the build configuration will return the output file (dll or exe) for the project and return as a <see cref="FilePath"/>
+        /// The project's <see cref="FilePath"/> and the build configuration will return the 
+        /// output file (dll or exe) for the project and return as a <see cref="FilePath"/>
         /// The alias expects a valid project file.
         /// <code>
         /// // Project output dll/exe as FilePath[] for 'Custom' configuration
@@ -194,7 +192,7 @@ namespace Cake.Incubator
         }
 
         /// <summary>
-        /// Moves a file
+        /// Obsolete: Use Cake.Common.IO.MoveFile instead
         /// </summary>
         /// <param name="context">the cake context</param>
         /// <param name="source">the source file</param>
@@ -212,6 +210,12 @@ namespace Cake.Incubator
             file.Move(destination);
         }
 
+        /// <summary>
+        /// Obsolete: Use Cake.Common.IO.MoveFiles instead
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="source"></param>
+        /// <param name="destination"></param>
         [CakeMethodAlias]
         [Obsolete("Use Cake.Common.IO.MoveFiles instead")]
         public static void Move(this ICakeContext context, IEnumerable<FilePath> source, DirectoryPath destination)

@@ -13,10 +13,6 @@ namespace Cake.Incubator
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
-    /// <summary>
-    /// The MSBuild project file parser.
-    /// customized from the original: https://github.com/cake-build/cake/blob/main/src/Cake.Common/Solution/Project/ProjectParser.cs
-    /// </summary>
     [CakeAliasCategory("MSBuild Resource")]
     public class CustomProjectParser
     {

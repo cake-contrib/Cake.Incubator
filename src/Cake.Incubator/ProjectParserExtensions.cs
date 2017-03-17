@@ -37,7 +37,7 @@ namespace Cake.Incubator
         }
 
         /// <summary>
-        /// Gets a parsed projects output assenbly path
+        /// Gets a parsed projects output assembly path
         /// </summary>
         /// <param name="projectParserResult">the parsed project</param>
         /// <returns>the output assembly path</returns>
@@ -71,7 +71,6 @@ namespace Cake.Incubator
         /// <param name="configuration">the build configuration</param>
         /// <returns>The parsed project</returns>
         [CakeMethodAlias]
-        [CakeAliasCategory("General")]
         public static CustomProjectParserResult ParseProject(this ICakeContext context, FilePath project, string configuration)
         {
             project.ThrowIfNull(nameof(project));

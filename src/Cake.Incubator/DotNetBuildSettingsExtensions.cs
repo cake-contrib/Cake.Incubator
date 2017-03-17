@@ -6,9 +6,7 @@ namespace Cake.Incubator
 {
     using System.Collections.Generic;
     using Cake.Common.Tools;
-    using Cake.Core.Annotations;
 
-    [CakeAliasCategory("DotNetBuild")]
     public static class DotNetBuildSettingsExtensions
     {
         /// <summary>
