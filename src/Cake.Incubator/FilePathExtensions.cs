@@ -4,13 +4,11 @@
 
 namespace Cake.Incubator
 {
-    using Cake.Core.Annotations;
     using Cake.Core.IO;
 
     /// <summary>
     /// Contains extension methods for working with <see cref="FilePath"/>'s
     /// </summary>
-    [CakeAliasCategory("FilePath Helpers")]
     public static class FilePathExtensions
     {
         /// <summary>

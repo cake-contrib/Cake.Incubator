@@ -6,9 +6,7 @@ namespace Cake.Incubator
     using System.Collections;
     using System.ComponentModel;
     using System.Text;
-    using Cake.Core.Annotations;
 
-    [CakeAliasCategory("Logging")]
     public static class LoggingExtensions
     {
         /// <summary>

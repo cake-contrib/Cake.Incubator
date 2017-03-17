@@ -8,14 +8,11 @@
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
-    /// <summary>
-    /// Contains aliases for dotnet test cli
-    /// </summary>
     [CakeAliasCategory("DotNetCore")]
     public static class DotNetCoreTestExtensions
     {
         /// <summary>
-        /// Runs <see cref="DotNetCoreTest(Cake.Core.ICakeContext,Cake.Core.IO.FilePath,Cake.Common.Tools.XUnit.XUnit2Settings)"/> using the given <see cref="XUnit2Settings"/>
+        /// Runs DotNetCoreTest using the given <see cref="XUnit2Settings"/>
         /// </summary>
         /// <param name="context">The Cake Context</param>
         /// <param name="project">DotNetCore Test Project File Path</param>

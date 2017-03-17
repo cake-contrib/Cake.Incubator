@@ -13,7 +13,7 @@ namespace Cake.Incubator
     public static class DirectoryExtensions
     {
         /// <summary>
-        /// Moves a directory
+        /// Obsolete: Use Cake.Common.IO.CopyDirectory instead
         /// </summary>
         /// <param name="context">The context</param>
         /// <param name="source">The source directory</param>
@@ -21,7 +21,7 @@ namespace Cake.Incubator
         /// <exception cref="CakeException">Throws if source directory does not exist</exception>
         /// <exception cref="CakeException">Throws if destination directory does exist</exception>
         [CakeMethodAlias]
-        [Obsolete("Use Cake.Common.IO.CopyDirectory(this ICakeContext context, DirectoryPath source, DirectoryPath destination) instead")]
+        [Obsolete("Use Cake.Common.IO.CopyDirectory instead")]
         public static void TransferDirectory(this ICakeContext context, DirectoryPath source, DirectoryPath destination)
         {
             context.ThrowIfNull(nameof(context));
