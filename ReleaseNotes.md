@@ -22,3 +22,6 @@
 - #10 Initial support for parsing VS2017 .NetStandard and .NetCore project files. 
 - #12 Adding support to include conditional references and added reference name without version as a fallback to the `CustomProjectParserResult.Name` property
 
+### 1.0.56
+
+- Added code xml documentation for the cake documentation site. 
