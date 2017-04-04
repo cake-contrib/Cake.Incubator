@@ -17,6 +17,6 @@ __Improvements__
 
 __Documentation__
 
-- [__#10__](https://github.com/cake-contrib/Cake.Incubator/issues/10) Add Wyam Documentation
+- [__#17__](https://github.com/cake-contrib/Cake.Incubator/issues/17) Add Wyam Documentation
 
 Please do not hesitate to reach out in the [Gitter Channel](https://gitter.im/cake-contrib/Lobby) if you have any issues using this addin.
