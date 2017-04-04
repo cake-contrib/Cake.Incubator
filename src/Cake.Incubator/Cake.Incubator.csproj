@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="AssertExtensions.cs" />
     <Compile Include="CustomProjectParserResult.cs" />
     <Compile Include="DirectoryExtensions.cs" />
