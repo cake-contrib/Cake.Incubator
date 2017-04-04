@@ -5,6 +5,9 @@ namespace Cake.Incubator
 {
     using System;
 
+    /// <summary>
+    /// Several extension methods when using String.
+    /// </summary>
     public static class StringExtensions
     {
         /// <summary>

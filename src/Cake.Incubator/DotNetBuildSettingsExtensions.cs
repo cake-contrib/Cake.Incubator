@@ -7,6 +7,9 @@ namespace Cake.Incubator
     using System.Collections.Generic;
     using Cake.Common.Tools;
 
+    /// <summary>
+    /// Several extension methods when using DotNetBuildSettings.
+    /// </summary>
     public static class DotNetBuildSettingsExtensions
     {
         /// <summary>

@@ -10,6 +10,9 @@ namespace Cake.Incubator
     using Core;
     using Core.Annotations;
 
+    /// <summary>
+    /// Several extension methods when using Environment Variables.
+    /// </summary>
     [CakeAliasCategory("Environment")]
     public static class EnvironmentExtensions
     {
