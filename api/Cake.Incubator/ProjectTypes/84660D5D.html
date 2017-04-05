@@ -1,0 +1,307 @@
+<!DOCTYPE html><html><head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="description">
+        <meta name="keywords" content="static content generator,static site generator,static site,HTML,web development,.NET,C#,Razor,Markdown,YAML">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
+        <title>Docs - API - ProjectTypes.DatabaseOther Field</title>
+        <link href="/Cake.Incubator/assets/css/mermaid.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/highlight.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/theme/theme.css" rel="stylesheet">
+        <link href="//fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,400i,700,700i" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/Cake.Incubator/assets/css/override.css" rel="stylesheet">
+        <script src="/Cake.Incubator/assets/js/jquery-2.2.3.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/bootstrap.min.js"></script>        
+        <script src="/Cake.Incubator/assets/js/app.min.js"></script>         
+        <script src="/Cake.Incubator/assets/js/highlight.pack.js"></script>   
+        <script src="/Cake.Incubator/assets/js/jquery.slimscroll.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/jquery.sticky-kit.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/mermaid.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="/Cake.Incubator/assets/js/html5shiv.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/respond.min.js"></script>
+        <![endif]-->  
+
+        
+    </head>
+    <body class="hold-transition wyam layout-boxed  ">    
+        <div class="top-banner"></div>
+        <div class="wrapper with-container">
+            <!-- Header -->
+            <header class="main-header">   
+                     
+                <a href="/Cake.Incubator/" class="logo">
+                            <span>Docs</span>
+                </a>   
+                         
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <!-- Sidebar toggle button-->
+                        <a href="#" class="sidebar-toggle visible-xs-block" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-right"></i>
+                        </a>
+                                        
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-down"></i>
+                        </button>
+                    </div>
+            
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                        <ul class="nav navbar-nav">                            
+                                    <li><a href="/Cake.Incubator/docs">Documentation</a></li>
+        <li><a href="/Cake.Incubator/blog">Blog</a></li>
+        <li class="active"><a href="/Cake.Incubator/api">API</a></li>
+ 
+                        </ul>       
+                    </div>
+                    <!-- /.navbar-collapse -->
+                
+                    <!-- Navbar Right Menu -->
+                </nav>
+            </header>
+            
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar ">
+                <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
+                    	
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Value">Constant Value</a></p>
+<hr class="infobar-hidden">
+</div>
+
+                </section>
+                <section class="sidebar">                    
+                    	
+	    <script src="/assets/js/lunr.min.js"></script>
+    <script src="/assets/js/searchIndex.js"></script>
+    <div class="sidebar-form">
+        <div class="input-group">
+            <input type="text" name="search" id="search" class="form-control" placeholder="Search Types...">
+            <span class="input-group-btn">
+                <button class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </div>
+    <div id="search-results">
+    </div>
+    <script>
+        function runSearch(query){
+            $("#search-results").empty();			
+            if( query.length < 2 ){
+                return;
+            }			
+            var results = searchModule.search("*" + query + "*");
+            var listHtml = "<ul class='sidebar-menu'>";	
+            listHtml += "<li class='header'>Type Results</li>";	
+            if(results.length == 0 ){
+                listHtml += "<li>No results found</li>";
+            } else {					
+                for(var i = 0; i < results.length; ++i){
+                    var res = results[i];
+                    listHtml += "<li><a href='" + res.url + "'>" + res.title + "</a></li>";
+                }				
+            }
+            listHtml += "</ul>";				
+            $("#search-results").append(listHtml);
+        }
+
+        $(document).ready(function(){
+            $("#search").on('input propertychange paste', function() {
+                runSearch($("#search").val());
+            });
+        });
+    </script>
+	
+    <hr>
+
+                    <ul class="sidebar-menu">
+                        
+			<li class="header">Namespace</li>
+		<li><a href="/Cake.Incubator/api/Cake.Incubator">Cake<wbr>.Incubator</a></li>
+		<li class="header">Type</li>
+		<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes">ProjectTypes</a></li>
+		<li role="separator" class="divider"></li>
+			<li class="header">Field Members</li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/9FF52F89">AspNetMvc1</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/25A42610">AspNetMvc2</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/B3942167">AspNetMvc3</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/100145F9">AspNetMvc4</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/8631428E">AspNetMvc5</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/6CD9AF0B">CPlusplus</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/06C35DB4">CSharp</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/96CCF420">Database</a></li>
+				<li class="selected"><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/84660D5D">DatabaseOther</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/46F5BEC3">DeploymentCab</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/2360547C">Deployment<wbr>Merge<wbr>Module</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/C91C49DF">DeploymentSetup</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/01C330C1">Deployment<wbr>Smart<wbr>Device<wbr>Cab</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/E30F5220">DistributedSystem</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/7B96D748">Dynamics2012<wbr>Ax<wbr>Csharp<wbr>In<wbr>Aot</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/B55290E4">FSharp</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/CE925293">JSharp</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/885FF67A">Legacy2003<wbr>Smart<wbr>Device<wbr>C<wbr>Sharp</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/888D37C2">Legacy2003<wbr>Smart<wbr>Device<wbr>Vb<wbr>Net</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/3B21D246">Model<wbr>View<wbr>Controller<wbr>V2<wbr>Mvc2</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/1D38B50C">Model<wbr>View<wbr>Controller<wbr>V3<wbr>Mvc3</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/AE71F120">Model<wbr>View<wbr>Controller<wbr>V4<wbr>Mvc4</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/8868966A">Model<wbr>View<wbr>Controller<wbr>V5<wbr>Mvc5</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/770085DC">MonoForAndroid</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/E60C0295">Monotouch</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/191F077B">MonotouchBinding</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/6721222C">PortableClassLibrary</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/AB4DAEFC">ProjectFolders</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/5755365F">SharepointCSharp</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/3AF2EF6D">SharepointVbNet</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/A1E3AE36">SharepointWorkflow</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/AF826B71">Silverlight</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/10A3B17D">SmartDeviceCSharp</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/8C0C0FE8">SmartDeviceVbNet</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/11AE4468">SolutionFolder</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/5D14D582">Test</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/FF9C4F08">VbNet</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/92D6C8C1">VisualDatabaseTools</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/20F68708">Visual<wbr>Studio<wbr>Tools<wbr>For<wbr>Applications<wbr>Vsta</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/BF6E5502">Visual<wbr>Studio<wbr>Tools<wbr>For<wbr>Office<wbr>Vsto</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/93B35FE3">WebApplication</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/DF7F3223">WebSite</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/AC1B9B99">Windows<wbr>Communication<wbr>Foundation</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/24F85139">WindowsCSharp</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/BA26C9EC">Windows<wbr>Phone881<wbr>App<wbr>C<wbr>Sharp</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/C231E6F4">Windows<wbr>Phone881<wbr>App<wbr>Vb<wbr>Net</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/13B7ABC2">Windows<wbr>Phone881<wbr>Blank<wbr>Hub<wbr>Webview<wbr>App</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/93A7DA63">Windows<wbr>Presentation<wbr>Foundation</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/B781E8B5">Windows<wbr>Store<wbr>Metro<wbr>Apps<wbr>Components</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/E04B790C">WindowsVbNet</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/301C1B41">Windows<wbr>Visual<wbr>C<wbr>Plusplus</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/9049F3A5">WorkflowCSharp</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/98628326">WorkflowFoundation</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/2456CEA7">WorkflowVbNet</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/9CD88CD8">XamarinAndroid</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/18F49D21">XamarinIos</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/C9D26F68">XnaWindows</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/864A79E9">XnaXbox</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/606A0420">XnaZune</a></li>
+
+
+                    </ul>
+                </section>                
+            </aside>
+            
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                
+
+
+
+<section class="content-header">
+			<h3><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes">ProjectTypes</a>.</h3>
+	<h1>DatabaseOther <small>Field</small></h1>
+</section>
+<section class="content">
+	
+	
+	
+		<div class="panel panel-default">
+			<div class="panel-body">
+				<dl class="dl-horizontal">				
+
+						<dt>Namespace</dt>
+						<dd><a href="/Cake.Incubator/api/Cake.Incubator">Cake<wbr>.Incubator</a></dd>
+					
+						<dt>Containing Type</dt>
+						<dd><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes">ProjectTypes</a></dd>		
+				</dl>
+			</div>
+		</div>
+
+	<h1 id="Syntax">Syntax</h1>
+	<pre><code>public const string DatabaseOther</code></pre>
+
+
+
+
+
+	<h1 id="Value">Constant Value</h1>
+	<div class="box">
+		<div class="box-body no-padding table-responsive">
+			<table class="table table-striped table-hover two-cols">
+				<thead>
+					<tr>
+						<th>Value</th>
+						<th>Type</th>
+					</tr>
+				</thead>
+				<tbody><tr>
+					<td>{4F174C21-8C12-11D0-8340-0000F80270F8}</td>
+					<td>String</td>
+				</tr>
+			</tbody></table>
+		</div>
+	</div>	
+
+
+	
+</section>
+                
+            </div>           
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+            </footer>
+            
+        </div>
+        <div class="wrapper bottom-wrapper">
+            <footer class="bottom-footer">
+                Generated by <a href="https://wyam.io">Wyam</a>
+            </footer>
+        </div>
+        <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <script>           
+            // Close the sidebar if we select an anchor link
+            $(".main-sidebar a[href^='#']:not('.expand')").click(function(){
+                $(document.body).removeClass('sidebar-open');
+            });
+            
+            $(document).load(function() {
+                mermaid.initialize(
+                {
+                    flowchart:
+                    {
+                        htmlLabels: false,
+                        useMaxWidth:false
+                    }
+                });  
+                mermaid.init(undefined, ".mermaid")
+                $('svg').addClass('img-responsive');
+                
+                $('pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });  
+            });
+            hljs.initHighlightingOnLoad();
+
+            // Back to top
+            $(window).scroll(function() {
+                if ($(this).scrollTop() >= 200) {        // If page is scrolled more than 50px
+                    $('#return-to-top').fadeIn(1000);    // Fade in the arrow
+                } else {
+                    $('#return-to-top').fadeOut(1000);   // Else fade out the arrow
+                }
+            });
+            $('#return-to-top').click(function() {      // When arrow is clicked
+                $('body,html').animate({
+                    scrollTop : 0                       // Scroll to top of body
+                }, 500);
+            });
+        </script>
+    
+</body></html>

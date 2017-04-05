@@ -1,0 +1,768 @@
+<!DOCTYPE html><html><head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="description">
+        <meta name="keywords" content="static content generator,static site generator,static site,HTML,web development,.NET,C#,Razor,Markdown,YAML">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
+        <title>Docs - API - ProjectTypes Class</title>
+        <link href="/Cake.Incubator/assets/css/mermaid.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/highlight.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/theme/theme.css" rel="stylesheet">
+        <link href="//fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,400i,700,700i" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/Cake.Incubator/assets/css/override.css" rel="stylesheet">
+        <script src="/Cake.Incubator/assets/js/jquery-2.2.3.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/bootstrap.min.js"></script>        
+        <script src="/Cake.Incubator/assets/js/app.min.js"></script>         
+        <script src="/Cake.Incubator/assets/js/highlight.pack.js"></script>   
+        <script src="/Cake.Incubator/assets/js/jquery.slimscroll.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/jquery.sticky-kit.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/mermaid.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="/Cake.Incubator/assets/js/html5shiv.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/respond.min.js"></script>
+        <![endif]-->  
+
+        
+    </head>
+    <body class="hold-transition wyam layout-boxed  ">    
+        <div class="top-banner"></div>
+        <div class="wrapper with-container">
+            <!-- Header -->
+            <header class="main-header">   
+                     
+                <a href="/Cake.Incubator/" class="logo">
+                            <span>Docs</span>
+                </a>   
+                         
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <!-- Sidebar toggle button-->
+                        <a href="#" class="sidebar-toggle visible-xs-block" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-right"></i>
+                        </a>
+                                        
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-down"></i>
+                        </button>
+                    </div>
+            
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                        <ul class="nav navbar-nav">                            
+                                    <li><a href="/Cake.Incubator/docs">Documentation</a></li>
+        <li><a href="/Cake.Incubator/blog">Blog</a></li>
+        <li class="active"><a href="/Cake.Incubator/api">API</a></li>
+ 
+                        </ul>       
+                    </div>
+                    <!-- /.navbar-collapse -->
+                
+                    <!-- Navbar Right Menu -->
+                </nav>
+            </header>
+            
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar ">
+                <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
+                    	
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
+<p><a href="#Syntax">Syntax</a></p>
+<p><a href="#fields">Fields</a></p>
+<hr class="infobar-hidden">
+</div>
+
+                </section>
+                <section class="sidebar">                    
+                    	
+	    <script src="/assets/js/lunr.min.js"></script>
+    <script src="/assets/js/searchIndex.js"></script>
+    <div class="sidebar-form">
+        <div class="input-group">
+            <input type="text" name="search" id="search" class="form-control" placeholder="Search Types...">
+            <span class="input-group-btn">
+                <button class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </div>
+    <div id="search-results">
+    </div>
+    <script>
+        function runSearch(query){
+            $("#search-results").empty();			
+            if( query.length < 2 ){
+                return;
+            }			
+            var results = searchModule.search("*" + query + "*");
+            var listHtml = "<ul class='sidebar-menu'>";	
+            listHtml += "<li class='header'>Type Results</li>";	
+            if(results.length == 0 ){
+                listHtml += "<li>No results found</li>";
+            } else {					
+                for(var i = 0; i < results.length; ++i){
+                    var res = results[i];
+                    listHtml += "<li><a href='" + res.url + "'>" + res.title + "</a></li>";
+                }				
+            }
+            listHtml += "</ul>";				
+            $("#search-results").append(listHtml);
+        }
+
+        $(document).ready(function(){
+            $("#search").on('input propertychange paste', function() {
+                runSearch($("#search").val());
+            });
+        });
+    </script>
+	
+    <hr>
+
+                    <ul class="sidebar-menu">
+                        
+			<li class="header">Namespace</li>
+		<li><a href="/Cake.Incubator/api/Cake.Incubator">Cake<wbr>.Incubator</a></li>
+		<li role="separator" class="divider"></li>
+			<li class="header">Class Types</li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/AssertExtensions">AssertExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectFile">CustomProjectFile</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectParser">CustomProjectParser</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectParserResult">Custom<wbr>Project<wbr>Parser<wbr>Result</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/DirectoryExtensions">DirectoryExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/DotNetBuildSettingsExtensions">Dot<wbr>Net<wbr>Build<wbr>Settings<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/DotNetCoreTestExtensions">Dot<wbr>Net<wbr>Core<wbr>Test<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions">EnumerableExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/EnvironmentExtensions">Environment<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/FileExtensions">FileExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/FilePathExtensions">FilePathExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/LoggingExtensions">LoggingExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions">Project<wbr>Parser<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectPath">ProjectPath</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectPathExtensions">Project<wbr>Path<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypeExtensions">Project<wbr>Type<wbr>Extensions</a></li>
+				<li class="selected"><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes">ProjectTypes</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectXElement">ProjectXElement</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/SolutionParserExtensions">Solution<wbr>Parser<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/StringExtensions">StringExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/XDocumentExtensions">XDocumentExtensions</a></li>
+			<li class="header">Enum Types</li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectType">ProjectType</a></li>
+
+
+                    </ul>
+                </section>                
+            </aside>
+            
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                
+
+
+
+<section class="content-header">
+	<h1>ProjectTypes <small>Class</small></h1>
+</section>
+<section class="content">
+	
+	
+		<h1 id="Summary">Summary</h1>
+	<div class="lead">
+    Class to contain a list of the Project Type ID's that exist within the Visual Studio eco-system.
+    </div>
+
+		<div class="panel panel-default">
+  			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+						<dl class="dl-horizontal">		
+
+								<dt>Namespace</dt>
+								<dd><a href="/Cake.Incubator/api/Cake.Incubator">Cake<wbr>.Incubator</a></dd>
+											
+							
+								<dt>Base Types</dt>
+								<dd>
+									<ul class="list-unstyled">										
+											<li>object</li>								
+									</ul>
+								</dd>				
+							
+							
+						</dl>
+					</div>		
+					<div class="col-md-6">
+						<div class="mermaid">
+							graph TD
+	Base0["object"]--&gt;Type
+	Type["ProjectTypes"]
+class Type type-node
+
+						</div>
+					</div>
+				</div>
+  			</div>
+		</div>
+
+	<h1 id="Syntax">Syntax</h1>
+	<pre><code>public static class ProjectTypes</code></pre>
+
+
+
+
+
+
+
+
+			<h1 id="fields">Fields</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover three-cols">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Constant Value</th>
+								<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/9FF52F89">AspNetMvc1</a></td>
+								<td>{603C0E0B-DB56-11DC-BE95-000D561079B0}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/25A42610">AspNetMvc2</a></td>
+								<td>{F85E285D-A4E0-4152-9332-AB1D724D3325}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/B3942167">AspNetMvc3</a></td>
+								<td>{E53F8FEA-EAE0-44A6-8774-FFD645390401}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/100145F9">AspNetMvc4</a></td>
+								<td>{E3E379DF-F4C6-4180-9B81-6769533ABE47}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/8631428E">AspNetMvc5</a></td>
+								<td>{349C5851-65DF-11DA-9384-00065B846F21}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/6CD9AF0B">CPlusplus</a></td>
+								<td>{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/06C35DB4">CSharp</a></td>
+								<td>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/96CCF420">Database</a></td>
+								<td>{A9ACE9BB-CECE-4E62-9AA4-C7E7C5BD2124}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/84660D5D">DatabaseOther</a></td>
+								<td>{4F174C21-8C12-11D0-8340-0000F80270F8}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/46F5BEC3">DeploymentCab</a></td>
+								<td>{3EA9E505-35AC-4774-B492-AD1749C4943A}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/2360547C">Deployment<wbr>Merge<wbr>Module</a></td>
+								<td>{06A35CCD-C46D-44D5-987B-CF40FF872267}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/C91C49DF">DeploymentSetup</a></td>
+								<td>{978C614F-708E-4E1A-B201-565925725DBA}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/01C330C1">Deployment<wbr>Smart<wbr>Device<wbr>Cab</a></td>
+								<td>{AB322303-2255-48EF-A496-5904EB18DA55}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/E30F5220">DistributedSystem</a></td>
+								<td>{F135691A-BF7E-435D-8960-F99683D2D49C}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/7B96D748">Dynamics2012<wbr>Ax<wbr>Csharp<wbr>In<wbr>Aot</a></td>
+								<td>{BF6F8E12-879D-49E7-ADF0-5503146B24B8}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/B55290E4">FSharp</a></td>
+								<td>{F2A71F9B-5D33-465A-A702-920D77279786}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/CE925293">JSharp</a></td>
+								<td>{E6FDF86B-F3D1-11D4-8576-0002A516ECE8}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/885FF67A">Legacy2003<wbr>Smart<wbr>Device<wbr>C<wbr>Sharp</a></td>
+								<td>{20D4826A-C6FA-45DB-90F4-C717570B9F32}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/888D37C2">Legacy2003<wbr>Smart<wbr>Device<wbr>Vb<wbr>Net</a></td>
+								<td>{CB4CE8C6-1BDB-4DC7-A4D3-65A1999772F8}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/3B21D246">Model<wbr>View<wbr>Controller<wbr>V2<wbr>Mvc2</a></td>
+								<td>{F85E285D-A4E0-4152-9332-AB1D724D3325}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/1D38B50C">Model<wbr>View<wbr>Controller<wbr>V3<wbr>Mvc3</a></td>
+								<td>{E53F8FEA-EAE0-44A6-8774-FFD645390401}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/AE71F120">Model<wbr>View<wbr>Controller<wbr>V4<wbr>Mvc4</a></td>
+								<td>{E3E379DF-F4C6-4180-9B81-6769533ABE47}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/8868966A">Model<wbr>View<wbr>Controller<wbr>V5<wbr>Mvc5</a></td>
+								<td>{349C5851-65DF-11DA-9384-00065B846F21}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/770085DC">MonoForAndroid</a></td>
+								<td>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/E60C0295">Monotouch</a></td>
+								<td>{6BC8ED88-2882-458C-8E55-DFD12B67127B}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/191F077B">MonotouchBinding</a></td>
+								<td>{F5B4F3BC-B597-4E2B-B552-EF5D8A32436F}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/6721222C">PortableClassLibrary</a></td>
+								<td>{786C830F-07A1-408B-BD7F-6EE04809D6DB}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/AB4DAEFC">ProjectFolders</a></td>
+								<td>{66A26720-8FB5-11D2-AA7E-00C04F688DDE}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/5755365F">SharepointCSharp</a></td>
+								<td>{593B0543-81F6-4436-BA1E-4747859CAAE2}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/3AF2EF6D">SharepointVbNet</a></td>
+								<td>{EC05E597-79D4-47f3-ADA0-324C4F7C7484}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/A1E3AE36">SharepointWorkflow</a></td>
+								<td>{F8810EC1-6754-47FC-A15F-DFABD2E3FA90}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/AF826B71">Silverlight</a></td>
+								<td>{A1591282-1198-4647-A2B1-27E5FF5F6F3B}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/10A3B17D">SmartDeviceCSharp</a></td>
+								<td>{4D628B5B-2FBC-4AA6-8C16-197242AEB884}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/8C0C0FE8">SmartDeviceVbNet</a></td>
+								<td>{68B1623D-7FB9-47D8-8664-7ECEA3297D4F}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/11AE4468">SolutionFolder</a></td>
+								<td>{2150E333-8FDC-42A3-9474-1A3956D46DE8}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/5D14D582">Test</a></td>
+								<td>{3AC096D0-A1C2-E12C-1390-A8335801FDAB}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/FF9C4F08">VbNet</a></td>
+								<td>{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/92D6C8C1">VisualDatabaseTools</a></td>
+								<td>{C252FEB5-A946-4202-B1D4-9916A0590387}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/20F68708">Visual<wbr>Studio<wbr>Tools<wbr>For<wbr>Applications<wbr>Vsta</a></td>
+								<td>{A860303F-1F3F-4691-B57E-529FC101A107}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/BF6E5502">Visual<wbr>Studio<wbr>Tools<wbr>For<wbr>Office<wbr>Vsto</a></td>
+								<td>{BAA0C2D2-18E2-41B9-852F-F413020CAA33}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/93B35FE3">WebApplication</a></td>
+								<td>{349C5851-65DF-11DA-9384-00065B846F21}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/DF7F3223">WebSite</a></td>
+								<td>{E24C65DC-7377-472B-9ABA-BC803B73C61A}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/AC1B9B99">Windows<wbr>Communication<wbr>Foundation</a></td>
+								<td>{3D9AD99F-2412-4246-B90B-4EAA41C64699}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/24F85139">WindowsCSharp</a></td>
+								<td>{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/BA26C9EC">Windows<wbr>Phone881<wbr>App<wbr>C<wbr>Sharp</a></td>
+								<td>{C089C8C0-30E0-4E22-80C0-CE093F111A43}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/C231E6F4">Windows<wbr>Phone881<wbr>App<wbr>Vb<wbr>Net</a></td>
+								<td>{DB03555F-0C8B-43BE-9FF9-57896B3C5E56}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/13B7ABC2">Windows<wbr>Phone881<wbr>Blank<wbr>Hub<wbr>Webview<wbr>App</a></td>
+								<td>{76F1466A-8B6D-4E39-A767-685A06062A39}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/93A7DA63">Windows<wbr>Presentation<wbr>Foundation</a></td>
+								<td>{60DC8134-EBA5-43B8-BCC9-BB4BC16C2548}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/B781E8B5">Windows<wbr>Store<wbr>Metro<wbr>Apps<wbr>Components</a></td>
+								<td>{BC8A1FFA-BEE3-4634-8014-F334798102B3}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/E04B790C">WindowsVbNet</a></td>
+								<td>{F184B08F-C81C-45F6-A57F-5ABD9991F28F}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/301C1B41">Windows<wbr>Visual<wbr>C<wbr>Plusplus</a></td>
+								<td>{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/9049F3A5">WorkflowCSharp</a></td>
+								<td>{14822709-B5A1-4724-98CA-57A101D1B079}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/98628326">WorkflowFoundation</a></td>
+								<td>{32F31D43-81CC-4C15-9DE6-3FC5453562B6}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/2456CEA7">WorkflowVbNet</a></td>
+								<td>{D59BE175-2ED0-4C54-BE3D-CDAA9F3214C8}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/9CD88CD8">XamarinAndroid</a></td>
+								<td>{EFBA0AD7-5A72-4C68-AF49-83D382785DCF}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/18F49D21">XamarinIos</a></td>
+								<td>{6BC8ED88-2882-458C-8E55-DFD12B67127B}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/C9D26F68">XnaWindows</a></td>
+								<td>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/864A79E9">XnaXbox</a></td>
+								<td>{2DF5C3F4-5A5F-47a9-8E94-23B4456F55E2}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes/606A0420">XnaZune</a></td>
+								<td>{D399B71A-8929-442a-A9AC-8BEC78BB2433}</td>
+								<td>
+									<div></div>
+											<div><small><em>static</em></small></div>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
+
+
+
+
+	
+</section>
+                
+            </div>           
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+            </footer>
+            
+        </div>
+        <div class="wrapper bottom-wrapper">
+            <footer class="bottom-footer">
+                Generated by <a href="https://wyam.io">Wyam</a>
+            </footer>
+        </div>
+        <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <script>           
+            // Close the sidebar if we select an anchor link
+            $(".main-sidebar a[href^='#']:not('.expand')").click(function(){
+                $(document.body).removeClass('sidebar-open');
+            });
+            
+            $(document).load(function() {
+                mermaid.initialize(
+                {
+                    flowchart:
+                    {
+                        htmlLabels: false,
+                        useMaxWidth:false
+                    }
+                });  
+                mermaid.init(undefined, ".mermaid")
+                $('svg').addClass('img-responsive');
+                
+                $('pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });  
+            });
+            hljs.initHighlightingOnLoad();
+
+            // Back to top
+            $(window).scroll(function() {
+                if ($(this).scrollTop() >= 200) {        // If page is scrolled more than 50px
+                    $('#return-to-top').fadeIn(1000);    // Fade in the arrow
+                } else {
+                    $('#return-to-top').fadeOut(1000);   // Else fade out the arrow
+                }
+            });
+            $('#return-to-top').click(function() {      // When arrow is clicked
+                $('body,html').animate({
+                    scrollTop : 0                       // Scroll to top of body
+                }, 500);
+            });
+        </script>
+    
+</body></html>
