@@ -76,6 +76,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="AssertExtensionTests.cs" />
     <Compile Include="CustomProjectParserTests.cs" />
     <Compile Include="DotNetBuildSettingsExtensionsTests.cs" />

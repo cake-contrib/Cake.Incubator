@@ -9,6 +9,9 @@ namespace Cake.Incubator
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
+    /// <summary>
+    /// Several extension methods when operating on a Directory.
+    /// </summary>
     [CakeAliasCategory("Directory Helpers")]
     public static class DirectoryExtensions
     {

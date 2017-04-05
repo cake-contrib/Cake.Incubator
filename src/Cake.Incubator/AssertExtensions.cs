@@ -79,7 +79,6 @@ namespace Cake.Incubator
         /// <summary>
         /// Throws a <see cref="ArgumentNullException"/> if a string is null or empty, otherwise returns the value
         /// </summary>
-        /// <typeparam name="T">The type to return</typeparam>
         /// <param name="value">The object to check</param>
         /// <param name="varName">The name of the variable</param>
         /// <exception cref="ArgumentNullException">value is null.</exception>

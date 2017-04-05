@@ -13,6 +13,9 @@ namespace Cake.Incubator
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
+    /// <summary>
+    /// Class to handle parsing of Visual Studio Project Files.
+    /// </summary>
     [CakeAliasCategory("MSBuild Resource")]
     public class CustomProjectParser
     {
@@ -49,7 +52,9 @@ namespace Cake.Incubator
             switch (extension)
             {                
                 case ".xproj":
+#pragma warning disable CS0618 // Type or member is obsolete
                     return ParseXprojFile(projectPath, config);                
+#pragma warning restore CS0618 // Type or member is obsolete
                 default:
                     return ParseCsProjFile(projectPath, config);
             }
@@ -309,15 +314,28 @@ namespace Cake.Incubator
         }
     }
 
+    /// <summary>
+    /// Class which describes the Path to a Visual Studio Project.
+    /// </summary>
     public class ProjectPath
     {
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ProjectPath"/> class.
+        /// </summary>
+        /// <param name="path">The path to the project file.</param>
         public ProjectPath(string path)
         {
             Path = path;
         }
 
+        /// <summary>
+        /// Gets or sets the path to the Project file.
+        /// </summary>
         public string Path { get; set; }
 
+        /// <summary>
+        /// Gets a value indicating whether the Project Path is to an actual file.
+        /// </summary>
         public bool IsFile => Path.Contains("*");
     }
 
@@ -341,8 +359,17 @@ namespace Cake.Incubator
         public bool Compile { get; set; }
     }
 
+    /// <summary>
+    /// Several extension methods when using ProjectPath.
+    /// </summary>
     public static class ProjectPathExtensions
     {
+        /// <summary>
+        /// Combines a base project path with the name of the project file.
+        /// </summary>
+        /// <param name="basePath">The base path to the location of the Project File.</param>
+        /// <param name="path">The path to the actual Project file.</param>
+        /// <returns></returns>
         public static ProjectPath CombineWithProjectPath(this DirectoryPath basePath, string path)
         {
             return new ProjectPath(System.IO.Path.Combine(basePath.FullPath, path));

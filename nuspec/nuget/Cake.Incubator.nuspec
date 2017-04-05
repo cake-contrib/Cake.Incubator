@@ -2,7 +2,7 @@
 <package>
   <metadata>
     <id>Cake.Incubator</id>
-    <version>$version$</version>
+    <version>0.1.0</version>
     <title>Cake.Incubator</title>
     <authors>Scott Mackay (@wwwlicious)</authors>
     <owners>Scott Mackay (@wwwlicious), cake-contrib</owners>
@@ -14,8 +14,10 @@
     <releaseNotes>Initial Release</releaseNotes>
     <copyright>Copyright 2016</copyright>
     <tags>Cake Build Script Extensions Project Solution</tags>
-    <dependencies>
-      <dependency id="Cake.Common" version="[0.0.16.2, 1)" />
-    </dependencies>
   </metadata>
+  <files>
+    <file src="Cake.Incubator.dll" target="lib/net45" />
+    <file src="Cake.Incubator.xml" target="lib/net45" />
+    <file src="Cake.Incubator.pdb" target="lib/net45" />
+  </files>
 </package>

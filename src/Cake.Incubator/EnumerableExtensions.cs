@@ -9,6 +9,9 @@ namespace Cake.Incubator
     using System.Linq;
     using Cake.Core.Annotations;
 
+    /// <summary>
+    /// Several extension methods when using IEnumerable.
+    /// </summary>
     [CakeAliasCategory("Collection Helpers")]
     public static class EnumerableExtensions
     {
@@ -83,6 +86,14 @@ namespace Cake.Incubator
         /// </example>
         public static bool IsNullOrEmpty<T>(this T[] source) => source == null || source.Length == 0;
 
+        /// <summary>
+        /// Select a distinct instance of an object from a collection of objects.
+        /// </summary>
+        /// <typeparam name="TSource">The type of the object to select.</typeparam>
+        /// <typeparam name="TKey">The type of the key to search for.</typeparam>
+        /// <param name="source">The collection of objects to select from.</param>
+        /// <param name="getKey">The key that is being searched for.</param>
+        /// <returns></returns>
         public static IEnumerable<TSource> Distinct<TSource, TKey>(this IEnumerable<TSource> source, Func<TSource, TKey> getKey)
         {
             var dictionary = new HashSet<TKey>();

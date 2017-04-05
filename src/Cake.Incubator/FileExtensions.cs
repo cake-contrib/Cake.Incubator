@@ -12,6 +12,9 @@ namespace Cake.Incubator
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
+    /// <summary>
+    /// Several extension methods when using File.
+    /// </summary>
     [CakeAliasCategory("File Operations")]
     public static class FileExtensions
     {

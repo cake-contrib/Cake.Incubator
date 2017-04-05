@@ -7,6 +7,9 @@ namespace Cake.Incubator
     using System.Linq;
     using System.Xml.Linq;
 
+    /// <summary>
+    /// Several extension methods when using XDocument.
+    /// </summary>
     public static class XDocumentExtensions
     {
         /// <summary>

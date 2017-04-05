@@ -9,6 +9,9 @@ namespace Cake.Incubator
     using Cake.Common.Solution;
     using Cake.Core.IO;
 
+    /// <summary>
+    /// Several extension methods when using SolutionParser.
+    /// </summary>
     public static class SolutionParserExtensions
     {
         /// <summary>
