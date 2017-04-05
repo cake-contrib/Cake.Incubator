@@ -12,6 +12,7 @@ namespace Cake.Incubator
     [Flags]
     public enum ProjectType
     {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         AspNetMvc1,
         AspNetMvc2,
         AspNetMvc3,
@@ -72,18 +73,32 @@ namespace Cake.Incubator
         XnaXbox,
         XnaZune,
         Unspecified
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 
+    /// <summary>
+    /// Several extension methods when using ProjectType.
+    /// </summary>
     public static class ProjectTypeExtensions
     {
+        /// <summary>
+        /// Provides an indication of whether a given ProjectType contains a specific flag.
+        /// </summary>
+        /// <param name="value">The ProjectType being interrogated.</param>
+        /// <param name="flag">The Flag that is being requested.</param>
+        /// <returns></returns>
         public static bool HasFlag(this ProjectType value, ProjectType flag)
         {
             return (value & flag) != 0;
         }
     }
 
+    /// <summary>
+    /// Class to contain a list of the Project Type ID's that exist within the Visual Studio eco-system.
+    /// </summary>
     public static class ProjectTypes
     {
+#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
         public const string AspNetMvc1 = "{603C0E0B-DB56-11DC-BE95-000D561079B0}";
         public const string AspNetMvc2 = "{F85E285D-A4E0-4152-9332-AB1D724D3325}";
         public const string AspNetMvc3 = "{E53F8FEA-EAE0-44A6-8774-FFD645390401}";
@@ -143,5 +158,6 @@ namespace Cake.Incubator
         public const string XnaWindows = "{6D335F3A-9D43-41b4-9D22-F6F17C4BE596}";
         public const string XnaXbox = "{2DF5C3F4-5A5F-47a9-8E94-23B4456F55E2}";
         public const string XnaZune = "{D399B71A-8929-442a-A9AC-8BEC78BB2433}";
+#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
     }
 }

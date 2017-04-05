@@ -7,9 +7,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTitle("Cake.Incubator")]
 [assembly: AssemblyDescription("A set of experimental extensions and aliases for cake scripts")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("@wwwlicious")]
-[assembly: AssemblyProduct("Cake.Incubator")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,16 +17,3 @@ using System.Runtime.InteropServices;
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
 [assembly: Guid("0fff7585-010f-4acd-b5d3-d1f9ebaa6e7a")]
-
-// Version information for an assembly consists of the following four values:
-//
-//      Major Version
-//      Minor Version 
-//      Build Number
-//      Revision
-//
-// You can specify all the values or you can default the Build and Revision Numbers 
-// by using the '*' as shown below:
-// [assembly: AssemblyVersion("1.0.*")]
-[assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("1.0.0.0")]

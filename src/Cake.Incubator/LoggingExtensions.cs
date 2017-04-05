@@ -7,6 +7,9 @@ namespace Cake.Incubator
     using System.ComponentModel;
     using System.Text;
 
+    /// <summary>
+    /// Several extension methods when using Logging.
+    /// </summary>
     public static class LoggingExtensions
     {
         /// <summary>

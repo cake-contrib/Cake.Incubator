@@ -8,6 +8,9 @@
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
+    /// <summary>
+    /// Several extension methods when using DotNetCoreTest.
+    /// </summary>
     [CakeAliasCategory("DotNetCore")]
     public static class DotNetCoreTestExtensions
     {

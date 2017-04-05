@@ -11,6 +11,9 @@ namespace Cake.Incubator
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
+    /// <summary>
+    /// Several extension methods when using ProjectParser.
+    /// </summary>
     [CakeAliasCategory("MSBuild Resource")]
     public static class ProjectParserExtensions
     {

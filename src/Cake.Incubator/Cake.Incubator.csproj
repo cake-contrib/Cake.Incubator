@@ -51,6 +51,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="..\SolutionInfo.cs">
+      <Link>Properties\SolutionInfo.cs</Link>
+    </Compile>
     <Compile Include="AssertExtensions.cs" />
     <Compile Include="CustomProjectParserResult.cs" />
     <Compile Include="DirectoryExtensions.cs" />
@@ -61,7 +64,6 @@
     <Compile Include="ProjectTypes.cs" />
     <Compile Include="StringExtensions.cs" />
     <Compile Include="XDocumentExtensions.cs" />
-    <None Include="Cake.Incubator.nuspec" />
     <Compile Include="NamespaceDoc.cs" />
     <Compile Include="EnumerableExtensions.cs" />
     <Compile Include="CustomProjectParser.cs" />
