@@ -107,7 +107,17 @@
 	</section>
 	<section class="content">
 		<h1 id="getting-started">Getting Started</h1>
-<p>Need to put some information in here...</p>
+<p>This addin is designed to be used inside of cake scripts. To start using it, first you must add a cake <a href="http://cakebuild.net/docs/fundamentals/preprocessor-directives">preprocessor directive</a> to your script as below.</p>
+<pre><code class="language-cs">// latest version 
+#addin "Cake.Incubator"
+
+// or
+#addin "nuget?package=Cake.Incubator"
+
+// for a specific version, use ?version=
+#addin "Cake.Incubator?version=1.1.0"
+</code></pre>
+<p>When the cake script is run, this will download the latest version of the <code>Cake.Incubator</code> nuget package and will now be available to use inside of the script.</p>
 
 	</section>
                 
