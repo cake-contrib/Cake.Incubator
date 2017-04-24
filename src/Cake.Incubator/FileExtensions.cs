@@ -65,7 +65,7 @@ namespace Cake.Incubator
         }
 
         /// <summary>
-        /// Gets FliePaths using glob patterns
+        /// Gets FilePaths using glob patterns
         /// </summary>
         /// <param name="context">the cake context</param>
         /// <param name="patterns">the glob patterns</param>
