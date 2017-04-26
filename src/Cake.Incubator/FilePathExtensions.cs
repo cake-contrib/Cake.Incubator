@@ -22,14 +22,14 @@ namespace Cake.Incubator
         }
 
         /// <summary>
-        /// Checks if the FilePath is a csproj file
+        /// Checks if the FilePath is a vbproj/csproj/fsproj file
         /// </summary>
         /// <param name="filePath">the path to check</param>
         /// <returns>true if csproj or fsproj file</returns>
         public static bool IsProject(this FilePath filePath)
         {
             return filePath.HasExtension && 
-                    (filePath.GetExtension().EqualsIgnoreCase(".csproj") || filePath.GetExtension().EqualsIgnoreCase(".fsproj"));
+                    (filePath.GetExtension().EqualsIgnoreCase(".vbproj") || filePath.GetExtension().EqualsIgnoreCase(".csproj") || filePath.GetExtension().EqualsIgnoreCase(".fsproj"));
         }
 
         /// <summary>
