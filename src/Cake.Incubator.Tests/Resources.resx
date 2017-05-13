@@ -859,27 +859,4 @@
   &lt;Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" /&gt;
 &lt;/Project&gt;</value>
   </data>
-  <data name="XProj_ValidFile" xml:space="preserve">
-    <value>&lt;?xml version="1.0" encoding="utf-8"?&gt;
-&lt;Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"&gt;
-  &lt;PropertyGroup&gt;
-    &lt;VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''"&gt;14.0&lt;/VisualStudioVersion&gt;
-    &lt;VSToolsPath Condition="'$(VSToolsPath)' == ''"&gt;$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)&lt;/VSToolsPath&gt;
-  &lt;/PropertyGroup&gt;
-
-  &lt;Import Project="$(VSToolsPath)\DotNet\Microsoft.DotNet.Props" Condition="'$(VSToolsPath)' != ''" /&gt;
-  &lt;PropertyGroup Label="Globals"&gt;
-    &lt;ProjectGuid&gt;9e95f6f1-67db-48f6-8567-f8ea71e31ee4&lt;/ProjectGuid&gt;
-    &lt;RootNamespace&gt;Cake.Common&lt;/RootNamespace&gt;
-    &lt;BaseIntermediateOutputPath Condition="'$(BaseIntermediateOutputPath)'=='' "&gt;.\obj&lt;/BaseIntermediateOutputPath&gt;
-    &lt;OutputPath Condition="'$(OutputPath)'=='' "&gt;.\bin\&lt;/OutputPath&gt;
-    &lt;TargetFrameworkVersion&gt;v4.5.2&lt;/TargetFrameworkVersion&gt;
-  &lt;/PropertyGroup&gt;
-
-  &lt;PropertyGroup&gt;
-    &lt;SchemaVersion&gt;2.0&lt;/SchemaVersion&gt;
-  &lt;/PropertyGroup&gt;
-  &lt;Import Project="$(VSToolsPath)\DotNet.Web\Microsoft.DotNet.Web.targets" Condition="'$(VSToolsPath)' != ''" /&gt;
-&lt;/Project&gt;</value>
-  </data>
 </root>

@@ -10,141 +10,32 @@ namespace Cake.Incubator
     /// </summary>
     public static class ProjectXElement
     {
-        private const string XmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
-
-        /// <summary>
-        /// Project root element
-        /// </summary>
-        internal const string Project = "{" + XmlNamespace + "}Project";
-
-        /// <summary>
-        /// Item group element
-        /// </summary>
-        internal const string ItemGroup = "{" + XmlNamespace + "}ItemGroup";
-
-        /// <summary>
-        /// Assembly reference element
-        /// </summary>
-        internal const string Reference = "{" + XmlNamespace + "}Reference";
-
-        /// <summary>
-        /// Namespace import element
-        /// </summary>
-        internal const string Import = "{" + XmlNamespace + "}Import";
-
-        /// <summary>
-        /// Namespace compile element
-        /// </summary>
-        internal const string Compile = "{" + XmlNamespace + "}Compile";
-
-        /// <summary>
-        /// Namespace property group element
-        /// </summary>
-        internal const string PropertyGroup = "{" + XmlNamespace + "}PropertyGroup";
-
-        /// <summary>
-        /// Namespace root namespace element
-        /// </summary>
-        internal const string RootNamespace = "{" + XmlNamespace + "}RootNamespace";
-
-        /// <summary>
-        /// Namespace output type element
-        /// </summary>
-        internal const string OutputType = "{" + XmlNamespace + "}OutputType";
-
-        /// <summary>
-        /// Namespace output path element
-        /// </summary>
-        internal const string OutputPath = "{" + XmlNamespace + "}OutputPath";
-
-        /// <summary>
-        /// Namespace assembly name element
-        /// </summary>
-        internal const string AssemblyName = "{" + XmlNamespace + "}AssemblyName";
-
-        /// <summary>
-        /// Gets the namespace for the target framework version element.
-        /// </summary>
-        internal const string TargetFrameworkVersion = "{" + XmlNamespace + "}TargetFrameworkVersion";
-
-        /// <summary>
-        /// Gets the namespace for the target framework version element.
-        /// </summary>
-        internal const string TargetFrameworkProfile = "{" + XmlNamespace + "}TargetFrameworkProfile";
-
-        /// <summary>
-        /// Gets the target framework element.
-        /// </summary>
+        internal const string Project = "Project";
+        internal const string ItemGroup = "ItemGroup";
+        internal const string Reference = "Reference";
+        internal const string Import = "Import";
+        internal const string Compile = "Compile";
+        internal const string PropertyGroup = "PropertyGroup";
+        internal const string RootNamespace = "RootNamespace";
+        internal const string OutputType = "OutputType";
+        internal const string OutputPath = "OutputPath";
+        internal const string AssemblyName = "AssemblyName";
+        internal const string TargetFrameworkVersion = "TargetFrameworkVersion";
+        internal const string TargetFrameworkProfile = "TargetFrameworkProfile";
         internal const string TargetFramework = "TargetFramework";
-
-        /// <summary>
-        /// Gets the namespace for the configuration element.
-        /// </summary>
-        internal const string Configuration = "{" + XmlNamespace + "}Configuration";
-
-        /// <summary>
-        ///  Gets the namespace for the platform element.
-        /// </summary>
-        internal const string Platform = "{" + XmlNamespace + "}Platform";
-
-        /// <summary>
-        /// Gets the namespace for the project GUID.
-        /// </summary>
-        internal const string ProjectGuid = "{" + XmlNamespace + "}ProjectGuid";
-
-        /// <summary>
-        /// Gets the namespace for the project type GUID.
-        /// </summary>
-        internal const string ProjectTypeGuids = "{" + XmlNamespace + "}ProjectTypeGuids";
-
-        /// <summary>
-        /// Gets the namespace for the bootstrapper package element.
-        /// </summary>
-        internal const string BootstrapperPackage = "{" + XmlNamespace + "}BootstrapperPackage";
-
-        /// <summary>
-        /// Gets the namespace for the project reference element.
-        /// </summary>
-        internal const string ProjectReference = "{" + XmlNamespace + "}ProjectReference";
-
-        /// <summary>
-        /// Gets the namespace for the service element.
-        /// </summary>
-        internal const string Service = "{" + XmlNamespace + "}Service";
-
-        /// <summary>
-        /// Gets the namespace for the hint path element.
-        /// </summary>
-        internal const string HintPath = "{" + XmlNamespace + "}HintPath";
-
-        /// <summary>
-        /// Gets the namespace for the name element.
-        /// </summary>
-        internal const string Name = "{" + XmlNamespace + "}Name";
-
-        /// <summary>
-        /// Gets the namespace for the fusion name element.
-        /// </summary>
-        internal const string FusionName = "{" + XmlNamespace + "}FusionName";
-
-        /// <summary>
-        /// Gets the namespace for the specific version element.
-        /// </summary>
-        internal const string SpecificVersion = "{" + XmlNamespace + "}SpecificVersion";
-
-        /// <summary>
-        /// Gets the namespace for the aliases element.
-        /// </summary>
-        internal const string Aliases = "{" + XmlNamespace + "}Aliases";
-
-        /// <summary>
-        /// Gets the namespace for the private element.
-        /// </summary>
-        internal const string Private = "{" + XmlNamespace + "}Private";
-
-        /// <summary>
-        /// Gets the namespace for the package element.
-        /// </summary>
-        internal const string Package = "{" + XmlNamespace + "}Package";
+        internal const string Configuration = "Configuration";
+        internal const string Platform = "Platform";
+        internal const string ProjectGuid = "ProjectGuid";
+        internal const string ProjectTypeGuids = "ProjectTypeGuids";
+        internal const string BootstrapperPackage = "BootstrapperPackage";
+        internal const string ProjectReference = "ProjectReference";
+        internal const string Service = "Service";
+        internal const string HintPath = "HintPath";
+        internal const string Name = "Name";
+        internal const string FusionName = "FusionName";
+        internal const string SpecificVersion = "SpecificVersion";
+        internal const string Aliases = "Aliases";
+        internal const string Private = "Private";
+        internal const string Package = "Package";
     }
 }
