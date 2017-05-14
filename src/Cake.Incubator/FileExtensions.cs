@@ -241,6 +241,11 @@ namespace Cake.Incubator
         /// </summary>
         /// <param name="xmlFile">the xml file path</param>
         /// <returns>An XDocument</returns>
+        /// <example>Load an xml document
+        /// <code>
+        /// XDocument doc = new File("./proj.csproj").LoadXml();
+        /// </code>
+        /// </example>
         public static XDocument LoadXml(this IFile xmlFile)
         {
             XDocument document;

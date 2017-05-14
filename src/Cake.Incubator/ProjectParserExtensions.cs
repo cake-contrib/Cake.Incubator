@@ -24,6 +24,13 @@ namespace Cake.Incubator
         /// </summary>
         /// <param name="projectParserResult">the parsed project</param>
         /// <returns>true if the project is a library</returns>
+        /// <example>
+        /// Check if a parsed project is a library or exe
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsLibrary()) { ... }
+        /// </code>
+        /// </example>
         public static bool IsLibrary(this CustomProjectParserResult projectParserResult)
         {
             return projectParserResult.OutputType.Equals("Library", StringComparison.InvariantCultureIgnoreCase);
@@ -34,6 +41,13 @@ namespace Cake.Incubator
         /// </summary>
         /// <param name="projectParserResult">the parsed project</param>
         /// <returns>the output assembly's file extension</returns>
+        /// <example>
+        /// Gets the output assembly extension
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// project.GetExtension(); // ".dll" or ".exe"
+        /// </code>
+        /// </example>
         public static string GetExtension(this CustomProjectParserResult projectParserResult)
         {
             return projectParserResult.IsLibrary()
@@ -46,6 +60,13 @@ namespace Cake.Incubator
         /// </summary>
         /// <param name="projectParserResult">the parsed project</param>
         /// <returns>the output assembly path</returns>
+        /// <example>
+        /// Returns the absolute project assembly file path, respects build config and platform settings
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// project.GetAssemblyFilePath(); // returns '/root/project/bin/release/test.dll'
+        /// </code>
+        /// </example>
         public static FilePath GetAssemblyFilePath(this CustomProjectParserResult projectParserResult)
         {
             return
@@ -57,8 +78,16 @@ namespace Cake.Incubator
         /// Checks the parsed projects type
         /// </summary>
         /// <param name="projectParserResult">the parsed project</param>
-        /// <param name="projectType">the project type to check</param>
+        /// <param name="projectType">the <see cref="ProjectType"/> to check</param>
         /// <returns>true if the project type matches</returns>
+        /// <remarks>Project Types are not supported in NetCore, this extension is for the Net Framework only</remarks>
+        /// <example>
+        /// Checks the project type
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// project.IsType(ProjectType.CSharp); // true 
+        /// </code>
+        /// </example>
         public static bool IsType(this CustomProjectParserResult projectParserResult, ProjectType projectType)
         {
             return projectType.HasFlag(ProjectType.Unspecified) ? projectParserResult.ProjectTypeGuids.IsNullOrEmpty() : projectParserResult.ProjectTypeGuids.Any(x => x.EqualsIgnoreCase(SolutionParserExtensions.Types[projectType]));
@@ -72,6 +101,12 @@ namespace Cake.Incubator
         /// <param name="configuration">the build configuration</param>
         /// <returns>The parsed project</returns>
         /// <remarks>Defaults to 'AnyCPU' platform, use overload to override this default</remarks>
+        /// <example>
+        /// Returns the project information specific to a build configuration
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), configuration: "Release");
+        /// </code>
+        /// </example>
         [CakeMethodAlias]
         public static CustomProjectParserResult ParseProject(this ICakeContext context, FilePath project, string configuration)
         {
@@ -86,6 +121,13 @@ namespace Cake.Incubator
         /// <param name="configuration">the build configuration</param>
         /// <param name="platform">the build platform</param>
         /// <returns>The parsed project</returns>
+        /// <example>
+        /// Returns the project information specific to a build configuration
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// </code>
+        /// </example>
         [CakeMethodAlias]
         public static CustomProjectParserResult ParseProject(this ICakeContext context, FilePath project, string configuration, string platform)
         {
@@ -112,8 +154,15 @@ namespace Cake.Incubator
         /// <returns>The parsed project</returns>
         /// <param name="projectFile">the project file</param>
         /// <param name="configuration">the build configuration</param>
-        /// <param name="platform">the build configuration platform</param>
+        /// <param name="platform">the build configuration platform, defaults to AnyCPU if not specified</param>
         /// <returns>The parsed project</returns>
+        /// <example>
+        /// Returns the project information specific to a build configuration
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = new File("./test.csproj").ParseProject(configuration: "Release", platform: "x86");
+        /// </code>
+        /// </example>
         public static CustomProjectParserResult ParseProject(this IFile projectFile, string configuration, string platform = "AnyCPU")
         {
             projectFile.ThrowIfNull(nameof(projectFile));

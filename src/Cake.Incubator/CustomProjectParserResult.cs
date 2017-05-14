@@ -49,16 +49,16 @@
         /// <value>The target framework profile.</value>
         public string TargetFrameworkProfile { get; set; }
 
-        /// <summary>Gets the project content files.</summary>
-        /// <value>The files.</value>
+        /// <summary>Gets the project content files. <see cref="CustomProjectFile"/></summary>
+        /// <value>The files. <see cref="CustomProjectFile"/></value>
         public ICollection<CustomProjectFile> Files { get; set; }
 
-        /// <summary>Gets the references.</summary>
-        /// <value>The references.</value>
+        /// <summary>Gets the references. <see cref="ProjectAssemblyReference"/></summary>
+        /// <value>The references. <see cref="ProjectAssemblyReference"/></value>
         public ICollection<ProjectAssemblyReference> References { get; set; }
 
-        /// <summary>Gets the references to other projects.</summary>
-        /// <value>The references.</value>
+        /// <summary>Gets the references to other projects. <see cref="ProjectReference"/></summary>
+        /// <value>The references. <see cref="ProjectReference"/></value>
         public ICollection<ProjectReference> ProjectReferences { get; set; }
 
         /// <summary>
@@ -72,41 +72,8 @@
         public bool IsNetFramework { get; set; }
 
         /// <summary>
-        /// Contains properties specific to net core projects
+        /// Contains properties specific to net core projects. See <see cref="NetCoreProject"/>
         /// </summary>
         public NetCoreProject NetCore { get; set; }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="T:Cake.Common.Solution.Project.ProjectParserResult" /> class.
-        /// </summary>
-        /// <param name="configuration">The build configuration.</param>
-        /// <param name="platform">The target platform.</param>
-        /// <param name="projectGuid">The unique project identifier.</param>
-        /// <param name="projectTypeGuids">The project type identifiers</param>
-        /// <param name="outputType">The compiler output type.</param>
-        /// <param name="outputPath">The compiler output path</param>
-        /// <param name="rootNameSpace">The default root namespace.</param>
-        /// <param name="assemblyName">Gets the build target assembly name.</param>
-        /// <param name="targetFrameworkVersion">The compiler framework version.</param>
-        /// <param name="targetFrameworkProfile">The compiler framework profile.</param>
-        /// <param name="files">The project content files.</param>
-        /// <param name="references">The references.</param>
-        /// <param name="projectReferences">The references to other projects.</param>
-        //public CustomProjectParserResult(string configuration, string platform, string projectGuid, string[] projectTypeGuids, string outputType, DirectoryPath outputPath, string rootNameSpace, string assemblyName, string targetFrameworkVersion, string targetFrameworkProfile, IEnumerable<CustomProjectFile> files, IEnumerable<ProjectAssemblyReference> references, IEnumerable<ProjectReference> projectReferences)
-        //{
-        //    this.Configuration = configuration;
-        //    this.Platform = platform;
-        //    this.ProjectGuid = projectGuid;
-        //    this.ProjectTypeGuids = projectTypeGuids;
-        //    this.OutputType = outputType;
-        //    this.OutputPath = outputPath;
-        //    this.RootNameSpace = rootNameSpace;
-        //    this.AssemblyName = assemblyName;
-        //    this.TargetFrameworkVersion = targetFrameworkVersion;
-        //    this.TargetFrameworkProfile = targetFrameworkProfile;
-        //    this.Files = files?.ToList().AsReadOnly();
-        //    this.References = references?.ToList().AsReadOnly();
-        //    this.ProjectReferences = projectReferences?.ToList().AsReadOnly();
-        //}
     }
 }

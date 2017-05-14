@@ -58,7 +58,7 @@ namespace Cake.Incubator
         public string Description { get; set; }
 
         /// <summary>
-        /// The dotnet CLI tool references
+        /// The dotnet CLI tool references, a collection of <see cref="DotNetCliToolReference"/>
         /// </summary>
         public ICollection<DotNetCliToolReference> DotNetCliToolReferences { get; set; }
 
@@ -108,7 +108,7 @@ namespace Cake.Incubator
         public string PackageProjectUrl { get; set; }
 
         /// <summary>
-        /// The project package references
+        /// The project package references. A collection of <see cref="PackageReference"/>
         /// </summary>
         public ICollection<PackageReference> PackageReferences { get; set; }
 
@@ -138,7 +138,7 @@ namespace Cake.Incubator
         public bool PreserveCompilationContext { get; set; }
 
         /// <summary>
-        /// The references to other projects
+        /// The references to other projects. A collection of <see cref="ProjectReference"/>
         /// </summary>
         public ICollection<ProjectReference> ProjectReferences { get; set; }
 
@@ -168,7 +168,7 @@ namespace Cake.Incubator
         public string[] RuntimeIdentifiers { get; set; }
 
         /// <summary>
-        /// Optional runtime options to override the default settings
+        /// Optional runtime options to override the default settings <see cref="RuntimeOptions"/>
         /// </summary>
         public RuntimeOptions RuntimeOptions { get; set; }
 
@@ -183,7 +183,7 @@ namespace Cake.Incubator
         public bool SignAssembly { get; set; }
 
         /// <summary>
-        /// The projects build targets
+        /// The projects build targets. A collection of <see cref="BuildTarget"/>
         /// </summary>
         public ICollection<BuildTarget> Targets { get; set; }
 

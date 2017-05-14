@@ -20,7 +20,7 @@ namespace Cake.Incubator
         /// <param name="projectPath">the path of the project file</param>
         /// <returns>the project file</returns>
         /// <exception cref="CakeException">Throws if the file does not exist or is not a recognised visual studio project file</exception>
-        public static IFile GetProjectFile(this IFileSystem fs, FilePath projectPath)
+        internal static IFile GetProjectFile(this IFileSystem fs, FilePath projectPath)
         {
             var file = fs.GetFile(projectPath);
             if (!file.Exists)

@@ -4,6 +4,8 @@
 
 namespace Cake.Incubator
 {
+    using System.Collections.Generic;
+
     /// <summary>
     /// A project build target
     /// </summary>
@@ -32,8 +34,9 @@ namespace Cake.Incubator
         public string[] DependsOn { get; set; }
 
         /// <summary>
-        /// Any executable targets
+        /// Any executable targets <see cref="BuildTargetExecutable"/>
         /// </summary>
-        public BuildTargetExecutable[] Executables { get; set; }
+        /// <value>The build target executables <see cref="BuildTargetExecutable"/></value>
+        public ICollection<BuildTargetExecutable> Executables { get; set; }
     }
 }

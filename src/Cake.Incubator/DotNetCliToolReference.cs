@@ -4,6 +4,9 @@
 
 namespace Cake.Incubator
 {
+    /// <summary>
+    /// A dotnet cli tool referenceS
+    /// </summary>
     public class DotNetCliToolReference
     {
         /// <summary>

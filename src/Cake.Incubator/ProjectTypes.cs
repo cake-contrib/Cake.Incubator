@@ -84,6 +84,7 @@ namespace Cake.Incubator
         /// <summary>
         /// Provides an indication of whether a given ProjectType contains a specific flag.
         /// </summary>
+        /// <remarks>Project Types are not supported in NetCore, this extension is for the Net Framework only</remarks>
         /// <param name="value">The ProjectType being interrogated.</param>
         /// <param name="flag">The Flag that is being requested.</param>
         /// <returns></returns>

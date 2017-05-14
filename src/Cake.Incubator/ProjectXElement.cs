@@ -8,7 +8,7 @@ namespace Cake.Incubator
     ///     MSBuild Project Xml Element XNames
     ///     original source: https://github.com/cake-build/cake/blob/main/src/Cake.Common/Solution/Project/ProjectXElement.cs
     /// </summary>
-    public static class ProjectXElement
+    internal static class ProjectXElement
     {
         internal const string Aliases = "Aliases";
         internal const string AllowUnsafeBlocks = "AllowUnsafeBlocks";
