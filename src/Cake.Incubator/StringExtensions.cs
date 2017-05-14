@@ -28,6 +28,11 @@ namespace Cake.Incubator
             return condition.StartsWith(TargetframeworkCondition);
         }
 
+        internal static string[] SplitWithoutEmpty(this string value, params char[] separator)
+        {
+            return value.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+        }
+
         internal static string GetConditionTargetFramework(this string condition)
         {
             return condition.Replace(" ", "").Substring(TargetframeworkCondition.Length, condition.Length - 1);

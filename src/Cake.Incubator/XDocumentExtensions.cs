@@ -26,9 +26,12 @@ namespace Cake.Incubator
         internal static string GetOutputPath(this XDocument document, string config, string platform = "AnyCPU")
         {
             return document.Descendants("OutputPath")
-                .FirstOrDefault(x => x.Parent.Attribute("Condition")
-                    .Value
-                    .EndsWith($"=='{config}|{platform}'", StringComparison.OrdinalIgnoreCase))?.Value;
+                .FirstOrDefault(x =>
+                {
+                    return x.Parent != null && x.Parent.Attribute("Condition")
+                               .Value
+                               .EndsWith($"=='{config}|{platform}'", StringComparison.OrdinalIgnoreCase);
+                })?.Value;
         }
 
         /// <summary>
@@ -68,7 +71,7 @@ namespace Cake.Incubator
 
         internal static string GetSdk(this XDocument document)
         {
-            return document.Root?.Attribute("Sdk")?.Value;
+            return document.Root?.Attribute("Sdk", true)?.Value;
         }
 
         internal static string GetVersion(this XDocument document)

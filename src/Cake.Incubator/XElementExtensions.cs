@@ -56,7 +56,8 @@ namespace Cake.Incubator
             return propertyGroup.GetFirstElementValue(ns + ProjectXElement.RootNamespace);
         }
 
-        internal static DirectoryPath GetOutputPath(this IEnumerable<XElement> configPropertyGroups, XNamespace ns, DirectoryPath rootPath)
+        internal static DirectoryPath GetOutputPath(this IEnumerable<XElement> configPropertyGroups, XNamespace ns,
+            DirectoryPath rootPath)
         {
             return configPropertyGroups
                 .Elements(ns + ProjectXElement.OutputPath)
@@ -77,6 +78,46 @@ namespace Cake.Incubator
         internal static string GetProjectGuid(this XElement propertyGroup, XNamespace ns)
         {
             return propertyGroup.GetFirstElementValue(ns + ProjectXElement.ProjectGuid);
+        }
+
+        /// <summary>
+        /// Gets the first (in document order) child element with the specified <see cref="XName"/>.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="name">The <see cref="XName"/> to match.</param>
+        /// <param name="ignoreCase">If set to <c>true</c> case will be ignored whilst searching for the <see cref="XElement"/>.</param>
+        /// <returns>A <see cref="XElement"/> that matches the specified <see cref="XName"/>, or null. </returns>
+        internal static XElement Element(this XElement element, XName name, bool ignoreCase)
+        {
+            var el = element.Element(name);
+            if (el != null)
+                return el;
+
+            if (!ignoreCase)
+                return null;
+
+            var elements = element.Elements().Where(e => e.Name.LocalName.EqualsIgnoreCase(name.ToString()));
+            return !elements.Any() ? null : elements.First();
+        }
+
+        /// <summary>
+        /// Gets the first (in document order) attribute with the specified <see cref="XName"/>.
+        /// </summary>
+        /// <param name="element">The element.</param>
+        /// <param name="name">The <see cref="XName"/> to match.</param>
+        /// <param name="ignoreCase">If set to <c>true</c> case will be ignored whilst searching for the <see cref="XAttribute"/>.</param>
+        /// <returns>A <see cref="XAttribute"/> that matches the specified <see cref="XName"/>, or null. </returns>
+        internal static XAttribute Attribute(this XElement element, XName name, bool ignoreCase)
+        {
+            var el = element.Attribute(name);
+            if (el != null)
+                return el;
+
+            if (!ignoreCase)
+                return null;
+
+            var attributes = element.Attributes().Where(e => e.Name.LocalName.EqualsIgnoreCase(name.ToString()));
+            return !attributes.Any() ? null : attributes.First();
         }
     }
 }
