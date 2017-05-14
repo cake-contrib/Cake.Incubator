@@ -1,7 +1,6 @@
 ﻿namespace Cake.Incubator
 {
     using System.Collections.Generic;
-    using System.Linq;
     using Cake.Common.Solution.Project;
     using Cake.Core.IO;
 
@@ -63,6 +62,21 @@
         public ICollection<ProjectReference> ProjectReferences { get; set; }
 
         /// <summary>
+        /// True if the project is a net core project
+        /// </summary>
+        public bool IsNetCore { get; set; }
+
+        /// <summary>
+        /// True if the project is a net framework project
+        /// </summary>
+        public bool IsNetFramework { get; set; }
+
+        /// <summary>
+        /// Contains properties specific to net core projects
+        /// </summary>
+        public NetCoreProject NetCore { get; set; }
+
+        /// <summary>
         /// Initializes a new instance of the <see cref="T:Cake.Common.Solution.Project.ProjectParserResult" /> class.
         /// </summary>
         /// <param name="configuration">The build configuration.</param>
@@ -78,21 +92,21 @@
         /// <param name="files">The project content files.</param>
         /// <param name="references">The references.</param>
         /// <param name="projectReferences">The references to other projects.</param>
-        public CustomProjectParserResult(string configuration, string platform, string projectGuid, string[] projectTypeGuids, string outputType, DirectoryPath outputPath, string rootNameSpace, string assemblyName, string targetFrameworkVersion, string targetFrameworkProfile, IEnumerable<CustomProjectFile> files, IEnumerable<ProjectAssemblyReference> references, IEnumerable<ProjectReference> projectReferences)
-        {
-            this.Configuration = configuration;
-            this.Platform = platform;
-            this.ProjectGuid = projectGuid;
-            this.ProjectTypeGuids = projectTypeGuids;
-            this.OutputType = outputType;
-            this.OutputPath = outputPath;
-            this.RootNameSpace = rootNameSpace;
-            this.AssemblyName = assemblyName;
-            this.TargetFrameworkVersion = targetFrameworkVersion;
-            this.TargetFrameworkProfile = targetFrameworkProfile;
-            this.Files = files?.ToList().AsReadOnly();
-            this.References = references?.ToList().AsReadOnly();
-            this.ProjectReferences = projectReferences?.ToList().AsReadOnly();
-        }
+        //public CustomProjectParserResult(string configuration, string platform, string projectGuid, string[] projectTypeGuids, string outputType, DirectoryPath outputPath, string rootNameSpace, string assemblyName, string targetFrameworkVersion, string targetFrameworkProfile, IEnumerable<CustomProjectFile> files, IEnumerable<ProjectAssemblyReference> references, IEnumerable<ProjectReference> projectReferences)
+        //{
+        //    this.Configuration = configuration;
+        //    this.Platform = platform;
+        //    this.ProjectGuid = projectGuid;
+        //    this.ProjectTypeGuids = projectTypeGuids;
+        //    this.OutputType = outputType;
+        //    this.OutputPath = outputPath;
+        //    this.RootNameSpace = rootNameSpace;
+        //    this.AssemblyName = assemblyName;
+        //    this.TargetFrameworkVersion = targetFrameworkVersion;
+        //    this.TargetFrameworkProfile = targetFrameworkProfile;
+        //    this.Files = files?.ToList().AsReadOnly();
+        //    this.References = references?.ToList().AsReadOnly();
+        //    this.ProjectReferences = projectReferences?.ToList().AsReadOnly();
+        //}
     }
 }

@@ -9,7 +9,6 @@ namespace Cake.Incubator.Tests
     using Xunit;
 
     /// <summary>
-    /// TODO Handle more project types
     /// Parse multiple types 
     /// </summary>
     public class SolutionParserExtensionsTests

@@ -11,36 +11,49 @@ namespace Cake.Incubator
 
     internal static class XElementExtensions
     {
+        internal static string GetAttributeValue(this XElement element, string attributeName)
+        {
+            return element.Attribute(attributeName)?.Value;
+        }
+
+        internal static string GetFirstElementValue(this XElement element, XName elementName)
+        {
+            return element.Descendants(elementName).FirstOrDefault()?.Value;
+        }
+
+        internal static IEnumerable<XElement> GetPropertyGroups(this XElement project, XNamespace ns)
+        {
+            return project.Elements(ns + ProjectXElement.PropertyGroup);
+        }
+
+        internal static IEnumerable<XElement> GetItemGroups(this XElement project, XNamespace ns)
+        {
+            return project.Elements(ns + ProjectXElement.ItemGroup);
+        }
+
+        internal static string GetPlatform(this XElement propertyGroup, XNamespace ns)
+        {
+            return propertyGroup.GetFirstElementValue(ns + ProjectXElement.Platform);
+        }
+
         internal static string GetTargetFrameworkProfile(this XElement propertyGroup, XNamespace ns)
         {
-            return propertyGroup
-                .Elements(ns + ProjectXElement.TargetFrameworkProfile)
-                .Select(targetFrameworkProfile => targetFrameworkProfile.Value)
-                .FirstOrDefault();
+            return propertyGroup.GetFirstElementValue(ns + ProjectXElement.TargetFrameworkProfile);
         }
 
         internal static string GetTargetFrameworkVersion(this XElement propertyGroup, XNamespace ns)
         {
-            return propertyGroup
-                .Elements(ns + ProjectXElement.TargetFrameworkVersion)
-                .Select(targetFrameworkVersion => targetFrameworkVersion.Value)
-                .FirstOrDefault();
+            return propertyGroup.GetFirstElementValue(ns + ProjectXElement.TargetFrameworkVersion);
         }
 
         internal static string GetAssemblyName(this XElement propertyGroup, XNamespace ns)
         {
-            return propertyGroup
-                .Elements(ns + ProjectXElement.AssemblyName)
-                .Select(assemblyName => assemblyName.Value)
-                .FirstOrDefault();
+            return propertyGroup.GetFirstElementValue(ns + ProjectXElement.AssemblyName);
         }
 
         internal static string GetRootNamespace(this XElement propertyGroup, XNamespace ns)
         {
-            return propertyGroup
-                .Elements(ns + ProjectXElement.RootNamespace)
-                .Select(rootNameSpace => rootNameSpace.Value)
-                .FirstOrDefault();
+            return propertyGroup.GetFirstElementValue(ns + ProjectXElement.RootNamespace);
         }
 
         internal static DirectoryPath GetOutputPath(this IEnumerable<XElement> configPropertyGroups, XNamespace ns, DirectoryPath rootPath)
@@ -53,26 +66,17 @@ namespace Cake.Incubator
 
         internal static string GetOutputType(this XElement propertyGroup, XNamespace ns)
         {
-            return propertyGroup
-                .Elements(ns + ProjectXElement.OutputType)
-                .Select(outputType => outputType.Value)
-                .FirstOrDefault();
+            return propertyGroup.GetFirstElementValue(ns + ProjectXElement.OutputType);
         }
 
         internal static string GetProjectType(this XElement propertyGroup, XNamespace ns)
         {
-            return propertyGroup
-                .Elements(ns + ProjectXElement.ProjectTypeGuids)
-                .Select(projectTypeGuid => projectTypeGuid.Value)
-                .FirstOrDefault();
+            return propertyGroup.GetFirstElementValue(ns + ProjectXElement.ProjectTypeGuids);
         }
 
         internal static string GetProjectGuid(this XElement propertyGroup, XNamespace ns)
         {
-            return propertyGroup
-                .Elements(ns + ProjectXElement.ProjectGuid)
-                .Select(projectGuid => projectGuid.Value)
-                .FirstOrDefault();
+            return propertyGroup.GetFirstElementValue(ns + ProjectXElement.ProjectGuid);
         }
     }
 }

@@ -10,6 +10,8 @@ namespace Cake.Incubator
     /// </summary>
     public static class StringExtensions
     {
+        private const string TargetframeworkCondition = "'$(TargetFramework)'==";
+
         /// <summary>
         /// Case-insensitive String.Equals
         /// </summary>
@@ -19,6 +21,16 @@ namespace Cake.Incubator
         public static bool EqualsIgnoreCase(this string source, string value)
         {
             return source.Equals(value, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        internal static bool HasTargetFrameworkCondition(this string condition)
+        {
+            return condition.StartsWith(TargetframeworkCondition);
+        }
+
+        internal static string GetConditionTargetFramework(this string condition)
+        {
+            return condition.Replace(" ", "").Substring(TargetframeworkCondition.Length, condition.Length - 1);
         }
     }
 }

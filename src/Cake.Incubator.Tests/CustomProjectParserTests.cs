@@ -5,11 +5,8 @@ namespace Cake.Incubator.Tests
 {
     using System;
     using System.IO;
-    using System.Linq;
     using System.Text;
-    using Cake.Core;
     using Cake.Core.IO;
-    using FakeItEasy;
     using FluentAssertions;
     using Xunit;
     using Path = Cake.Core.IO.Path;
@@ -59,7 +56,7 @@ namespace Cake.Incubator.Tests
             result.Configuration.Should().Be("debug");
             result.OutputPath.ToString().Should().Be("bin/custom");
             result.OutputType.Should().Be("Exe");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/a.exe");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/project.exe");
         }
 
         [Fact]
@@ -70,7 +67,7 @@ namespace Cake.Incubator.Tests
             result.Configuration.Should().Be("release");
             result.OutputPath.ToString().Should().Be("bin/release/netcoreapp1.1");
             result.OutputType.Should().Be("Exe");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/release/netcoreapp1.1/a.exe");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/release/netcoreapp1.1/project.exe");
         }
 
         [Fact]
@@ -81,7 +78,7 @@ namespace Cake.Incubator.Tests
             result.Configuration.Should().Be("debug");
             result.OutputPath.ToString().Should().Be("bin/wayhey");
             result.OutputType.Should().Be("Library");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/wayhey/a.dll");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/wayhey/project.dll");
         }
 
         [Fact]
@@ -131,14 +128,21 @@ namespace Cake.Incubator.Tests
             result.IsType(ProjectType.CSharp).Should().BeTrue();
             result.IsType(ProjectType.AspNetMvc1).Should().BeTrue();
         }
-        
     }
 
     internal class TestProjectParserResult : CustomProjectParserResult
     {
         public TestProjectParserResult()
-            : base("Debug", "x86", Guid.NewGuid().ToString(), new []{ ProjectTypes.CSharp }, "Library", "/bin/Debug", "RootNamespace", "AssemblyName", "v4.5", null, null, null, null)
         {
+            Configuration = "Debug";
+            Platform = "x86";
+            ProjectGuid = Guid.NewGuid().ToString();
+            ProjectTypeGuids = new[] { ProjectTypes.CSharp };
+            OutputType = "Library";
+            OutputPath = "/bin/Debug";
+            RootNameSpace = "RootNamespace";
+            AssemblyName = "AssemblyName";
+            TargetFrameworkVersion = "v4.5";
         }
     }
 
@@ -146,10 +150,9 @@ namespace Cake.Incubator.Tests
     {
         private readonly string content;
 
-        public FakeFile(string content, string path = "a.sln")
+        public FakeFile(string content, string path = "./project.csproj")
         {
             this.content = content;
-            Exists = true;
             Path = path;
         }
 
@@ -174,11 +177,12 @@ namespace Cake.Incubator.Tests
         }
 
         public FilePath Path { get; }
-        public long Length { get; }
+
+        public long Length => throw new NotImplementedException();
 
         Path IFileSystemInfo.Path => Path;
 
-        public bool Exists { get; }
-        public bool Hidden { get; }
+        public bool Exists => throw new NotImplementedException();
+        public bool Hidden => throw new NotImplementedException();
     }
 }
