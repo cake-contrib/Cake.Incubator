@@ -11,6 +11,7 @@ namespace Cake.Incubator
     public static class StringExtensions
     {
         private const string TargetframeworkCondition = "'$(TargetFramework)'==";
+        private const string ConfigPlatformCondition = "'$(Configuration)|$(Platform)'==";
 
         /// <summary>
         /// Case-insensitive String.Equals
@@ -28,6 +29,16 @@ namespace Cake.Incubator
             return condition.StartsWith(TargetframeworkCondition);
         }
 
+        internal static bool HasConfigPlatformCondition(this string condition)
+        {
+            return condition.StartsWith(ConfigPlatformCondition);
+        }
+
+        internal static string GetConditionalConfigPlatform(this string condition)
+        {
+            return condition.Substring(ConfigPlatformCondition.Length).Trim().TrimStart('\'').TrimEnd('\'');
+        }
+
         internal static string[] SplitWithoutEmpty(this string value, params char[] separator)
         {
             return value.Split(separator, StringSplitOptions.RemoveEmptyEntries);
@@ -35,7 +46,7 @@ namespace Cake.Incubator
 
         internal static string GetConditionTargetFramework(this string condition)
         {
-            return condition.Replace(" ", "").Substring(TargetframeworkCondition.Length, condition.Length - 1);
+            return condition.Substring(TargetframeworkCondition.Length).Trim().TrimStart('\'').TrimEnd('\'');
         }
     }
 }

@@ -22,12 +22,12 @@ namespace Cake.Incubator
         /// <summary>
         /// The runtime option for min thread pool threads
         /// </summary>
-        public string ThreadPoolMinThreads { get; set; }
+        public int ThreadPoolMinThreads { get; set; }
 
         /// <summary>
         /// The runtime option for max thread pool threads
         /// </summary>
-        public string ThreadPoolMaxThreads { get; set; }
+        public int ThreadPoolMaxThreads { get; set; }
 
         /// <summary>
         /// The runtime option for concurrent GC

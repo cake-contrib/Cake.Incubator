@@ -13,7 +13,7 @@ namespace Cake.Incubator
     public class NetCoreProject
     {
         /// <summary>
-        /// True if the assembly allows safe blocks
+        /// True if the assembly allows unsafe blocks
         /// </summary>
         public bool AllowUnsafeBlocks { get; set; }
 

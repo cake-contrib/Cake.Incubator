@@ -3,6 +3,7 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 namespace Cake.Incubator.Tests
 {
+    using System.Linq;
     using FluentAssertions;
     using Xunit;
 
@@ -429,12 +430,217 @@ namespace Cake.Incubator.Tests
             file.ParseProject("test").NetCore.Version.Should().Be("1.2.3.5");
         }
 
-        // TODO: Output Paths, Conditions, PackageReference, ProjectReference, RuntimeOptions
-        [Fact(Skip="need to check conditions")]
-        public void ParseProject_GetsCorrectOutputPath()
+        [Fact]
+        public void ParseProject_NetCore_ConcurrentGarbageCollection_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("OutputPath", "b"));
-            file.ParseProject("test").OutputPath.Should().Be("b");
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("ConcurrentGarbageCollection", "true"));
+            file.ParseProject("test").NetCore.RuntimeOptions.ConcurrentGarbageCollection.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_RetainVMGarbageCollection_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("RetainVMGarbageCollection", "true"));
+            file.ParseProject("test").NetCore.RuntimeOptions.RetainVMGarbageCollection.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_ServerGarbageCollection_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("ServerGarbageCollection", "true"));
+            file.ParseProject("test").NetCore.RuntimeOptions.ServerGarbageCollection.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_ThreadPoolMaxThreads_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("ThreadPoolMaxThreads", "3"));
+            file.ParseProject("test").NetCore.RuntimeOptions.ThreadPoolMaxThreads.Should().Be(3);
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_ThreadPoolMinThreads_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("ThreadPoolMinThreads", "3"));
+            file.ParseProject("test").NetCore.RuntimeOptions.ThreadPoolMinThreads.Should().Be(3);
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_ProjectReferences_ReturnIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<ProjectReference Include=\"..\\a\\b.csproj\" /><ProjectReference Include=\"..\\c\\d.csproj\" />"), "c:/project/src/x.csproj");
+            var references = file.ParseProject("test").NetCore.ProjectReferences;
+
+            references.Should().HaveCount(2);
+
+            var first = references.First();
+            first.Name.Should().Be("b");
+            first.RelativePath.Should().Be("../a/b.csproj");
+            first.FilePath.ToString().Should().Be("c:/project/a/b.csproj");
+            first.Package.Should().BeNull();
+            first.Project.Should().BeNull();
+
+            var second = references.Last();
+            second.Name.Should().Be("d");
+            second.RelativePath.Should().Be("../c/d.csproj");
+            second.FilePath.ToString().Should().Be("c:/project/c/d.csproj");
+            second.Package.Should().BeNull();
+            second.Project.Should().BeNull();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_PackageReference_ReturnsWithTargetFrameworkInParentIfSet()
+        {
+            var packageRef = 
+                @"<ItemGroup Condition=""'$(TargetFramework)'== 'net451'"">
+                    <PackageReference Include=""System.Collections.Immutable"" Version=""1.3.1"" />
+                </ItemGroup>
+                <ItemGroup Condition=""'$(TargetFramework)'== 'netstandard1.5' "">
+                    <PackageReference Include=""Newtonsoft.Json"" Version=""9.0.1"" />
+                </ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(packageRef));
+            var references = file.ParseProject("test").NetCore.PackageReferences;
+
+            references.Should().HaveCount(2);
+
+            var first = references.First();
+            first.ExcludeAssets.Should().BeNull();
+            first.IncludeAssets.Should().BeNull();
+            first.PrivateAssets.Should().BeNull();
+            first.Name.Should().Be("System.Collections.Immutable");
+            first.TargetFramework.Should().Be("net451");
+            first.Version.Should().Be("1.3.1");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_PackageReference_ReturnsWithTargetFrameworkInAttributeIfSet()
+        {
+            var packageRef =
+                @"<ItemGroup>
+                    <PackageReference Include=""System.Collections.Immutable"" Version=""1.3.1"" Condition=""'$(TargetFramework)'== 'net451'"" />
+                </ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(packageRef));
+            var references = file.ParseProject("test").NetCore.PackageReferences;
+
+            references.Should().HaveCount(1);
+
+            var first = references.First();
+            first.ExcludeAssets.Should().BeNull();
+            first.IncludeAssets.Should().BeNull();
+            first.PrivateAssets.Should().BeNull();
+            first.Name.Should().Be("System.Collections.Immutable");
+            first.TargetFramework.Should().Be("net451");
+            first.Version.Should().Be("1.3.1");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_PackageReference_ReturnsDuplicatesWithDifferentTargetFrameworkInAttributeIfSet()
+        {
+            var packageRef =
+                @"<ItemGroup>
+                    <PackageReference Include=""System.Collections.Immutable"" Version=""1.3.1"" Condition=""'$(TargetFramework)'== 'net451'"" />
+                    <PackageReference Include=""System.Collections.Immutable"" Version=""1.3.2"" Condition=""'$(TargetFramework)'== 'netstandard1.5'"" />
+                </ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(packageRef));
+            var references = file.ParseProject("test").NetCore.PackageReferences;
+
+            references.Should().HaveCount(2);
+
+            var first = references.First();
+            first.ExcludeAssets.Should().BeNull();
+            first.IncludeAssets.Should().BeNull();
+            first.PrivateAssets.Should().BeNull();
+            first.Name.Should().Be("System.Collections.Immutable");
+            first.TargetFramework.Should().Be("net451");
+            first.Version.Should().Be("1.3.1");
+
+            references.Last().TargetFramework.Should().Be("netstandard1.5");
+            references.Last().Version.Should().Be("1.3.2");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_DotNetCliToolReferences_ReturnsIfSet()
+        {
+            var cliRefs = @"<ItemGroup>
+                          <DotNetCliToolReference Include=""Blerk1"" Version=""1.0.0"" />
+                          <DotNetCliToolReference Include=""Blerk2"" Version=""2.3.4"" />
+                            </ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(cliRefs));
+            var references = file.ParseProject("test").NetCore.DotNetCliToolReferences;
+
+            references.Should().HaveCount(2);
+
+            var first = references.First();
+            first.Name.Should().Be("Blerk1");
+            first.Version.Should().Be("1.0.0");
+
+            var last = references.Last();
+            last.Name.Should().Be("Blerk2");
+            last.Version.Should().Be("2.3.4");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_Targets_ReturnsIfSet()
+        {
+            var targetString = @"<Target Name=""Jogging"" BeforeTargets=""Stretch;Jump;;"" AfterTargets=""IceBath"" DependsOn=""Mood"">
+                                  <Exec Command=""hop.cmd"" />
+                                  <Exec Command=""skip.cmd"" />
+                                </Target>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(targetString));
+            var targets = file.ParseProject("test").NetCore.Targets;
+            
+            var first = targets.Should().ContainSingle().Subject;
+            first.BeforeTargets.Should().BeEquivalentTo("Stretch", "Jump");
+            first.AfterTargets.Should().BeEquivalentTo("IceBath");
+            first.DependsOn.Should().BeEquivalentTo("Mood");
+            first.Name.Should().Be("Jogging");
+
+            first.Executables.Should().HaveCount(2);
+
+            first.Executables.First().Command.Should().Be("hop.cmd");
+            first.Executables.Last().Command.Should().Be("skip.cmd");
+        }
+
+
+        [Fact]
+        public void ParseProject_GetsCorrectOutputPath_FallbackConfigOnly()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
+            file.ParseProject("test").OutputPath.ToString().Should().Be("bin/test");
+        }
+
+        [Fact]
+        public void ParseProject_GetsCorrectOutputPath_FallbackConfigAndPlatform()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
+            file.ParseProject("test", "x86").OutputPath.ToString().Should().Be("bin/x86/test");
+        }
+
+        [Fact]
+        public void ParseProject_GetsCorrectOutputPath_FallbackConfigPlatformAndTargetFramework()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(@"<PropertyGroup>
+                            <TargetFramework>NetStandard1.6</TargetFramework>
+                          </PropertyGroup>"));
+            file.ParseProject("test", "x86").OutputPath.ToString().Should().Be("bin/x86/test/NetStandard1.6");
+        }
+
+        [Fact]
+        public void ParseProject_GetsCorrectOutputPath_UsesConditionOverrideWithDefaultPlatform()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(@"<PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='Test|AnyCPU'"">
+                            <OutputPath>bin\wayhey\</OutputPath>
+                          </PropertyGroup>"));
+            file.ParseProject("test").OutputPath.ToString().Should().Be("bin/wayhey");
+        }
+
+        [Fact]
+        public void ParseProject_GetsCorrectOutputPath_UsesConditionOverride()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(@"<PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='Test|x86'"">
+                            <OutputPath>bin\wayhey\</OutputPath>
+                          </PropertyGroup>"));
+            file.ParseProject("test", "x86").OutputPath.ToString().Should().Be("bin/wayhey");
         }
     }
 }

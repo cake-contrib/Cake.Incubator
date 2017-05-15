@@ -26,11 +26,6 @@ namespace Cake.Incubator
             return project.Elements(ns + ProjectXElement.PropertyGroup);
         }
 
-        internal static IEnumerable<XElement> GetItemGroups(this XElement project, XNamespace ns)
-        {
-            return project.Elements(ns + ProjectXElement.ItemGroup);
-        }
-
         internal static string GetPlatform(this XElement propertyGroup, XNamespace ns)
         {
             return propertyGroup.GetFirstElementValue(ns + ProjectXElement.Platform);

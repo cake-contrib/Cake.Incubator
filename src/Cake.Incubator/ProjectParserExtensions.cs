@@ -218,8 +218,8 @@ namespace Cake.Incubator
             var targetFrameworks = document.GetFirstElementValue(ProjectXElement.TargetFrameworks)?.SplitWithoutEmpty(';') ?? new[] { targetFramework };
             var outputType = document.GetFirstElementValue(ProjectXElement.OutputType) ?? "Library";
             var debugType = document.GetFirstElementValue(ProjectXElement.DebugType);
-            var defaultOutputPath = projectFile.Path.GetDirectory()?.Combine($"bin/{config}/{targetFramework}/");
-            var outputPath = document.GetOutputPath(config) ?? defaultOutputPath;
+            var defaultOutputPath = projectFile.GetDefaultOutputPath(config, platform, targetFramework);
+            var outputPath = document.GetOutputPath(config, platform) ?? defaultOutputPath;
             var packageReferences = document.GetPackageReferences();
             var projectReferences = document.GetProjectReferences(projectFile.Path.GetDirectory());
             var assemblyName = document.GetFirstElementValue(ProjectXElement.AssemblyName) ?? $"{projectFile.Path.GetFilenameWithoutExtension()}";
@@ -253,8 +253,8 @@ namespace Cake.Incubator
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.ServerGarbageCollection), out var serverGarbageCollection);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.ConcurrentGarbageCollection), out var concurrentGarbageCollection);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.RetainVMGarbageCollection), out var retainVMGarbageCollection);
-            var threadPoolMinThreads = document.GetFirstElementValue(ProjectXElement.ThreadPoolMinThreads);
-            var threadPoolMaxThreads = document.GetFirstElementValue(ProjectXElement.ThreadPoolMaxThreads);
+            int.TryParse(document.GetFirstElementValue(ProjectXElement.ThreadPoolMinThreads), out var threadPoolMinThreads);
+            int.TryParse(document.GetFirstElementValue(ProjectXElement.ThreadPoolMaxThreads), out var threadPoolMaxThreads);
             var noWarn = document.GetFirstElementValue(ProjectXElement.NoWarn)?.SplitWithoutEmpty(';').Where(x => !x.StartsWith("$"))?.ToArray() ?? new string[0];
             var defineConstants = document.GetFirstElementValue(ProjectXElement.DefineConstants)?.SplitWithoutEmpty(';').Where(x => !x.StartsWith("$"))?.ToArray() ?? new string[0];
             var targets = document.GetTargets();
@@ -336,6 +336,16 @@ namespace Cake.Incubator
               <!-- CopyToPublishDirectory = { Always, PreserveNewest, Never } -->
             </ItemGroup>
              * */
+        }
+
+        private static DirectoryPath GetDefaultOutputPath(this IFile projectFile, string config, string platform, string targetFramework)
+        {
+            var template = "bin/";
+            if (!platform.IsNullOrEmpty() && !platform.EqualsIgnoreCase("AnyCPU")) template += $"{platform}/";
+            if (!config.IsNullOrEmpty()) template += $"{config}/";
+            if (!targetFramework.IsNullOrEmpty()) template += $"{targetFramework}/";
+
+            return projectFile.Path.GetDirectory()?.Combine(template);
         }
 
         private static NetFrameworkProjectProperties GetNetFrameworkProjectProperties(XDocument document, string config, string platform, XNamespace ns, DirectoryPath rootPath)

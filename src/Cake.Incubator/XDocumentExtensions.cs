@@ -28,35 +28,10 @@ namespace Cake.Incubator
             return document.Descendants("OutputPath")
                 .FirstOrDefault(x =>
                 {
-                    return x.Parent != null && x.Parent.Attribute("Condition")
-                               .Value
-                               .EndsWith($"=='{config}|{platform}'", StringComparison.OrdinalIgnoreCase);
+                    var condition = x.Parent?.Attribute("Condition")?.Value;
+                    if (condition.IsNullOrEmpty() || !condition.HasConfigPlatformCondition()) return false;
+                    return condition.GetConditionalConfigPlatform().EqualsIgnoreCase($"{config}|{platform}");
                 })?.Value;
-        }
-
-        /// <summary>
-        /// Gets the first platform target value for a specific config from an xml document
-        /// </summary>
-        /// <param name="document">The xml document</param>
-        /// <param name="config">the configuration</param>
-        /// <param name="platform">the platform</param>
-        /// <returns>the platform target</returns>
-        internal static string GetPlatformTarget(this XDocument document, string config, string platform = "AnyCPU")
-        {
-            return document.Descendants("PlatformTarget")
-                .FirstOrDefault(x => x.Parent.Attribute("Condition")
-                    .Value
-                    .EndsWith($"=='{config}|{platform}'", StringComparison.OrdinalIgnoreCase))?.Value;
-        }
-
-        /// <summary>
-        /// Gets the first targetframework value from an xml document
-        /// </summary>
-        /// <param name="document">The xml document</param>
-        /// <returns>the target framework</returns>
-        internal static string GetTargetFramework(this XDocument document)
-        {
-            return document.GetFirstElementValue(ProjectXElement.TargetFramework);
         }
 
         /// <summary>
@@ -143,13 +118,12 @@ namespace Cake.Incubator
         {
             return document.Descendants(ProjectXElement.ProjectReference).Select(x =>
             {
-                var value = x.GetAttributeValue("Include");
+                var value = new FilePath(x.GetAttributeValue("Include"));
                 return new ProjectReference
                 {
-                    Name = value,
-                    RelativePath = value,
-                    FilePath = rootPath.CombineWithFilePath(value),
-
+                    Name = value.GetFilenameWithoutExtension().ToString(),
+                    RelativePath = value.IsRelative ? value.ToString() : value.GetRelativePath(rootPath).ToString(),
+                    FilePath = value.IsRelative ? value.MakeAbsolute(rootPath) : value.ToString(),
                 };
             }).ToArray();
         }
@@ -170,9 +144,9 @@ namespace Cake.Incubator
                 new BuildTarget
                 {
                     Name = x.GetAttributeValue("Name"),
-                    BeforeTargets = x.GetAttributeValue("BeforeTargets")?.Split(';') ?? new string[0],
-                    AfterTargets = x.GetAttributeValue("AfterTargets")?.Split(';') ?? new string[0],
-                    DependsOn = x.GetAttributeValue("DependsOn")?.Split(';') ?? new string[0],
+                    BeforeTargets = x.GetAttributeValue("BeforeTargets")?.SplitWithoutEmpty(';') ?? new string[0],
+                    AfterTargets = x.GetAttributeValue("AfterTargets")?.SplitWithoutEmpty(';') ?? new string[0],
+                    DependsOn = x.GetAttributeValue("DependsOn")?.SplitWithoutEmpty(';') ?? new string[0],
                     Executables = x.Elements("Exec").Select(exec =>
                         new BuildTargetExecutable
                         {
