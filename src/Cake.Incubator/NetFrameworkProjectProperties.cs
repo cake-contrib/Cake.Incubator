@@ -9,7 +9,7 @@ namespace Cake.Incubator
     /// <summary>
     /// Represents the project properties for a .Net Framework project file
     /// </summary>
-    public class NetFrameworkProjectProperties
+    internal class NetFrameworkProjectProperties
     {
         public string Configuration { get; set; }
         public string Platform { get; set; }
