@@ -38,9 +38,6 @@
       <HintPath>..\packages\Cake.Core.0.16.2\lib\net45\Cake.Core.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="dotMemory.Unit, Version=103.0.0.0, Culture=neutral, PublicKeyToken=1010a0d8d6380325, processorArchitecture=MSIL">
-      <HintPath>..\packages\JetBrains.dotMemoryUnit.2.3.20160517.113140\lib\dotMemory.Unit.dll</HintPath>
-    </Reference>
     <Reference Include="FakeItEasy, Version=2.3.1.0, Culture=neutral, PublicKeyToken=eff28e2146d5fd2c, processorArchitecture=MSIL">
       <HintPath>..\packages\FakeItEasy.2.3.1\lib\net40\FakeItEasy.dll</HintPath>
       <Private>True</Private>
