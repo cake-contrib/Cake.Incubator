@@ -88,6 +88,7 @@
     <Compile Include="FilePathExtensionTests.cs" />
     <Compile Include="LoggingExtensionsTests.cs" />
     <Compile Include="NetCoreProjectParserExtensionsTests.cs" />
+    <Compile Include="NetFrameworkParserExtensionTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Resources.Designer.cs">
       <AutoGen>True</AutoGen>

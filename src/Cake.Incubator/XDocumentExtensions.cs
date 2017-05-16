@@ -96,17 +96,17 @@ namespace Cake.Incubator
             return document.Descendants(ProjectXElement.PackageReference).Select(
                 x =>
                 {
-                    var privateAssets = x.Element(ProjectXElement.PrivateAssets)?.Value.Split(';');
-                    var includeAssets = x.Element(ProjectXElement.IncludeAssets)?.Value.Split(';');
-                    var excludeAssets = x.Element(ProjectXElement.ExcludeAssets)?.Value.Split(';');
+                    var privateAssets = x.Element(ProjectXElement.PrivateAssets)?.Value.SplitWithoutEmpty(';');
+                    var includeAssets = x.Element(ProjectXElement.IncludeAssets)?.Value.SplitWithoutEmpty(';');
+                    var excludeAssets = x.Element(ProjectXElement.ExcludeAssets)?.Value.SplitWithoutEmpty(';');
                     var condition = x.GetAttributeValue("Condition") ?? x.Parent.GetAttributeValue("Condition");
                     return new PackageReference
                     {
                         Name = x.GetAttributeValue("Include"),
                         Version = x.GetAttributeValue("Version"),
-                        PrivateAssets = x.GetAttributeValue(ProjectXElement.PrivateAssets)?.Split(';') ?? privateAssets,
-                        IncludeAssets = x.GetAttributeValue(ProjectXElement.IncludeAssets)?.Split(';') ?? includeAssets,
-                        ExcludeAssets = x.GetAttributeValue(ProjectXElement.ExcludeAssets)?.Split(';') ?? excludeAssets,
+                        PrivateAssets = x.GetAttributeValue(ProjectXElement.PrivateAssets)?.SplitWithoutEmpty(';') ?? privateAssets,
+                        IncludeAssets = x.GetAttributeValue(ProjectXElement.IncludeAssets)?.SplitWithoutEmpty(';') ?? includeAssets,
+                        ExcludeAssets = x.GetAttributeValue(ProjectXElement.ExcludeAssets)?.SplitWithoutEmpty(';') ?? excludeAssets,
                         TargetFramework = condition.HasTargetFrameworkCondition()
                             ? condition.GetConditionTargetFramework()
                             : null
