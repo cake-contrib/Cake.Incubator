@@ -12,7 +12,7 @@ namespace Cake.Incubator
     /// <summary>
     /// Several extension methods when operating on a Directory.
     /// </summary>
-    [CakeAliasCategory("Directory Helpers")]
+    [CakeAliasCategory("Directory Operations")]
     public static class DirectoryExtensions
     {
         /// <summary>
@@ -24,6 +24,7 @@ namespace Cake.Incubator
         /// <exception cref="CakeException">Throws if source directory does not exist</exception>
         /// <exception cref="CakeException">Throws if destination directory does exist</exception>
         [CakeMethodAlias]
+        [CakeAliasCategory("Copy")]
         [Obsolete("Use Cake.Common.IO.CopyDirectory instead")]
         public static void TransferDirectory(this ICakeContext context, DirectoryPath source, DirectoryPath destination)
         {

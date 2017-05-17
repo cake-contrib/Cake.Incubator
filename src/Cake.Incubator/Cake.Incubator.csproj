@@ -64,6 +64,7 @@
     <Compile Include="EnvironmentExtensions.cs" />
     <Compile Include="FileExtensions.cs" />
     <Compile Include="FileSystemExtensions.cs" />
+    <Compile Include="GlobbingExtensions.cs" />
     <Compile Include="LoggingExtensions.cs" />
     <Compile Include="NetCoreProject.cs" />
     <Compile Include="NetFrameworkProjectProperties.cs" />
