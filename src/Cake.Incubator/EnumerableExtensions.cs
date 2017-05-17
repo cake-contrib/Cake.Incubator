@@ -12,7 +12,6 @@ namespace Cake.Incubator
     /// <summary>
     /// Several extension methods when using IEnumerable.
     /// </summary>
-    [CakeAliasCategory("Collection Helpers")]
     public static class EnumerableExtensions
     {
         /// <summary>
