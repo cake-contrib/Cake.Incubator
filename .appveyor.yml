@@ -24,3 +24,10 @@ branches:
 cache:
 - src\packages -> src\**\packages.config
 - tools -> setup.cake
+
+#---------------------------------#
+#    environment configuration    #
+#---------------------------------#
+
+# Build worker image (VM template)
+image: Visual Studio 2017
