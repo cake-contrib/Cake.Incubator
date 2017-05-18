@@ -214,15 +214,22 @@ namespace Cake.Incubator
         {
             var sdk = document.GetSdk();
             var version = document.GetVersion();
+            var projectName = projectFile.Path.GetFilenameWithoutExtension().ToString();
+            var rootnamespace = document.GetFirstElementValue(ProjectXElement.RootNamespace) ?? projectName;
             var targetFramework = document.GetFirstElementValue(ProjectXElement.TargetFramework);
+            var applicationIcon = document.GetFirstElementValue(ProjectXElement.ApplicationIcon);
+            var assemblyVersion = document.GetFirstElementValue(ProjectXElement.AssemblyVersion) ?? "1.0.0.0";
+            var fileVersion = document.GetFirstElementValue(ProjectXElement.FileVersion) ?? "1.0.0.0";
             var targetFrameworks = document.GetFirstElementValue(ProjectXElement.TargetFrameworks)?.SplitWithoutEmpty(';') ?? new[] { targetFramework };
             var outputType = document.GetFirstElementValue(ProjectXElement.OutputType) ?? "Library";
             var debugType = document.GetFirstElementValue(ProjectXElement.DebugType);
+            var product = document.GetFirstElementValue(ProjectXElement.Product);
+            var documentationFile = document.GetFirstElementValue(ProjectXElement.DocumentationFile);
             var defaultOutputPath = projectFile.GetDefaultOutputPath(config, platform, targetFramework);
             var outputPath = document.GetOutputPath(config, platform) ?? defaultOutputPath;
             var packageReferences = document.GetPackageReferences();
             var projectReferences = document.GetProjectReferences(projectFile.Path.GetDirectory());
-            var assemblyName = document.GetFirstElementValue(ProjectXElement.AssemblyName) ?? $"{projectFile.Path.GetFilenameWithoutExtension()}";
+            var assemblyName = document.GetFirstElementValue(ProjectXElement.AssemblyName) ?? projectName;
             var packageId = document.GetFirstElementValue(ProjectXElement.PackageId) ?? assemblyName;
             var authors = document.GetFirstElementValue(ProjectXElement.Authors)?.SplitWithoutEmpty(';') ?? new string[0];
             var company = document.GetFirstElementValue(ProjectXElement.Company);
@@ -236,7 +243,11 @@ namespace Cake.Incubator
             var runtimeIdentifiers = document.GetFirstElementValue(ProjectXElement.RuntimeIdentifiers)?.SplitWithoutEmpty(';') ?? new string[0];
             var dotNetCliToolReferences = document.GetDotNetCliToolReferences();
             var assemblyOriginatorKeyFile = document.GetFirstElementValue(ProjectXElement.AssemblyOriginatorKeyFile);
+            bool.TryParse(document.GetFirstElementValue(ProjectXElement.GeneratePackageOnBuild), out var generatePackageOnBuild);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.SignAssembly), out var signAssembly);
+            bool.TryParse(document.GetFirstElementValue(ProjectXElement.DelaySign), out var delaySign);
+            bool.TryParse(document.GetFirstElementValue(ProjectXElement.DebugSymbols), out var debugSymbols);
+            bool.TryParse(document.GetFirstElementValue(ProjectXElement.Optimize), out var optimize);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.PublicSign), out var publicSign);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.TreatWarningsAsErrors), out var treatWarningsAsErrors);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.GenerateDocumentationFile), out var generateDocumentationFile);
@@ -245,10 +256,13 @@ namespace Cake.Incubator
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.PackageRequireLicenseAcceptance), out var packageRequireLicenseAcceptance);
             var packageTags = document.GetFirstElementValue(ProjectXElement.PackageTags)?.SplitWithoutEmpty(';') ?? new string[0];
             var packageReleaseNotes = document.GetFirstElementValue(ProjectXElement.PackageReleaseNotes);
+            var langVersion = document.GetFirstElementValue(ProjectXElement.LangVersion);
             var packageIconUrl = document.GetFirstElementValue(ProjectXElement.PackageIconUrl);
             var packageProjectUrl = document.GetFirstElementValue(ProjectXElement.PackageProjectUrl);
             var packageLicenseUrl = document.GetFirstElementValue(ProjectXElement.PackageLicenseUrl);
-            var repositoryType = document.GetFirstElementValue(ProjectXElement.RepositoryType);
+            var generateSerializationAssemblies = document.GetFirstElementValue(ProjectXElement.GenerateSerializationAssemblies);
+            var warningLevel = document.GetFirstElementValue(ProjectXElement.WarningLevel);
+            var repositoryType = document.GetFirstElementValue(ProjectXElement.RepositoryType) ?? "git";
             var repositoryUrl = document.GetFirstElementValue(ProjectXElement.RepositoryUrl);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.ServerGarbageCollection), out var serverGarbageCollection);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.ConcurrentGarbageCollection), out var concurrentGarbageCollection);
@@ -256,58 +270,73 @@ namespace Cake.Incubator
             int.TryParse(document.GetFirstElementValue(ProjectXElement.ThreadPoolMinThreads), out var threadPoolMinThreads);
             int.TryParse(document.GetFirstElementValue(ProjectXElement.ThreadPoolMaxThreads), out var threadPoolMaxThreads);
             var noWarn = document.GetFirstElementValue(ProjectXElement.NoWarn)?.SplitWithoutEmpty(';').Where(x => !x.StartsWith("$"))?.ToArray() ?? new string[0];
+            var treatSpecificWarningsAsErrors = document.GetFirstElementValue(ProjectXElement.TreatSpecificWarningsAsErrors)?.SplitWithoutEmpty(';')?.ToArray() ?? new string[0];
             var defineConstants = document.GetFirstElementValue(ProjectXElement.DefineConstants)?.SplitWithoutEmpty(';').Where(x => !x.StartsWith("$"))?.ToArray() ?? new string[0];
             var targets = document.GetTargets();
 
+
+            // TODO: config/platform specific props
             return new CustomProjectParserResult
             {
+                AssemblyName = assemblyName,
                 Configuration = config,
-                Platform = platform,
                 OutputType = outputType,
                 OutputPath = outputPath,
-                AssemblyName = assemblyName,
-                TargetFrameworkVersion = targetFramework,
+                Platform = platform,
                 ProjectReferences = projectReferences,
+                RootNameSpace = rootnamespace,
+                TargetFrameworkVersion = targetFramework,
                 IsNetCore = true,
                 NetCore = new NetCoreProject
                 {
-                    Sdk = sdk,
-                    IsWeb = sdk.EqualsIgnoreCase("Microsoft.NET.Sdk.Web"),
-                    Version = version,
-                    PackageId = packageId,
-                    PackageReferences = packageReferences,
-                    ProjectReferences = projectReferences,
-                    TargetFrameworks = targetFrameworks,
-                    DebugType = debugType,
+                    AllowUnsafeBlocks = allowUnsafeBlocks,
+                    ApplicationIcon = applicationIcon,
+                    AssemblyOriginatorKeyFile = assemblyOriginatorKeyFile,
+                    AssemblyTitle = assemblyTitle ?? assemblyName,
+                    AssemblyVersion = assemblyVersion,
                     Authors = authors,
                     Company = company,
-                    NeutralLanguage = neutralLang,
-                    AssemblyTitle = assemblyTitle ?? assemblyName,
-                    Description = description,
                     Copyright = copyright,
-                    NetStandardImplicitPackageVersion = netstandardVersion,
-                    RuntimeFrameworkVersion = runtimeFrameworkVersion,
-                    PackageTargetFallbacks = packageTargetFallbacks,
-                    RuntimeIdentifiers = runtimeIdentifiers,
+                    DebugSymbols = debugSymbols,
+                    DebugType = debugType,
+                    DefineConstants = defineConstants,
+                    DelaySign = delaySign,
+                    Description = description,
+                    DocumentationFile = documentationFile,
                     DotNetCliToolReferences = dotNetCliToolReferences,
-                    AssemblyOriginatorKeyFile = assemblyOriginatorKeyFile,
-                    SignAssembly = signAssembly,
-                    PublicSign = publicSign,
-                    TreatWarningsAsErrors = treatWarningsAsErrors,
+                    FileVersion = fileVersion,
                     GenerateDocumentationFile = generateDocumentationFile,
-                    PreserveCompilationContext = preserveCompilationContext,
-                    AllowUnsafeBlocks = allowUnsafeBlocks,
+                    GeneratePackageOnBuild = generatePackageOnBuild,
+                    GenerateSerializationAssemblies = generateSerializationAssemblies,
+                    IsWeb = sdk.EqualsIgnoreCase("Microsoft.NET.Sdk.Web"),
+                    LangVersion = langVersion,
+                    NetStandardImplicitPackageVersion = netstandardVersion,
+                    NeutralLanguage = neutralLang,
+                    NoWarn = noWarn,
+                    Optimize = optimize,
+                    PackageIconUrl = packageIconUrl,
+                    PackageId = packageId,
+                    PackageLicenseUrl = packageLicenseUrl,
+                    PackageProjectUrl = packageProjectUrl,
+                    PackageReferences = packageReferences,
+                    PackageReleaseNotes = packageReleaseNotes,
                     PackageRequireLicenseAcceptance = packageRequireLicenseAcceptance,
                     PackageTags = packageTags,
-                    PackageReleaseNotes = packageReleaseNotes,
-                    PackageIconUrl = packageIconUrl,
-                    PackageProjectUrl = packageProjectUrl,
-                    PackageLicenseUrl = packageLicenseUrl,
+                    PackageTargetFallbacks = packageTargetFallbacks,
+                    PreserveCompilationContext = preserveCompilationContext,
+                    Product = product,
+                    ProjectReferences = projectReferences,
+                    PublicSign = publicSign,
                     RepositoryType = repositoryType,
                     RepositoryUrl = repositoryUrl,
-                    NoWarn = noWarn,
-                    DefineConstants = defineConstants,
+                    RuntimeFrameworkVersion = runtimeFrameworkVersion,
+                    RuntimeIdentifiers = runtimeIdentifiers,
+                    Sdk = sdk,
+                    SignAssembly = signAssembly,
+                    TargetFrameworks = targetFrameworks,
                     Targets = targets,
+                    TreatWarningsAsErrors = treatWarningsAsErrors,
+                    TreatSpecificWarningsAsErrors = treatSpecificWarningsAsErrors,
                     RuntimeOptions = new RuntimeOptions
                     {
                         ServerGarbageCollection = serverGarbageCollection,
@@ -315,9 +344,29 @@ namespace Cake.Incubator
                         RetainVMGarbageCollection = retainVMGarbageCollection,
                         ThreadPoolMinThreads = threadPoolMinThreads,
                         ThreadPoolMaxThreads = threadPoolMaxThreads
-                    }
+                    },
+                    Version = version,
+                    WarningLevel = warningLevel
                 }
             };
+            /*
+             <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+                <DefineConstants>TRACE;DEBUG;NETSTANDARD1_6;WINDOWS;</DefineConstants>
+                <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+                <Optimize>True</Optimize>
+                <WarningLevel>1</WarningLevel>
+                <NoWarn>1701;1702;1705;1304</NoWarn>
+                <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+                <TreatSpecificWarningsAsErrors>1701;2093</TreatSpecificWarningsAsErrors>
+                <DocumentationFile>bin\x64\Debug\NetStandard1.6\Custom.xml</DocumentationFile>
+                <GenerateSerializationAssemblies>On</GenerateSerializationAssemblies>
+                <LangVersion>5</LangVersion>
+                <ErrorReport>queue</ErrorReport>
+                <CheckForOverflowUnderflow>True</CheckForOverflowUnderflow>
+                <FileAlignment>1024</FileAlignment>
+                <DebugSymbols>True</DebugSymbols>
+              </PropertyGroup> 
+             */
 
             // TODO: Add support for file contents
             // default globs: https://docs.microsoft.com/en-us/dotnet/articles/core/tools/project-json-to-csproj#files

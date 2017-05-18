@@ -12,9 +12,11 @@ namespace Cake.Incubator
     {
         internal const string Aliases = "Aliases";
         internal const string AllowUnsafeBlocks = "AllowUnsafeBlocks";
+        internal const string ApplicationIcon = "ApplicationIcon";
         internal const string AssemblyName = "AssemblyName";
         internal const string AssemblyOriginatorKeyFile = "AssemblyOriginatorKeyFile";
         internal const string AssemblyTitle = "AssemblyTitle";
+        internal const string AssemblyVersion = "AssemblyVersion";
         internal const string Authors = "Authors";
         internal const string BootstrapperPackage = "BootstrapperPackage";
         internal const string Company = "Company";
@@ -22,21 +24,29 @@ namespace Cake.Incubator
         internal const string ConcurrentGarbageCollection = "ConcurrentGarbageCollection";
         internal const string Configuration = "Configuration";
         internal const string Copyright = "Copyright";
+        internal const string DebugSymbols = "DebugSymbols";
         internal const string DebugType = "DebugType";
         internal const string DefineConstants = "DefineConstants";
+        internal const string DelaySign = "DelaySign";
         internal const string Description = "Description";
+        internal const string DocumentationFile = "DocumentationFile";
         internal const string DotNetCliToolReference = "DotNetCliToolReference";
         internal const string ExcludeAssets = "ExcludeAssets";
+        internal const string FileVersion = "FileVersion";
         internal const string FusionName = "FusionName";
         internal const string GenerateDocumentationFile = "GenerateDocumentationFile";
+        internal const string GeneratePackageOnBuild = "GeneratePackageOnBuild";
+        internal const string GenerateSerializationAssemblies = "GenerateSerializationAssemblies";
         internal const string HintPath = "HintPath";
         internal const string Import = "Import";
         internal const string IncludeAssets = "IncludeAssets";
         internal const string ItemGroup = "ItemGroup";
+        internal const string LangVersion = "LangVersion";
         internal const string Name = "Name";
         internal const string NetStandardImplicitPackageVersion = "NetStandardImplicitPackageVersion";
         internal const string NeutralLanguage = "NeutralLanguage";
         internal const string NoWarn = "NoWarn";
+        internal const string Optimize = "Optimize";
         internal const string OutputPath = "OutputPath";
         internal const string OutputType = "OutputType";
         internal const string Package = "Package";
@@ -53,6 +63,7 @@ namespace Cake.Incubator
         internal const string PreserveCompilationContext = "PreserveCompilationContext";
         internal const string Private = "Private";
         internal const string PrivateAssets = "PrivateAssets";
+        internal const string Product = "Product";
         internal const string Project = "Project";
         internal const string ProjectGuid = "ProjectGuid";
         internal const string ProjectReference = "ProjectReference";
@@ -77,9 +88,11 @@ namespace Cake.Incubator
         internal const string TargetFrameworks = "TargetFrameworks";
         internal const string ThreadPoolMaxThreads = "ThreadPoolMaxThreads";
         internal const string ThreadPoolMinThreads = "ThreadPoolMinThreads";
+        internal const string TreatSpecificWarningsAsErrors = "TreatSpecificWarningsAsErrors";
         internal const string TreatWarningsAsErrors = "TreatWarningsAsErrors";
         internal const string Version = "Version";
         internal const string VersionPrefix = "VersionPrefix";
         internal const string VersionSuffix = "VersionSuffix";
+        internal const string WarningLevel = "WarningLevel";
     }
 }

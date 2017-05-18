@@ -56,7 +56,7 @@ namespace Cake.Incubator
             var suffix = document.GetFirstElementValue(ProjectXElement.VersionSuffix);
             var version = document.GetFirstElementValue(ProjectXElement.Version);
 
-            if (prefix.IsNullOrEmpty() || suffix.IsNullOrEmpty()) return version;
+            if (prefix.IsNullOrEmpty() || suffix.IsNullOrEmpty()) return version ?? "1.0.0";
 
             return char.IsDigit(suffix[0]) ? $"{prefix}.{suffix}" : $"{prefix}-{suffix}";
         }

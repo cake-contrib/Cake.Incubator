@@ -18,6 +18,11 @@ namespace Cake.Incubator
         public bool AllowUnsafeBlocks { get; set; }
 
         /// <summary>
+        /// The application icon
+        /// </summary>
+        public string ApplicationIcon { get; set; }
+
+        /// <summary>
         /// The assembly title, defaults to the assemblyname
         /// </summary>
         public string AssemblyTitle { get; set; }
@@ -26,6 +31,11 @@ namespace Cake.Incubator
         /// The signing key file path
         /// </summary>
         public string AssemblyOriginatorKeyFile { get; set; }
+
+        /// <summary>
+        /// The Assembly Version
+        /// </summary>
+        public string AssemblyVersion { get; set; }
 
         /// <summary>
         /// The assembly or package authors
@@ -43,6 +53,11 @@ namespace Cake.Incubator
         public string Company { get; set; }
 
         /// <summary>
+        /// True if compilation will output debug symbols
+        /// </summary>
+        public bool DebugSymbols { get; set; }
+
+        /// <summary>
         /// The debug type (portable, embedded, full)
         /// </summary>
         public string DebugType { get; set; }
@@ -53,9 +68,19 @@ namespace Cake.Incubator
         public string[] DefineConstants { get; set; }
 
         /// <summary>
+        /// When delay signed, the project will not run or be debuggable
+        /// </summary>
+        public bool DelaySign { get; set; }
+
+        /// <summary>
         /// Project and package description
         /// </summary>
         public string Description { get; set; }
+
+        /// <summary>
+        /// The documentation file path
+        /// </summary>
+        public string DocumentationFile { get; set; }
 
         /// <summary>
         /// The dotnet CLI tool references, a collection of <see cref="DotNetCliToolReference"/>
@@ -63,14 +88,34 @@ namespace Cake.Incubator
         public ICollection<DotNetCliToolReference> DotNetCliToolReferences { get; set; }
 
         /// <summary>
+        /// The File Version
+        /// </summary>
+        public string FileVersion { get; set; }
+
+        /// <summary>
         /// True if assembly will generate xml documentation
         /// </summary>
         public bool GenerateDocumentationFile { get; set; }
 
         /// <summary>
+        /// True if the package will be generated when building
+        /// </summary>
+        public bool GeneratePackageOnBuild { get; set; }
+
+        /// <summary>
+        /// Generate serialization assemblies (Off, On, Auto)
+        /// </summary>
+        public string GenerateSerializationAssemblies { get; set; }
+
+        /// <summary>
         /// True if this is a web project
         /// </summary>
         public bool IsWeb { get; set; }
+
+        /// <summary>
+        /// Assembly language version (ISO-1, ISO-2, [C#]2-7)
+        /// </summary>
+        public string LangVersion { get; set; }
 
         /// <summary>
         /// The netstandard package target version if specified
@@ -86,6 +131,11 @@ namespace Cake.Incubator
         /// The pragma warnings to ignore during compilation
         /// </summary>
         public string[] NoWarn { get; set; }
+
+        /// <summary>
+        /// The optimize code flag
+        /// </summary>
+        public bool Optimize { get; set; }
 
         /// <summary>
         /// The package icon url
@@ -138,6 +188,11 @@ namespace Cake.Incubator
         public bool PreserveCompilationContext { get; set; }
 
         /// <summary>
+        /// The product name
+        /// </summary>
+        public string Product { get; set; }
+
+        /// <summary>
         /// The references to other projects. A collection of <see cref="ProjectReference"/>
         /// </summary>
         public ICollection<ProjectReference> ProjectReferences { get; set; }
@@ -146,7 +201,7 @@ namespace Cake.Incubator
         /// Undocumented flag relating to assembly signing
         /// </summary>
         public bool PublicSign { get; set; }
-        
+
         /// <summary>
         /// The source control repository type for the project
         /// </summary>
@@ -193,6 +248,11 @@ namespace Cake.Incubator
         public string[] TargetFrameworks { get; set; }
 
         /// <summary>
+        /// The warnings to specifically treat as errors
+        /// </summary>
+        public string[] TreatSpecificWarningsAsErrors { get; set; }
+
+        /// <summary>
         /// True if wanrings will be treated as errors during compilation
         /// </summary>
         public bool TreatWarningsAsErrors { get; set; }
@@ -201,5 +261,10 @@ namespace Cake.Incubator
         /// The project version
         /// </summary>
         public string Version { get; set; }
+
+        /// <summary>
+        /// Compiler warning level
+        /// </summary>
+        public string WarningLevel { get; set; }
     }
 }

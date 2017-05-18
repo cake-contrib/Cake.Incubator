@@ -53,6 +53,20 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
+        public void ParseProject_RootNamespace_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("RootNamespace", "b"));
+            file.ParseProject("test").RootNameSpace.Should().Be("b");
+        }
+
+        [Fact]
+        public void ParseProject_RootNamespace_FallbackToProjectName()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null), "./any/root.csproj");
+            file.ParseProject("test").RootNameSpace.Should().Be("root");
+        }
+
+        [Fact]
         public void ParseProject_GetsCorrectOutputType_WhenNoneSpecified()
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("AssemblyName", "a"));
@@ -71,6 +85,20 @@ namespace Cake.Incubator.Tests
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("OutputType", "Exe"));
             file.ParseProject("test").OutputType.Should().Be("Exe");
+        }
+
+        [Fact]
+        public void ParseProject_ApplicationIcons_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("ApplicationIcon", "fav.ico"));
+            file.ParseProject("test").NetCore.ApplicationIcon.Should().Be("fav.ico");
+        }
+
+        [Fact]
+        public void ParseProject_GeneratePackageOnBuild_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("GeneratePackageOnBuild", "true"));
+            file.ParseProject("test").NetCore.GeneratePackageOnBuild.Should().BeTrue();
         }
 
         [Fact]
@@ -102,19 +130,12 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
-        public void ParseProject_IgnoresRootnamespace()
-        {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
-            file.ParseProject("test").RootNameSpace.Should().BeNull();
-        }
-
-        [Fact]
         public void ParseProject_IgnoresTargetFrameworkProfile()
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
             file.ParseProject("test").TargetFrameworkProfile.Should().BeNull();
         }
-
+        
         [Fact]
         public void ParseProject_TargetFrameworkVersion_NullIfUnspecified()
         {
@@ -148,6 +169,13 @@ namespace Cake.Incubator.Tests
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("AllowUnsafeBlocks", "true"));
             file.ParseProject("test").NetCore.AllowUnsafeBlocks.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_DebugSymbols_TrueIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("DebugSymbols", "true"));
+            file.ParseProject("test").NetCore.DebugSymbols.Should().BeTrue();
         }
 
         [Fact]
@@ -228,6 +256,27 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
+        public void ParseProject_NetCore_WarningLevel_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("WarningLevel", "3"));
+            file.ParseProject("test").NetCore.WarningLevel.Should().Be("3");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_Optimize_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("Optimize", "true"));
+            file.ParseProject("test").NetCore.Optimize.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_DocumentationFile_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("DocumentationFile", ".a/b/c.xml"));
+            file.ParseProject("test").NetCore.DocumentationFile.Should().Be(".a/b/c.xml");
+        }
+
+        [Fact]
         public void ParseProject_NetCore_GenerateDocumentationFile_ReturnsIfSet()
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("GenerateDocumentationFile", "true"));
@@ -256,10 +305,38 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
+        public void ParseProject_NetCore_TreatSpecificWarningsAsErrors_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TreatSpecificWarningsAsErrors", ";CS3132;CS2534;"));
+            file.ParseProject("test").NetCore.TreatSpecificWarningsAsErrors.Should().BeEquivalentTo("CS3132", "CS2534");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_GenerateSerializationAssemblies_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("GenerateSerializationAssemblies", "autobots"));
+            file.ParseProject("test").NetCore.GenerateSerializationAssemblies.Should().Be("autobots");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_LangVersion_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("LangVersion", "GROOT"));
+            file.ParseProject("test").NetCore.LangVersion.Should().Be("GROOT");
+        }
+
+        [Fact]
         public void ParseProject_NetCore_PackageIconUrl_ReturnsIfSet()
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageIconUrl", "http://acme.inc/fav.ico"));
             file.ParseProject("test").NetCore.PackageIconUrl.Should().Be("http://acme.inc/fav.ico");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_Product_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("Product", "acme skyhooks"));
+            file.ParseProject("test").NetCore.Product.Should().Be("acme skyhooks");
         }
 
         [Fact]
@@ -340,10 +417,24 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
+        public void ParseProject_NetCore_DelaySign_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("DelaySign", "true"));
+            file.ParseProject("test").NetCore.DelaySign.Should().BeTrue();
+        }
+
+        [Fact]
         public void ParseProject_NetCore_RepositoryType_ReturnsIfSet()
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("RepositoryType", "gitgat"));
             file.ParseProject("test").NetCore.RepositoryType.Should().Be("gitgat");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_RepositoryType_DefaultFallback()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
+            file.ParseProject("test").NetCore.RepositoryType.Should().Be("git");
         }
 
         [Fact]
@@ -412,14 +503,14 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_Version_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<VersionPrefix>1.2.3</VersionPrefix><VersionSuffix>5813</VersionSuffix>"));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<VersionPrefix>1.2.3</VersionPrefix><VersionSuffix>5813</VersionSuffix><Version>8.9.10</Version>"));
             file.ParseProject("test").NetCore.Version.Should().Be("1.2.3.5813");
         }
 
         [Fact]
         public void ParseProject_NetCore_Version_ReturnsIfSemver()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<VersionPrefix>1.2.3</VersionPrefix><VersionSuffix>alpha5813</VersionSuffix>"));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<VersionPrefix>1.2.3</VersionPrefix><VersionSuffix>alpha5813</VersionSuffix><Version>8.9.10</Version>"));
             file.ParseProject("test").NetCore.Version.Should().Be("1.2.3-alpha5813");
         }
 
@@ -428,6 +519,41 @@ namespace Cake.Incubator.Tests
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("Version", "1.2.3.5"));
             file.ParseProject("test").NetCore.Version.Should().Be("1.2.3.5");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_AssemblyVersion_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("AssemblyVersion", "1.4.3.5"));
+            file.ParseProject("test").NetCore.AssemblyVersion.Should().Be("1.4.3.5");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_AssemblyVersion_DefaultFallback()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
+            file.ParseProject("test").NetCore.AssemblyVersion.Should().Be("1.0.0.0");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_FileVersion_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("FileVersion", "1.4.3.5"));
+            file.ParseProject("test").NetCore.FileVersion.Should().Be("1.4.3.5");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_FileVersion_DefaultFallback()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
+            file.ParseProject("test").NetCore.FileVersion.Should().Be("1.0.0.0");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_Version_DefaultFallback()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
+            file.ParseProject("test").NetCore.Version.Should().Be("1.0.0");
         }
 
         [Fact]
