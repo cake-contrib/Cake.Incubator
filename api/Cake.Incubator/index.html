@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head>
+﻿<!DOCTYPE html><html><head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta name="description">
@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
-        <title>Docs - API - Cake.Incubator Namespace</title>
+        <title>Cake.Incubator - API - Cake.Incubator Namespace</title>
         <link href="/Cake.Incubator/assets/css/mermaid.css" rel="stylesheet">
         <link href="/Cake.Incubator/assets/css/highlight.css" rel="stylesheet">
         <link href="/Cake.Incubator/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
@@ -36,7 +36,7 @@
             <header class="main-header">   
                      
                 <a href="/Cake.Incubator/" class="logo">
-                            <span>Docs</span>
+                            <span>Cake.Incubator</span>
                 </a>   
                          
                 <nav class="navbar navbar-static-top" role="navigation">
@@ -72,7 +72,8 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#ClassTypes">Class Types</a></p>
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
+<p><a href="#ClassTypes">Class Types</a></p>
 <p><a href="#EnumTypes">Enum Types</a></p>
 <hr class="infobar-hidden">
 </div>
@@ -80,8 +81,8 @@
                 </section>
                 <section class="sidebar">                    
                     	
-	    <script src="/assets/js/lunr.min.js"></script>
-    <script src="/assets/js/searchIndex.js"></script>
+	    <script src="/Cake.Incubator/assets/js/lunr.min.js"></script>
+    <script src="/Cake.Incubator/assets/js/searchIndex.js"></script>
     <div class="sidebar-form">
         <div class="input-group">
             <input type="text" name="search" id="search" class="form-control" placeholder="Search Types...">
@@ -130,8 +131,7 @@
 				<a href="/Cake.Incubator/api/Cake">Cake</a> <a href="#" class="expand"></a>
 				<ul class="treeview-menu">
 						<li class=" selected"><a href="/Cake.Incubator/api/Cake.Incubator">Cake<wbr>.Incubator</a></li>
-</ul></li>			<li><a href="/Cake.Incubator/api/global">global</a></li>
-      
+</ul></li>      
 
                     </ul>
                 </section>                
@@ -149,7 +149,11 @@
 <section class="content">
 	
 	
-	
+		<h1 id="Summary">Summary</h1>
+	<div class="lead">
+    This project contains various experimental but useful extension methods and aliases for Cake that over time may become part of the core project
+    </div>
+
 
 			<h1 id="ClassTypes">Class Types</h1>
 			<div class="box">
@@ -168,13 +172,21 @@
     </td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectFile">CustomProjectFile</a></td>
-									<td>Represents a MSBuild project file.</td>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/BuildTarget">BuildTarget</a></td>
+									<td>
+    A project build target
+    </td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectParser">CustomProjectParser</a></td>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/BuildTargetExecutable">Build<wbr>Target<wbr>Executable</a></td>
 									<td>
-    Class to handle parsing of Visual Studio Project Files.
+    A executable build target 
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectFile">CustomProjectFile</a></td>
+									<td>
+    Represents a MSBuild project file.
     </td>
 							</tr>
 							<tr>
@@ -191,6 +203,12 @@
 								<td><a href="/Cake.Incubator/api/Cake.Incubator/DotNetBuildSettingsExtensions">Dot<wbr>Net<wbr>Build<wbr>Settings<wbr>Extensions</a></td>
 									<td>
     Several extension methods when using DotNetBuildSettings.
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/DotNetCliToolReference">Dot<wbr>Net<wbr>Cli<wbr>Tool<wbr>Reference</a></td>
+									<td>
+    A dotnet cli tool referenceS
     </td>
 							</tr>
 							<tr>
@@ -224,15 +242,39 @@
     </td>
 							</tr>
 							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/FileSystemExtensions">FileSystemExtensions</a></td>
+									<td>
+    Contains extension methods for working with cakes <code class="cs">IFileSystem</code>
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/GlobbingExtensions">GlobbingExtensions</a></td>
+									<td>
+    Contains functionality related to file system globbing. 
+    </td>
+							</tr>
+							<tr>
 								<td><a href="/Cake.Incubator/api/Cake.Incubator/LoggingExtensions">LoggingExtensions</a></td>
 									<td>
     Several extension methods when using Logging.
     </td>
 							</tr>
 							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject">NetCoreProject</a></td>
+									<td>
+    Describes a netcore project
+    </td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/PackageReference">PackageReference</a></td>
+									<td>
+    A project package reference
+    </td>
+							</tr>
+							<tr>
 								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions">Project<wbr>Parser<wbr>Extensions</a></td>
 									<td>
-    Several extension methods when using ProjectParser.
+    Extension methods for parsing msbuild projects (csproj, vbproj, fsproj)
     </td>
 							</tr>
 							<tr>
@@ -248,22 +290,15 @@
     </td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypeExtensions">Project<wbr>Type<wbr>Extensions</a></td>
-									<td>
-    Several extension methods when using ProjectType.
-    </td>
-							</tr>
-							<tr>
 								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes">ProjectTypes</a></td>
 									<td>
     Class to contain a list of the Project Type ID's that exist within the Visual Studio eco-system.
     </td>
 							</tr>
 							<tr>
-								<td><a href="/Cake.Incubator/api/Cake.Incubator/ProjectXElement">ProjectXElement</a></td>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/RuntimeOptions">RuntimeOptions</a></td>
 									<td>
-    MSBuild Project Xml Element XNames
-    original source: https://github.com/cake-build/cake/blob/main/src/Cake.Common/Solution/Project/ProjectXElement.cs
+    Optional runtime options to override the default settings
     </td>
 							</tr>
 							<tr>

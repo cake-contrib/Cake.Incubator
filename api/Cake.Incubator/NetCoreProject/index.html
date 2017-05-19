@@ -1,0 +1,951 @@
+﻿<!DOCTYPE html><html><head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+        <meta name="description">
+        <meta name="keywords" content="static content generator,static site generator,static site,HTML,web development,.NET,C#,Razor,Markdown,YAML">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="shortcut icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
+        <title>Cake.Incubator - API - NetCoreProject Class</title>
+        <link href="/Cake.Incubator/assets/css/mermaid.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/highlight.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/adminlte/AdminLTE.css" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/theme/theme.css" rel="stylesheet">
+        <link href="//fonts.googleapis.com/css?family=Roboto+Mono:400,700|Roboto:400,400i,700,700i" rel="stylesheet">
+        <link href="/Cake.Incubator/assets/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+        <link href="/Cake.Incubator/assets/css/override.css" rel="stylesheet">
+        <script src="/Cake.Incubator/assets/js/jquery-2.2.3.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/bootstrap.min.js"></script>        
+        <script src="/Cake.Incubator/assets/js/app.min.js"></script>         
+        <script src="/Cake.Incubator/assets/js/highlight.pack.js"></script>   
+        <script src="/Cake.Incubator/assets/js/jquery.slimscroll.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/jquery.sticky-kit.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/mermaid.min.js"></script>
+        <!--[if lt IE 9]>
+        <script src="/Cake.Incubator/assets/js/html5shiv.min.js"></script>
+        <script src="/Cake.Incubator/assets/js/respond.min.js"></script>
+        <![endif]-->  
+
+        
+    </head>
+    <body class="hold-transition wyam layout-boxed  ">    
+        <div class="top-banner"></div>
+        <div class="wrapper with-container">
+            <!-- Header -->
+            <header class="main-header">   
+                     
+                <a href="/Cake.Incubator/" class="logo">
+                            <span>Cake.Incubator</span>
+                </a>   
+                         
+                <nav class="navbar navbar-static-top" role="navigation">
+                    <!-- Sidebar toggle button-->
+                        <a href="#" class="sidebar-toggle visible-xs-block" data-toggle="offcanvas" role="button">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-right"></i>
+                        </a>
+                                        
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar-collapse">
+                            <span class="sr-only">Toggle side menu</span>
+                            <i class="fa fa-chevron-circle-down"></i>
+                        </button>
+                    </div>
+            
+                    <!-- Collect the nav links, forms, and other content for toggling -->
+                    <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
+                        <ul class="nav navbar-nav">                            
+                                    <li><a href="/Cake.Incubator/docs">Documentation</a></li>
+        <li><a href="/Cake.Incubator/blog">Blog</a></li>
+        <li class="active"><a href="/Cake.Incubator/api">API</a></li>
+ 
+                        </ul>       
+                    </div>
+                    <!-- /.navbar-collapse -->
+                
+                    <!-- Navbar Right Menu -->
+                </nav>
+            </header>
+            
+            <!-- Left side column. contains the logo and sidebar -->
+            <aside class="main-sidebar ">
+                <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
+                    	
+	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
+<p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Properties">Properties</a></p>
+<p><a href="#ExtensionMethods">Extension Methods</a></p>
+<hr class="infobar-hidden">
+</div>
+
+                </section>
+                <section class="sidebar">                    
+                    	
+	    <script src="/Cake.Incubator/assets/js/lunr.min.js"></script>
+    <script src="/Cake.Incubator/assets/js/searchIndex.js"></script>
+    <div class="sidebar-form">
+        <div class="input-group">
+            <input type="text" name="search" id="search" class="form-control" placeholder="Search Types...">
+            <span class="input-group-btn">
+                <button class="btn btn-flat"><i class="fa fa-search"></i></button>
+            </span>
+        </div>
+    </div>
+    <div id="search-results">
+    </div>
+    <script>
+        function runSearch(query){
+            $("#search-results").empty();			
+            if( query.length < 2 ){
+                return;
+            }			
+            var results = searchModule.search("*" + query + "*");
+            var listHtml = "<ul class='sidebar-menu'>";	
+            listHtml += "<li class='header'>Type Results</li>";	
+            if(results.length == 0 ){
+                listHtml += "<li>No results found</li>";
+            } else {					
+                for(var i = 0; i < results.length; ++i){
+                    var res = results[i];
+                    listHtml += "<li><a href='" + res.url + "'>" + res.title + "</a></li>";
+                }				
+            }
+            listHtml += "</ul>";				
+            $("#search-results").append(listHtml);
+        }
+
+        $(document).ready(function(){
+            $("#search").on('input propertychange paste', function() {
+                runSearch($("#search").val());
+            });
+        });
+    </script>
+	
+    <hr>
+
+                    <ul class="sidebar-menu">
+                        
+			<li class="header">Namespace</li>
+		<li><a href="/Cake.Incubator/api/Cake.Incubator">Cake<wbr>.Incubator</a></li>
+		<li role="separator" class="divider"></li>
+			<li class="header">Class Types</li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/AssertExtensions">AssertExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/BuildTarget">BuildTarget</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/BuildTargetExecutable">Build<wbr>Target<wbr>Executable</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectFile">CustomProjectFile</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectParserResult">Custom<wbr>Project<wbr>Parser<wbr>Result</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/DirectoryExtensions">DirectoryExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/DotNetBuildSettingsExtensions">Dot<wbr>Net<wbr>Build<wbr>Settings<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/DotNetCliToolReference">Dot<wbr>Net<wbr>Cli<wbr>Tool<wbr>Reference</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/DotNetCoreTestExtensions">Dot<wbr>Net<wbr>Core<wbr>Test<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions">EnumerableExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/EnvironmentExtensions">Environment<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/FileExtensions">FileExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/FilePathExtensions">FilePathExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/FileSystemExtensions">FileSystemExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/GlobbingExtensions">GlobbingExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/LoggingExtensions">LoggingExtensions</a></li>
+				<li class="selected"><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject">NetCoreProject</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/PackageReference">PackageReference</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions">Project<wbr>Parser<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectPath">ProjectPath</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectPathExtensions">Project<wbr>Path<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectTypes">ProjectTypes</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/RuntimeOptions">RuntimeOptions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/SolutionParserExtensions">Solution<wbr>Parser<wbr>Extensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/StringExtensions">StringExtensions</a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/XDocumentExtensions">XDocumentExtensions</a></li>
+			<li class="header">Enum Types</li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectType">ProjectType</a></li>
+
+
+                    </ul>
+                </section>                
+            </aside>
+            
+            <!-- Content Wrapper. Contains page content -->
+            <div class="content-wrapper">
+                
+
+
+
+<section class="content-header">
+	<h1>NetCoreProject <small>Class</small></h1>
+</section>
+<section class="content">
+	
+	
+		<h1 id="Summary">Summary</h1>
+	<div class="lead">
+    Describes a netcore project
+    </div>
+
+		<div class="panel panel-default">
+  			<div class="panel-body">
+				<div class="row">
+					<div class="col-md-6">
+						<dl class="dl-horizontal">		
+
+								<dt>Namespace</dt>
+								<dd><a href="/Cake.Incubator/api/Cake.Incubator">Cake<wbr>.Incubator</a></dd>
+											
+							
+								<dt>Base Types</dt>
+								<dd>
+									<ul class="list-unstyled">										
+											<li>object</li>								
+									</ul>
+								</dd>				
+							
+							
+						</dl>
+					</div>		
+					<div class="col-md-6">
+						<div class="mermaid">
+							graph TD
+	Base0["object"]--&gt;Type
+	Type["NetCoreProject"]
+class Type type-node
+
+						</div>
+					</div>
+				</div>
+  			</div>
+		</div>
+
+	<h1 id="Syntax">Syntax</h1>
+	<pre><code>public class NetCoreProject</code></pre>
+
+
+
+
+
+
+
+
+
+			<h1 id="Properties">Properties</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover three-cols">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Value</th>
+								<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/51EFDE5A">AllowUnsafeBlocks</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    True if the assembly allows unsafe blocks
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/FB10C976">ApplicationIcon</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The application icon
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/FCD52CC2">Assembly<wbr>Originator<wbr>Key<wbr>File</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The signing key file path
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/75C938DC">AssemblyTitle</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The assembly title, defaults to the assemblyname
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/08983BD7">AssemblyVersion</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The Assembly Version
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/01C59CDA">Authors</a></td>
+								<td>string[]</td>
+								<td>
+									<div>
+    dotnet pack: A list of packages authors, matching the profile names on nuget.org. 
+    These are displayed in the NuGet Gallery on nuget.org and are used to cross-reference packages by the same authors.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/A218E058">Build<wbr>Output<wbr>Target<wbr>Folder</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: Specifies the folder where to place the output assemblies. 
+    The output assemblies (and other output files) are copied into their respective framework folders.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/1FE62F1B">Company</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The assembly or package company
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/CDB37D76">ContentTargetFolders</a></td>
+								<td>string[]</td>
+								<td>
+									<div>
+    dotnet pack: This property specifies the default location of where all the content files should go if PackagePath is not specified for them. 
+    The default value is "content;contentFiles".
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/DEE38FB2">Copyright</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    Copyright details for the package.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/754593DC">DebugSymbols</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    True if compilation will output debug symbols
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/1CD1FF94">DebugType</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The debug type (portable, embedded, full)
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/76D060BE">DefineConstants</a></td>
+								<td>string[]</td>
+								<td>
+									<div>
+    Build pre-processor directives
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/F805F790">DelaySign</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    When delay signed, the project will not run or be debuggable
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/EEC71019">Description</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: A long description of the package for UI display.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/9A20EC4C">DocumentationFile</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The documentation file path
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/D600E656">Dot<wbr>Net<wbr>Cli<wbr>Tool<wbr>References</a></td>
+								<td>ICollection<wbr>&lt;<wbr>Dot<wbr>Net<wbr>Cli<wbr>Tool<wbr>Reference&gt;<wbr></td>
+								<td>
+									<div>
+    The dotnet CLI tool references, a collection of <code class="cs"><a href="/Cake.Incubator/api/Cake.Incubator/DotNetCliToolReference">DotNetCliToolReference</a></code>
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/ABAC7145">FileVersion</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The File Version
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/8F8C97C1">Generate<wbr>Documentation<wbr>File</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    True if assembly will generate xml documentation
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/D3C3F6C0">Generate<wbr>Package<wbr>On<wbr>Build</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    True if the package will be generated when building
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/2BC4454B">Generate<wbr>Serialization<wbr>Assemblies</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    Generate serialization assemblies (Off, On, Auto)
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/3C930004">IncludeBuildOutput</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    dotnet pack: This Boolean values specifies whether the build output assemblies should be packed into the .nupkg file or not.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/F55B8287">IncludeContentInPack</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    dotnet pack: This Boolean value specifies whether any items that have a type of Content will be included in the resulting package automatically. The default is true.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/AB929CEB">IncludeSource</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    dotnet pack: This Boolean value indicates whether the pack process should create a source package. 
+    The source package contains the library's source code as well as PDB files. 
+    Source files are put under the src/ProjectName directory in the resulting package file.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/8E013F57">IncludeSymbols</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    dotnet pack: This Boolean value indicates whether the package should create an additional symbols package when the project is packed. 
+    This package will have a .symbols.nupkg extension and will copy the PDB files along with the DLL and other output files.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/345B3F66">IsPackable</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    dotnet pack: A Boolean value that specifies whether the project can be packed. The default value is true.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/2B5276CF">IsTool</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    dotnet pack: Specifies whether all output files are copied to the tools folder instead of the lib folder. 
+    Note that this is different from a DotNetCliTool which is specified by setting the PackageType in the .csproj file.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/12E8B545">IsWeb</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    True if this is a web project
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/209BDAD8">LangVersion</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    Assembly language version (ISO-1, ISO-2, [C#]2-7)
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/D00DF19F">MinClientVersion</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: Specifies the minimum version of the NuGet client that can install this package, enforced by nuget.exe and the Visual Studio Package Manager.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/6F2945D1">Net<wbr>Standard<wbr>Implicit<wbr>Package<wbr>Version</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The netstandard package target version if specified
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/1FAAFFEA">NeutralLanguage</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The assembly neutral language
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/511944B5">NoPackageAnalysis</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    dotnet pack: Specifies that pack should not run package analysis after building the package.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/C4972A7E">NoWarn</a></td>
+								<td>string[]</td>
+								<td>
+									<div>
+    The pragma warnings to ignore during compilation
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/E01E618F">NuspecBasePath</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: Base path for the .nuspec file.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/B21B3096">NuspecFile</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: Relative or absolute path to the .nuspec file being used for packing
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/6245FFEE">NuspecProperties</a></td>
+								<td>NameValueCollection</td>
+								<td>
+									<div>
+    dotnet pack: list of key=value pairs.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/7FFD6D89">Optimize</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    The optimize code flag
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/8A4318A7">PackageIconUrl</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: A URL for a 64x64 image with transparent background to use as the icon for the package in UI display.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/13E1537F">PackageId</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: The package id
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/1488DBE0">PackageLicenseUrl</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: An URL to the license that is applicable to the package.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/2101116C">PackageOutputPath</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: Determines the output path in which the packed package will be dropped. Default is the OutputPath
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/C307B9B0">PackageProjectUrl</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: A URL for the package's home page, often shown in UI displays as well as nuget.org.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/BDF3B093">PackageReferences</a></td>
+								<td>ICollection<wbr>&lt;<wbr>Package<wbr>Reference&gt;<wbr></td>
+								<td>
+									<div>
+    The project package references. A collection of <code class="cs"><a href="/Cake.Incubator/api/Cake.Incubator/PackageReference">PackageReference</a></code>
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/1AAFFC3D">PackageReleaseNotes</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: Release notes for the package.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/115AF48F">Package<wbr>Require<wbr>License<wbr>Acceptance</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    dotnet pack: A Boolean value that specifies whether the client must prompt the consumer to accept the package license before installing the package. 
+    The default is false.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/9F6E33B0">PackageTags</a></td>
+								<td>string[]</td>
+								<td>
+									<div>
+    dotnet pack: A list of tags that designates the package.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/1F160EB0">Package<wbr>Target<wbr>Fallbacks</a></td>
+								<td>string[]</td>
+								<td>
+									<div>
+    The fallback targets to use when importing packages
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/F1AAF405">Preserve<wbr>Compilation<wbr>Context</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    Required to be true for the compilation of razor views
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/FDEBDA87">Product</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The product name
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/A17B6228">ProjectReferences</a></td>
+								<td>ICollection<wbr>&lt;<wbr>Project<wbr>Reference&gt;<wbr></td>
+								<td>
+									<div>
+    The references to other projects. A collection of <code class="cs">ProjectReference</code>
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/730A1BDB">PublicSign</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    Undocumented flag relating to assembly signing
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/10D87478">RepositoryType</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: Specifies the type of the repository. Default is "git"
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/B82D4C8A">RepositoryUrl</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: Specifies the URL for the repository where the source code for the package resides and/or from which it's being built.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/727656E0">Runtime<wbr>Framework<wbr>Version</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The runtime framework version
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/E464508B">RuntimeIdentifiers</a></td>
+								<td>string[]</td>
+								<td>
+									<div>
+    The runtime identifiers
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/295B6639">RuntimeOptions</a></td>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/RuntimeOptions">RuntimeOptions</a></td>
+								<td>
+									<div>
+    Optional runtime options to override the default settings <code class="cs"><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/295B6639">RuntimeOptions</a></code>
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/AC01F95A">Sdk</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The net core sdk
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/D89494B7">SignAssembly</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    True if the assembly is signed during compilation
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/228BF819">TargetFrameworks</a></td>
+								<td>string[]</td>
+								<td>
+									<div>
+    The projects target frameworks
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/43F1D3FB">Targets</a></td>
+								<td>ICollection<wbr>&lt;BuildTarget&gt;<wbr></td>
+								<td>
+									<div>
+    The projects build targets. A collection of <code class="cs"><a href="/Cake.Incubator/api/Cake.Incubator/BuildTarget">BuildTarget</a></code>
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/89DACC97">Title</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    dotnet pack: A human-friendly title of the package, typically used in UI displays as on nuget.org and the Package Manager in Visual Studio. 
+    If not specified, the package ID is used instead.
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/D51939A8">Treat<wbr>Specific<wbr>Warnings<wbr>As<wbr>Errors</a></td>
+								<td>string[]</td>
+								<td>
+									<div>
+    The warnings to specifically treat as errors
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/7E20F0F0">Treat<wbr>Warnings<wbr>As<wbr>Errors</a></td>
+								<td>bool</td>
+								<td>
+									<div>
+    True if wanrings will be treated as errors during compilation
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/933C8CEB">Version</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    The project version
+    </div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/NetCoreProject/BAF15ED5">WarningLevel</a></td>
+								<td>string</td>
+								<td>
+									<div>
+    Compiler warning level
+    </div>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
+
+
+
+			<h1 id="ExtensionMethods">Extension Methods</h1>
+			<div class="box">
+				<div class="box-body no-padding table-responsive">
+					<table class="table table-striped table-hover three-cols">
+						<thead>
+							<tr>
+								<th>Name</th>
+								<th>Value</th>
+								<th>Summary</th>
+							</tr>
+						</thead>
+							<tbody><tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/LoggingExtensions/D2217BAF">Dump<wbr>&lt;<wbr>Net<wbr>Core<wbr>Project&gt;<wbr><wbr>()<wbr></a></td>
+								<td>string</td>
+								<td>
+									<div>
+     Get a basic string representation of specified object.
+     </div>
+										<div><small><em>From <a href="/Cake.Incubator/api/Cake.Incubator/LoggingExtensions">LoggingExtensions</a></em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/AssertExtensions/1A01586C">ThrowIfNull<wbr>&lt;<wbr>Net<wbr>Core<wbr>Project&gt;<wbr><wbr>(string)<wbr></a></td>
+								<td>T</td>
+								<td>
+									<div>
+    Throws a <code class="cs">System.ArgumentNullException</code> if the value is null, otherwise returns the value
+    </div>
+										<div><small><em>From <a href="/Cake.Incubator/api/Cake.Incubator/AssertExtensions">AssertExtensions</a></em></small></div>
+								</td>
+							</tr>
+							<tr>
+								<td><a href="/Cake.Incubator/api/Cake.Incubator/AssertExtensions/32D7598B">ThrowIfNull<wbr>&lt;<wbr>Net<wbr>Core<wbr>Project&gt;<wbr><wbr>(string, <wbr>string)<wbr></a></td>
+								<td>T</td>
+								<td>
+									<div>
+    Throws a <code class="cs">System.ArgumentNullException</code> with a specific message if the value is null, otherwise returns the value
+    </div>
+										<div><small><em>From <a href="/Cake.Incubator/api/Cake.Incubator/AssertExtensions">AssertExtensions</a></em></small></div>
+								</td>
+							</tr>
+					</tbody></table>
+				</div>
+			</div>
+		
+
+	
+</section>
+                
+            </div>           
+            
+            <!-- Footer -->
+            <footer class="main-footer">
+            </footer>
+            
+        </div>
+        <div class="wrapper bottom-wrapper">
+            <footer class="bottom-footer">
+                Generated by <a href="https://wyam.io">Wyam</a>
+            </footer>
+        </div>
+        <a href="javascript:" id="return-to-top"><i class="fa fa-chevron-up"></i></a>
+        
+        <script>           
+            // Close the sidebar if we select an anchor link
+            $(".main-sidebar a[href^='#']:not('.expand')").click(function(){
+                $(document.body).removeClass('sidebar-open');
+            });
+            
+            $(document).load(function() {
+                mermaid.initialize(
+                {
+                    flowchart:
+                    {
+                        htmlLabels: false,
+                        useMaxWidth:false
+                    }
+                });  
+                mermaid.init(undefined, ".mermaid")
+                $('svg').addClass('img-responsive');
+                
+                $('pre code').each(function(i, block) {
+                    hljs.highlightBlock(block);
+                });  
+            });
+            hljs.initHighlightingOnLoad();
+
+            // Back to top
+            $(window).scroll(function() {
+                if ($(this).scrollTop() >= 200) {        // If page is scrolled more than 50px
+                    $('#return-to-top').fadeIn(1000);    // Fade in the arrow
+                } else {
+                    $('#return-to-top').fadeOut(1000);   // Else fade out the arrow
+                }
+            });
+            $('#return-to-top').click(function() {      // When arrow is clicked
+                $('body,html').animate({
+                    scrollTop : 0                       // Scroll to top of body
+                }, 500);
+            });
+        </script>
+    
+</body></html>

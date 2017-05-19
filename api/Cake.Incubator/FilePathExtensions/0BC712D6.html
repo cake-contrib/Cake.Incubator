@@ -1,4 +1,4 @@
-<!DOCTYPE html><html><head>
+﻿<!DOCTYPE html><html><head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=Edge">
         <meta name="description">
@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
-        <title>Docs - API - FilePathExtensions.IsProject(FilePath) Method</title>
+        <title>Cake.Incubator - API - FilePathExtensions.IsProject(FilePath) Method</title>
         <link href="/Cake.Incubator/assets/css/mermaid.css" rel="stylesheet">
         <link href="/Cake.Incubator/assets/css/highlight.css" rel="stylesheet">
         <link href="/Cake.Incubator/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
@@ -36,7 +36,7 @@
             <header class="main-header">   
                      
                 <a href="/Cake.Incubator/" class="logo">
-                            <span>Docs</span>
+                            <span>Cake.Incubator</span>
                 </a>   
                          
                 <nav class="navbar navbar-static-top" role="navigation">
@@ -74,6 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
+<p><a href="#Examples">Examples</a></p>
 <p><a href="#Parameters">Parameters</a></p>
 <p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
@@ -82,8 +83,8 @@
                 </section>
                 <section class="sidebar">                    
                     	
-	    <script src="/assets/js/lunr.min.js"></script>
-    <script src="/assets/js/searchIndex.js"></script>
+	    <script src="/Cake.Incubator/assets/js/lunr.min.js"></script>
+    <script src="/Cake.Incubator/assets/js/searchIndex.js"></script>
     <div class="sidebar-form">
         <div class="input-group">
             <input type="text" name="search" id="search" class="form-control" placeholder="Search Types...">
@@ -156,7 +157,7 @@
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Checks if the FilePath is a csproj file
+    Checks if the FilePath is a vbproj/csproj/fsproj file
     </div>
 
 		<div class="panel panel-default">
@@ -176,6 +177,13 @@
 	<h1 id="Syntax">Syntax</h1>
 	<pre><code>public static bool IsProject(this FilePath filePath)</code></pre>
 
+	<h1 id="Examples">Examples</h1>
+	<div>
+    Check if the file is a project
+    <pre><code class="cs">new FilePath("test.csproj").IsProject(); // true;
+new FilePath("test.fsproj").IsProject(); // true;
+new FilePath("test.vbproj").IsProject(); // true;</code></pre>
+    </div>
 
 
 
@@ -212,7 +220,7 @@
 				</thead>
 				<tbody><tr>
 					<td>bool</td>
-					<td>true if csproj or fsproj file</td>
+					<td>true if a visual studio project file was recognised</td>
 				</tr>
 			</tbody></table>
 		</div>
