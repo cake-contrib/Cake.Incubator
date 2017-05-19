@@ -5,146 +5,109 @@
 namespace Cake.Incubator
 {
     /// <summary>
-    /// MSBuild Project Xml Element XNames
-    /// original source: https://github.com/cake-build/cake/blob/main/src/Cake.Common/Solution/Project/ProjectXElement.cs
+    ///     MSBuild Project Xml Element XNames
+    ///     original source: https://github.com/cake-build/cake/blob/main/src/Cake.Common/Solution/Project/ProjectXElement.cs
     /// </summary>
-    public static class ProjectXElement
+    internal static class ProjectXElement
     {
-        private const string XmlNamespace = "http://schemas.microsoft.com/developer/msbuild/2003";
-
-        /// <summary>
-        /// Project root element
-        /// </summary>
-        internal const string Project = "{" + XmlNamespace + "}Project";
-
-        /// <summary>
-        /// Item group element
-        /// </summary>
-        internal const string ItemGroup = "{" + XmlNamespace + "}ItemGroup";
-
-        /// <summary>
-        /// Assembly reference element
-        /// </summary>
-        internal const string Reference = "{" + XmlNamespace + "}Reference";
-
-        /// <summary>
-        /// Namespace import element
-        /// </summary>
-        internal const string Import = "{" + XmlNamespace + "}Import";
-
-        /// <summary>
-        /// Namespace compile element
-        /// </summary>
-        internal const string Compile = "{" + XmlNamespace + "}Compile";
-
-        /// <summary>
-        /// Namespace property group element
-        /// </summary>
-        internal const string PropertyGroup = "{" + XmlNamespace + "}PropertyGroup";
-
-        /// <summary>
-        /// Namespace root namespace element
-        /// </summary>
-        internal const string RootNamespace = "{" + XmlNamespace + "}RootNamespace";
-
-        /// <summary>
-        /// Namespace output type element
-        /// </summary>
-        internal const string OutputType = "{" + XmlNamespace + "}OutputType";
-
-        /// <summary>
-        /// Namespace output path element
-        /// </summary>
-        internal const string OutputPath = "{" + XmlNamespace + "}OutputPath";
-
-        /// <summary>
-        /// Namespace assembly name element
-        /// </summary>
-        internal const string AssemblyName = "{" + XmlNamespace + "}AssemblyName";
-
-        /// <summary>
-        /// Gets the namespace for the target framework version element.
-        /// </summary>
-        internal const string TargetFrameworkVersion = "{" + XmlNamespace + "}TargetFrameworkVersion";
-
-        /// <summary>
-        /// Gets the namespace for the target framework version element.
-        /// </summary>
-        internal const string TargetFrameworkProfile = "{" + XmlNamespace + "}TargetFrameworkProfile";
-
-        /// <summary>
-        /// Gets the target framework element.
-        /// </summary>
+        internal const string Aliases = "Aliases";
+        internal const string AllowUnsafeBlocks = "AllowUnsafeBlocks";
+        internal const string ApplicationIcon = "ApplicationIcon";
+        internal const string AssemblyName = "AssemblyName";
+        internal const string AssemblyOriginatorKeyFile = "AssemblyOriginatorKeyFile";
+        internal const string AssemblyTitle = "AssemblyTitle";
+        internal const string AssemblyVersion = "AssemblyVersion";
+        internal const string Authors = "Authors";
+        internal const string BootstrapperPackage = "BootstrapperPackage";
+        internal const string BuildOutputTargetFolder = "BuildOutputTargetFolder";
+        internal const string Company = "Company";
+        internal const string Compile = "Compile";
+        internal const string ConcurrentGarbageCollection = "ConcurrentGarbageCollection";
+        internal const string Configuration = "Configuration";
+        internal const string ContentTargetFolders = "ContentTargetFolders";
+        internal const string Copyright = "Copyright";
+        internal const string DebugSymbols = "DebugSymbols";
+        internal const string DebugType = "DebugType";
+        internal const string DefineConstants = "DefineConstants";
+        internal const string DelaySign = "DelaySign";
+        internal const string Description = "Description";
+        internal const string DocumentationFile = "DocumentationFile";
+        internal const string DotNetCliToolReference = "DotNetCliToolReference";
+        internal const string ExcludeAssets = "ExcludeAssets";
+        internal const string FileVersion = "FileVersion";
+        internal const string FusionName = "FusionName";
+        internal const string GenerateDocumentationFile = "GenerateDocumentationFile";
+        internal const string GeneratePackageOnBuild = "GeneratePackageOnBuild";
+        internal const string GenerateSerializationAssemblies = "GenerateSerializationAssemblies";
+        internal const string HintPath = "HintPath";
+        internal const string Import = "Import";
+        internal const string IncludeAssets = "IncludeAssets";
+        internal const string IncludeBuildOutput = "IncludeBuildOutput";
+        internal const string IncludeContentInPack = "IncludeContentInPack";
+        internal const string IncludeSource = "IncludeSource";
+        internal const string IncludeSymbols = "IncludeSymbols";
+        internal const string IsPackable = "IsPackable";
+        internal const string IsTool = "IsTool";
+        internal const string ItemGroup = "ItemGroup";
+        internal const string LangVersion = "LangVersion";
+        internal const string MinClientVersion = "MinClientVersion";
+        internal const string Name = "Name";
+        internal const string NetStandardImplicitPackageVersion = "NetStandardImplicitPackageVersion";
+        internal const string NeutralLanguage = "NeutralLanguage";
+        internal const string NoPackageAnalysis = "NoPackageAnalysis";
+        internal const string NoWarn = "NoWarn";
+        internal const string NuspecBasePath = "NuspecBasePath";
+        internal const string NuspecFile = "NuspecFile";
+        internal const string NuspecProperties = "NuspecProperties";
+        internal const string Optimize = "Optimize";
+        internal const string OutputPath = "OutputPath";
+        internal const string OutputType = "OutputType";
+        internal const string Package = "Package";
+        internal const string PackageId = "PackageId";
+        internal const string PackageIconUrl = "PackageIconUrl";
+        internal const string PackageLicenseUrl = "PackageLicenseUrl";
+        internal const string PackageOutputPath = "PackageOutputPath";
+        internal const string PackageProjectUrl = "PackageProjectUrl";
+        internal const string PackageReference = "PackageReference";
+        internal const string PackageReleaseNotes = "PackageReleaseNotes";
+        internal const string PackageRequireLicenseAcceptance = "PackageRequireLicenseAcceptance";
+        internal const string PackageTags = "PackageTags";
+        internal const string PackageTargetFallback = "PackageTargetFallback";
+        internal const string Platform = "Platform";
+        internal const string PreserveCompilationContext = "PreserveCompilationContext";
+        internal const string Private = "Private";
+        internal const string PrivateAssets = "PrivateAssets";
+        internal const string Product = "Product";
+        internal const string Project = "Project";
+        internal const string ProjectGuid = "ProjectGuid";
+        internal const string ProjectReference = "ProjectReference";
+        internal const string ProjectTypeGuids = "ProjectTypeGuids";
+        internal const string PropertyGroup = "PropertyGroup";
+        internal const string PublicSign = "PublicSign";
+        internal const string Reference = "Reference";
+        internal const string RepositoryType = "RepositoryType";
+        internal const string RepositoryUrl = "RepositoryUrl";
+        internal const string RetainVMGarbageCollection = "RetainVMGarbageCollection";
+        internal const string RootNamespace = "RootNamespace";
+        internal const string RuntimeFrameworkVersion = "RuntimeFrameworkVersion";
+        internal const string RuntimeIdentifiers = "RuntimeIdentifiers";
+        internal const string ServerGarbageCollection = "ServerGarbageCollection";
+        internal const string Service = "Service";
+        internal const string SpecificVersion = "SpecificVersion";
+        internal const string SignAssembly = "SignAssembly";
+        internal const string Target = "Target";
+        internal const string TargetFrameworkVersion = "TargetFrameworkVersion";
+        internal const string TargetFrameworkProfile = "TargetFrameworkProfile";
         internal const string TargetFramework = "TargetFramework";
-
-        /// <summary>
-        /// Gets the namespace for the configuration element.
-        /// </summary>
-        internal const string Configuration = "{" + XmlNamespace + "}Configuration";
-
-        /// <summary>
-        ///  Gets the namespace for the platform element.
-        /// </summary>
-        internal const string Platform = "{" + XmlNamespace + "}Platform";
-
-        /// <summary>
-        /// Gets the namespace for the project GUID.
-        /// </summary>
-        internal const string ProjectGuid = "{" + XmlNamespace + "}ProjectGuid";
-
-        /// <summary>
-        /// Gets the namespace for the project type GUID.
-        /// </summary>
-        internal const string ProjectTypeGuids = "{" + XmlNamespace + "}ProjectTypeGuids";
-
-        /// <summary>
-        /// Gets the namespace for the bootstrapper package element.
-        /// </summary>
-        internal const string BootstrapperPackage = "{" + XmlNamespace + "}BootstrapperPackage";
-
-        /// <summary>
-        /// Gets the namespace for the project reference element.
-        /// </summary>
-        internal const string ProjectReference = "{" + XmlNamespace + "}ProjectReference";
-
-        /// <summary>
-        /// Gets the namespace for the service element.
-        /// </summary>
-        internal const string Service = "{" + XmlNamespace + "}Service";
-
-        /// <summary>
-        /// Gets the namespace for the hint path element.
-        /// </summary>
-        internal const string HintPath = "{" + XmlNamespace + "}HintPath";
-
-        /// <summary>
-        /// Gets the namespace for the name element.
-        /// </summary>
-        internal const string Name = "{" + XmlNamespace + "}Name";
-
-        /// <summary>
-        /// Gets the namespace for the fusion name element.
-        /// </summary>
-        internal const string FusionName = "{" + XmlNamespace + "}FusionName";
-
-        /// <summary>
-        /// Gets the namespace for the specific version element.
-        /// </summary>
-        internal const string SpecificVersion = "{" + XmlNamespace + "}SpecificVersion";
-
-        /// <summary>
-        /// Gets the namespace for the aliases element.
-        /// </summary>
-        internal const string Aliases = "{" + XmlNamespace + "}Aliases";
-
-        /// <summary>
-        /// Gets the namespace for the private element.
-        /// </summary>
-        internal const string Private = "{" + XmlNamespace + "}Private";
-
-        /// <summary>
-        /// Gets the namespace for the package element.
-        /// </summary>
-        internal const string Package = "{" + XmlNamespace + "}Package";
+        internal const string TargetFrameworks = "TargetFrameworks";
+        internal const string ThreadPoolMaxThreads = "ThreadPoolMaxThreads";
+        internal const string ThreadPoolMinThreads = "ThreadPoolMinThreads";
+        internal const string Title = "Title";
+        internal const string TreatSpecificWarningsAsErrors = "TreatSpecificWarningsAsErrors";
+        internal const string TreatWarningsAsErrors = "TreatWarningsAsErrors";
+        internal const string Version = "Version";
+        internal const string VersionPrefix = "VersionPrefix";
+        internal const string VersionSuffix = "VersionSuffix";
+        internal const string WarningLevel = "WarningLevel";
     }
 }

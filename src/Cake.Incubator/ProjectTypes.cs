@@ -77,23 +77,6 @@ namespace Cake.Incubator
     }
 
     /// <summary>
-    /// Several extension methods when using ProjectType.
-    /// </summary>
-    public static class ProjectTypeExtensions
-    {
-        /// <summary>
-        /// Provides an indication of whether a given ProjectType contains a specific flag.
-        /// </summary>
-        /// <param name="value">The ProjectType being interrogated.</param>
-        /// <param name="flag">The Flag that is being requested.</param>
-        /// <returns></returns>
-        public static bool HasFlag(this ProjectType value, ProjectType flag)
-        {
-            return (value & flag) != 0;
-        }
-    }
-
-    /// <summary>
     /// Class to contain a list of the Project Type ID's that exist within the Visual Studio eco-system.
     /// </summary>
     public static class ProjectTypes

@@ -1,12 +1,12 @@
 # ![CakeBuild](https://github.com/cake-build/graphics/raw/master/png/cake-small.png) Cake.Incubator
 
-[![Build status](https://ci.appveyor.com/api/projects/status/2wn5r21h6hkpuyrx/branch/master?svg=true)](https://ci.appveyor.com/project/MacLeanElectrical/cake-extensions/branch/master)
+[![Build status](https://ci.appveyor.com/api/projects/status/github/cake-contrib/cake.incubator?branch=master&svg=true)](https://ci.appveyor.com/project/cakecontrib/cake-incubator/branch/master)
 [![NuGet version](https://badge.fury.io/nu/Cake.Incubator.svg)](https://badge.fury.io/nu/Cake.Incubator)
 
 This project contains various experimental but useful extension methods and aliases for [Cake](http://cakebuild.net) that over time may become part of the core project
 
 * Repository: [http://github.org/cake-contrib/cake.incubator](http://github.org/cake-contrib/cake.incubator)
-* Docs: [https://wwwlicious.gitbooks.io/cake-incubator/](https://wwwlicious.gitbooks.io/cake-incubator/content/)
+* Docs: [http://cakebuild.net/api/Cake.Incubator/](http://cakebuild.net/api/Cake.Incubator/)
 * Release Notes [https://github.com/cake-contrib/Cake.Incubator/blob/master/ReleaseNotes.md](https://github.com/cake-contrib/Cake.Incubator/blob/master/ReleaseNotes.md)
 
 ### Usage: inside build.cake

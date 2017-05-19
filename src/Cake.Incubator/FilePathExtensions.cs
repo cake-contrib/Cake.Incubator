@@ -16,20 +16,34 @@ namespace Cake.Incubator
         /// </summary>
         /// <param name="filePath">the path to check</param>
         /// <returns>true if sln file</returns>
+        /// <example>
+        /// Check if the file is a solution
+        /// <code>
+        /// new FilePath("test.sln").IsSolution(); // true
+        /// </code>
+        /// </example>
         public static bool IsSolution(this FilePath filePath)
         {
             return filePath.HasExtension && filePath.GetExtension().EqualsIgnoreCase(".sln");
         }
 
         /// <summary>
-        /// Checks if the FilePath is a csproj file
+        /// Checks if the FilePath is a vbproj/csproj/fsproj file
         /// </summary>
         /// <param name="filePath">the path to check</param>
-        /// <returns>true if csproj or fsproj file</returns>
+        /// <returns>true if a visual studio project file was recognised</returns>
+        /// <example>
+        /// Check if the file is a project
+        /// <code>
+        /// new FilePath("test.csproj").IsProject(); // true;
+        /// new FilePath("test.fsproj").IsProject(); // true;
+        /// new FilePath("test.vbproj").IsProject(); // true;
+        /// </code>
+        /// </example>
         public static bool IsProject(this FilePath filePath)
         {
-            return filePath.HasExtension && 
-                    (filePath.GetExtension().EqualsIgnoreCase(".csproj") || filePath.GetExtension().EqualsIgnoreCase(".fsproj"));
+            return filePath.HasExtension &&
+                    (filePath.GetExtension().EqualsIgnoreCase(".vbproj") || filePath.GetExtension().EqualsIgnoreCase(".csproj") || filePath.GetExtension().EqualsIgnoreCase(".fsproj"));
         }
 
         /// <summary>
@@ -38,6 +52,12 @@ namespace Cake.Incubator
         /// <param name="path">the path to check</param>
         /// <param name="fileName">the file name and extension</param>
         /// <returns>true if filename and extension matches</returns>
+        /// <example>
+        /// Check by the filename (includes extension)
+        /// <code>
+        /// new FilePath("/folder/testing.cs").HasFileName("testing.cs"); // true
+        /// </code>
+        /// </example>
         public static bool HasFileName(this FilePath path, string fileName)
         {
             fileName.ThrowIfNullOrEmpty(nameof(fileName));

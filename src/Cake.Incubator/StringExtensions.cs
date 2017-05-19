@@ -10,6 +10,9 @@ namespace Cake.Incubator
     /// </summary>
     public static class StringExtensions
     {
+        private const string TargetframeworkCondition = "'$(TargetFramework)'==";
+        private const string ConfigPlatformCondition = "'$(Configuration)|$(Platform)'==";
+
         /// <summary>
         /// Case-insensitive String.Equals
         /// </summary>
@@ -19,6 +22,31 @@ namespace Cake.Incubator
         public static bool EqualsIgnoreCase(this string source, string value)
         {
             return source.Equals(value, StringComparison.InvariantCultureIgnoreCase);
+        }
+
+        internal static bool HasTargetFrameworkCondition(this string condition)
+        {
+            return condition.StartsWith(TargetframeworkCondition);
+        }
+
+        internal static bool HasConfigPlatformCondition(this string condition, string config = null, string platform = null)
+        {
+            return config.IsNullOrEmpty() ? condition.StartsWith(ConfigPlatformCondition) : condition.EqualsIgnoreCase($"{ConfigPlatformCondition}'{config}|{platform}'");
+        }
+
+        internal static string GetConditionalConfigPlatform(this string condition)
+        {
+            return condition.Substring(ConfigPlatformCondition.Length).Trim().TrimStart('\'').TrimEnd('\'');
+        }
+
+        internal static string[] SplitIgnoreEmpty(this string value, params char[] separator)
+        {
+            return value.IsNullOrEmpty() ? new string[0] : value.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+        }
+
+        internal static string GetConditionTargetFramework(this string condition)
+        {
+            return condition.Substring(TargetframeworkCondition.Length).Trim().TrimStart('\'').TrimEnd('\'');
         }
     }
 }

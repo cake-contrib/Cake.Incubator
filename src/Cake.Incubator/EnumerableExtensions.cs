@@ -7,12 +7,10 @@ namespace Cake.Incubator
     using System;
     using System.Collections.Generic;
     using System.Linq;
-    using Cake.Core.Annotations;
 
     /// <summary>
     /// Several extension methods when using IEnumerable.
     /// </summary>
-    [CakeAliasCategory("Collection Helpers")]
     public static class EnumerableExtensions
     {
         /// <summary>

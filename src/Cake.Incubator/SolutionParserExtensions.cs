@@ -19,6 +19,16 @@ namespace Cake.Incubator
         /// </summary>
         /// <param name="project">the solutionproject</param>
         /// <returns>true if the project is a solution folder</returns>
+        /// <example>
+        /// Identifies a SolutionProject as a solution folder type
+        /// <code>
+        /// // test.sln { proj1.csproj, solutionFolder }
+        /// var projects = ParseSolution(new FilePath("test.sln")).Projects;
+        /// 
+        /// projects[0].IsSolutionFolder(); // false
+        /// projects[1].IsSolutionFolder(); // true
+        /// </code>
+        /// </example>
         public static bool IsSolutionFolder(this SolutionProject project)
         {
             return project.Type.EqualsIgnoreCase(ProjectTypes.SolutionFolder);
@@ -40,6 +50,13 @@ namespace Cake.Incubator
         /// </summary>
         /// <param name="projects">The SolutionProject collection</param>
         /// <returns>The SolutionProjects</returns>
+        /// <example>
+        /// Gets an absolute assembly path for a project
+        /// <code>
+        /// SolutionProjectResult result = ParseSolution(new FilePath("test.sln"));
+        /// result.GetProjects();
+        /// </code>
+        /// </example>
         public static IEnumerable<SolutionProject> GetProjects(this SolutionParserResult projects)
         {
             return projects.Projects.Where(x => !IsSolutionFolder(x));
@@ -51,6 +68,13 @@ namespace Cake.Incubator
         /// <param name="solutionProject">The solutionproject</param>
         /// <param name="project">The parsed project</param>
         /// <returns>The SolutionProject output assembly path</returns>
+        /// <example>
+        /// Gets an absolute assembly path for a project
+        /// <code>
+        /// var projects = ParseSolution(new FilePath("test.sln")).GetProjects();
+        /// project[0].GetAssemblyFilePath(); 
+        /// </code>
+        /// </example>
         public static FilePath GetAssemblyFilePath(this SolutionProject solutionProject, CustomProjectParserResult project)
         {
             solutionProject.ThrowIfNull(nameof(solutionProject));
