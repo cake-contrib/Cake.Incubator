@@ -18,6 +18,12 @@ namespace Cake.Incubator
         /// <param name="settings">The settings.</param>
         /// <param name="targets">The .NET build targets.</param>
         /// <returns>The same <see cref="DotNetBuildSettings"/> instance so that multiple calls can be chained.</returns>
+        /// <example>
+        /// Add many targets to the build settings
+        /// <code>
+        /// var settings = new DotNetBuildSettings().WithTargets(new[] { "Clean", "Build", "Publish" });
+        /// </code>
+        /// </example>
         public static DotNetBuildSettings WithTargets(this DotNetBuildSettings settings, IEnumerable<string> targets)
         {
             settings.ThrowIfNull(nameof(settings));

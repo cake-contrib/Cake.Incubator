@@ -3,13 +3,13 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 namespace Cake.Incubator.Tests
 {
+    using System.Linq;
     using Cake.Common.Solution;
     using Cake.Core.IO;
     using FluentAssertions;
     using Xunit;
 
     /// <summary>
-    /// TODO Handle more project types
     /// Parse multiple types 
     /// </summary>
     public class SolutionParserExtensionsTests
@@ -40,6 +40,15 @@ namespace Cake.Incubator.Tests
                 .Should()
                 .HaveCount(1)
                 .And.Contain(x => x.Type == ProjectTypes.CSharp);
+        }
+
+        [Fact]
+        public void GetAssemblyFilePath_ReturnsExpectedFilePath()
+        {
+            var result = GetSolutionParserResult().Projects.First();
+            var parserResult = new CustomProjectParserResult { AssemblyName = "a", OutputPath = "./b", OutputType = "library" };
+
+            result.GetAssemblyFilePath(parserResult).ToString().Should().Be("b/a.dll");
         }
 
         private SolutionParserResult GetSolutionParserResult()

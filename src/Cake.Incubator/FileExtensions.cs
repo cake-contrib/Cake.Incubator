@@ -7,6 +7,7 @@ namespace Cake.Incubator
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using System.Xml.Linq;
     using Cake.Common.Solution;
     using Cake.Core;
     using Cake.Core.Annotations;
@@ -173,6 +174,26 @@ namespace Cake.Incubator
                 var file = context.FileSystem.GetFile(f);
                 file.Move(destination.CombineWithFilePath(f.GetFilename()));
             });
+        }
+
+        /// <summary>
+        /// Loads an xml file
+        /// </summary>
+        /// <param name="xmlFile">the xml file path</param>
+        /// <returns>An XDocument</returns>
+        /// <example>Load an xml document
+        /// <code>
+        /// XDocument doc = new File("./proj.csproj").LoadXml();
+        /// </code>
+        /// </example>
+        public static XDocument LoadXml(this IFile xmlFile)
+        {
+            XDocument document;
+            using (var stream = xmlFile.OpenRead())
+            {
+                document = XDocument.Load(stream);
+            }
+            return document;
         }
     }
 }

@@ -184,21 +184,5 @@ namespace Cake.Incubator.Tests {
                 return ResourceManager.GetString("VS2017_CsProj_ValidFile", resourceCulture);
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///&lt;Project ToolsVersion=&quot;14.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;VisualStudioVersion Condition=&quot;&apos;$(VisualStudioVersion)&apos; == &apos;&apos;&quot;&gt;14.0&lt;/VisualStudioVersion&gt;
-        ///    &lt;VSToolsPath Condition=&quot;&apos;$(VSToolsPath)&apos; == &apos;&apos;&quot;&gt;$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)&lt;/VSToolsPath&gt;
-        ///  &lt;/PropertyGroup&gt;
-        ///
-        ///  &lt;Import Project=&quot;$(VSToolsPath)\DotNet\Microsoft.DotNet.Props&quot; Condition=&quot;&apos;$(V [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string XProj_ValidFile {
-            get {
-                return ResourceManager.GetString("XProj_ValidFile", resourceCulture);
-            }
-        }
     }
 }

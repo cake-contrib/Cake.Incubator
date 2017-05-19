@@ -6,6 +6,9 @@ namespace Cake.Incubator
 {
     using System.Runtime.CompilerServices;
 
+    /// <summary>
+    /// This project contains various experimental but useful extension methods and aliases for Cake that over time may become part of the core project
+    /// </summary>
     [CompilerGenerated]
     internal class NamespaceDoc
     {

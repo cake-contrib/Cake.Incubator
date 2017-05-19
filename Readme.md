@@ -6,7 +6,7 @@
 This project contains various experimental but useful extension methods and aliases for [Cake](http://cakebuild.net) that over time may become part of the core project
 
 * Repository: [http://github.org/cake-contrib/cake.incubator](http://github.org/cake-contrib/cake.incubator)
-* Docs: [https://wwwlicious.gitbooks.io/cake-incubator/](https://wwwlicious.gitbooks.io/cake-incubator/content/)
+* Docs: [http://cakebuild.net/api/Cake.Incubator/](http://cakebuild.net/api/Cake.Incubator/)
 * Release Notes [https://github.com/cake-contrib/Cake.Incubator/blob/master/ReleaseNotes.md](https://github.com/cake-contrib/Cake.Incubator/blob/master/ReleaseNotes.md)
 
 ### Usage: inside build.cake
