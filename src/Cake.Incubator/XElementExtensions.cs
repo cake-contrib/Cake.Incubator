@@ -16,9 +16,38 @@ namespace Cake.Incubator
             return element.Attribute(attributeName)?.Value;
         }
 
-        internal static string GetFirstElementValue(this XElement element, XName elementName)
+        /// <summary>
+        /// gets the first matching element value, if a config is passed, it will only match an element with the specified config and platform condition.
+        /// the platform defaults to AnyCPU
+        /// </summary>
+        /// <param name="element">the parent element</param>
+        /// <param name="elementName">the element name to match</param>
+        /// <param name="config">the configuration to match</param>
+        /// <param name="platform">the platform to match, default is AnyCPU</param>
+        /// <returns>the matching element value if found</returns>
+        internal static string GetFirstElementValue(this XElement element, XName elementName, string config = null, string platform = "AnyCPU")
         {
-            return element.Descendants(elementName).FirstOrDefault()?.Value;
+            // if no config specified, return first value without config condition
+            if (config.IsNullOrEmpty()) return element.Descendants(elementName).FirstOrDefault(x => !x.WithConfigCondition())?.Value;
+
+            // next will look to match the config|platform condition of an element or it's parent, if that fails, 
+            // will fallback to grab the first matching value without a condition on the element or it's parent.
+            return element.Descendants(elementName).FirstOrDefault(x => x.WithConfigCondition(config, platform))
+                       ?.Value ?? element.Descendants(elementName).FirstOrDefault(x => !x.WithConfigCondition())?.Value;
+        }
+
+        /// <summary>
+        /// checks the element for a config condition attribute. If not found, also check the parent
+        /// </summary>
+        /// <param name="element">the element</param>
+        /// <param name="config">the optional config value to match</param>
+        /// <param name="platform">the optional platform value to match</param>
+        /// <returns>true if a matching condition is found</returns>
+        internal static bool WithConfigCondition(this XElement element, string config = null, string platform = null)
+        {
+            var configAttribute = element.Attribute("Condition")?.Value.HasConfigPlatformCondition(config, platform);
+            if(!configAttribute.HasValue) configAttribute = element.Parent?.Attribute("Condition")?.Value.HasConfigPlatformCondition(config, platform);
+            return configAttribute ?? false;
         }
 
         internal static IEnumerable<XElement> GetPropertyGroups(this XElement project, XNamespace ns)

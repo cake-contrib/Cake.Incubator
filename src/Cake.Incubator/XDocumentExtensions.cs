@@ -61,9 +61,27 @@ namespace Cake.Incubator
             return char.IsDigit(suffix[0]) ? $"{prefix}.{suffix}" : $"{prefix}-{suffix}";
         }
 
-        internal static string GetFirstElementValue(this XDocument document, string elementName)
+        /// <summary>
+        /// gets the first matching element value, if a config is passed, it will only match an element with the specified config and platform condition.
+        /// the platform defaults to AnyCPU
+        /// </summary>
+        /// <param name="document">the document</param>
+        /// <param name="elementName">the element name to match</param>
+        /// <param name="config">the configuration to match</param>
+        /// <param name="platform">the platform to match, default is AnyCPU</param>
+        /// <returns>the matching element value if found</returns>
+        internal static string GetFirstElementValue(this XDocument document, XName elementName, string config = null, string platform = "AnyCPU")
         {
-            return document.Descendants(elementName).FirstOrDefault()?.Value;
+            var elements = document.Descendants(elementName);
+            if (!elements.Any()) return null;
+
+            // if no config specified, return first value without config condition
+            if (config.IsNullOrEmpty()) return elements.FirstOrDefault(x => !x.WithConfigCondition())?.Value;
+
+            // next will look to match the config|platform condition of an element or it's parent, if that fails, 
+            // will fallback to grab the first matching value without a condition on the element or it's parent.
+            return elements.FirstOrDefault(x => x.WithConfigCondition(config, platform))
+                       ?.Value ?? elements.FirstOrDefault(x => !x.WithConfigCondition())?.Value;
         }
 
         internal static ICollection<DotNetCliToolReference> GetDotNetCliToolReferences(this XDocument document)
@@ -96,17 +114,17 @@ namespace Cake.Incubator
             return document.Descendants(ProjectXElement.PackageReference).Select(
                 x =>
                 {
-                    var privateAssets = x.Element(ProjectXElement.PrivateAssets)?.Value.SplitWithoutEmpty(';');
-                    var includeAssets = x.Element(ProjectXElement.IncludeAssets)?.Value.SplitWithoutEmpty(';');
-                    var excludeAssets = x.Element(ProjectXElement.ExcludeAssets)?.Value.SplitWithoutEmpty(';');
+                    var privateAssets = x.Element(ProjectXElement.PrivateAssets)?.Value.SplitIgnoreEmpty(';');
+                    var includeAssets = x.Element(ProjectXElement.IncludeAssets)?.Value.SplitIgnoreEmpty(';');
+                    var excludeAssets = x.Element(ProjectXElement.ExcludeAssets)?.Value.SplitIgnoreEmpty(';');
                     var condition = x.GetAttributeValue("Condition") ?? x.Parent.GetAttributeValue("Condition");
                     return new PackageReference
                     {
                         Name = x.GetAttributeValue("Include"),
                         Version = x.GetAttributeValue("Version"),
-                        PrivateAssets = x.GetAttributeValue(ProjectXElement.PrivateAssets)?.SplitWithoutEmpty(';') ?? privateAssets,
-                        IncludeAssets = x.GetAttributeValue(ProjectXElement.IncludeAssets)?.SplitWithoutEmpty(';') ?? includeAssets,
-                        ExcludeAssets = x.GetAttributeValue(ProjectXElement.ExcludeAssets)?.SplitWithoutEmpty(';') ?? excludeAssets,
+                        PrivateAssets = x.GetAttributeValue(ProjectXElement.PrivateAssets)?.SplitIgnoreEmpty(';') ?? privateAssets,
+                        IncludeAssets = x.GetAttributeValue(ProjectXElement.IncludeAssets)?.SplitIgnoreEmpty(';') ?? includeAssets,
+                        ExcludeAssets = x.GetAttributeValue(ProjectXElement.ExcludeAssets)?.SplitIgnoreEmpty(';') ?? excludeAssets,
                         TargetFramework = condition.HasTargetFrameworkCondition()
                             ? condition.GetConditionTargetFramework()
                             : null
@@ -144,9 +162,9 @@ namespace Cake.Incubator
                 new BuildTarget
                 {
                     Name = x.GetAttributeValue("Name"),
-                    BeforeTargets = x.GetAttributeValue("BeforeTargets")?.SplitWithoutEmpty(';'),
-                    AfterTargets = x.GetAttributeValue("AfterTargets")?.SplitWithoutEmpty(';'),
-                    DependsOn = x.GetAttributeValue("DependsOn")?.SplitWithoutEmpty(';'),
+                    BeforeTargets = x.GetAttributeValue("BeforeTargets")?.SplitIgnoreEmpty(';'),
+                    AfterTargets = x.GetAttributeValue("AfterTargets")?.SplitIgnoreEmpty(';'),
+                    DependsOn = x.GetAttributeValue("DependsOn")?.SplitIgnoreEmpty(';'),
                     Executables = x.Elements("Exec").Select(exec =>
                         new BuildTargetExecutable
                         {
@@ -157,7 +175,7 @@ namespace Cake.Incubator
 
         internal static NameValueCollection GetNuspecProps(this XDocument document)
         {
-            var nuspecProps = document.GetFirstElementValue(ProjectXElement.NuspecProperties).SplitWithoutEmpty(';');
+            var nuspecProps = document.GetFirstElementValue(ProjectXElement.NuspecProperties).SplitIgnoreEmpty(';');
             var nuspecProperties = new NameValueCollection(nuspecProps.Length);
             foreach (var prop in nuspecProps)
             {

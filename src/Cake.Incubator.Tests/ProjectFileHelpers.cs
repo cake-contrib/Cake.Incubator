@@ -6,9 +6,9 @@ namespace Cake.Incubator.Tests
 {
     public class ProjectFileHelpers
     {
-        public static string GetNetCoreProjectWithElement(string element, string value)
+        public static string GetNetCoreProjectWithElement(string element, string value, string attribute = null)
         {
-            return $"<Project sdk=\"Microsoft.NET.Sdk\"><{element}>{value}</{element}></Project>";
+            return $"<Project sdk=\"Microsoft.NET.Sdk\"><{element} {attribute}>{value}</{element}></Project>";
         }
 
         public static string GetNetCoreProjectWithString(string content)
@@ -19,6 +19,16 @@ namespace Cake.Incubator.Tests
         public static string GetNetCoreWebProjectWithString(string content)
         {
             return $"<Project sdk=\"Microsoft.NET.Sdk.Web\">{content}</Project>";
+        }
+
+        public static string GetNetCoreProjectElementWithConfig(string element, string value, string config, string platform)
+        {
+            return GetNetCoreProjectWithElement(element, value, $@"Condition=""'$(Configuration)|$(Platform)'=='{config}|{platform}'""");
+        }
+
+        public static string GetNetCoreProjectElementWithParentConfig(string element, string value, string config, string platform)
+        {
+            return GetNetCoreProjectWithString($@"<PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='{config}|{platform}'""><{element}>{value}</{element}></PropertyGroup>");
         }
     }
 }

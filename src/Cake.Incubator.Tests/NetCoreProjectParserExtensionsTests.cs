@@ -363,6 +363,37 @@ namespace Cake.Incubator.Tests
             file.ParseProject("test").NetCore.DefineConstants.Should().BeEquivalentTo("DEBUG", "WIN");
         }
 
+        [Theory]
+        [InlineData("test", "oil")]
+        [InlineData("bananas", "shoes")]
+        public void ParseProject_NetCore_DefineConstants_ReturnsEmptyIfNoConfigMatch(string config, string platform)
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectElementWithConfig("DefineConstants", "Birth;Death;Taxes;", config, platform));
+            file.ParseProject("test", "shoes").NetCore.DefineConstants.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_DefineConstants_ReturnsCorrectConfigMatch()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectElementWithConfig("DefineConstants", "Birth;Death;Taxes;", "test", "shoes"));
+            file.ParseProject("test", "shoes").NetCore.DefineConstants.Should().BeEquivalentTo("Birth", "Death", "Taxes");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_DefineConstants_ReturnsCorrectParentConfigMatch()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectElementWithParentConfig("DefineConstants", "Birth;Death;Taxes;", "test", "shoes"));
+            file.ParseProject("test", "shoes").NetCore.DefineConstants.Should().BeEquivalentTo("Birth", "Death", "Taxes");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_DefineConstants_ReturnsCorrectFallbackIfConditionsDontMatch()
+        {
+            var projString = @"<Project sdk=""Microsoft.NET.Sdk""><DefineConstants>Hoka;Loca;Moca;</DefineConstants><PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='test|shoes'""><DefineConstants>Birth;Death;Taxes;</DefineConstants></PropertyGroup></Project>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(projString));
+            file.ParseProject("Roca", "shoes").NetCore.DefineConstants.Should().BeEquivalentTo("Hoka", "Loca", "Moca");
+        }
+
         [Fact]
         public void ParseProject_NetCore_Description_ReturnsIfSet()
         {

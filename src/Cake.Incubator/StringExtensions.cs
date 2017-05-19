@@ -29,9 +29,9 @@ namespace Cake.Incubator
             return condition.StartsWith(TargetframeworkCondition);
         }
 
-        internal static bool HasConfigPlatformCondition(this string condition)
+        internal static bool HasConfigPlatformCondition(this string condition, string config = null, string platform = null)
         {
-            return condition.StartsWith(ConfigPlatformCondition);
+            return config.IsNullOrEmpty() ? condition.StartsWith(ConfigPlatformCondition) : condition.EqualsIgnoreCase($"{ConfigPlatformCondition}'{config}|{platform}'");
         }
 
         internal static string GetConditionalConfigPlatform(this string condition)
@@ -39,10 +39,9 @@ namespace Cake.Incubator
             return condition.Substring(ConfigPlatformCondition.Length).Trim().TrimStart('\'').TrimEnd('\'');
         }
 
-        internal static string[] SplitWithoutEmpty(this string value, params char[] separator)
+        internal static string[] SplitIgnoreEmpty(this string value, params char[] separator)
         {
-            if (value.IsNullOrEmpty()) return new string[0];
-            return value.Split(separator, StringSplitOptions.RemoveEmptyEntries);
+            return value.IsNullOrEmpty() ? new string[0] : value.Split(separator, StringSplitOptions.RemoveEmptyEntries);
         }
 
         internal static string GetConditionTargetFramework(this string condition)
