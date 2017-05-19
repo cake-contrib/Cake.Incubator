@@ -41,6 +41,7 @@ namespace Cake.Incubator
 
         internal static string[] SplitWithoutEmpty(this string value, params char[] separator)
         {
+            if (value.IsNullOrEmpty()) return new string[0];
             return value.Split(separator, StringSplitOptions.RemoveEmptyEntries);
         }
 

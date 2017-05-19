@@ -4,8 +4,8 @@
 
 namespace Cake.Incubator
 {
-    using System;
     using System.Collections.Generic;
+    using System.Collections.Specialized;
     using System.Linq;
     using System.Xml.Linq;
     using Cake.Common.Solution.Project;
@@ -144,15 +144,27 @@ namespace Cake.Incubator
                 new BuildTarget
                 {
                     Name = x.GetAttributeValue("Name"),
-                    BeforeTargets = x.GetAttributeValue("BeforeTargets")?.SplitWithoutEmpty(';') ?? new string[0],
-                    AfterTargets = x.GetAttributeValue("AfterTargets")?.SplitWithoutEmpty(';') ?? new string[0],
-                    DependsOn = x.GetAttributeValue("DependsOn")?.SplitWithoutEmpty(';') ?? new string[0],
+                    BeforeTargets = x.GetAttributeValue("BeforeTargets")?.SplitWithoutEmpty(';'),
+                    AfterTargets = x.GetAttributeValue("AfterTargets")?.SplitWithoutEmpty(';'),
+                    DependsOn = x.GetAttributeValue("DependsOn")?.SplitWithoutEmpty(';'),
                     Executables = x.Elements("Exec").Select(exec =>
                         new BuildTargetExecutable
                         {
                             Command = exec.GetAttributeValue("Command")
                         }).ToArray()
                 }).ToArray();
+        }
+
+        internal static NameValueCollection GetNuspecProps(this XDocument document)
+        {
+            var nuspecProps = document.GetFirstElementValue(ProjectXElement.NuspecProperties).SplitWithoutEmpty(';');
+            var nuspecProperties = new NameValueCollection(nuspecProps.Length);
+            foreach (var prop in nuspecProps)
+            {
+                var pair = prop.Split('=');
+                nuspecProperties.Add(pair[0], pair[1]);
+            }
+            return nuspecProperties;
         }
     }
 }

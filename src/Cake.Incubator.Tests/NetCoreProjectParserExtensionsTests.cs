@@ -186,6 +186,121 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
+        public void ParseProject_NetCore_BuildOutputTargetFolder_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("BuildOutputTargetFolder", "./oompa/loompa"));
+            file.ParseProject("test").NetCore.BuildOutputTargetFolder.Should().Be("./oompa/loompa");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_IncludeBuildOutput_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("IncludeBuildOutput", "true"));
+            file.ParseProject("test").NetCore.IncludeBuildOutput.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_IncludeContentInPack_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("IncludeContentInPack", "true"));
+            file.ParseProject("test").NetCore.IncludeContentInPack.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_IncludeSource_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("IncludeSource", "true"));
+            file.ParseProject("test").NetCore.IncludeSource.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_IncludeSymbols_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("IncludeSymbols", "true"));
+            file.ParseProject("test").NetCore.IncludeSymbols.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_IsPackable_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("IsPackable", "true"));
+            file.ParseProject("test").NetCore.IsPackable.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_IsPackable_DefaultFallback()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
+            file.ParseProject("test").NetCore.IsPackable.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_IsTool_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("IsTool", "true"));
+            file.ParseProject("test").NetCore.IsTool.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_NoPackageAnalysis_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("NoPackageAnalysis", "true"));
+            file.ParseProject("test").NetCore.NoPackageAnalysis.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_MinClientVersion_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("MinClientVersion", "mouse"));
+            file.ParseProject("test").NetCore.MinClientVersion.Should().Be("mouse");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_NuspecBasePath_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("NuspecBasePath", "./all/about/the/base"));
+            file.ParseProject("test").NetCore.NuspecBasePath.Should().Be("./all/about/the/base");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_NuspecFile_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("NuspecFile", "./re.spec"));
+            file.ParseProject("test").NetCore.NuspecFile.Should().Be("./re.spec");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_NuspecProperties_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("NuspecProperties", "edgar=poe;jimmini=cricket;"));
+            var props = file.ParseProject("test").NetCore.NuspecProperties;
+            props.Should().HaveCount(2);
+            props["edgar"].Should().Be("poe");
+            props["jimmini"].Should().Be("cricket");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_PackageOutputPath_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageOutputPath", "./row/row/row/yerboat"));
+            file.ParseProject("test").NetCore.PackageOutputPath.Should().Be("./row/row/row/yerboat");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_Title_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("Title", "Count Dracula"));
+            file.ParseProject("test").NetCore.Title.Should().Be("Count Dracula");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_ContentTargetFolders_ReturnsIfSet()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("ContentTargetFolders", "content;contentFiles;;"));
+            file.ParseProject("test").NetCore.ContentTargetFolders.Should().BeEquivalentTo("content", "contentFiles");
+        }
+
+        [Fact]
         public void ParseProject_NetCore_AssemblyTitle_ReturnsIfSet()
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("AssemblyTitle", "my title"));

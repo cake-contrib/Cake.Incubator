@@ -231,16 +231,18 @@ namespace Cake.Incubator
             var projectReferences = document.GetProjectReferences(projectFile.Path.GetDirectory());
             var assemblyName = document.GetFirstElementValue(ProjectXElement.AssemblyName) ?? projectName;
             var packageId = document.GetFirstElementValue(ProjectXElement.PackageId) ?? assemblyName;
-            var authors = document.GetFirstElementValue(ProjectXElement.Authors)?.SplitWithoutEmpty(';') ?? new string[0];
+            var authors = document.GetFirstElementValue(ProjectXElement.Authors)?.SplitWithoutEmpty(';');
             var company = document.GetFirstElementValue(ProjectXElement.Company);
             var neutralLang = document.GetFirstElementValue(ProjectXElement.NeutralLanguage);
             var assemblyTitle = document.GetFirstElementValue(ProjectXElement.AssemblyTitle);
             var description = document.GetFirstElementValue(ProjectXElement.Description);
             var copyright = document.GetFirstElementValue(ProjectXElement.Copyright);
+            var buildOutputTargetFolder = document.GetFirstElementValue(ProjectXElement.BuildOutputTargetFolder);
+            var contentTargetFolders = document.GetFirstElementValue(ProjectXElement.ContentTargetFolders)?.SplitWithoutEmpty(';');
             var netstandardVersion = document.GetFirstElementValue(ProjectXElement.NetStandardImplicitPackageVersion);
             var runtimeFrameworkVersion = document.GetFirstElementValue(ProjectXElement.RuntimeFrameworkVersion);
-            var packageTargetFallbacks = document.GetFirstElementValue(ProjectXElement.PackageTargetFallback)?.SplitWithoutEmpty(';') ?? new string[0];
-            var runtimeIdentifiers = document.GetFirstElementValue(ProjectXElement.RuntimeIdentifiers)?.SplitWithoutEmpty(';') ?? new string[0];
+            var packageTargetFallbacks = document.GetFirstElementValue(ProjectXElement.PackageTargetFallback)?.SplitWithoutEmpty(';');
+            var runtimeIdentifiers = document.GetFirstElementValue(ProjectXElement.RuntimeIdentifiers)?.SplitWithoutEmpty(';');
             var dotNetCliToolReferences = document.GetDotNetCliToolReferences();
             var assemblyOriginatorKeyFile = document.GetFirstElementValue(ProjectXElement.AssemblyOriginatorKeyFile);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.GeneratePackageOnBuild), out var generatePackageOnBuild);
@@ -248,18 +250,34 @@ namespace Cake.Incubator
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.DelaySign), out var delaySign);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.DebugSymbols), out var debugSymbols);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.Optimize), out var optimize);
+            bool.TryParse(document.GetFirstElementValue(ProjectXElement.IncludeBuildOutput), out var includeBuildOutput);
+            bool.TryParse(document.GetFirstElementValue(ProjectXElement.IncludeContentInPack), out var includeContentInPack);
+            bool.TryParse(document.GetFirstElementValue(ProjectXElement.IncludeSource), out var includeSource);
+            bool.TryParse(document.GetFirstElementValue(ProjectXElement.IncludeSymbols), out var includeSymbols);
+            if (!bool.TryParse(document.GetFirstElementValue(ProjectXElement.IsPackable), out var isPackable))
+            {
+                isPackable = true;
+            }
+            bool.TryParse(document.GetFirstElementValue(ProjectXElement.IsTool), out var isTool);
+            bool.TryParse(document.GetFirstElementValue(ProjectXElement.NoPackageAnalysis), out var noPackageAnalysis);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.PublicSign), out var publicSign);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.TreatWarningsAsErrors), out var treatWarningsAsErrors);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.GenerateDocumentationFile), out var generateDocumentationFile);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.PreserveCompilationContext), out var preserveCompilationContext);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.AllowUnsafeBlocks), out var allowUnsafeBlocks);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.PackageRequireLicenseAcceptance), out var packageRequireLicenseAcceptance);
-            var packageTags = document.GetFirstElementValue(ProjectXElement.PackageTags)?.SplitWithoutEmpty(';') ?? new string[0];
+            var packageTags = document.GetFirstElementValue(ProjectXElement.PackageTags)?.SplitWithoutEmpty(';');
             var packageReleaseNotes = document.GetFirstElementValue(ProjectXElement.PackageReleaseNotes);
+            var minClientVersion = document.GetFirstElementValue(ProjectXElement.MinClientVersion);
             var langVersion = document.GetFirstElementValue(ProjectXElement.LangVersion);
+            var nuspecBasePath = document.GetFirstElementValue(ProjectXElement.NuspecBasePath);
+            var nuspecFile = document.GetFirstElementValue(ProjectXElement.NuspecFile);
+            var nuspecProps = document.GetNuspecProps();
             var packageIconUrl = document.GetFirstElementValue(ProjectXElement.PackageIconUrl);
             var packageProjectUrl = document.GetFirstElementValue(ProjectXElement.PackageProjectUrl);
             var packageLicenseUrl = document.GetFirstElementValue(ProjectXElement.PackageLicenseUrl);
+            var packageOutputPath = document.GetFirstElementValue(ProjectXElement.PackageOutputPath);
+            var title = document.GetFirstElementValue(ProjectXElement.Title);
             var generateSerializationAssemblies = document.GetFirstElementValue(ProjectXElement.GenerateSerializationAssemblies);
             var warningLevel = document.GetFirstElementValue(ProjectXElement.WarningLevel);
             var repositoryType = document.GetFirstElementValue(ProjectXElement.RepositoryType) ?? "git";
@@ -270,10 +288,9 @@ namespace Cake.Incubator
             int.TryParse(document.GetFirstElementValue(ProjectXElement.ThreadPoolMinThreads), out var threadPoolMinThreads);
             int.TryParse(document.GetFirstElementValue(ProjectXElement.ThreadPoolMaxThreads), out var threadPoolMaxThreads);
             var noWarn = document.GetFirstElementValue(ProjectXElement.NoWarn)?.SplitWithoutEmpty(';').Where(x => !x.StartsWith("$"))?.ToArray() ?? new string[0];
-            var treatSpecificWarningsAsErrors = document.GetFirstElementValue(ProjectXElement.TreatSpecificWarningsAsErrors)?.SplitWithoutEmpty(';')?.ToArray() ?? new string[0];
+            var treatSpecificWarningsAsErrors = document.GetFirstElementValue(ProjectXElement.TreatSpecificWarningsAsErrors)?.SplitWithoutEmpty(';') ?? new string[0];
             var defineConstants = document.GetFirstElementValue(ProjectXElement.DefineConstants)?.SplitWithoutEmpty(';').Where(x => !x.StartsWith("$"))?.ToArray() ?? new string[0];
             var targets = document.GetTargets();
-
 
             // TODO: config/platform specific props
             return new CustomProjectParserResult
@@ -295,7 +312,9 @@ namespace Cake.Incubator
                     AssemblyTitle = assemblyTitle ?? assemblyName,
                     AssemblyVersion = assemblyVersion,
                     Authors = authors,
+                    BuildOutputTargetFolder = buildOutputTargetFolder,
                     Company = company,
+                    ContentTargetFolders = contentTargetFolders,
                     Copyright = copyright,
                     DebugSymbols = debugSymbols,
                     DebugType = debugType,
@@ -308,15 +327,27 @@ namespace Cake.Incubator
                     GenerateDocumentationFile = generateDocumentationFile,
                     GeneratePackageOnBuild = generatePackageOnBuild,
                     GenerateSerializationAssemblies = generateSerializationAssemblies,
+                    IncludeBuildOutput = includeBuildOutput,
+                    IncludeContentInPack = includeContentInPack,
+                    IncludeSource = includeSource,
+                    IncludeSymbols = includeSymbols,
+                    IsPackable = isPackable,
+                    IsTool = isTool,
                     IsWeb = sdk.EqualsIgnoreCase("Microsoft.NET.Sdk.Web"),
                     LangVersion = langVersion,
+                    MinClientVersion = minClientVersion,
                     NetStandardImplicitPackageVersion = netstandardVersion,
                     NeutralLanguage = neutralLang,
+                    NoPackageAnalysis = noPackageAnalysis,
                     NoWarn = noWarn,
+                    NuspecBasePath = nuspecBasePath,
+                    NuspecFile = nuspecFile,
+                    NuspecProperties = nuspecProps,
                     Optimize = optimize,
                     PackageIconUrl = packageIconUrl,
                     PackageId = packageId,
                     PackageLicenseUrl = packageLicenseUrl,
+                    PackageOutputPath = packageOutputPath,
                     PackageProjectUrl = packageProjectUrl,
                     PackageReferences = packageReferences,
                     PackageReleaseNotes = packageReleaseNotes,
@@ -333,6 +364,7 @@ namespace Cake.Incubator
                     RuntimeIdentifiers = runtimeIdentifiers,
                     Sdk = sdk,
                     SignAssembly = signAssembly,
+                    Title = title,
                     TargetFrameworks = targetFrameworks,
                     Targets = targets,
                     TreatWarningsAsErrors = treatWarningsAsErrors,
