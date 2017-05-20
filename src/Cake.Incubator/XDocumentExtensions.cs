@@ -14,7 +14,7 @@ namespace Cake.Incubator
     /// <summary>
     /// Several extension methods when using XDocument.
     /// </summary>
-    public static class XDocumentExtensions
+    internal static class XDocumentExtensions
     {
         /// <summary>
         /// Gets the first output path value for a specific config from an xml document
