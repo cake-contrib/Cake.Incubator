@@ -26,7 +26,7 @@ namespace Cake.Incubator
 
         internal static bool HasTargetFrameworkCondition(this string condition)
         {
-            return condition.StartsWith(TargetframeworkCondition);
+            return !condition.IsNullOrEmpty() && condition.StartsWith(TargetframeworkCondition);
         }
 
         internal static bool HasConfigPlatformCondition(this string condition, string config = null, string platform = null)
