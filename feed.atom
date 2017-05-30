@@ -4,7 +4,27 @@
 	<id>http://cake-contrib.github.io/Cake.Incubator</id>
 	<title>Cake.Incubator</title>
 	<rights>2017</rights>
-	<updated>2017-05-30T08:16:34Z</updated>
+	<updated>2017-05-30T09:14:37Z</updated>
+	<entry>
+		<author>
+			<name>wwwlicious</name>
+		</author>
+		<link href="http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.3.0" />
+		<id>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.3.0</id>
+		<title>New Release - 1.3.0</title>
+		<updated>2017-05-30T00:00:00Z</updated>
+		<summary>&lt;p&gt;As part of this release we had &lt;a href="https://github.com/cake-contrib/Cake.Incubator/issues?milestone=5&amp;amp;state=closed"&gt;2 issues&lt;/a&gt; closed.&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<author>
+			<name>wwwlicious</name>
+		</author>
+		<link href="http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.2.0" />
+		<id>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.2.0</id>
+		<title>New Release - 1.2.0</title>
+		<updated>2017-05-21T00:00:00Z</updated>
+		<summary>&lt;p&gt;This release brings fuller support for parsing VS 2017 project formats.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<author>
 			<name>gep13</name>
