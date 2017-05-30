@@ -14,7 +14,7 @@ namespace Cake.Incubator
     /// <summary>
     /// Several extension methods when using XDocument.
     /// </summary>
-    public static class XDocumentExtensions
+    internal static class XDocumentExtensions
     {
         /// <summary>
         /// Gets the first output path value for a specific config from an xml document
@@ -120,8 +120,8 @@ namespace Cake.Incubator
                     var condition = x.GetAttributeValue("Condition") ?? x.Parent.GetAttributeValue("Condition");
                     return new PackageReference
                     {
-                        Name = x.GetAttributeValue("Include"),
-                        Version = x.GetAttributeValue("Version"),
+                        Name = x.GetAttributeValue("Include") ?? x.Element("Include")?.Value,
+                        Version = x.GetAttributeValue("Version") ?? x.Element("Version")?.Value,
                         PrivateAssets = x.GetAttributeValue(ProjectXElement.PrivateAssets)?.SplitIgnoreEmpty(';') ?? privateAssets,
                         IncludeAssets = x.GetAttributeValue(ProjectXElement.IncludeAssets)?.SplitIgnoreEmpty(';') ?? includeAssets,
                         ExcludeAssets = x.GetAttributeValue(ProjectXElement.ExcludeAssets)?.SplitIgnoreEmpty(';') ?? excludeAssets,

@@ -785,6 +785,38 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
+        public void ParseProject_NetCore_PackageReference_ReturnsWithVersionAsChildElement()
+        {
+            var packageRef =
+                @"<PackageReference Include=""Cake.Core"">
+                    <Version>1.3.1</Version>
+                    </PackageReference>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(packageRef));
+            var references = file.ParseProject("test").NetCore.PackageReferences;
+
+            references.Should().HaveCount(1);
+
+            var first = references.First();
+            first.Version.Should().Be("1.3.1");
+        }
+
+        [Fact]
+        public void ParseProject_NetCore_PackageReference_ReturnsWithIncludeAsChildElement()
+        {
+            var packageRef =
+                @"<PackageReference>
+                    <Include>Cake.Core</Include>
+                    </PackageReference>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(packageRef));
+            var references = file.ParseProject("test").NetCore.PackageReferences;
+
+            references.Should().HaveCount(1);
+
+            var first = references.First();
+            first.Name.Should().Be("Cake.Core");
+        }
+
+        [Fact]
         public void ParseProject_NetCore_PackageReference_ReturnsWithTargetFrameworkInAttributeIfSet()
         {
             var packageRef =

@@ -1,6 +1,6 @@
 ﻿// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 namespace Cake.Incubator
 {
@@ -85,7 +85,7 @@ namespace Cake.Incubator
         /// Checks the project type
         /// <code>
         /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
-        /// project.IsType(ProjectType.CSharp); // true 
+        /// project.IsType(ProjectType.CSharp); // true
         /// </code>
         /// </example>
         public static bool IsType(this CustomProjectParserResult projectParserResult, ProjectType projectType)
@@ -124,7 +124,7 @@ namespace Cake.Incubator
         /// <example>
         /// Returns the project information specific to a build configuration
         /// <code>
-        /// CustomParseProjectResult project 
+        /// CustomParseProjectResult project
         ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
         /// </code>
         /// </example>
@@ -143,7 +143,6 @@ namespace Cake.Incubator
             var projectFile = context.FileSystem.GetProjectFile(project);
             var result = projectFile.ParseProject(configuration, platform);
 
-            context.Debug($"Parsed project file {project}\r\n{result.Dump()}");
             return result;
         }
 
@@ -159,7 +158,7 @@ namespace Cake.Incubator
         /// <example>
         /// Returns the project information specific to a build configuration
         /// <code>
-        /// CustomParseProjectResult project 
+        /// CustomParseProjectResult project
         ///         = new File("./test.csproj").ParseProject(configuration: "Release", platform: "x86");
         /// </code>
         /// </example>

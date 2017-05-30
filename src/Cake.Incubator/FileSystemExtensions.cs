@@ -11,7 +11,7 @@ namespace Cake.Incubator
     /// <summary>
     /// Contains extension methods for working with cakes <see cref="IFileSystem"/>
     /// </summary>
-    public static class FileSystemExtensions
+    internal static class FileSystemExtensions
     {
         /// <summary>
         /// Loads a visual studio project file
