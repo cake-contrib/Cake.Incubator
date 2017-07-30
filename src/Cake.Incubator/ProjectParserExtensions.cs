@@ -50,27 +50,23 @@ namespace Cake.Incubator
         /// </example>
         public static bool IsWebApplication(this CustomProjectParserResult projectParserResult)
         {
-            var webApp = new Guid("349C5851-65DF-11DA-9384-00065B846F21");
-            if (!projectParserResult.ProjectTypeGuids.Any())
+            if (projectParserResult.IsNetFramework)
             {
-                return false;
-            }
-
-            foreach (var projectTypeGuid in projectParserResult.ProjectTypeGuids)
-            {
-                bool valid = Guid.TryParse(projectTypeGuid, out Guid result);
-                if (!valid)
+                if (!projectParserResult.ProjectTypeGuids.Any())
                 {
-                    continue;
+                    return false;
                 }
 
-                if (result.Equals(webApp))
-                {
-                    return true;
-                }
+                return projectParserResult.IsType(ProjectType.AspNetMvc1) ||
+                   projectParserResult.IsType(ProjectType.AspNetMvc2) ||
+                   projectParserResult.IsType(ProjectType.AspNetMvc3) ||
+                   projectParserResult.IsType(ProjectType.AspNetMvc4) ||
+                   projectParserResult.IsType(ProjectType.AspNetMvc5) ||
+                   projectParserResult.IsType(ProjectType.WebApplication) ||
+                   projectParserResult.IsType(ProjectType.WebSite);
             }
 
-            return false;
+            return projectParserResult.IsNetCore && projectParserResult.NetCore.IsWeb;
         }
 
         /// <summary>
