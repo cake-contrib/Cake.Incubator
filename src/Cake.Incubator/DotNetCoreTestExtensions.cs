@@ -68,6 +68,12 @@
                 throw new CakeException("-noappdomain is not supported in .netcoreapp");
             }
 
+            if (settings.OutputDirectory == null
+                && (settings.HtmlReport || settings.NUnitReport || settings.XmlReport))
+            {
+                throw new CakeException("OutputDirectory must not be null");
+            }
+
             // Generate NUnit Style XML report?
             if (settings.NUnitReport)
             {

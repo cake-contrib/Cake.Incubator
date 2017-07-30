@@ -105,5 +105,18 @@ namespace Cake.Incubator
                 }
             }
         }
+
+        /// <summary>
+        /// Checks if the source is contained in a list
+        /// </summary>
+        /// <typeparam name="T">The source and list type</typeparam>
+        /// <param name="source">The source item</param>
+        /// <param name="list">The list of items to check</param>
+        /// <returns>True if found, false if not</returns>
+        public static bool IsIn<T>(this T source, params T[] list)
+        {
+            source.ThrowIfNull(nameof(source));
+            return list.Contains(source);
+        }
     }
 }

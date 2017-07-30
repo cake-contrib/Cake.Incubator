@@ -6,13 +6,13 @@
     <title>Cake.Incubator</title>
     <authors>Scott Mackay (@wwwlicious)</authors>
     <owners>Scott Mackay (@wwwlicious), cake-contrib</owners>
-    <iconUrl>https://github.com/cake-build/graphics/raw/master/png/cake-small.png</iconUrl>
+    <iconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</iconUrl>
     <projectUrl>https://github.com/cake-contrib/Cake.Incubator</projectUrl>
     <licenseUrl>https://opensource.org/licenses/MPL-2.0</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Provides experimental extensions and additional aliases for Cake.Build scripts</description>
-    <releaseNotes>Initial Release</releaseNotes>
-    <copyright>Copyright 2016</copyright>
+    <releaseNotes>https://github.com/cake-contrib/Cake.Incubator/releases</releaseNotes>
+    <copyright>Copyright 2017</copyright>
     <tags>Cake Build Script Extensions Project Solution</tags>
   </metadata>
   <files>

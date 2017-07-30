@@ -37,6 +37,39 @@ namespace Cake.Incubator
         }
 
         /// <summary>
+        /// Checks if the project is a web application.
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is a web application</returns>
+        /// <example>
+        /// Check if a parsed project is a web application
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsWebApplication()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsWebApplication(this CustomProjectParserResult projectParserResult)
+        {
+            if (projectParserResult.IsNetFramework)
+            {
+                if (!projectParserResult.ProjectTypeGuids.Any())
+                {
+                    return false;
+                }
+
+                return projectParserResult.IsType(ProjectType.AspNetMvc1) ||
+                   projectParserResult.IsType(ProjectType.AspNetMvc2) ||
+                   projectParserResult.IsType(ProjectType.AspNetMvc3) ||
+                   projectParserResult.IsType(ProjectType.AspNetMvc4) ||
+                   projectParserResult.IsType(ProjectType.AspNetMvc5) ||
+                   projectParserResult.IsType(ProjectType.WebApplication) ||
+                   projectParserResult.IsType(ProjectType.WebSite);
+            }
+
+            return projectParserResult.IsNetCore && projectParserResult.NetCore.IsWeb;
+        }
+
+        /// <summary>
         /// Returns the parsed projects output assembly extension
         /// </summary>
         /// <param name="projectParserResult">the parsed project</param>

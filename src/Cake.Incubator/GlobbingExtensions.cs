@@ -55,15 +55,14 @@ namespace Cake.Incubator
         /// <param name="patterns">the glob patterns</param>
         /// <returns>the files matching the glob patterns</returns>
         /// <example>
-        /// Locates files with the same name in the same directory, but different extensions.
-        /// The .pdb to your .dll as it were.
+        /// Pass multiple glob patterns 
         /// <code>
         /// // /output/file.dll
         /// // /output/file.xml
         /// // /output/file.pdb
         /// // /output/another.dll
         ///
-        /// IEnumerable&lt;FilePath&gt; matchingFiles = GetMatchingFiles(new FilePath("/output/file.dll"));
+        /// IEnumerable&lt;FilePath&gt; matchingFiles = GetFiles("*.pdb", "*.xml"));
         ///
         /// matchingFiles[0]; // /output/file.xml
         /// matchingFiles[1]; // /output/file.pdb
