@@ -36,7 +36,7 @@ namespace Cake.Incubator.Tests
             var patternA = "a.*";
             var patternB = "b.*";
 
-            var files = context.GetFiles(patternA);
+            var files = context.GetFiles(patternA, patternB);
             files.Should().NotBeEmpty();
         }
     }
