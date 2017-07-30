@@ -141,11 +141,11 @@ namespace Cake.Incubator.Tests
             var webApp = sut.IsWebApplication();
 
             // assert
-            webApp.ShouldBeEquivalentTo(false);
+            webApp.Should().BeFalse();
         }
 
         [Fact]
-        public void IsWebApplication_ReturnsFalse_WhenProjectIsOfTypeWebApplication()
+        public void IsWebApplication_ReturnsTrue_WhenProjectIsOfTypeWebApplication()
         {
             // arrange
             var sut = validCsProjWebApplicationFile.ParseProject("debug");
@@ -154,7 +154,7 @@ namespace Cake.Incubator.Tests
             var webApp = sut.IsWebApplication();
 
             // assert
-            webApp.ShouldBeEquivalentTo(true);
+            webApp.Should().BeTrue();
         }
     }
 
