@@ -5,8 +5,16 @@
 		<link>http://cake-contrib.github.io/Cake.Incubator</link>
 		<description />
 		<copyright>2017</copyright>
-		<pubDate>Tue, 30 May 2017 09:23:03 GMT</pubDate>
-		<lastBuildDate>Tue, 30 May 2017 09:23:03 GMT</lastBuildDate>
+		<pubDate>Sun, 30 Jul 2017 15:48:32 GMT</pubDate>
+		<lastBuildDate>Sun, 30 Jul 2017 15:48:32 GMT</lastBuildDate>
+		<item>
+			<title>New Release - 1.4.0</title>
+			<link>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.4.0</link>
+			<description>&lt;p&gt;As part of this release we had &lt;a href="https://github.com/cake-contrib/Cake.Incubator/issues?milestone=6&amp;amp;state=closed"&gt;4 issues&lt;/a&gt; closed.&lt;/p&gt;</description>
+			<author>wwwlicious</author>
+			<guid>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.4.0</guid>
+			<pubDate>Sun, 30 Jul 2017 00:00:00 GMT</pubDate>
+		</item>
 		<item>
 			<title>New Release - 1.3.0</title>
 			<link>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.3.0</link>
@@ -24,19 +32,19 @@
 			<pubDate>Sun, 21 May 2017 00:00:00 GMT</pubDate>
 		</item>
 		<item>
-			<title>New Release - 1.1.0</title>
-			<link>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0</link>
-			<description>&lt;p&gt;We are happy to announnce the 1.1.0 release of the Cake.Incubator Addin for Cake.&lt;/p&gt;</description>
-			<author>gep13</author>
-			<guid>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0</guid>
-			<pubDate>Mon, 03 Apr 2017 00:00:00 GMT</pubDate>
-		</item>
-		<item>
 			<title>New Release - 1.1.1</title>
 			<link>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.1</link>
 			<description>&lt;p&gt;This is a hotfix release for 1.1.0.&lt;/p&gt;</description>
 			<author>wwwlicious</author>
 			<guid>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.1</guid>
+			<pubDate>Mon, 03 Apr 2017 00:00:00 GMT</pubDate>
+		</item>
+		<item>
+			<title>New Release - 1.1.0</title>
+			<link>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0</link>
+			<description>&lt;p&gt;We are happy to announnce the 1.1.0 release of the Cake.Incubator Addin for Cake.&lt;/p&gt;</description>
+			<author>gep13</author>
+			<guid>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0</guid>
 			<pubDate>Mon, 03 Apr 2017 00:00:00 GMT</pubDate>
 		</item>
 	</channel>

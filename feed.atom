@@ -4,7 +4,17 @@
 	<id>http://cake-contrib.github.io/Cake.Incubator</id>
 	<title>Cake.Incubator</title>
 	<rights>2017</rights>
-	<updated>2017-05-30T09:23:03Z</updated>
+	<updated>2017-07-30T15:48:32Z</updated>
+	<entry>
+		<author>
+			<name>wwwlicious</name>
+		</author>
+		<link href="http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.4.0" />
+		<id>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.4.0</id>
+		<title>New Release - 1.4.0</title>
+		<updated>2017-07-30T00:00:00Z</updated>
+		<summary>&lt;p&gt;As part of this release we had &lt;a href="https://github.com/cake-contrib/Cake.Incubator/issues?milestone=6&amp;amp;state=closed"&gt;4 issues&lt;/a&gt; closed.&lt;/p&gt;</summary>
+	</entry>
 	<entry>
 		<author>
 			<name>wwwlicious</name>
@@ -27,16 +37,6 @@
 	</entry>
 	<entry>
 		<author>
-			<name>gep13</name>
-		</author>
-		<link href="http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0" />
-		<id>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0</id>
-		<title>New Release - 1.1.0</title>
-		<updated>2017-04-03T00:00:00Z</updated>
-		<summary>&lt;p&gt;We are happy to announnce the 1.1.0 release of the Cake.Incubator Addin for Cake.&lt;/p&gt;</summary>
-	</entry>
-	<entry>
-		<author>
 			<name>wwwlicious</name>
 		</author>
 		<link href="http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.1" />
@@ -44,5 +44,15 @@
 		<title>New Release - 1.1.1</title>
 		<updated>2017-04-03T00:00:00Z</updated>
 		<summary>&lt;p&gt;This is a hotfix release for 1.1.0.&lt;/p&gt;</summary>
+	</entry>
+	<entry>
+		<author>
+			<name>gep13</name>
+		</author>
+		<link href="http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0" />
+		<id>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0</id>
+		<title>New Release - 1.1.0</title>
+		<updated>2017-04-03T00:00:00Z</updated>
+		<summary>&lt;p&gt;We are happy to announnce the 1.1.0 release of the Cake.Incubator Addin for Cake.&lt;/p&gt;</summary>
 	</entry>
 </feed>

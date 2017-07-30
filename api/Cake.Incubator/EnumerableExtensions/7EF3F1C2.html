@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
-        <title>Cake.Incubator - API - ProjectParserExtensions.ParseProject(ICakeContext, FilePath, string) Method</title>
+        <title>Cake.Incubator - API - EnumerableExtensions.IsIn&lt;T&gt;(T, T[]) Method</title>
         <link href="/Cake.Incubator/assets/css/mermaid.css" rel="stylesheet">
         <link href="/Cake.Incubator/assets/css/highlight.css" rel="stylesheet">
         <link href="/Cake.Incubator/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
@@ -74,9 +74,7 @@
                     	
 	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
 <p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Examples">Examples</a></p>
-<p><a href="#Remarks">Remarks</a></p>
-<p><a href="#Attributes">Attributes</a></p>
+<p><a href="#TypeParameters">Type Parameters</a></p>
 <p><a href="#Parameters">Parameters</a></p>
 <p><a href="#ReturnValue">Return Value</a></p>
 <hr class="infobar-hidden">
@@ -132,17 +130,15 @@
 			<li class="header">Namespace</li>
 		<li><a href="/Cake.Incubator/api/Cake.Incubator">Cake<wbr>.Incubator</a></li>
 		<li class="header">Type</li>
-		<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions">Project<wbr>Parser<wbr>Extensions</a></li>
+		<li><a href="/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions">EnumerableExtensions</a></li>
 		<li role="separator" class="divider"></li>
 			<li class="header">Method Members</li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/D730FDAA">GetAssemblyFilePath<wbr>(<wbr>Custom<wbr>Project<wbr>Parser<wbr>Result)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/E4D53944">GetExtension<wbr>(<wbr>Custom<wbr>Project<wbr>Parser<wbr>Result)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/24DACD2D">IsLibrary<wbr>(<wbr>Custom<wbr>Project<wbr>Parser<wbr>Result)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/15402E06">IsType<wbr>(<wbr>Custom<wbr>Project<wbr>Parser<wbr>Result, <wbr>ProjectType)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/1F81CA68">IsWebApplication<wbr>(<wbr>Custom<wbr>Project<wbr>Parser<wbr>Result)<wbr></a></li>
-				<li class="selected"><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/D66EB115">ParseProject<wbr>(ICakeContext, <wbr>FilePath, <wbr>string)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/6804B61A">ParseProject<wbr>(ICakeContext, <wbr>FilePath, <wbr>string, <wbr>string)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/9777019D">ParseProject<wbr>(IFile, <wbr>string, <wbr>string)<wbr></a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions/4F0C32C4">Distinct<wbr>&lt;TSource, <wbr>TKey&gt;<wbr><wbr>(IEnumerable<wbr>&lt;TSource&gt;<wbr>, <wbr>Func<wbr>&lt;TSource, <wbr>TKey&gt;<wbr>)<wbr></a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions/EFDEDF72">Each<wbr>&lt;T&gt;<wbr><wbr>(IEnumerable<wbr>&lt;T&gt;<wbr>, <wbr>Action<wbr>&lt;T&gt;<wbr>)<wbr></a></li>
+				<li class="selected"><a href="/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions/7EF3F1C2">IsIn<wbr>&lt;T&gt;<wbr><wbr>(T, <wbr>T[])<wbr></a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions/DAAC3AB2">IsNullOrEmpty<wbr>&lt;T&gt;<wbr><wbr>(IEnumerable<wbr>&lt;T&gt;<wbr>)<wbr></a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions/570E9DB5">IsNullOrEmpty<wbr>&lt;T&gt;<wbr><wbr>(IList<wbr>&lt;T&gt;<wbr>)<wbr></a></li>
+				<li><a href="/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions/A83C10B8">IsNullOrEmpty<wbr>&lt;T&gt;<wbr><wbr>(T[])<wbr></a></li>
 
 
                     </ul>
@@ -156,15 +152,15 @@
 
 
 <section class="content-header">
-			<h3><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions">Project<wbr>Parser<wbr>Extensions</a>.</h3>
-	<h1>ParseProject<wbr>(ICakeContext, <wbr>FilePath, <wbr>string)<wbr> <small>Method</small></h1>
+			<h3><a href="/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions">EnumerableExtensions</a>.</h3>
+	<h1>IsIn<wbr>&lt;T&gt;<wbr><wbr>(T, <wbr>T[])<wbr> <small>Method</small></h1>
 </section>
 <section class="content">
 	
 	
 		<h1 id="Summary">Summary</h1>
 	<div class="lead">
-    Parses a csproj file into a strongly typed <code class="cs"><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectParserResult">CustomProjectParserResult</a></code> object
+    Checks if the source is contained in a list
     </div>
 
 		<div class="panel panel-default">
@@ -175,43 +171,35 @@
 						<dd><a href="/Cake.Incubator/api/Cake.Incubator">Cake<wbr>.Incubator</a></dd>
 					
 						<dt>Containing Type</dt>
-						<dd><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions">Project<wbr>Parser<wbr>Extensions</a></dd>		
+						<dd><a href="/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions">EnumerableExtensions</a></dd>		
 					
 				</dl>
   			</div>
 		</div>
 
 	<h1 id="Syntax">Syntax</h1>
-	<pre><code>[CakeMethodAlias]
-public static CustomProjectParserResult ParseProject(this ICakeContext context, FilePath project, string configuration)</code></pre>
+	<pre><code>public static bool IsIn&lt;T&gt;(this T source, params T[] list)</code></pre>
 
-	<h1 id="Examples">Examples</h1>
-	<div>
-    Returns the project information specific to a build configuration
-    <pre><code class="cs">CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), configuration: "Release");</code></pre>
-    </div>
 
-	<h1 id="Remarks">Remarks</h1>
-	<div>Defaults to 'AnyCPU' platform, use overload to override this default</div>
 
-	<h1 id="Attributes">Attributes</h1>
+
+	<h1 id="TypeParameters">Type Parameters</h1>
 	<div class="box">
 		<div class="box-body no-padding table-responsive">
 			<table class="table table-striped table-hover two-cols">
 				<thead>
 					<tr>
-						<th>Type</th>
+						<th>Name</th>
 						<th>Description</th>
 					</tr>
 				</thead>
-					<tbody><tr>
-						<td>CakeMethodAlias</td>
-						<td></td>
+					<tbody><tr id="typeparam-T">
+						<td>T</td>
+						<td>The source and list type</td>
 					</tr>
 			</tbody></table>
 		</div>
 	</div>	
-
 
 	<h1 id="Parameters">Parameters</h1>
 	<div class="box">
@@ -225,19 +213,14 @@ public static CustomProjectParserResult ParseProject(this ICakeContext context, 
 					</tr>
 				</thead>
 					<tbody><tr>
-						<td>context</td>
-						<td>ICakeContext</td>
-						<td>the cake context</td>
+						<td>source</td>
+						<td>T</td>
+						<td>The source item</td>
 					</tr>
 					<tr>
-						<td>project</td>
-						<td>FilePath</td>
-						<td>the project filepath</td>
-					</tr>
-					<tr>
-						<td>configuration</td>
-						<td>string</td>
-						<td>the build configuration</td>
+						<td>list</td>
+						<td>T[]</td>
+						<td>The list of items to check</td>
 					</tr>
 			</tbody></table>
 		</div>
@@ -254,8 +237,8 @@ public static CustomProjectParserResult ParseProject(this ICakeContext context, 
 					</tr>
 				</thead>
 				<tbody><tr>
-					<td><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectParserResult">Custom<wbr>Project<wbr>Parser<wbr>Result</a></td>
-					<td>The parsed project</td>
+					<td>bool</td>
+					<td>True if found, false if not</td>
 				</tr>
 			</tbody></table>
 		</div>

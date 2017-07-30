@@ -6,7 +6,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="shortcut icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
         <link rel="icon" href="/Cake.Incubator/assets/img/favicon.ico" type="image/x-icon">
-        <title>Cake.Incubator - API - ProjectParserExtensions.ParseProject(IFile, string, string) Method</title>
+        <title>Cake.Incubator - New Release - 1.4.0</title>
         <link href="/Cake.Incubator/assets/css/mermaid.css" rel="stylesheet">
         <link href="/Cake.Incubator/assets/css/highlight.css" rel="stylesheet">
         <link href="/Cake.Incubator/assets/css/bootstrap/bootstrap.css" rel="stylesheet">
@@ -57,8 +57,8 @@
                     <div class="collapse navbar-collapse pull-left" id="navbar-collapse">
                         <ul class="nav navbar-nav">                            
                                     <li><a href="/Cake.Incubator/docs">Documentation</a></li>
-        <li><a href="/Cake.Incubator/blog">Blog</a></li>
-        <li class="active"><a href="/Cake.Incubator/api">API</a></li>
+        <li class="active"><a href="/Cake.Incubator/blog">Blog</a></li>
+        <li><a href="/Cake.Incubator/api">API</a></li>
  
                         </ul>       
                     </div>
@@ -72,76 +72,29 @@
             <aside class="main-sidebar ">
                 <section class="infobar" data-spy="affix" data-offset-top="60" data-offset-bottom="200"> 
                     	
-	<div id="infobar-headings"><h6>On This Page</h6><p><a href="#Summary">Summary</a></p>
-<p><a href="#Syntax">Syntax</a></p>
-<p><a href="#Examples">Examples</a></p>
-<p><a href="#Parameters">Parameters</a></p>
-<p><a href="#ReturnValue">Return Value</a></p>
+        <div><p><a href="https://github.com/cake-contrib/Cake.Incubator/tree/develop/docs/input/blog/new-release-1.4.0.md"><i class="fa fa-pencil-square" aria-hidden="true"></i> Edit Content</a></p></div>
+    <div id="infobar-headings"><h6>On This Page</h6><p><a href="#release">1.4.0 Release</a></p>
 <hr class="infobar-hidden">
 </div>
 
                 </section>
                 <section class="sidebar">                    
-                    	
-	    <script src="/Cake.Incubator/assets/js/lunr.min.js"></script>
-    <script src="/Cake.Incubator/assets/js/searchIndex.js"></script>
-    <div class="sidebar-form">
-        <div class="input-group">
-            <input type="text" name="search" id="search" class="form-control" placeholder="Search Types...">
-            <span class="input-group-btn">
-                <button class="btn btn-flat"><i class="fa fa-search"></i></button>
-            </span>
-        </div>
-    </div>
-    <div id="search-results">
-    </div>
-    <script>
-        function runSearch(query){
-            $("#search-results").empty();			
-            if( query.length < 2 ){
-                return;
-            }			
-            var results = searchModule.search("*" + query + "*");
-            var listHtml = "<ul class='sidebar-menu'>";	
-            listHtml += "<li class='header'>Type Results</li>";	
-            if(results.length == 0 ){
-                listHtml += "<li>No results found</li>";
-            } else {					
-                for(var i = 0; i < results.length; ++i){
-                    var res = results[i];
-                    listHtml += "<li><a href='" + res.url + "'>" + res.title + "</a></li>";
-                }				
-            }
-            listHtml += "</ul>";				
-            $("#search-results").append(listHtml);
-        }
-
-        $(document).ready(function(){
-            $("#search").on('input propertychange paste', function() {
-                runSearch($("#search").val());
-            });
-        });
-    </script>
-	
-    <hr>
+                    
 
                     <ul class="sidebar-menu">
                         
-			<li class="header">Namespace</li>
-		<li><a href="/Cake.Incubator/api/Cake.Incubator">Cake<wbr>.Incubator</a></li>
-		<li class="header">Type</li>
-		<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions">Project<wbr>Parser<wbr>Extensions</a></li>
-		<li role="separator" class="divider"></li>
-			<li class="header">Method Members</li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/D730FDAA">GetAssemblyFilePath<wbr>(<wbr>Custom<wbr>Project<wbr>Parser<wbr>Result)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/E4D53944">GetExtension<wbr>(<wbr>Custom<wbr>Project<wbr>Parser<wbr>Result)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/24DACD2D">IsLibrary<wbr>(<wbr>Custom<wbr>Project<wbr>Parser<wbr>Result)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/15402E06">IsType<wbr>(<wbr>Custom<wbr>Project<wbr>Parser<wbr>Result, <wbr>ProjectType)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/1F81CA68">IsWebApplication<wbr>(<wbr>Custom<wbr>Project<wbr>Parser<wbr>Result)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/D66EB115">ParseProject<wbr>(ICakeContext, <wbr>FilePath, <wbr>string)<wbr></a></li>
-				<li><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/6804B61A">ParseProject<wbr>(ICakeContext, <wbr>FilePath, <wbr>string, <wbr>string)<wbr></a></li>
-				<li class="selected"><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions/9777019D">ParseProject<wbr>(IFile, <wbr>string, <wbr>string)<wbr></a></li>
 
+    <li class="header"><i class="fa fa-bookmark"></i> Categories</li>    
+        <li><a href="/Cake.Incubator/blog/release">Release</a></li>
+    
+    <li class="header"><i class="fa fa-calendar"></i> Archive</li>    
+        <li><a href="/Cake.Incubator/blog/archive/2017/07">July, 2017</a></li>
+        <li><a href="/Cake.Incubator/blog/archive/2017/05">May, 2017</a></li>
+        <li><a href="/Cake.Incubator/blog/archive/2017/04">April, 2017</a></li>
+    
+    <li class="header"><i class="fa fa-user"></i> Authors</li>    
+        <li><a href="/Cake.Incubator/blog/author/gep13">gep13</a></li>
+        <li><a href="/Cake.Incubator/blog/author/wwwlicious">wwwlicious</a></li>
 
                     </ul>
                 </section>                
@@ -153,96 +106,38 @@
 
 
 
-<section class="content-header">
-			<h3><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions">Project<wbr>Parser<wbr>Extensions</a>.</h3>
-	<h1>ParseProject<wbr>(IFile, <wbr>string, <wbr>string)<wbr> <small>Method</small></h1>
-</section>
-<section class="content">
-	
-	
-		<h1 id="Summary">Summary</h1>
-	<div class="lead">
-    Parses a csproj file into a strongly typed <code class="cs"><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectParserResult">CustomProjectParserResult</a></code> object
-    </div>
-
-		<div class="panel panel-default">
-  			<div class="panel-body">	
-				<dl class="dl-horizontal">	
-						
-						<dt>Namespace</dt>
-						<dd><a href="/Cake.Incubator/api/Cake.Incubator">Cake<wbr>.Incubator</a></dd>
-					
-						<dt>Containing Type</dt>
-						<dd><a href="/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions">Project<wbr>Parser<wbr>Extensions</a></dd>		
-					
-				</dl>
-  			</div>
-		</div>
-
-	<h1 id="Syntax">Syntax</h1>
-	<pre><code>public static CustomProjectParserResult ParseProject(this IFile projectFile, string configuration, string platform = "AnyCPU")</code></pre>
-
-	<h1 id="Examples">Examples</h1>
-	<div>
-    Returns the project information specific to a build configuration
-    <pre><code class="cs">CustomParseProjectResult project
-        = new File("./test.csproj").ParseProject(configuration: "Release", platform: "x86");</code></pre>
-    </div>
+	<section class="content-header">
+		<h1>New Release - 1.4.0</h1>
+	</section>
+	<section class="content">
+		
 
 
+<dl class="dl-horizontal">
+    <dt><i class="fa fa-calendar"></i> Published</dt>
+    <dd>30 July 2017</dd>
+        <dt><i class="fa fa-bookmark"></i> Category</dt>
+        <dd><a href="/Cake.Incubator/blog/release">Release</a></dd>
+            <dt><i class="fa fa-user"></i> Author</dt>
+        <dd><a href="/Cake.Incubator/blog/author/wwwlicious">wwwlicious</a></dd>
+</dl>
+
+<h1 id="release">1.4.0 Release</h1>
+<p>As part of this release we had <a href="https://github.com/cake-contrib/Cake.Incubator/issues?milestone=6&amp;state=closed">4 issues</a> closed.</p>
+<p><strong>Bugs</strong></p>
+<ul>
+<li><a href="https://github.com/cake-contrib/Cake.Incubator/pull/39"><strong>#39</strong></a> GH38: Adding check of OutputDirectory setting</li>
+<li><a href="https://github.com/cake-contrib/Cake.Incubator/issues/38"><strong>#38</strong></a> NullReference in DotNetCoreTest</li>
+</ul>
+<p><strong>Improvements</strong></p>
+<ul>
+<li><a href="https://github.com/cake-contrib/Cake.Incubator/pull/40"><strong>#40</strong></a> Created a new project parser extension method "IsWebApplication".</li>
+<li><a href="https://github.com/cake-contrib/Cake.Incubator/issues/36"><strong>#36</strong></a> Would it be possible to use the Cake Contrib Icon for your NuGet Package?</li>
+</ul>
+<p>Please do not hesitate to reach out in the <a href="https://gitter.im/cake-contrib/Lobby">Gitter Channel</a> if you have any issues using this addin.</p>
 
 
-	<h1 id="Parameters">Parameters</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover three-cols">
-				<thead>
-					<tr>
-						<th>Name</th>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-					<tbody><tr>
-						<td>projectFile</td>
-						<td>IFile</td>
-						<td>the project file</td>
-					</tr>
-					<tr>
-						<td>configuration</td>
-						<td>string</td>
-						<td>the build configuration</td>
-					</tr>
-					<tr>
-						<td>platform</td>
-						<td>string</td>
-						<td>the build configuration platform, defaults to AnyCPU if not specified</td>
-					</tr>
-			</tbody></table>
-		</div>
-	</div>	
-
-	<h1 id="ReturnValue">Return Value</h1>
-	<div class="box">
-		<div class="box-body no-padding table-responsive">
-			<table class="table table-striped table-hover two-cols">
-				<thead>
-					<tr>
-						<th>Type</th>
-						<th>Description</th>
-					</tr>
-				</thead>
-				<tbody><tr>
-					<td><a href="/Cake.Incubator/api/Cake.Incubator/CustomProjectParserResult">Custom<wbr>Project<wbr>Parser<wbr>Result</a></td>
-					<td>The parsed project</td>
-				</tr>
-			</tbody></table>
-		</div>
-	</div>	
-
-
-	
-</section>
+	</section>
                 
             </div>           
             
