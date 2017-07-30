@@ -15,6 +15,7 @@ namespace Cake.Incubator.Tests
     {
         private readonly FakeFile validCsProjFile;
         private readonly FakeFile anotherValidFile;
+        private readonly FakeFile validCsProjWebApplicationFile;
         private readonly FakeFile valid2017CsProjFile;
         private readonly FakeFile valid2017CsProjNetcoreFile;
         private readonly FakeFile valid2017CsProjNetstandardFile;
@@ -28,6 +29,7 @@ namespace Cake.Incubator.Tests
             valid2017CsProjNetstandardFile = new FakeFile(Resources.VS2017_CsProj_NetStandard_ValidFile);
             validCsProjConditionalReferenceFile = new FakeFile(Resources.CsProj_ConditionReference_ValidFile);
             anotherValidFile = new FakeFile(Resources.AnotherCSProj);
+            validCsProjWebApplicationFile = new FakeFile(Resources.CsProj_ValidWebApplication);
         }
 
         [Fact]
@@ -127,6 +129,32 @@ namespace Cake.Incubator.Tests
             result.IsType(ProjectType.Unspecified).Should().BeFalse();
             result.IsType(ProjectType.CSharp).Should().BeTrue();
             result.IsType(ProjectType.AspNetMvc1).Should().BeTrue();
+        }
+
+        [Fact]
+        public void IsWebApplication_ReturnsFalse_WhenProjectIsOfTypeLibrary()
+        {
+            // arrange
+            var sut = validCsProjFile.ParseProject("debug");
+
+            // act
+            var webApp = sut.IsWebApplication();
+
+            // assert
+            webApp.ShouldBeEquivalentTo(false);
+        }
+
+        [Fact]
+        public void IsWebApplication_ReturnsFalse_WhenProjectIsOfTypeWebApplication()
+        {
+            // arrange
+            var sut = validCsProjWebApplicationFile.ParseProject("debug");
+
+            // act
+            var webApp = sut.IsWebApplication();
+
+            // assert
+            webApp.ShouldBeEquivalentTo(true);
         }
     }
 

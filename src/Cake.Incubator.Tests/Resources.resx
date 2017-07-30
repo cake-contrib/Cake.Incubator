@@ -751,6 +751,61 @@
   &lt;Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" /&gt;
 &lt;/Project&gt;</value>
   </data>
+  <data name="CsProj_ValidWebApplication" xml:space="preserve">
+    <value>&lt;Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003"&gt;
+  &lt;Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" /&gt;
+  &lt;PropertyGroup&gt;
+    &lt;MinimumVisualStudioVersion&gt;11.0&lt;/MinimumVisualStudioVersion&gt;
+    &lt;Configuration Condition=" '$(Configuration)' == '' "&gt;Debug&lt;/Configuration&gt;
+    &lt;Platform Condition=" '$(Platform)' == '' "&gt;AnyCPU&lt;/Platform&gt;
+    &lt;ProjectGuid&gt;{864BC2C5-0E27-47EC-B103-0AC11FE40C5B}&lt;/ProjectGuid&gt;
+    &lt;OutputType&gt;Library&lt;/OutputType&gt;
+    &lt;AppDesignerFolder&gt;Properties&lt;/AppDesignerFolder&gt;
+    &lt;RootNamespace&gt;Cake.Common&lt;/RootNamespace&gt;
+    &lt;AssemblyName&gt;Cake.Common&lt;/AssemblyName&gt;
+    &lt;DefaultLanguage&gt;en-US&lt;/DefaultLanguage&gt;
+    &lt;FileAlignment&gt;512&lt;/FileAlignment&gt;
+    &lt;ProjectTypeGuids&gt;{349c5851-65df-11da-9384-00065b846f21};{fae04ec0-301f-11d3-bf4b-00c04f79efbc}&lt;/ProjectTypeGuids&gt;
+    &lt;TargetFrameworkProfile&gt;Profile111&lt;/TargetFrameworkProfile&gt;
+    &lt;TargetFrameworkVersion&gt;v4.5&lt;/TargetFrameworkVersion&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' "&gt;
+    &lt;DebugSymbols&gt;true&lt;/DebugSymbols&gt;
+    &lt;DebugType&gt;full&lt;/DebugType&gt;
+    &lt;Optimize&gt;false&lt;/Optimize&gt;
+    &lt;OutputPath&gt;bin\Debug\&lt;/OutputPath&gt;
+    &lt;DefineConstants&gt;DEBUG;TRACE&lt;/DefineConstants&gt;
+    &lt;ErrorReport&gt;prompt&lt;/ErrorReport&gt;
+    &lt;WarningLevel&gt;4&lt;/WarningLevel&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' "&gt;
+    &lt;DebugType&gt;pdbonly&lt;/DebugType&gt;
+    &lt;Optimize&gt;true&lt;/Optimize&gt;
+    &lt;OutputPath&gt;bin\Release\&lt;/OutputPath&gt;
+    &lt;DefineConstants&gt;TRACE&lt;/DefineConstants&gt;
+    &lt;ErrorReport&gt;prompt&lt;/ErrorReport&gt;
+    &lt;WarningLevel&gt;4&lt;/WarningLevel&gt;
+  &lt;/PropertyGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;Compile Include="Properties\AssemblyInfo.cs" /&gt;
+    &lt;Compile Include="Class1.cs" /&gt;
+    &lt;Content Include="app\**" /&gt;
+  &lt;/ItemGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;Reference Include="System.Collections.Immutable, Version=1.1.37.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL"&gt;
+      &lt;HintPath&gt;..\packages\System.Collections.Immutable.1.1.37\lib\dotnet\System.Collections.Immutable.dll&lt;/HintPath&gt;
+      &lt;Private&gt;True&lt;/Private&gt;
+    &lt;/Reference&gt;
+  &lt;/ItemGroup&gt;
+  &lt;ItemGroup&gt;
+    &lt;ProjectReference Include="..\Cake.Common\Cake.Common.csproj"&gt;
+      &lt;Project&gt;{ABC3F1CB-F84E-43ED-A120-0CCFE344D250}&lt;/Project&gt;
+      &lt;Name&gt;Cake.Common&lt;/Name&gt;
+    &lt;/ProjectReference&gt;
+  &lt;/ItemGroup&gt;
+  &lt;Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" /&gt;
+&lt;/Project&gt;</value>
+  </data>
   <data name="VS2017_CsProj_NetCoreDefault" xml:space="preserve">
     <value>&lt;Project Sdk="Microsoft.NET.Sdk"&gt;
 
