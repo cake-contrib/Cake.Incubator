@@ -85,6 +85,7 @@
     <Compile Include="EnumerableExtensionsTests.cs" />
     <Compile Include="EnvironmentExtensionsTests.cs" />
     <Compile Include="FilePathExtensionTests.cs" />
+    <Compile Include="FunctionalExtensionsTests.cs" />
     <Compile Include="GlobbingExtensionsTests.cs" />
     <Compile Include="LoggingExtensionsTests.cs" />
     <Compile Include="NetCoreProjectParserExtensionsTests.cs" />

@@ -68,6 +68,7 @@
     <Compile Include="LoggingExtensions.cs" />
     <Compile Include="NetCoreProject.cs" />
     <Compile Include="NetFrameworkProjectProperties.cs" />
+    <Compile Include="FunctionalExtensions.cs" />
     <Compile Include="PackageReference.cs" />
     <Compile Include="ProjectPath.cs" />
     <Compile Include="ProjectPathExtensions.cs" />
