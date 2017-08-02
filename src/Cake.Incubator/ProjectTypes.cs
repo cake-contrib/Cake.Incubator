@@ -45,6 +45,7 @@ namespace Cake.Incubator
         SharepointVbNet,
         SharepointWorkflow,
         Silverlight,
+        ServiceFabricApplication,
         SmartDeviceCSharp,
         SmartDeviceVbNet,
         SolutionFolder,
@@ -110,6 +111,7 @@ namespace Cake.Incubator
         public const string MonotouchBinding = "{F5B4F3BC-B597-4E2B-B552-EF5D8A32436F}";
         public const string PortableClassLibrary = "{786C830F-07A1-408B-BD7F-6EE04809D6DB}";
         public const string ProjectFolders = "{66A26720-8FB5-11D2-AA7E-00C04F688DDE}";
+        public const string ServiceFabricApplication = "{A07B5EB6-E848-4116-A8D0-A826331D98C6}";
         public const string SharepointCSharp = "{593B0543-81F6-4436-BA1E-4747859CAAE2}";
         public const string SharepointVbNet = "{EC05E597-79D4-47f3-ADA0-324C4F7C7484}";
         public const string SharepointWorkflow = "{F8810EC1-6754-47FC-A15F-DFABD2E3FA90}";

@@ -114,6 +114,7 @@ namespace Cake.Incubator
             { ProjectType.MonotouchBinding, ProjectTypes.MonotouchBinding },
             { ProjectType.PortableClassLibrary, ProjectTypes.PortableClassLibrary },
             { ProjectType.ProjectFolders, ProjectTypes.ProjectFolders },
+            { ProjectType.ServiceFabricApplication, ProjectTypes.ServiceFabricApplication },
             { ProjectType.SharepointCSharp, ProjectTypes.SharepointCSharp },
             { ProjectType.SharepointVbNet, ProjectTypes.SharepointVbNet },
             { ProjectType.SharepointWorkflow, ProjectTypes.SharepointWorkflow },
