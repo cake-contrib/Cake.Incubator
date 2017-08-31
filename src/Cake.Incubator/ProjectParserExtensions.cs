@@ -5,6 +5,8 @@
 namespace Cake.Incubator
 {
     using System;
+    using System.ComponentModel;
+    using System.Diagnostics;
     using System.Linq;
     using System.Xml.Linq;
     using Cake.Common.Diagnostics;
@@ -175,7 +177,6 @@ namespace Cake.Incubator
 
             var projectFile = context.FileSystem.GetProjectFile(project);
             var result = projectFile.ParseProject(configuration, platform);
-
             return result;
         }
 
@@ -324,7 +325,6 @@ namespace Cake.Incubator
             var defineConstants = document.GetFirstElementValue(ProjectXElement.DefineConstants, config, platform)?.SplitIgnoreEmpty(';').Where(x => !x.StartsWith("$"))?.ToArray() ?? new string[0];
             var targets = document.GetTargets();
 
-            // TODO: config/platform specific props
             return new CustomProjectParserResult
             {
                 AssemblyName = assemblyName,
@@ -537,13 +537,31 @@ namespace Cake.Incubator
                         Include = includeValue,
                         HintPath = string.IsNullOrEmpty(hintPathElement?.Value)
                             ? null
-                            : rootPath.CombineWithFilePath(hintPathElement.Value),
+                            : hintPathElement.GetAbsolutePath(rootPath),
                         Name = nameElement?.Value ?? includeValue?.Split(',')?.FirstOrDefault(),
                         FusionName = fusionNameElement?.Value,
                         SpecificVersion = specificVersionElement == null ? (bool?)null : bool.Parse(specificVersionElement.Value),
                         Aliases = aliasesElement?.Value,
                         Private = privateElement == null ? (bool?)null : bool.Parse(privateElement.Value)
                     }).Distinct(x => x.Name).ToArray();
+        }
+
+        private static FilePath GetAbsolutePath(this XElement hintPathElement, DirectoryPath rootPath)
+        {
+            
+            var hintPath = new FilePath(hintPathElement.Value).IsRelative;
+            Cake.Core.IO.FilePath absolutePath;
+            if (hintPath)
+            {
+                absolutePath = rootPath.CombineWithFilePath(hintPathElement.Value);
+            }
+            else
+            {
+                absolutePath = hintPathElement.Value;
+                Debug.WriteLine($"An absolute path {absolutePath} was used in a project reference. It is recommended that projects contain only relative paths for references");
+            }
+
+            return absolutePath;
         }
     }
 }

@@ -20,6 +20,7 @@ namespace Cake.Incubator.Tests
         private readonly FakeFile valid2017CsProjNetcoreFile;
         private readonly FakeFile valid2017CsProjNetstandardFile;
         private readonly FakeFile validCsProjConditionalReferenceFile;
+        private readonly FakeFile validCsProjWithAbsoluteFilePaths;
 
         public CustomProjectParserTests()
         {
@@ -30,6 +31,7 @@ namespace Cake.Incubator.Tests
             validCsProjConditionalReferenceFile = new FakeFile(Resources.CsProj_ConditionReference_ValidFile);
             anotherValidFile = new FakeFile(Resources.AnotherCSProj);
             validCsProjWebApplicationFile = new FakeFile(Resources.CsProj_ValidWebApplication);
+            validCsProjWithAbsoluteFilePaths = new FakeFile(Resources.CsProj_AbsolutePath);
         }
 
         [Fact]
@@ -59,6 +61,14 @@ namespace Cake.Incubator.Tests
             result.OutputPath.ToString().Should().Be("bin/custom");
             result.OutputType.Should().Be("Exe");
             result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/project.exe");
+        }
+
+        [Fact]
+        public void CustomProjectParser_ShouldParseProjectWithAbsolutePaths()
+        {
+            var result = validCsProjWithAbsoluteFilePaths.ParseProject("debug");
+
+            result.References.Should().Contain(x => x.HintPath.FullPath == "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5.2/System.dll");
         }
 
         [Fact]
