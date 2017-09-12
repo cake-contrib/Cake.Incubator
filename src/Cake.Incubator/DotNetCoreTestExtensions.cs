@@ -12,6 +12,7 @@
     /// Several extension methods when using DotNetCoreTest.
     /// </summary>
     [CakeAliasCategory("DotNetCore")]
+    // ReSharper disable once UnusedMember.Global
     public static class DotNetCoreTestExtensions
     {
         /// <summary>
@@ -22,6 +23,7 @@
         /// <param name="xunitSettings">XUnit2 DotNetCore Test Settings Configurer</param>
         [CakeAliasCategory("Test")]
         [CakeMethodAlias]
+        // ReSharper disable once UnusedMember.Global
         public static void DotNetCoreTest(
             this ICakeContext context,
             FilePath project,

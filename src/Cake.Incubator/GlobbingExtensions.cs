@@ -39,6 +39,7 @@ namespace Cake.Incubator
         /// </example>
         [CakeMethodAlias]
         [CakeAliasCategory("Files")]
+        // ReSharper disable once UnusedMember.Global
         public static IEnumerable<IFile> GetMatchingFiles(this ICakeContext context, IEnumerable<FilePath> files)
         {
             return files.SelectMany(

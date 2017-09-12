@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package>
+  <metadata>
+    <id>Cake.Incubator</id>
+    <version>0.1.0</version>
+    <title>Cake.Incubator</title>
+    <authors>Scott Mackay (@wwwlicious)</authors>
+    <owners>Scott Mackay (@wwwlicious), cake-contrib</owners>
+    <iconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</iconUrl>
+    <projectUrl>https://github.com/cake-contrib/Cake.Incubator</projectUrl>
+    <licenseUrl>https://opensource.org/licenses/MPL-2.0</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>>Cake AddIn that provides useful extensions and additional aliases for Cake.Build scripts</description>
+    <releaseNotes>https://github.com/cake-contrib/Cake.Incubator/releases</releaseNotes>
+    <copyright>Copyright (c) Cake Contributions 2016 - Present</copyright>
+    <tags>Cake Build Script Extensions Project Solution</tags>
+  </metadata>
+  <files>
+    <file src="net45\Cake.Incubator.dll" target="lib/net45" />
+    <file src="net45\Cake.Incubator.xml" target="lib/net45" />
+    <file src="net45\Cake.Incubator.pdb" target="lib/net45" />
+    <file src="net46\Cake.Incubator.dll" target="lib/net46" />
+    <file src="net46\Cake.Incubator.xml" target="lib/net46" />
+    <file src="net46\Cake.Incubator.pdb" target="lib/net46" />
+    <file src="netstandard1.6\Cake.Incubator.dll" target="lib/netstandard1.6" />
+    <file src="netstandard1.6\Cake.Incubator.xml" target="lib/netstandard1.6" />
+    <file src="netstandard1.6\Cake.Incubator.pdb" target="lib/netstandard1.6" />
+  </files>
+</package>
