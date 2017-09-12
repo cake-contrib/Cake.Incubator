@@ -1,17 +1,17 @@
 ﻿
-Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.26430.6
+Microsoft Visual Studio Solution File, Format Version 14.00
+# Visual Studio 17
+VisualStudioVersion = 15.0.26730.12
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Incubator", "Cake.Incubator\Cake.Incubator.csproj", "{0FFF7585-010F-4ACD-B5D3-D1F9EBAA6E7A}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{36E8E24A-525A-40F3-8C19-F4C15CC69CA7}"
 	ProjectSection(SolutionItems) = preProject
 		..\LICENSE = ..\LICENSE
 		..\Readme.md = ..\Readme.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Incubator.Tests", "Cake.Incubator.Tests\Cake.Incubator.Tests.csproj", "{8124B540-7044-40EE-A848-608415D24F48}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Cake.Incubator", "Cake.Incubator\Cake.Incubator.csproj", "{AD4C46DF-E243-43A7-9946-8910BE59C016}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Cake.Incubator.Tests", "Cake.Incubator.Tests\Cake.Incubator.Tests.csproj", "{A629378B-9E20-419C-8A3D-C8E93633A8CC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,16 +19,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0FFF7585-010F-4ACD-B5D3-D1F9EBAA6E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0FFF7585-010F-4ACD-B5D3-D1F9EBAA6E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0FFF7585-010F-4ACD-B5D3-D1F9EBAA6E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0FFF7585-010F-4ACD-B5D3-D1F9EBAA6E7A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{8124B540-7044-40EE-A848-608415D24F48}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{8124B540-7044-40EE-A848-608415D24F48}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{8124B540-7044-40EE-A848-608415D24F48}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{8124B540-7044-40EE-A848-608415D24F48}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AD4C46DF-E243-43A7-9946-8910BE59C016}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD4C46DF-E243-43A7-9946-8910BE59C016}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AD4C46DF-E243-43A7-9946-8910BE59C016}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AD4C46DF-E243-43A7-9946-8910BE59C016}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A629378B-9E20-419C-8A3D-C8E93633A8CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A629378B-9E20-419C-8A3D-C8E93633A8CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A629378B-9E20-419C-8A3D-C8E93633A8CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A629378B-9E20-419C-8A3D-C8E93633A8CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {F984C3E1-2EA7-4B20-8CE3-8CF8434A79E6}
 	EndGlobalSection
 EndGlobal

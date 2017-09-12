@@ -7,7 +7,6 @@ namespace Cake.Incubator
     using System;
     using System.Linq;
     using System.Xml.Linq;
-    using Cake.Common.Diagnostics;
     using Cake.Common.Solution.Project;
     using Cake.Core;
     using Cake.Core.Annotations;
@@ -33,7 +32,7 @@ namespace Cake.Incubator
         /// </example>
         public static bool IsLibrary(this CustomProjectParserResult projectParserResult)
         {
-            return projectParserResult.OutputType.Equals("Library", StringComparison.InvariantCultureIgnoreCase);
+            return projectParserResult.OutputType.Equals("Library", StringComparison.OrdinalIgnoreCase);
         }
 
         /// <summary>

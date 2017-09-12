@@ -5,6 +5,7 @@ namespace Cake.Incubator
 {
     using System.Collections;
     using System.ComponentModel;
+    using System.Reflection;
     using System.Text;
 
     /// <summary>
@@ -54,7 +55,12 @@ namespace Cake.Incubator
             {
                 var propertyType = descriptor.PropertyType;
                 var value = descriptor.GetValue(obj);
-                if (propertyType.GetInterface("IEnumerable") != null && propertyType != typeof(string))
+#if NETSTANDARD1_6
+                var enumerableType = propertyType.GetTypeInfo().GetInterface("IEnumerable");
+#else
+                var enumerableType = propertyType.GetInterface("IEnumerable");
+#endif
+                if (enumerableType != null && propertyType != typeof(string))
                 {
                     ProcessEnumerable(value, dump, descriptor);
                     continue;
