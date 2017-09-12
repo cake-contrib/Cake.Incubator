@@ -10,6 +10,16 @@ namespace Cake.Incubator.Tests
     public class AssertExtensionsTests
     {
         [Fact]
+        public void ThrowIfNull_WithMessage_SetsMessage()
+        {
+            object obj = null;
+
+            Action action = () => obj.ThrowIfNull(nameof(obj), "This is required");
+            action.ShouldThrow<ArgumentNullException>().WithMessage(
+                "This is required\r\nParameter name: obj");
+        }
+    
+        [Fact]
         public void ThrowIfNull_ThrowsWhenNull()
         {
             string a = null;

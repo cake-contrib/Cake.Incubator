@@ -79,6 +79,21 @@ namespace Cake.Incubator.Tests {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
+        ///&lt;Project ToolsVersion=&quot;15.0&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
+        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///  &lt;PropertyGroup&gt;
+        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///    &lt;ProjectGuid&gt;{D3E3AADD-D244- [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CsProj_AbsolutePath {
+            get {
+                return ResourceManager.GetString("CsProj_AbsolutePath", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Project ToolsVersion=&quot;14.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
         ///  &lt;PropertyGroup&gt;
         ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
@@ -119,6 +134,20 @@ namespace Cake.Incubator.Tests {
         internal static string CsProj_ValidFile {
             get {
                 return ResourceManager.GetString("CsProj_ValidFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &lt;Project ToolsVersion=&quot;12.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
+        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///  &lt;PropertyGroup&gt;
+        ///    &lt;MinimumVisualStudioVersion&gt;11.0&lt;/MinimumVisualStudioVersion&gt;
+        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; ==  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string CsProj_ValidWebApplication {
+            get {
+                return ResourceManager.GetString("CsProj_ValidWebApplication", resourceCulture);
             }
         }
         
