@@ -5,8 +5,8 @@
 		<link>http://cake-contrib.github.io/Cake.Incubator</link>
 		<description />
 		<copyright>2017</copyright>
-		<pubDate>Tue, 12 Sep 2017 12:23:42 GMT</pubDate>
-		<lastBuildDate>Tue, 12 Sep 2017 12:23:42 GMT</lastBuildDate>
+		<pubDate>Tue, 12 Sep 2017 12:28:58 GMT</pubDate>
+		<lastBuildDate>Tue, 12 Sep 2017 12:28:58 GMT</lastBuildDate>
 		<item>
 			<title>New Release - 1.5.0</title>
 			<link>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.5.0</link>
@@ -40,19 +40,19 @@
 			<pubDate>Sun, 21 May 2017 00:00:00 GMT</pubDate>
 		</item>
 		<item>
-			<title>New Release - 1.1.0</title>
-			<link>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0</link>
-			<description>&lt;p&gt;We are happy to announnce the 1.1.0 release of the Cake.Incubator Addin for Cake.&lt;/p&gt;</description>
-			<author>gep13</author>
-			<guid>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0</guid>
-			<pubDate>Mon, 03 Apr 2017 00:00:00 GMT</pubDate>
-		</item>
-		<item>
 			<title>New Release - 1.1.1</title>
 			<link>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.1</link>
 			<description>&lt;p&gt;This is a hotfix release for 1.1.0.&lt;/p&gt;</description>
 			<author>wwwlicious</author>
 			<guid>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.1</guid>
+			<pubDate>Mon, 03 Apr 2017 00:00:00 GMT</pubDate>
+		</item>
+		<item>
+			<title>New Release - 1.1.0</title>
+			<link>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0</link>
+			<description>&lt;p&gt;We are happy to announnce the 1.1.0 release of the Cake.Incubator Addin for Cake.&lt;/p&gt;</description>
+			<author>gep13</author>
+			<guid>http://cake-contrib.github.io/Cake.Incubator/blog/new-release-1.1.0</guid>
 			<pubDate>Mon, 03 Apr 2017 00:00:00 GMT</pubDate>
 		</item>
 	</channel>

@@ -34,190 +34,6 @@ var searchModule = function() {
 
     a({
         id:0,
-        title:"ProjectType",
-        content:"ProjectType",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:1,
-        title:"LoggingExtensions",
-        content:"LoggingExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:2,
-        title:"CustomProjectFile",
-        content:"CustomProjectFile",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:3,
-        title:"GlobbingExtensions",
-        content:"GlobbingExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:4,
-        title:"ProjectParserExtensions",
-        content:"ProjectParserExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:5,
-        title:"AssertExtensions",
-        content:"AssertExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:6,
-        title:"FileExtensions",
-        content:"FileExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:7,
-        title:"NetCoreProject",
-        content:"NetCoreProject",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:8,
-        title:"ProjectTypes",
-        content:"ProjectTypes",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:9,
-        title:"DotNetCliToolReference",
-        content:"DotNetCliToolReference",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:10,
-        title:"DotNetCoreTestExtensions",
-        content:"DotNetCoreTestExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:11,
-        title:"ProjectPath",
-        content:"ProjectPath",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:12,
-        title:"DotNetBuildSettingsExtensions",
-        content:"DotNetBuildSettingsExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:13,
-        title:"CustomProjectParserResult",
-        content:"CustomProjectParserResult",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:14,
-        title:"SolutionParserExtensions",
-        content:"SolutionParserExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:15,
-        title:"PackageReference",
-        content:"PackageReference",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:16,
-        title:"StringExtensions",
-        content:"StringExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:17,
-        title:"BuildTarget",
-        content:"BuildTarget",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:18,
-        title:"EnumerableExtensions",
-        content:"EnumerableExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:19,
-        title:"DirectoryExtensions",
-        content:"DirectoryExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:20,
-        title:"FilePathExtensions",
-        content:"FilePathExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:21,
-        title:"BuildTargetExecutable",
-        content:"BuildTargetExecutable",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:22,
-        title:"EnvironmentExtensions",
-        content:"EnvironmentExtensions",
-        description:'',
-        tags:''
-    });
-
-    a({
-        id:23,
         title:"ProjectPathExtensions",
         content:"ProjectPathExtensions",
         description:'',
@@ -225,88 +41,200 @@ var searchModule = function() {
     });
 
     a({
-        id:24,
+        id:1,
+        title:"CustomProjectParserResult",
+        content:"CustomProjectParserResult",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:2,
         title:"RuntimeOptions",
         content:"RuntimeOptions",
         description:'',
         tags:''
     });
 
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/ProjectType',
-        title:"ProjectType",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/LoggingExtensions',
-        title:"LoggingExtensions",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/CustomProjectFile',
-        title:"CustomProjectFile",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/GlobbingExtensions',
-        title:"GlobbingExtensions",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions',
-        title:"ProjectParserExtensions",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/AssertExtensions',
-        title:"AssertExtensions",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/FileExtensions',
-        title:"FileExtensions",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/NetCoreProject',
-        title:"NetCoreProject",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/ProjectTypes',
+    a({
+        id:3,
         title:"ProjectTypes",
-        description:""
+        content:"ProjectTypes",
+        description:'',
+        tags:''
     });
 
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/DotNetCliToolReference',
-        title:"DotNetCliToolReference",
-        description:""
+    a({
+        id:4,
+        title:"FilePathExtensions",
+        content:"FilePathExtensions",
+        description:'',
+        tags:''
     });
 
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/DotNetCoreTestExtensions',
-        title:"DotNetCoreTestExtensions",
-        description:""
+    a({
+        id:5,
+        title:"FileExtensions",
+        content:"FileExtensions",
+        description:'',
+        tags:''
     });
 
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/ProjectPath',
+    a({
+        id:6,
+        title:"BuildTargetExecutable",
+        content:"BuildTargetExecutable",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:7,
         title:"ProjectPath",
-        description:""
+        content:"ProjectPath",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:8,
+        title:"ProjectParserExtensions",
+        content:"ProjectParserExtensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:9,
+        title:"NetCoreProject",
+        content:"NetCoreProject",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:10,
+        title:"LoggingExtensions",
+        content:"LoggingExtensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:11,
+        title:"DotNetCliToolReference",
+        content:"DotNetCliToolReference",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:12,
+        title:"EnvironmentExtensions",
+        content:"EnvironmentExtensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:13,
+        title:"DotNetBuildSettingsExtensions",
+        content:"DotNetBuildSettingsExtensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:14,
+        title:"DirectoryExtensions",
+        content:"DirectoryExtensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:15,
+        title:"SolutionParserExtensions",
+        content:"SolutionParserExtensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:16,
+        title:"EnumerableExtensions",
+        content:"EnumerableExtensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:17,
+        title:"AssertExtensions",
+        content:"AssertExtensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:18,
+        title:"PackageReference",
+        content:"PackageReference",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:19,
+        title:"ProjectType",
+        content:"ProjectType",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:20,
+        title:"GlobbingExtensions",
+        content:"GlobbingExtensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:21,
+        title:"BuildTarget",
+        content:"BuildTarget",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:22,
+        title:"StringExtensions",
+        content:"StringExtensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:23,
+        title:"DotNetCoreTestExtensions",
+        content:"DotNetCoreTestExtensions",
+        description:'',
+        tags:''
+    });
+
+    a({
+        id:24,
+        title:"CustomProjectFile",
+        content:"CustomProjectFile",
+        description:'',
+        tags:''
     });
 
     y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/DotNetBuildSettingsExtensions',
-        title:"DotNetBuildSettingsExtensions",
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/ProjectPathExtensions',
+        title:"ProjectPathExtensions",
         description:""
     });
 
@@ -317,38 +245,14 @@ var searchModule = function() {
     });
 
     y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/SolutionParserExtensions',
-        title:"SolutionParserExtensions",
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/RuntimeOptions',
+        title:"RuntimeOptions",
         description:""
     });
 
     y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/PackageReference',
-        title:"PackageReference",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/StringExtensions',
-        title:"StringExtensions",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/BuildTarget',
-        title:"BuildTarget",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions',
-        title:"EnumerableExtensions",
-        description:""
-    });
-
-    y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/DirectoryExtensions',
-        title:"DirectoryExtensions",
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/ProjectTypes',
+        title:"ProjectTypes",
         description:""
     });
 
@@ -359,8 +263,44 @@ var searchModule = function() {
     });
 
     y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/FileExtensions',
+        title:"FileExtensions",
+        description:""
+    });
+
+    y({
         url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/BuildTargetExecutable',
         title:"BuildTargetExecutable",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/ProjectPath',
+        title:"ProjectPath",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/ProjectParserExtensions',
+        title:"ProjectParserExtensions",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/NetCoreProject',
+        title:"NetCoreProject",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/LoggingExtensions',
+        title:"LoggingExtensions",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/DotNetCliToolReference',
+        title:"DotNetCliToolReference",
         description:""
     });
 
@@ -371,14 +311,74 @@ var searchModule = function() {
     });
 
     y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/ProjectPathExtensions',
-        title:"ProjectPathExtensions",
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/DotNetBuildSettingsExtensions',
+        title:"DotNetBuildSettingsExtensions",
         description:""
     });
 
     y({
-        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/RuntimeOptions',
-        title:"RuntimeOptions",
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/DirectoryExtensions',
+        title:"DirectoryExtensions",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/SolutionParserExtensions',
+        title:"SolutionParserExtensions",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/EnumerableExtensions',
+        title:"EnumerableExtensions",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/AssertExtensions',
+        title:"AssertExtensions",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/PackageReference',
+        title:"PackageReference",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/ProjectType',
+        title:"ProjectType",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/GlobbingExtensions',
+        title:"GlobbingExtensions",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/BuildTarget',
+        title:"BuildTarget",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/StringExtensions',
+        title:"StringExtensions",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/DotNetCoreTestExtensions',
+        title:"DotNetCoreTestExtensions",
+        description:""
+    });
+
+    y({
+        url:'/Cake.Incubator/Cake.Incubator/api/Cake.Incubator/CustomProjectFile',
+        title:"CustomProjectFile",
         description:""
     });
 
