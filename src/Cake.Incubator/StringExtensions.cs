@@ -21,7 +21,7 @@ namespace Cake.Incubator
         /// <returns>true if strings are the same</returns>
         public static bool EqualsIgnoreCase(this string source, string value)
         {
-            return source.Equals(value, StringComparison.InvariantCultureIgnoreCase);
+            return source.Equals(value, StringComparison.OrdinalIgnoreCase);
         }
 
         internal static bool HasTargetFrameworkCondition(this string condition)

@@ -25,6 +25,7 @@ namespace Cake.Incubator
         /// <param name="filePathCollection">the collection to filter</param>
         /// <param name="fileNames">the file names to filter by</param>
         /// <returns>the filtered list</returns>
+        // ReSharper disable once UnusedMember.Global
         public static IEnumerable<FilePath> Filter(this FilePathCollection filePathCollection, params string[] fileNames)
         {
             return
@@ -61,6 +62,7 @@ namespace Cake.Incubator
         /// </example>
         [CakeMethodAlias]
         [CakeAliasCategory("Projects")]
+        // ReSharper disable once UnusedMember.Global
         public static IEnumerable<FilePath> GetOutputAssemblies(this ICakeContext context, FilePath target,
             string configuration)
         {
@@ -142,6 +144,7 @@ namespace Cake.Incubator
         [CakeMethodAlias]
         [CakeAliasCategory("Move")]
         [Obsolete("Use Cake.Common.IO.MoveFile instead")]
+        // ReSharper disable once UnusedMember.Global
         public static void Move(this ICakeContext context, FilePath source, FilePath destination)
         {
             source.ThrowIfNull(nameof(source));
@@ -162,6 +165,7 @@ namespace Cake.Incubator
         [CakeMethodAlias]
         [CakeAliasCategory("Move")]
         [Obsolete("Use Cake.Common.IO.MoveFiles instead")]
+        // ReSharper disable once UnusedMember.Global
         public static void Move(this ICakeContext context, IEnumerable<FilePath> source, DirectoryPath destination)
         {
             var sourceFiles = source.ThrowIfNull(nameof(source));

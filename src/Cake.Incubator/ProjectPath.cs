@@ -26,6 +26,7 @@ namespace Cake.Incubator
         /// <summary>
         /// Gets a value indicating whether the Project Path is to an actual file.
         /// </summary>
+        // ReSharper disable once UnusedMember.Global
         public bool IsFile => Path.Contains("*");
     }
 }

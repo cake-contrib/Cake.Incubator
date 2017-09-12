@@ -1,99 +1,54 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+<Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{0FFF7585-010F-4ACD-B5D3-D1F9EBAA6E7A}</ProjectGuid>
-    <OutputType>Library</OutputType>
-    <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Cake.Incubator</RootNamespace>
-    <AssemblyName>Cake.Incubator</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
+    <TargetFrameworks>netstandard1.6;net45;net46</TargetFrameworks>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0</Version>
+    <Description>Provides useful extensions and additional aliases for Cake.Build scripts</Description>
+    <Copyright>Copyright © Cake Contributions 2017 - Present</Copyright>
+    <PackageTags>Cake Build Script Extensions Project Solution</PackageTags>
+    <RepositoryUrl>https://github.com/cake-contrib/Cake.Incubator</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/cake-contrib/Cake.Incubator</PackageProjectUrl>
+    <PackageLicenseUrl>https://opensource.org/licenses/MPL-2.0</PackageLicenseUrl>
+    <PackageIconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
+    <Authors>Scott Mackay (@wwwlicious),cake-contrib</Authors>
+    <ReleaseNotes>https://github.com/cake-contrib/Cake.Incubator/releases</ReleaseNotes>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
+
+  <PropertyGroup Condition="'$(TargetFramework)'=='netstandard1.6'">
+    <DefineConstants>NETSTANDARD1_6;</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard1.6|AnyCPU'">
+    <DocumentationFile>bin\Release\netstandard1.6\Cake.Incubator.xml</DocumentationFile>
     <DebugType>full</DebugType>
+    <DebugSymbols>true</DebugSymbols>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
-    <DefineConstants>DEBUG;TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Debug\Cake.Incubator.xml</DocumentationFile>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>full</DebugType>
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-    <DocumentationFile>bin\Release\Cake.Incubator.xml</DocumentationFile>
-    <DebugSymbols>true</DebugSymbols>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net46|AnyCPU'">
+    <DocumentationFile>bin\Release\net46\Cake.Incubator.xml</DocumentationFile>
   </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|net45|AnyCPU'">
+    <DocumentationFile>bin\Release\net45\Cake.Incubator.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
-    <Reference Include="Cake.Common, Version=0.16.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Cake.Common.0.16.2\lib\net45\Cake.Common.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="Cake.Core, Version=0.16.2.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Cake.Core.0.16.2\lib\net45\Cake.Core.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="System" />
-    <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
-    <Reference Include="System.Data" />
-    <Reference Include="System.Net.Http" />
-    <Reference Include="System.Xml" />
+    <PackageReference Include="Cake.Common" Version="0.21.1" />
+    <PackageReference Include="Cake.Core" Version="0.21.1" />
   </ItemGroup>
-  <ItemGroup>
-    <Compile Include="..\SolutionInfo.cs">
-      <Link>Properties\SolutionInfo.cs</Link>
-    </Compile>
-    <Compile Include="AssertExtensions.cs" />
-    <Compile Include="BuildTarget.cs" />
-    <Compile Include="BuildTargetExecutable.cs" />
-    <Compile Include="CustomProjectFile.cs" />
-    <Compile Include="CustomProjectParserResult.cs" />
-    <Compile Include="DirectoryExtensions.cs" />
-    <Compile Include="DotNetCliToolReference.cs" />
-    <Compile Include="DotNetCoreTestExtensions.cs" />
-    <Compile Include="EnvironmentExtensions.cs" />
-    <Compile Include="FileExtensions.cs" />
-    <Compile Include="FileSystemExtensions.cs" />
-    <Compile Include="GlobbingExtensions.cs" />
-    <Compile Include="LoggingExtensions.cs" />
-    <Compile Include="NetCoreProject.cs" />
-    <Compile Include="NetFrameworkProjectProperties.cs" />
-    <Compile Include="PackageReference.cs" />
-    <Compile Include="ProjectPath.cs" />
-    <Compile Include="ProjectPathExtensions.cs" />
-    <Compile Include="ProjectTypes.cs" />
-    <Compile Include="RuntimeOptions.cs" />
-    <Compile Include="StringExtensions.cs" />
-    <Compile Include="XDocumentExtensions.cs" />
-    <Compile Include="NamespaceDoc.cs" />
-    <Compile Include="EnumerableExtensions.cs" />
-    <Compile Include="DotNetBuildSettingsExtensions.cs" />
-    <Compile Include="FilePathExtensions.cs" />
-    <Compile Include="ProjectParserExtensions.cs" />
-    <Compile Include="ProjectXElement.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SolutionParserExtensions.cs" />
-    <Compile Include="XElementExtensions.cs" />
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'net46'">
+    <PackageReference Include="System.Collections.Specialized">
+      <Version>4.3.0</Version>
+    </PackageReference>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
+
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard1.6'">
+    <PackageReference Include="System.Collections.Specialized">
+      <Version>4.3.0</Version>
+    </PackageReference>
   </ItemGroup>
-  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
-       Other similar extension points exist, see Microsoft.Common.targets.
-  <Target Name="BeforeBuild">
-  </Target>
-  <Target Name="AfterBuild">
-  </Target>
-  -->
+
 </Project>

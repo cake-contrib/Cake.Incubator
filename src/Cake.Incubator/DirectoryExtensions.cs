@@ -13,6 +13,7 @@ namespace Cake.Incubator
     /// Several extension methods when operating on a Directory.
     /// </summary>
     [CakeAliasCategory("Directory Operations")]
+    // ReSharper disable once UnusedMember.Global
     public static class DirectoryExtensions
     {
         /// <summary>
@@ -26,6 +27,7 @@ namespace Cake.Incubator
         [CakeMethodAlias]
         [CakeAliasCategory("Copy")]
         [Obsolete("Use Cake.Common.IO.CopyDirectory instead")]
+        // ReSharper disable once UnusedMember.Global
         public static void TransferDirectory(this ICakeContext context, DirectoryPath source, DirectoryPath destination)
         {
             context.ThrowIfNull(nameof(context));

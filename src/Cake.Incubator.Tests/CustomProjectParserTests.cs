@@ -15,10 +15,12 @@ namespace Cake.Incubator.Tests
     {
         private readonly FakeFile validCsProjFile;
         private readonly FakeFile anotherValidFile;
+        private readonly FakeFile validCsProjWebApplicationFile;
         private readonly FakeFile valid2017CsProjFile;
         private readonly FakeFile valid2017CsProjNetcoreFile;
         private readonly FakeFile valid2017CsProjNetstandardFile;
         private readonly FakeFile validCsProjConditionalReferenceFile;
+        private readonly FakeFile validCsProjWithAbsoluteFilePaths;
 
         public CustomProjectParserTests()
         {
@@ -28,6 +30,8 @@ namespace Cake.Incubator.Tests
             valid2017CsProjNetstandardFile = new FakeFile(Resources.VS2017_CsProj_NetStandard_ValidFile);
             validCsProjConditionalReferenceFile = new FakeFile(Resources.CsProj_ConditionReference_ValidFile);
             anotherValidFile = new FakeFile(Resources.AnotherCSProj);
+            validCsProjWebApplicationFile = new FakeFile(Resources.CsProj_ValidWebApplication);
+            validCsProjWithAbsoluteFilePaths = new FakeFile(Resources.CsProj_AbsolutePath);
         }
 
         [Fact]
@@ -57,6 +61,14 @@ namespace Cake.Incubator.Tests
             result.OutputPath.ToString().Should().Be("bin/custom");
             result.OutputType.Should().Be("Exe");
             result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/project.exe");
+        }
+
+        [Fact]
+        public void CustomProjectParser_ShouldParseProjectWithAbsolutePaths()
+        {
+            var result = validCsProjWithAbsoluteFilePaths.ParseProject("debug");
+
+            result.References.Should().Contain(x => x.HintPath.FullPath == "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5.2/System.dll");
         }
 
         [Fact]
@@ -127,6 +139,32 @@ namespace Cake.Incubator.Tests
             result.IsType(ProjectType.Unspecified).Should().BeFalse();
             result.IsType(ProjectType.CSharp).Should().BeTrue();
             result.IsType(ProjectType.AspNetMvc1).Should().BeTrue();
+        }
+
+        [Fact]
+        public void IsWebApplication_ReturnsFalse_WhenProjectIsOfTypeLibrary()
+        {
+            // arrange
+            var sut = validCsProjFile.ParseProject("debug");
+
+            // act
+            var webApp = sut.IsWebApplication();
+
+            // assert
+            webApp.Should().BeFalse();
+        }
+
+        [Fact]
+        public void IsWebApplication_ReturnsTrue_WhenProjectIsOfTypeWebApplication()
+        {
+            // arrange
+            var sut = validCsProjWebApplicationFile.ParseProject("debug");
+
+            // act
+            var webApp = sut.IsWebApplication();
+
+            // assert
+            webApp.Should().BeTrue();
         }
     }
 

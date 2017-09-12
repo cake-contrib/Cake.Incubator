@@ -23,6 +23,7 @@ namespace Cake.Incubator
         internal const string Company = "Company";
         internal const string Compile = "Compile";
         internal const string ConcurrentGarbageCollection = "ConcurrentGarbageCollection";
+        // ReSharper disable once UnusedMember.Global
         internal const string Configuration = "Configuration";
         internal const string ContentTargetFolders = "ContentTargetFolders";
         internal const string Copyright = "Copyright";

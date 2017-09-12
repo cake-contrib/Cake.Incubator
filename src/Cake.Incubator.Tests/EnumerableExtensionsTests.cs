@@ -58,5 +58,11 @@ namespace Cake.Incubator.Tests
             IEnumerable<string> arr = new List<string> { "foo" }.AsEnumerable();
             arr.IsNullOrEmpty().Should().BeFalse();
         }
+
+        [Fact]
+        public void Using_Extension_Test()
+        {
+            "Two".IsIn("One", "Two", "Three").Should().BeTrue();
+        }
     }
 }

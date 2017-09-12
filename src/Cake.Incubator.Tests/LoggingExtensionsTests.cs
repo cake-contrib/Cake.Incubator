@@ -27,8 +27,7 @@ namespace Cake.Incubator.Tests
                 DateTimeProp = DateTime.Today
             };
 
-            var expected =
-                $"StringProp: {test.StringProp}\r\nIntProp: {test.IntProp}\r\nDateTimeProp: {test.DateTimeProp}";
+            var expected = $"StringProp: {test.StringProp}\r\nIntProp: {test.IntProp}\r\nDateTimeProp: {test.DateTimeProp}";
 
             test.Dump().Should().Be(expected);
         }
