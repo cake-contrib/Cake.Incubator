@@ -218,6 +218,12 @@ namespace Cake.Incubator.Tests
 
         public long Length => throw new NotImplementedException();
 
+        public FileAttributes Attributes
+        {
+            get => throw new NotImplementedException();
+            set => throw new NotImplementedException();
+        }
+
         Path IFileSystemInfo.Path => Path;
 
         public bool Exists => throw new NotImplementedException();
