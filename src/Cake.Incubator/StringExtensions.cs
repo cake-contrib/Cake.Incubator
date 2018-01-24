@@ -4,13 +4,14 @@
 namespace Cake.Incubator
 {
     using System;
+    using System.Text.RegularExpressions;
 
     /// <summary>
     /// Several extension methods when using String.
     /// </summary>
     public static class StringExtensions
     {
-        private const string TargetframeworkCondition = "'$(TargetFramework)'==";
+        private static readonly Regex TargetframeworkCondition = new Regex("\\s*\\\'\\$\\(TargetFramework\\)\\\'\\s*==\\s*", RegexOptions.Compiled);
         private const string ConfigPlatformCondition = "'$(Configuration)|$(Platform)'==";
 
         /// <summary>
@@ -26,7 +27,7 @@ namespace Cake.Incubator
 
         internal static bool HasTargetFrameworkCondition(this string condition)
         {
-            return !condition.IsNullOrEmpty() && condition.StartsWith(TargetframeworkCondition);
+            return !condition.IsNullOrEmpty() && TargetframeworkCondition.IsMatch(condition);
         }
 
         internal static bool HasConfigPlatformCondition(this string condition, string config = null, string platform = null)
@@ -46,7 +47,7 @@ namespace Cake.Incubator
 
         internal static string GetConditionTargetFramework(this string condition)
         {
-            return condition.Substring(TargetframeworkCondition.Length).Trim().TrimStart('\'').TrimEnd('\'');
+            return TargetframeworkCondition.Replace(condition, string.Empty).Trim().TrimStart('\'').TrimEnd('\'');
         }
     }
 }
