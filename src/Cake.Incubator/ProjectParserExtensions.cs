@@ -5,9 +5,9 @@
 namespace Cake.Incubator
 {
     using System;
-    using System.ComponentModel;
     using System.Diagnostics;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Xml.Linq;
     using Cake.Common.Solution.Project;
     using Cake.Core;
@@ -20,6 +20,10 @@ namespace Cake.Incubator
     [CakeAliasCategory("MSBuild Resource")]
     public static class ProjectParserExtensions
     {
+        private static readonly Regex NetCoreTargetFrameworkRegex = new Regex("([Nn][Ee][Tt])([Cc])\\w+", RegexOptions.Compiled);
+        private static readonly Regex NetStandardTargetFrameworkRegex = new Regex("([Nn][Ee][Tt])([Ss])\\w+", RegexOptions.Compiled);
+        private static readonly Regex NetFrameworkTargetFrameworkRegex = new Regex("([Nn][Ee][Tt][0-9*])\\w+", RegexOptions.Compiled);
+
         /// <summary>
         /// Checks if the project is a library
         /// </summary>
@@ -35,6 +39,82 @@ namespace Cake.Incubator
         public static bool IsLibrary(this CustomProjectParserResult projectParserResult)
         {
             return projectParserResult.OutputType.Equals("Library", StringComparison.OrdinalIgnoreCase);
+        }
+
+        /// <summary>
+        /// Checks if the project is a `dotnet test` compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is a dotnet test compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is a dotnet test compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsDotNetCliTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsDotNetCliTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            // check for package reference 'Microsoft.NET.Test.Sdk' first
+            // in 2017 csproj format, it is located in package references
+            // in pre 2017 format, it is located in references
+            const string microsoftNetTestSdk = "Microsoft.NET.Test.Sdk";
+
+            if (projectParserResult.IsNetCore &&
+                projectParserResult.NetCore.PackageReferences.Any(
+                    x => x.Name.EqualsIgnoreCase(microsoftNetTestSdk)))
+                return true;
+
+            return projectParserResult.IsNetFramework &&
+                   !projectParserResult.PackageReferences.IsNullOrEmpty() &&
+                   projectParserResult.PackageReferences.Any(x => x.Name.EqualsIgnoreCase(microsoftNetTestSdk));
+        }
+
+        /// <summary>
+        /// Checks if the project is a pre `dotnet test` compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is a pre `dotnet test` compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is a pre `dotnet test` compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsFrameworkTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsFrameworkTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            // test libs should target a specific platform, standard does not so isn't recommended
+            if (projectParserResult.IsNetStandard) return false;
+
+            var testFrameworkPackageNames = new[] { "Xunit", "Nunit", "Microsoft.VisualStudio.TestPlatform", "fixie", "Expecto" };
+            var testFrameworkAssemblyNames = new[] { "xunit.core", "Nunit.framework", "Microsoft.VisualStudio.TestPlatform.TestFramework", "fixie", "Expecto" };
+            if (projectParserResult.IsNetFramework)
+            {
+                // check project guid or for common test package/assembly references
+                return projectParserResult.IsType(ProjectType.Test) ||
+                       projectParserResult.PackageReferences.Any(x => testFrameworkPackageNames.Contains(x.Name, StringComparer.OrdinalIgnoreCase)) ||
+                       projectParserResult.References.Any(x => testFrameworkAssemblyNames.Contains(x.Name, StringComparer.OrdinalIgnoreCase));
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if the project is a test compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is a test compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is a test compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            return IsDotNetCliTestProject(projectParserResult) || IsFrameworkTestProject(projectParserResult);
         }
 
         /// <summary>
@@ -124,7 +204,12 @@ namespace Cake.Incubator
         /// </example>
         public static bool IsType(this CustomProjectParserResult projectParserResult, ProjectType projectType)
         {
-            return projectType.HasFlag(ProjectType.Unspecified) ? projectParserResult.ProjectTypeGuids.IsNullOrEmpty() : projectParserResult.ProjectTypeGuids.Any(x => x.EqualsIgnoreCase(SolutionParserExtensions.Types[projectType]));
+            if (projectType.HasFlag(ProjectType.Unspecified))
+            {
+                return projectParserResult.ProjectTypeGuids.IsNullOrEmpty();
+            }
+
+            return !projectParserResult.ProjectTypeGuids.IsNullOrEmpty() && projectParserResult.ProjectTypeGuids.Any(x => x.EqualsIgnoreCase(SolutionParserExtensions.Types[projectType]));
         }
 
         /// <summary>
@@ -203,25 +288,26 @@ namespace Cake.Incubator
             var document = projectFile.LoadXml();
 
             return document.IsDotNetSdk()
-                ? document.ParseNetcoreProjectFile(projectFile, configuration, platform)
-                : document.ParseNetFramework(projectFile, configuration, platform);
+                ? document.ParseVS2017ProjectFile(projectFile, configuration, platform)
+                : document.ParsePreVS2017ProjectFile(projectFile, configuration, platform);
         }
 
-        internal static CustomProjectParserResult ParseNetFramework(this XDocument document, IFile projectFile, string config, string platform)
+        internal static CustomProjectParserResult ParsePreVS2017ProjectFile(this XDocument document, IFile projectFile, string config, string platform)
         {
             var rootPath = projectFile.Path.GetDirectory();
 
             var ns = document.Root.Name?.Namespace;
-            var projectProperties = GetNetFrameworkProjectProperties(document, config, platform, ns, rootPath);
+            var projectProperties = GetPreVS2017ProjectProperties(document, config, platform, ns, rootPath);
 
             if (projectProperties == null)
             {
-                throw new CakeException("Failed to parse .net framework project properties");
+                throw new CakeException("Failed to parse pre VS2017 project properties");
             }
 
             var projectFiles = GetNetFrameworkMSBuildProjects(document, ns, rootPath);
             var references = GetNetFrameworkReferences(document, ns, rootPath);
             var projectReferences = GetNetFrameworkProjectReferences(document, ns, rootPath);
+            var packageReferences = document.GetPackageReferences();
 
             return new CustomProjectParserResult
             {
@@ -233,26 +319,30 @@ namespace Cake.Incubator
                 OutputPath = projectProperties.OutputPath,
                 RootNameSpace = projectProperties.RootNameSpace,
                 AssemblyName = projectProperties.AssemblyName,
-                TargetFrameworkVersion = projectProperties.TargetFrameworkVersion,
+                TargetFrameworkVersion = projectProperties.TargetFrameworkVersions.First(),
+                TargetFrameworkVersions = projectProperties.TargetFrameworkVersions,
                 TargetFrameworkProfile = projectProperties.TargetFrameworkProfile,
                 Files = projectFiles,
                 References = references,
                 ProjectReferences = projectReferences,
+                PackageReferences = packageReferences,
                 IsNetFramework = true
             };
         }
 
-        internal static CustomProjectParserResult ParseNetcoreProjectFile(this XDocument document, IFile projectFile, string config, string platform)
+        internal static CustomProjectParserResult ParseVS2017ProjectFile(this XDocument document, IFile projectFile, string config, string platform)
         {
             var sdk = document.GetSdk();
             var version = document.GetVersion();
             var projectName = projectFile.Path.GetFilenameWithoutExtension().ToString();
             var rootnamespace = document.GetFirstElementValue(ProjectXElement.RootNamespace) ?? projectName;
             var targetFramework = document.GetFirstElementValue(ProjectXElement.TargetFramework);
+            var targetFrameworks =
+                document.GetFirstElementValue(ProjectXElement.TargetFrameworks)?.SplitIgnoreEmpty(';') ??
+                (targetFramework != null ? new[] { targetFramework } : new string[0]);
             var applicationIcon = document.GetFirstElementValue(ProjectXElement.ApplicationIcon);
             var assemblyVersion = document.GetFirstElementValue(ProjectXElement.AssemblyVersion) ?? "1.0.0.0";
             var fileVersion = document.GetFirstElementValue(ProjectXElement.FileVersion) ?? "1.0.0.0";
-            var targetFrameworks = document.GetFirstElementValue(ProjectXElement.TargetFrameworks)?.SplitIgnoreEmpty(';') ?? new[] { targetFramework };
             var outputType = document.GetFirstElementValue(ProjectXElement.OutputType) ?? "Library";
             var debugType = document.GetFirstElementValue(ProjectXElement.DebugType);
             var product = document.GetFirstElementValue(ProjectXElement.Product);
@@ -323,6 +413,9 @@ namespace Cake.Incubator
             var treatSpecificWarningsAsErrors = document.GetFirstElementValue(ProjectXElement.TreatSpecificWarningsAsErrors, config, platform)?.SplitIgnoreEmpty(';') ?? new string[0];
             var defineConstants = document.GetFirstElementValue(ProjectXElement.DefineConstants, config, platform)?.SplitIgnoreEmpty(';').Where(x => !x.StartsWith("$"))?.ToArray() ?? new string[0];
             var targets = document.GetTargets();
+            var isNetCore = targetFrameworks.Any(x => NetCoreTargetFrameworkRegex.IsMatch(x));
+            var isNetStandard = targetFrameworks.Any(x => NetStandardTargetFrameworkRegex.IsMatch(x));
+            var isNetFramework = targetFrameworks.Any(x => NetFrameworkTargetFrameworkRegex.IsMatch(x));
 
             return new CustomProjectParserResult
             {
@@ -334,7 +427,11 @@ namespace Cake.Incubator
                 ProjectReferences = projectReferences,
                 RootNameSpace = rootnamespace,
                 TargetFrameworkVersion = targetFramework,
-                IsNetCore = true,
+                TargetFrameworkVersions = targetFrameworks,
+                IsNetCore = isNetCore,
+                IsNetStandard = isNetStandard,
+                IsNetFramework = isNetFramework,
+                PackageReferences = packageReferences,
                 NetCore = new NetCoreProject
                 {
                     AllowUnsafeBlocks = allowUnsafeBlocks,
@@ -442,7 +539,7 @@ namespace Cake.Incubator
             return projectFile.Path.GetDirectory()?.Combine(template);
         }
 
-        private static NetFrameworkProjectProperties GetNetFrameworkProjectProperties(XDocument document, string config, string platform, XNamespace ns, DirectoryPath rootPath)
+        private static NetFrameworkProjectProperties GetPreVS2017ProjectProperties(XDocument document, string config, string platform, XNamespace ns, DirectoryPath rootPath)
         {
             return (from project in document.Elements(ns + ProjectXElement.Project)
                     from propertyGroup in project.GetPropertyGroups(ns)
@@ -469,6 +566,7 @@ namespace Cake.Incubator
                         RootNameSpace = propertyGroup.GetRootNamespace(ns),
                         AssemblyName = propertyGroup.GetAssemblyName(ns),
                         TargetFrameworkVersion = propertyGroup.GetTargetFrameworkVersion(ns),
+                        TargetFrameworkVersions = propertyGroup.GetTargetFrameworkVersions(ns)?.SplitIgnoreEmpty(';') ?? new[] { propertyGroup.GetTargetFrameworkVersion(ns) },
                         TargetFrameworkProfile = propertyGroup.GetTargetFrameworkProfile(ns)
                     }).FirstOrDefault();
         }
@@ -547,7 +645,7 @@ namespace Cake.Incubator
 
         private static FilePath GetAbsolutePath(this XElement hintPathElement, DirectoryPath rootPath)
         {
-            
+
             var hintPath = new FilePath(hintPathElement.Value).IsRelative;
             Cake.Core.IO.FilePath absolutePath;
             if (hintPath)

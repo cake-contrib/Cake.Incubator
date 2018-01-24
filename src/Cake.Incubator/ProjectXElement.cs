@@ -98,6 +98,7 @@ namespace Cake.Incubator
         internal const string SignAssembly = "SignAssembly";
         internal const string Target = "Target";
         internal const string TargetFrameworkVersion = "TargetFrameworkVersion";
+        internal const string TargetFrameworkVersions = "TargetFrameworkVersions";
         internal const string TargetFrameworkProfile = "TargetFrameworkProfile";
         internal const string TargetFramework = "TargetFramework";
         internal const string TargetFrameworks = "TargetFrameworks";

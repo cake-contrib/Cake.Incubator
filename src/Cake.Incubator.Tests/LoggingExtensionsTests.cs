@@ -5,6 +5,7 @@ namespace Cake.Incubator.Tests
 {
     using System;
     using System.Collections.Generic;
+    using Core.IO;
     using FluentAssertions;
     using Xunit;
 
@@ -40,6 +41,15 @@ namespace Cake.Incubator.Tests
             const string expected = "ListProp: foo, bar\r\nIntListProp: 1, 2, 3, 5";
 
             test.Dump().Should().Be(expected);
+        }
+
+        [Fact(Skip = "Need to process raw ienumerables")]
+        public void Dump_OutputsCorrectString_IEnumerablePropsForFilePath()
+        {
+            var test = new[] {new FilePath("/Test1.a"), new FilePath("/Test2.a"),};
+
+            var dump = test.Dump();
+            dump.Should().Be("");
         }
 
         [Fact]

@@ -94,6 +94,12 @@ namespace Cake.Incubator
                 }).ToArray();
         }
 
+        internal static XName GetXNameWithNamespace(this XNamespace ns, string elementName)
+        {
+            var nsName = ns?.NamespaceName;
+            return nsName == null ? XName.Get(elementName) : XName.Get(elementName, nsName);
+        }
+
         internal static ICollection<PackageReference> GetPackageReferences(this XDocument document)
         {
             // NOTE: Conflicting docs: 
@@ -111,17 +117,27 @@ namespace Cake.Incubator
 
             <PackageReference Include="Newtonsoft.Json" Version="9.0.1" Condition="'$(TargetFramework)' == 'net452'" />
              */
-            return document.Descendants(ProjectXElement.PackageReference).Select(
+
+            // if we are querying a pre-2017 csproj file, we need the namespace in the xname queries
+            var ns = document.Root?.Name.Namespace;
+            var packageReferenceXName = ns.GetXNameWithNamespace(ProjectXElement.PackageReference);
+            var privateAssetsXName = ns.GetXNameWithNamespace(ProjectXElement.PrivateAssets);
+            var includeAssetsXName = ns.GetXNameWithNamespace(ProjectXElement.IncludeAssets);
+            var excludeAssetsXName = ns.GetXNameWithNamespace(ProjectXElement.ExcludeAssets);
+            var includeXName = ns.GetXNameWithNamespace("Include");
+            var versionXName = ns.GetXNameWithNamespace("Version");
+
+            return document.Descendants(packageReferenceXName).Select(
                 x =>
                 {
-                    var privateAssets = x.Element(ProjectXElement.PrivateAssets)?.Value.SplitIgnoreEmpty(';');
-                    var includeAssets = x.Element(ProjectXElement.IncludeAssets)?.Value.SplitIgnoreEmpty(';');
-                    var excludeAssets = x.Element(ProjectXElement.ExcludeAssets)?.Value.SplitIgnoreEmpty(';');
+                    var privateAssets = x.Element(privateAssetsXName)?.Value.SplitIgnoreEmpty(';');
+                    var includeAssets = x.Element(includeAssetsXName)?.Value.SplitIgnoreEmpty(';');
+                    var excludeAssets = x.Element(excludeAssetsXName)?.Value.SplitIgnoreEmpty(';');
                     var condition = x.GetAttributeValue("Condition") ?? x.Parent.GetAttributeValue("Condition");
                     return new PackageReference
                     {
-                        Name = x.GetAttributeValue("Include") ?? x.Element("Include")?.Value,
-                        Version = x.GetAttributeValue("Version") ?? x.Element("Version")?.Value,
+                        Name = x.GetAttributeValue("Include") ?? x.Element(includeXName)?.Value,
+                        Version = x.GetAttributeValue("Version") ?? x.Element(versionXName)?.Value,
                         PrivateAssets = x.GetAttributeValue(ProjectXElement.PrivateAssets)?.SplitIgnoreEmpty(';') ?? privateAssets,
                         IncludeAssets = x.GetAttributeValue(ProjectXElement.IncludeAssets)?.SplitIgnoreEmpty(';') ?? includeAssets,
                         ExcludeAssets = x.GetAttributeValue(ProjectXElement.ExcludeAssets)?.SplitIgnoreEmpty(';') ?? excludeAssets,

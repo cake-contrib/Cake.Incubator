@@ -1,5 +1,6 @@
 ﻿namespace Cake.Incubator
 {
+    using System;
     using System.Collections.Generic;
     using Cake.Common.Solution.Project;
     using Cake.Core.IO;
@@ -41,9 +42,15 @@
         /// <value>The assembly name.</value>
         public string AssemblyName { get; set; }
 
-        /// <summary>Gets the compiler target framework version.</summary>
+        /// <summary>Gets the first compiler target framework version.</summary>
         /// <value>The target framework version.</value>
+        /// <remarks>If this is a multi-target project, use </remarks>
+        [Obsolete("Use TargetFrameworkVersions instead")] 
         public string TargetFrameworkVersion { get; set; }
+
+        /// <summary>Gets the first compiler target framework versions.</summary>
+        /// <value>An array of target framework versions.</value>
+        public string[] TargetFrameworkVersions { get; set; }
 
         /// <summary>Gets the compiler target framework profile.</summary>
         /// <value>The target framework profile.</value>
@@ -62,18 +69,28 @@
         public ICollection<ProjectReference> ProjectReferences { get; set; }
 
         /// <summary>
-        /// True if the project is a net core project
+        /// True if the project is a net core compatible project
         /// </summary>
         public bool IsNetCore { get; set; }
 
         /// <summary>
-        /// True if the project is a net framework project
+        /// True if the project is a net framework compatible project
         /// </summary>
         public bool IsNetFramework { get; set; }
+
+        /// <summary>
+        /// True if the project is a net standard compatible project
+        /// </summary>
+        public bool IsNetStandard { get; set; }
 
         /// <summary>
         /// Contains properties specific to net core projects. See <see cref="NetCoreProject"/>
         /// </summary>
         public NetCoreProject NetCore { get; set; }
+
+        /// <summary>
+        /// The project package references. A collection of <see cref="PackageReference"/>
+        /// </summary>
+        public ICollection<PackageReference> PackageReferences { get; set; }
     }
 }

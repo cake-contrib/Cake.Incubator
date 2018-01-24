@@ -69,6 +69,11 @@ namespace Cake.Incubator
         {
             return propertyGroup.GetFirstElementValue(ns + ProjectXElement.TargetFrameworkVersion);
         }
+        
+        internal static string GetTargetFrameworkVersions(this XElement propertyGroup, XNamespace ns)
+        {
+            return propertyGroup.GetFirstElementValue(ns + ProjectXElement.TargetFrameworkVersions);
+        }
 
         internal static string GetAssemblyName(this XElement propertyGroup, XNamespace ns)
         {

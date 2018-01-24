@@ -12,7 +12,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_GetsCorrectAssemblyName()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("AssemblyName", "a"));
+            var netCoreProjectWithElement = ProjectFileHelpers.GetNetCoreProjectWithElement("AssemblyName", "a");
+            var file = new FakeFile(netCoreProjectWithElement);
             file.ParseProject("test").AssemblyName.Should().Be("a");
         }
 
@@ -31,17 +32,72 @@ namespace Cake.Incubator.Tests
             file.ParseProject("test").Configuration.Should().Be("test");
         }
 
-        [Fact]
-        public void ParseProject_SetsIsNetCore()
+        [Theory]
+        [InlineData("netcoreapp1.0")]
+        [InlineData("netcoreapp1.1")]
+        [InlineData("netcoreapp2.0")]
+        [InlineData("netcoreappX.X")]
+        public void ParseProject_SetsIsNetCore(string coreTarget)
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFramework", coreTarget));
             file.ParseProject("test").IsNetCore.Should().BeTrue();
         }
 
-        [Fact]
-        public void ParseProject_SetsIsNetCoreForWeb()
+        [Theory]
+        [InlineData("netstandard1.0")]
+        [InlineData("netstandard1.1")]
+        [InlineData("netstandard2.0")]
+        [InlineData("netstandardX.X")]
+        public void ParseProject_SetsIsNetStandard(string coreTarget)
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFramework", coreTarget));
+            file.ParseProject("test").IsNetStandard.Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_GetsMultiTargets()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;net462;netstandard1.6;netcoreapp1.0;"));
+            var result = file.ParseProject("test");
+
+            result.IsNetStandard.Should().BeTrue();
+            result.IsNetFramework.Should().BeTrue();
+            result.IsNetCore.Should().BeTrue();
+            result.TargetFrameworkVersions.Should().HaveCount(4).And.BeEquivalentTo("net45", "net462", "netstandard1.6", "netcoreapp1.0");
+        }
+
+        [Fact]
+        public void ParseProject_IsCoreTestProject()
+        {
+            var testProject = "<PropertyGroup><TargetFramework>netcoreapp2.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
+            file.ParseProject("test").IsTestProject().Should().BeTrue();
+            file.ParseProject("test").IsDotNetCliTestProject().Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_IsCoreTestProjectForNetFxWithPackage()
+        {
+            var testProject = "<PropertyGroup><TargetFramework>net462</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
+            file.ParseProject("test").IsTestProject().Should().BeTrue();
+            file.ParseProject("test").IsDotNetCliTestProject().Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_IsTestProject_ReturnsFalseForNetStandard()
+        {
+            var testProject = "<PropertyGroup><TargetFramework>netstandard1.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
+            file.ParseProject("test").IsTestProject().Should().BeFalse();
+            file.ParseProject("test").IsDotNetCliTestProject().Should().BeFalse();
+            file.ParseProject("test").IsFrameworkTestProject().Should().BeFalse();
+        }
+
+        [Fact]
+        public void ParseProject_SetsIsNetCoreForWebSdk()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<PropertyGroup><TargetFramework>netcoreapp2.0</TargetFramework></PropertyGroup>"));
             file.ParseProject("test").IsNetCore.Should().BeTrue();
         }
 

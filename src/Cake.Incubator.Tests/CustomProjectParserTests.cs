@@ -4,12 +4,31 @@
 namespace Cake.Incubator.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Text;
     using Cake.Core.IO;
     using FluentAssertions;
     using Xunit;
     using Path = Cake.Core.IO.Path;
+
+    public class TestProjects
+    {
+        private static readonly FakeFile validCsProjMSTestFile = new FakeFile(Resources.CsProj_ValidMSTestFile);
+        private static readonly FakeFile validCsProjXUnitTestFile = new FakeFile(Resources.CsProj_ValidXUnitTestFile);
+        private static readonly FakeFile validCsProjNUnitTestFile = new FakeFile(Resources.CsProjValidNUnitTestFile);
+        private static readonly FakeFile validCsProjFSUnitTestFile = new FakeFile(Resources.CsProjValidFSUnitTestFile);
+        private static readonly FakeFile validCsProjFixieTestFile = new FakeFile(Resources.CsProjValidFixieTestFile);
+
+        public static IEnumerable<object[]> TestData => new List<object[]>
+        {
+            new object[] {validCsProjMSTestFile},
+            new object[] {validCsProjNUnitTestFile},
+            new object[] {validCsProjXUnitTestFile},
+            new object[] {validCsProjFSUnitTestFile},
+            new object[] {validCsProjFixieTestFile},
+        };
+    }
 
     public class CustomProjectParserTests
     {
@@ -21,6 +40,7 @@ namespace Cake.Incubator.Tests
         private readonly FakeFile valid2017CsProjNetstandardFile;
         private readonly FakeFile validCsProjConditionalReferenceFile;
         private readonly FakeFile validCsProjWithAbsoluteFilePaths;
+        
 
         public CustomProjectParserTests()
         {
@@ -62,6 +82,29 @@ namespace Cake.Incubator.Tests
             result.OutputType.Should().Be("Exe");
             result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/project.exe");
         }
+
+        [Theory]
+        [MemberData(memberName: "TestData", MemberType = typeof(TestProjects))]
+        public void ParseProject_IsFrameworkTestProject(FakeFile testProject)
+        {
+            var result = testProject.ParseProject("test");
+            result.IsFrameworkTestProject().Should().BeTrue();
+        }
+
+        [Fact]
+        public void CustomProjectParser_IsFrameworkTestProject_ReturnsFalseForNonTestFrameworkProject()
+        {
+            var result = valid2017CsProjFile.ParseProject("debug");
+            result.IsFrameworkTestProject().Should().BeFalse();
+        }
+
+        [Fact]
+        public void CustomProjectParser_IsFrameworkTestProject_ReturnsFalseForNonTestCoreProject()
+        {
+            var result = valid2017CsProjNetcoreFile.ParseProject("debug");
+            result.IsFrameworkTestProject().Should().BeFalse();
+        }
+
 
         [Fact]
         public void CustomProjectParser_ShouldParseProjectWithAbsolutePaths()
@@ -184,7 +227,7 @@ namespace Cake.Incubator.Tests
         }
     }
 
-    internal class FakeFile : IFile
+    public class FakeFile : IFile
     {
         private readonly string content;
 

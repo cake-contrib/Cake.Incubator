@@ -16,6 +16,8 @@ namespace Cake.Incubator.Tests
             project.AssemblyName.Should().Be("Cake.Incubator");
             project.Configuration.Should().Be("Release");
             project.IsNetFramework.Should().BeTrue();
+            project.IsNetStandard.Should().BeFalse();
+            project.IsNetCore.Should().BeFalse();
             project.NetCore.Should().BeNull();
             project.OutputPath.ToString().Should().Be("../../../Cake.Incubator/bin/Release");
             project.OutputType.Should().Be("Library");
@@ -25,6 +27,7 @@ namespace Cake.Incubator.Tests
             project.References.Should().ContainSingle(x => x.Name.Equals("Cake.Core"));
             project.RootNameSpace.Should().Be("Cake.Incubator");
             project.TargetFrameworkVersion.Should().Be("v4.5");
+            project.TargetFrameworkVersions.Should().ContainSingle().And.Equal("v4.5");
         }
     }
 }
