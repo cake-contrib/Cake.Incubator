@@ -241,6 +241,99 @@ namespace Cake.Incubator
         }
 
         /// <summary>
+        /// Checks for a project package refernce by name and optional TargetFramework
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <param name="packageName">the package name</param>
+        /// <param name="targetFramework">the target framework, if not specified, checks all TargetFrameworks for the package</param>
+        /// <returns>True if package exists in project, otherwise false</returns>
+        /// <example>
+        /// Checks if the project has an NUnit package
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// bool ref = project.HasReference("NUnit"); // true
+        /// bool ref = project.HasReference("NUnit", "net45"); // false
+        /// </code>
+        /// </example>
+        public static bool HasPackage(this CustomProjectParserResult projectParserResult, string packageName, string targetFramework = null)
+        {
+            return (targetFramework == null)
+                ? projectParserResult.PackageReferences.Any(x => x.Name.EqualsIgnoreCase(packageName))
+                : projectParserResult.PackageReferences.Any(x =>
+                    x.Name.EqualsIgnoreCase(packageName) && x.TargetFramework == targetFramework);
+        }
+        
+        /// <summary>
+        /// Checks for a project assembly refernce by name or alias
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <param name="referenceAssemblyName">the assembly name</param>
+        /// <returns>True if reference exists in project, otherwise false</returns>
+        /// <example>
+        /// Checks for a System.Configuration assembly reference
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// bool hasConfig = project.GetReference("System.Configuration");
+        /// </code>
+        /// </example>
+        public static bool HasReference(this CustomProjectParserResult projectParserResult, string referenceAssemblyName)
+        {
+            return projectParserResult.References.Any(x =>
+                x.Name.EqualsIgnoreCase(referenceAssemblyName) || x.Aliases.EqualsIgnoreCase(referenceAssemblyName));
+        }
+        
+        /// <summary>
+        /// Gets a project package reference
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <param name="packageName">the package name</param>
+        /// <param name="targetFramework">the specific targetframework, if not specified, returns the package for any TargetFramework</param>
+        /// <returns>The package reference if found</returns>
+        /// <example>
+        /// Get the NUnit package reference
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// 
+        /// PackageReference ref = project.GetReference("NUnit");
+        /// string nUnitVersion = ref.Version;
+        /// 
+        /// PackageReference ref = project.GetReference("NUnit", "netstandard2.0");
+        /// string nUnitVersion = ref.Version;
+        /// </code>
+        /// </example>
+        public static PackageReference GetPackage(this CustomProjectParserResult projectParserResult, string packageName, string targetFramework = null)
+        {
+            return (targetFramework == null)
+                ? projectParserResult.PackageReferences.FirstOrDefault(x => x.Name.EqualsIgnoreCase(packageName))
+                : projectParserResult.PackageReferences.FirstOrDefault(x =>
+                    x.Name.EqualsIgnoreCase(packageName) && x.TargetFramework == targetFramework);
+        }
+        
+        /// <summary>
+        /// Gets a project assembly reference by name or alias
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <param name="referenceAssemblyName">the assembly name</param>
+        /// <returns>the project assembly reference if found</returns>
+        /// <example>
+        /// Get the System.Configuration assembly reference
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// ProjectAssemblyReference ref = project.GetReference("System.Configuration");
+        /// string HintPath = ref.HintPath;
+        /// </code>
+        /// </example>
+        public static ProjectAssemblyReference GetReference(this CustomProjectParserResult projectParserResult, string referenceAssemblyName)
+        {
+            return projectParserResult.References.SingleOrDefault(x =>
+                x.Name.EqualsIgnoreCase(referenceAssemblyName) || x.Aliases.EqualsIgnoreCase(referenceAssemblyName));
+        }
+
+        /// <summary>
         /// Parses a csproj file into a strongly typed <see cref="CustomProjectParserResult"/> object
         /// using the specified build configuration and default platform (AnyCpu)
         /// </summary>
@@ -509,6 +602,7 @@ namespace Cake.Incubator
             var outputPaths = document.GetOutputPaths(config, targetFrameworks, projectFile.Path.GetDirectory(), platform);
             var packageReferences = document.GetPackageReferences();
             var projectReferences = document.GetProjectReferences(projectFile.Path.GetDirectory());
+            var assemblyReferences = document.GetAssemblyReferences();
             var assemblyName = document.GetFirstElementValue(ProjectXElement.AssemblyName) ?? projectName;
             var packageId = document.GetFirstElementValue(ProjectXElement.PackageId) ?? assemblyName;
             var authors = document.GetFirstElementValue(ProjectXElement.Authors)?.SplitIgnoreEmpty(';');
@@ -584,6 +678,7 @@ namespace Cake.Incubator
                 OutputPaths = outputPaths,
                 Platform = platform,
                 ProjectReferences = projectReferences,
+                References = assemblyReferences,
                 RootNameSpace = rootnamespace,
                 TargetFrameworkVersion = targetFramework,
                 TargetFrameworkVersions = targetFrameworks,
