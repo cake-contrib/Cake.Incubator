@@ -23,15 +23,33 @@ namespace Cake.Incubator
         /// <param name="config">the configuration</param>
         /// <param name="platform">the platform</param>
         /// <returns>the output path</returns>
-        internal static string GetOutputPath(this XDocument document, string config, string platform = "AnyCPU")
+        internal static DirectoryPath[] GetOutputPaths(this XDocument document, string config, string[] targetFrameworks, DirectoryPath rootDirectoryPath, string platform = "AnyCPU")
         {
-            return document.Descendants("OutputPath")
+            var outputPathOverride = document.Descendants("OutputPath")
                 .FirstOrDefault(x =>
                 {
                     var condition = x.Parent?.Attribute("Condition")?.Value;
                     if (condition.IsNullOrEmpty() || !condition.HasConfigPlatformCondition()) return false;
                     return condition.GetConditionalConfigPlatform().EqualsIgnoreCase($"{config}|{platform}");
                 })?.Value;
+
+            // specific output path is specified in project, overrides convention
+            if (!string.IsNullOrWhiteSpace(outputPathOverride))
+            {
+                return targetFrameworks.IsNullOrEmpty()
+                    ? new[] {rootDirectoryPath.Combine(outputPathOverride)}
+                    : targetFrameworks.Select(
+                        x => rootDirectoryPath.Combine(outputPathOverride).Combine(x)).ToArray();
+            }
+
+            // use conventions, skip null or empty props
+            var template = "bin/";
+            if (!platform.IsNullOrEmpty() && !platform.EqualsIgnoreCase("AnyCPU")) template += $"{platform}/";
+            if (!config.IsNullOrEmpty()) template += $"{config}/";
+
+            return targetFrameworks.IsNullOrEmpty()
+                ? new[] {rootDirectoryPath.Combine(template)}
+                : targetFrameworks.Select(x => rootDirectoryPath.Combine(template).Combine(x)).ToArray();
         }
 
         /// <summary>

@@ -5,6 +5,7 @@
 namespace Cake.Incubator
 {
     using System;
+    using System.Collections.Generic;
     using System.Diagnostics;
     using System.Linq;
     using System.Text.RegularExpressions;
@@ -13,6 +14,7 @@ namespace Cake.Incubator
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
+    using Common.Solution;
 
     /// <summary>
     /// Extension methods for parsing msbuild projects (csproj, vbproj, fsproj)
@@ -38,7 +40,7 @@ namespace Cake.Incubator
         /// </example>
         public static bool IsLibrary(this CustomProjectParserResult projectParserResult)
         {
-            return projectParserResult.OutputType.Equals("Library", StringComparison.OrdinalIgnoreCase);
+            return projectParserResult.OutputType.EqualsIgnoreCase("Library");
         }
 
         /// <summary>
@@ -164,9 +166,13 @@ namespace Cake.Incubator
         /// </example>
         public static string GetExtension(this CustomProjectParserResult projectParserResult)
         {
+            // TODO this depends on the following hot mess: https://github.com/dotnet/cli/issues/6237
+            // More on runtime identifiers - https://github.com/dotnet/corefx/blob/master/pkg/Microsoft.NETCore.Platforms/readme.md
             return projectParserResult.IsLibrary()
                 ? ".dll"
-                : ".exe";
+                : projectParserResult.IsNetFramework
+                    ? ".exe"
+                    : ".dll";
         }
 
         /// <summary>
@@ -180,12 +186,34 @@ namespace Cake.Incubator
         /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
         /// project.GetAssemblyFilePath(); // returns '/root/project/bin/release/test.dll'
         /// </code>
+        /// <remarks>NOTE: This does not currently support how runtime identifiers affect outputs</remarks>
         /// </example>
         public static FilePath GetAssemblyFilePath(this CustomProjectParserResult projectParserResult)
         {
             return
                 projectParserResult.OutputPath.CombineWithFilePath(projectParserResult.AssemblyName +
                                                                    projectParserResult.GetExtension());
+        }
+
+        /// <summary>
+        /// Gets a parsed projects output assembly paths for mulit-targeting projects
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>the output assembly paths</returns>
+        /// <example>
+        /// Returns the absolute project assembly file paths, respects explicit project overrides, build config, platform settings and target frameworks
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// project.GetAssemblyFilePaths(); // returns [] { '/root/project/bin/release/net45/test.dll', '/root/project/bin/release/netstandard1.6'
+        /// </code>
+        /// </example>
+        /// <remarks>NOTE: This does not currently support how runtime identifiers affect outputs</remarks>
+        public static FilePath[] GetAssemblyFilePaths(this CustomProjectParserResult projectParserResult)
+        {
+            return
+                projectParserResult.OutputPaths.Select(x => x.Combine(x).CombineWithFilePath(
+                    projectParserResult.AssemblyName +
+                    projectParserResult.GetExtension())).ToArray();
         }
 
         /// <summary>
@@ -214,6 +242,7 @@ namespace Cake.Incubator
 
         /// <summary>
         /// Parses a csproj file into a strongly typed <see cref="CustomProjectParserResult"/> object
+        /// using the specified build configuration and default platform (AnyCpu)
         /// </summary>
         /// <param name="context">the cake context</param>
         /// <param name="project">the project filepath</param>
@@ -234,6 +263,7 @@ namespace Cake.Incubator
 
         /// <summary>
         /// Parses a csproj file into a strongly typed <see cref="CustomProjectParserResult"/> object
+        /// using the specified build configuration and target platform
         /// </summary>
         /// <param name="context">the cake context</param>
         /// <param name="project">the project filepath</param>
@@ -262,6 +292,134 @@ namespace Cake.Incubator
             var projectFile = context.FileSystem.GetProjectFile(project);
             var result = projectFile.ParseProject(configuration, platform);
             return result;
+        }
+
+        /// <summary>
+        /// Gets the output assembly paths for solution or project files, for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the solution or project file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <returns>the list of output assembly paths</returns>
+        /// <exception cref="ArgumentException">Throws if the file is not a recognizable solution or project file</exception>
+        /// <example>
+        /// The project or solution's <see cref="FilePath"/> and the build configuration will 
+        /// return the output file/s (dll or exe) for the project and return as an <see cref="IEnumerable{T}"/>
+        /// The alias expects a valid `.sln` or a `csproj` file.
+        ///
+        /// For a solution
+        /// <code>
+        /// // Solution output dll/exe's FilePath[] for 'Release' configuration
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.sln"), "Release");
+        /// </code>
+        /// 
+        /// For a project
+        /// <code>
+        /// // Project output dll/exe as FilePath[] for 'Custom' configuration
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.csproj"), "Custom");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Projects")]
+        // ReSharper disable once UnusedMember.Global
+        public static IEnumerable<FilePath> GetOutputAssemblies(this ICakeContext context, FilePath target,
+            string configuration)
+        {
+            if (!target.IsProject() && !target.IsSolution())
+                throw new ArgumentException(
+                    $"Cannot get target assemblies, {target.FullPath} is not a project or solution file");
+
+            return target.IsSolution()
+                ? context.GetSolutionAssemblies(target, configuration)
+                : context.GetProjectAssemblies(target, configuration);
+        }
+
+        /// <summary>
+        /// Gets the output assembly paths for a solution file, for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the solution file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <returns>the list of output assembly paths</returns>
+        /// <exception cref="ArgumentException">Throws if the file is not a recognizable solution file</exception>
+        /// <example>
+        /// The Solution's <see cref="FilePath"/> and the build configuration will return the 
+        /// output files (dll or exe) for the projects and return as an <see cref="IEnumerable{FilePath}"/>
+        /// The alias expects a valid `.sln` file.
+        /// <code>
+        /// // Solution project's output dll/exe's for the 'Release' configuration
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.sln"), "Release");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Projects")]
+        public static IEnumerable<FilePath> GetSolutionAssemblies(this ICakeContext context, FilePath target,
+            string configuration)
+        {
+            if (!target.IsSolution())
+                throw new ArgumentException(
+                    $"Cannot get target assemblies, {target.FullPath} is not a solution file");
+
+            var result = context.ParseSolution(target);
+            return
+                result.GetProjects().SelectMany(x => context.GetProjectAssemblies(x.Path, configuration));
+        }
+
+        /// <summary>
+        /// Gets the output assembly path for a project file, for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the project file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <returns>the output assembly path</returns>
+        /// <exception cref="ArgumentException">Throws if the file is not a recognizable project file</exception>
+        /// <example>
+        /// The project's <see cref="FilePath"/> and the build configuration will return the 
+        /// output file (dll or exe) for the project and return as a <see cref="FilePath"/>
+        /// The alias expects a valid project file.
+        /// <code>
+        /// // Project output dll/exe as FilePath[] for 'Custom' configuration
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.csproj"), "Custom");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Projects")]
+        [Obsolete("Use GetProjectAssemblies instead which includes support for multi-targeting projects")]
+        public static FilePath GetProjectAssembly(this ICakeContext context, FilePath target, string configuration)
+        {
+            if (!target.IsProject())
+                throw new ArgumentException(
+                    $"Cannot get target assembly, {target.FullPath} is not a project file");
+
+            return context.ParseProject(target, configuration).GetAssemblyFilePath();
+        }
+
+        /// <summary>
+        /// Gets the output assembly path for a project file, for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the project file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <returns>the output assembly path</returns>
+        /// <exception cref="ArgumentException">Throws if the file is not a recognizable project file</exception>
+        /// <example>
+        /// The project's <see cref="FilePath"/> and the build configuration will return the 
+        /// output file (dll or exe) for the project and return as a <see cref="FilePath"/>
+        /// The alias expects a valid project file.
+        /// <code>
+        /// // Project output dll/exe as FilePath[] for 'Custom' configuration
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.csproj"), "Custom");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Projects")]
+        public static FilePath[] GetProjectAssemblies(this ICakeContext context, FilePath target, string configuration)
+        {
+            if (!target.IsProject())
+                throw new ArgumentException(
+                    $"Cannot get target assembly, {target.FullPath} is not a project file");
+
+            return context.ParseProject(target, configuration).GetAssemblyFilePaths();
         }
 
 
@@ -317,6 +475,7 @@ namespace Cake.Incubator
                 ProjectTypeGuids = projectProperties.ProjectTypeGuids,
                 OutputType = projectProperties.OutputType,
                 OutputPath = projectProperties.OutputPath,
+                OutputPaths = new[] { projectProperties.OutputPath },
                 RootNameSpace = projectProperties.RootNameSpace,
                 AssemblyName = projectProperties.AssemblyName,
                 TargetFrameworkVersion = projectProperties.TargetFrameworkVersions.First(),
@@ -347,8 +506,7 @@ namespace Cake.Incubator
             var debugType = document.GetFirstElementValue(ProjectXElement.DebugType);
             var product = document.GetFirstElementValue(ProjectXElement.Product);
             var documentationFile = document.GetFirstElementValue(ProjectXElement.DocumentationFile, config, platform);
-            var defaultOutputPath = projectFile.GetDefaultOutputPath(config, platform, targetFramework);
-            var outputPath = document.GetOutputPath(config, platform) ?? defaultOutputPath;
+            var outputPaths = document.GetOutputPaths(config, targetFrameworks, projectFile.Path.GetDirectory(), platform);
             var packageReferences = document.GetPackageReferences();
             var projectReferences = document.GetProjectReferences(projectFile.Path.GetDirectory());
             var assemblyName = document.GetFirstElementValue(ProjectXElement.AssemblyName) ?? projectName;
@@ -422,7 +580,8 @@ namespace Cake.Incubator
                 AssemblyName = assemblyName,
                 Configuration = config,
                 OutputType = outputType,
-                OutputPath = outputPath,
+                OutputPath = outputPaths.FirstOrDefault(),
+                OutputPaths = outputPaths,
                 Platform = platform,
                 ProjectReferences = projectReferences,
                 RootNameSpace = rootnamespace,
@@ -527,16 +686,6 @@ namespace Cake.Incubator
               <!-- CopyToPublishDirectory = { Always, PreserveNewest, Never } -->
             </ItemGroup>
              * */
-        }
-
-        private static DirectoryPath GetDefaultOutputPath(this IFile projectFile, string config, string platform, string targetFramework)
-        {
-            var template = "bin/";
-            if (!platform.IsNullOrEmpty() && !platform.EqualsIgnoreCase("AnyCPU")) template += $"{platform}/";
-            if (!config.IsNullOrEmpty()) template += $"{config}/";
-            if (!targetFramework.IsNullOrEmpty()) template += $"{targetFramework}/";
-
-            return projectFile.Path.GetDirectory()?.Combine(template);
         }
 
         private static NetFrameworkProjectProperties GetPreVS2017ProjectProperties(XDocument document, string config, string platform, XNamespace ns, DirectoryPath rootPath)

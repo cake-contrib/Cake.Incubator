@@ -30,9 +30,17 @@
         /// <value>The output type.</value>
         public string OutputType { get; set; }
 
-        /// <summary>Gets the compiler output path.</summary>
+        /// <summary>
+        /// Gets the first compiler artifact output path.
+        /// Use OutputPaths for multi-targeting libraries
+        /// </summary>
         /// <value>The output path.</value>
+        [Obsolete("Use OutputPaths instead for multi-targeting support")]
         public DirectoryPath OutputPath { get; set; }
+
+        /// <summary>Gets the compiler artifact output paths.</summary>
+        /// <value>The output paths.</value>
+        public DirectoryPath[] OutputPaths { get; set; }
 
         /// <summary>Gets the default root namespace.</summary>
         /// <value>The root namespace.</value>

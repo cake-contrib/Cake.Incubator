@@ -4,6 +4,7 @@
 namespace Cake.Incubator.Tests
 {
     using System.Linq;
+    using Core.IO;
     using FluentAssertions;
     using Xunit;
 
@@ -130,6 +131,38 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
+        public void ParseProject_GetsCorrectOutputPath_WhenTargetFrameworkSpecified()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFramework", "net45"));
+            file.ParseProject("test").OutputPath.FullPath.Should().Be("bin/test/net45");
+        }
+
+        [Fact]
+        public void ParseProject_GetsCorrectDefaultOutputPath_WhenTargetFrameworksSpecified()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;netstandard1.6"));
+            file.ParseProject("test").OutputPath.FullPath.Should().Be("bin/test/net45");
+        }
+
+        [Fact]
+        public void ParseProject_GetsCorrectDefaultOutputPaths_WhenTargetFrameworksSpecified()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;netstandard1.6"));
+            var paths = file.ParseProject("test").OutputPaths;
+            paths.Should().HaveCount(2);
+            paths.First().FullPath.Should().Be("bin/test/net45");
+            paths.Last().FullPath.Should().Be("bin/test/netstandard1.6");
+        }
+
+        [Fact]
+        public void ParseProject_GetsCorrectDefaultOutputPaths_WhenTargetFrameworkSpecified()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFramework", "net45"));
+            file.ParseProject("test").OutputPaths.Should().ContainSingle().Which.FullPath.Should().Be("bin/test/net45");
+        }
+
+
+        [Fact]
         public void ParseProject_GetsCorrectOutputType_WhenLibrarySpecified()
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("OutputType", "Library"));
@@ -191,7 +224,7 @@ namespace Cake.Incubator.Tests
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(null));
             file.ParseProject("test").TargetFrameworkProfile.Should().BeNull();
         }
-        
+
         [Fact]
         public void ParseProject_TargetFrameworkVersion_NullIfUnspecified()
         {
@@ -503,7 +536,7 @@ namespace Cake.Incubator.Tests
         public void ParseProject_NetCore_NoWarn_ReturnsIfSet()
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("NoWarn", "$(nowarn);CS3132;CS2534;"));
-            file.ParseProject("test").NetCore.NoWarn.Should().BeEquivalentTo("CS3132","CS2534");
+            file.ParseProject("test").NetCore.NoWarn.Should().BeEquivalentTo("CS3132", "CS2534");
         }
 
         [Fact]
@@ -684,8 +717,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_TargetFrameworks_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;net46;###**%%.1;;"));
-            file.ParseProject("test").NetCore.TargetFrameworks.Should().BeEquivalentTo("net45","net46", "###**%%.1");
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;net46;12345;;"));
+            file.ParseProject("test").NetCore.TargetFrameworks.Should().BeEquivalentTo("net45", "net46", "12345");
         }
 
         [Fact]
@@ -819,7 +852,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_PackageReference_ReturnsWithTargetFrameworkInParentIfSet()
         {
-            var packageRef = 
+            var packageRef =
                 @"<ItemGroup Condition=""'$(TargetFramework)'== 'net451'"">
                     <PackageReference Include=""System.Collections.Immutable"" Version=""1.3.1"" />
                 </ItemGroup>
@@ -948,7 +981,7 @@ namespace Cake.Incubator.Tests
                                 </Target>";
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(targetString));
             var targets = file.ParseProject("test").NetCore.Targets;
-            
+
             var first = targets.Should().ContainSingle().Subject;
             first.BeforeTargets.Should().BeEquivalentTo("Stretch", "Jump");
             first.AfterTargets.Should().BeEquivalentTo("IceBath");

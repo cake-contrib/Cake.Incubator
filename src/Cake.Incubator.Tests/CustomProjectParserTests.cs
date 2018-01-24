@@ -78,9 +78,9 @@ namespace Cake.Incubator.Tests
             var result = valid2017CsProjNetcoreFile.ParseProject("debug");
 
             result.Configuration.Should().Be("debug");
-            result.OutputPath.ToString().Should().Be("bin/custom");
+            result.OutputPath.ToString().Should().Be("bin/custom/netcoreapp1.1");
             result.OutputType.Should().Be("Exe");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/project.exe");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/netcoreapp1.1/project.dll");
         }
 
         [Theory]
@@ -122,7 +122,7 @@ namespace Cake.Incubator.Tests
             result.Configuration.Should().Be("release");
             result.OutputPath.ToString().Should().Be("bin/release/netcoreapp1.1");
             result.OutputType.Should().Be("Exe");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/release/netcoreapp1.1/project.exe");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/release/netcoreapp1.1/project.dll");
         }
 
         [Fact]
@@ -131,9 +131,9 @@ namespace Cake.Incubator.Tests
             var result = valid2017CsProjNetstandardFile.ParseProject("debug");
 
             result.Configuration.Should().Be("debug");
-            result.OutputPath.ToString().Should().Be("bin/wayhey");
+            result.OutputPath.ToString().Should().Be("bin/wayhey/netstandard1.6");
             result.OutputType.Should().Be("Library");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/wayhey/project.dll");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/wayhey/netstandard1.6/project.dll");
         }
 
         [Fact]
