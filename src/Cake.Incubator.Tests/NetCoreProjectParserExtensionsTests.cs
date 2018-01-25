@@ -1050,6 +1050,16 @@ namespace Cake.Incubator.Tests
             project.HasPackage("System.Collections.Immutable", "net451").Should().BeTrue();
             project.HasPackage("System.Collections.Immutable", "net452").Should().BeFalse();
         }
+
+
+        [Fact]
+        public void HasPackage_ReturnsFalseWhenPackageNotFound()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(""));
+            var project = file.ParseProject("test");
+            project.HasPackage("Moogli").Should().BeFalse();
+            project.HasPackage("Moogli", "net452").Should().BeFalse();
+        }
         
         [Fact]
         public void HasPackage_ReturnsTrueWhenPackageFoundAndParentCondition()
@@ -1065,6 +1075,21 @@ namespace Cake.Incubator.Tests
             project.HasPackage("System.Collections.Immutable", "net451").Should().BeTrue();
             project.HasPackage("System.Collections.Immutable", "net452").Should().BeFalse();
         }
+
+        [Fact]
+        public void GetPackage_ReturnsTrueWhenPackageFoundAndParentCondition()
+        {
+            var packageRef =
+                @"<ItemGroup Condition=""'$(TargetFramework)'== 'net451'"">
+                    <PackageReference Include=""System.Collections.Immutable"" Version=""1.3.1"" />
+                </ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(packageRef));
+
+            var project = file.ParseProject("test");
+            project.GetPackage("System.Collections.Immutable").Should().NotBeNull();
+            project.GetPackage("System.Collections.Immutable", "net451").Should().NotBeNull();
+            project.GetPackage("System.Collections.Immutable", "net452").Should().BeNull();
+        }
         
         [Fact]
         public void HasReference_ReturnsTrueWhenPackageFound()
@@ -1075,6 +1100,17 @@ namespace Cake.Incubator.Tests
             var project = file.ParseProject("test");
             project.HasReference("Microsoft.CSharp").Should().BeTrue();
             project.HasReference("Blerk").Should().BeFalse();
+        }
+
+        [Fact]
+        public void GetReference_ReturnsTrueWhenPackageFound()
+        {
+            var reference = @"<ItemGroup><Reference Include=""Microsoft.CSharp"" /></ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(reference));
+
+            var project = file.ParseProject("test");
+            project.GetReference("Microsoft.CSharp").Should().NotBeNull();
+            project.GetReference("Blerk").Should().BeNull();
         }
     }
 }

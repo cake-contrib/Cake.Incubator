@@ -166,7 +166,7 @@ namespace Cake.Incubator
                 }).ToArray();
         }
         
-        internal static ICollection<PackageReference> GetAssemblyReferences(this XDocument document)
+        internal static ICollection<ProjectAssemblyReference> GetAssemblyReferences(this XDocument document, DirectoryPath rootPath)
         {
             /*
                 <Reference Include="Cake.Common, Version=0.22.0.0, Culture=neutral, PublicKeyToken=null">
@@ -177,50 +177,41 @@ namespace Cake.Incubator
             // if we are querying a pre-2017 csproj file, we need the namespace in the xname queries
             var ns = document.Root?.Name.Namespace;
             var referenceXName = ns.GetXNameWithNamespace(ProjectXElement.Reference);
+            var includeXName = ns.GetXNameWithNamespace(ProjectXElement.Include);
             var hintPathXName = ns.GetXNameWithNamespace(ProjectXElement.HintPath);
-            var versionXName = ns.GetXNameWithNamespace(ProjectXElement.SpecificVersion);
+            var nameXName = ns.GetXNameWithNamespace(ProjectXElement.Name);
+            var fusionXName = ns.GetXNameWithNamespace(ProjectXElement.FusionName);
+            var specificVersionXName = ns.GetXNameWithNamespace(ProjectXElement.SpecificVersion);
+            var aliasesXName = ns.GetXNameWithNamespace(ProjectXElement.Aliases);
             var privateXName = ns.GetXNameWithNamespace(ProjectXElement.Private);
-
-            /*
-             return (from reference in document.Descendants(ns + ProjectXElement.Reference)
-                    from include in reference.Attributes("Include")
-                    let includeValue = include.Value
-                    let hintPathElement = reference.Element(ns + ProjectXElement.HintPath)
-                    let nameElement = reference.Element(ns + ProjectXElement.Name)
-                    let fusionNameElement = reference.Element(ns + ProjectXElement.FusionName)
-                    let specificVersionElement = reference.Element(ns + ProjectXElement.SpecificVersion)
-                    let aliasesElement = reference.Element(ns + ProjectXElement.Aliases)
-                    let privateElement = reference.Element(ns + ProjectXElement.Private)
-                    select new ProjectAssemblyReference
-                    {
-                        Include = includeValue,
-                        HintPath = string.IsNullOrEmpty(hintPathElement?.Value)
-                            ? null
-                            : hintPathElement.GetAbsolutePath(rootPath),
-                        Name = nameElement?.Value ?? includeValue?.Split(',')?.FirstOrDefault(),
-                        FusionName = fusionNameElement?.Value,
-                        SpecificVersion = specificVersionElement == null ? (bool?)null : bool.Parse(specificVersionElement.Value),
-                        Aliases = aliasesElement?.Value,
-                        Private = privateElement == null ? (bool?)null : bool.Parse(privateElement.Value)
-                    }).Distinct(x => x.Name).ToArray();
-        }
-             */
             
             return document.Descendants(referenceXName).Select(
                 x =>
                 {
                     var condition = x.GetAttributeValue("Condition") ?? x.Parent.GetAttributeValue("Condition");
+                    var include = x.GetAttributeValue(ProjectXElement.Include) ?? x.Element(includeXName)?.Value;
+                    var hintPath = x.GetAttributeValue(ProjectXElement.HintPath) ?? x.Element(hintPathXName)?.Value;
+                    var name = x.GetAttributeValue(ProjectXElement.Name) ?? x.Element(nameXName)?.Value;
+                    var fusionName = x.GetAttributeValue(ProjectXElement.FusionName) ?? x.Element(fusionXName)?.Value;
+                    var specificVersion = x.GetAttributeValue(ProjectXElement.SpecificVersion) ??
+                                          x.Element(specificVersionXName)?.Value;
+                    var aliases = x.GetAttributeValue(ProjectXElement.Aliases) ?? x.Element(aliasesXName)?.Value;
+                    var privateFlag = x.GetAttributeValue(ProjectXElement.Aliases) ?? x.Element(privateXName)?.Value;
+                    
+                    // TODO Can't set the target framework condition without changing the return type, no where to put it.
+                    var targetFramework = condition.HasTargetFrameworkCondition()
+                        ? condition.GetConditionTargetFramework()
+                        : null;
+
                     return new ProjectAssemblyReference
                     {
-                        Name = x.GetAttributeValue("Include") ?? x.Element(includeXName)?.Value,
-                        SpecificVersion = 
-                        Version = x.GetAttributeValue("Version") ?? x.Element(versionXName)?.Value,
-                        PrivateAssets = x.GetAttributeValue(ProjectXElement.PrivateAssets)?.SplitIgnoreEmpty(';') ?? privateAssets,
-                        IncludeAssets = x.GetAttributeValue(ProjectXElement.IncludeAssets)?.SplitIgnoreEmpty(';') ?? includeAssets,
-                        ExcludeAssets = x.GetAttributeValue(ProjectXElement.ExcludeAssets)?.SplitIgnoreEmpty(';') ?? excludeAssets,
-                        TargetFramework = condition.HasTargetFrameworkCondition()
-                            ? condition.GetConditionTargetFramework()
-                            : null
+                        Include = include,
+                        HintPath = string.IsNullOrWhiteSpace(hintPath) ? null : hintPath.GetAbsolutePath(rootPath),
+                        Name = name ?? include?.Split(',')?.FirstOrDefault(),
+                        FusionName = fusionName,
+                        SpecificVersion = specificVersion == null ? (bool?) null : bool.Parse(specificVersion),
+                        Aliases = aliases,
+                        Private = privateFlag == null ? (bool?) null : bool.Parse(privateFlag),
                     };
                 }).ToArray();
         }

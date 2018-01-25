@@ -141,7 +141,7 @@ namespace Cake.Incubator.Tests
         {
             var result = validCsProjConditionalReferenceFile.ParseProject("debug");
 
-            result.References.Should().HaveCount(8).And.Contain(x => x.Name.Equals("Microsoft.VisualStudio.QualityTools.UnitTestFramework"));
+            result.References.Should().HaveCount(9).And.Contain(x => x.Name.Equals("Microsoft.VisualStudio.QualityTools.UnitTestFramework"));
         }
         
         [Fact]

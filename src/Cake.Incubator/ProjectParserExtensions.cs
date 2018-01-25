@@ -6,7 +6,6 @@ namespace Cake.Incubator
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Xml.Linq;
@@ -281,7 +280,8 @@ namespace Cake.Incubator
         public static bool HasReference(this CustomProjectParserResult projectParserResult, string referenceAssemblyName)
         {
             return projectParserResult.References.Any(x =>
-                x.Name.EqualsIgnoreCase(referenceAssemblyName) || x.Aliases.EqualsIgnoreCase(referenceAssemblyName));
+                x.Name.EqualsIgnoreCase(referenceAssemblyName) ||
+                (x.Aliases != null && x.Aliases.EqualsIgnoreCase(referenceAssemblyName)));
         }
         
         /// <summary>
@@ -330,7 +330,7 @@ namespace Cake.Incubator
         public static ProjectAssemblyReference GetReference(this CustomProjectParserResult projectParserResult, string referenceAssemblyName)
         {
             return projectParserResult.References.SingleOrDefault(x =>
-                x.Name.EqualsIgnoreCase(referenceAssemblyName) || x.Aliases.EqualsIgnoreCase(referenceAssemblyName));
+                x.Name.EqualsIgnoreCase(referenceAssemblyName) || (x.Aliases != null && x.Aliases.EqualsIgnoreCase(referenceAssemblyName)));
         }
 
         /// <summary>
@@ -481,8 +481,7 @@ namespace Cake.Incubator
         public static FilePath GetProjectAssembly(this ICakeContext context, FilePath target, string configuration)
         {
             if (!target.IsProject())
-                throw new ArgumentException(
-                    $"Cannot get target assembly, {target.FullPath} is not a project file");
+                throw new ArgumentException($"Cannot get target assembly, {target.FullPath} is not a project file");
 
             return context.ParseProject(target, configuration).GetAssemblyFilePath();
         }
@@ -556,7 +555,7 @@ namespace Cake.Incubator
             }
 
             var projectFiles = GetNetFrameworkMSBuildProjects(document, ns, rootPath);
-            var references = GetNetFrameworkReferences(document, ns, rootPath);
+            var references = document.GetAssemblyReferences(rootPath);
             var projectReferences = GetNetFrameworkProjectReferences(document, ns, rootPath);
             var packageReferences = document.GetPackageReferences();
 
@@ -584,6 +583,7 @@ namespace Cake.Incubator
 
         internal static CustomProjectParserResult ParseVS2017ProjectFile(this XDocument document, IFile projectFile, string config, string platform)
         {
+            var rootDirectoryPath = projectFile.Path.GetDirectory();
             var sdk = document.GetSdk();
             var version = document.GetVersion();
             var projectName = projectFile.Path.GetFilenameWithoutExtension().ToString();
@@ -599,10 +599,10 @@ namespace Cake.Incubator
             var debugType = document.GetFirstElementValue(ProjectXElement.DebugType);
             var product = document.GetFirstElementValue(ProjectXElement.Product);
             var documentationFile = document.GetFirstElementValue(ProjectXElement.DocumentationFile, config, platform);
-            var outputPaths = document.GetOutputPaths(config, targetFrameworks, projectFile.Path.GetDirectory(), platform);
+            var outputPaths = document.GetOutputPaths(config, targetFrameworks, rootDirectoryPath, platform);
             var packageReferences = document.GetPackageReferences();
-            var projectReferences = document.GetProjectReferences(projectFile.Path.GetDirectory());
-            var assemblyReferences = document.GetAssemblyReferences();
+            var projectReferences = document.GetProjectReferences(rootDirectoryPath);
+            var assemblyReferences = document.GetAssemblyReferences(rootDirectoryPath);
             var assemblyName = document.GetFirstElementValue(ProjectXElement.AssemblyName) ?? projectName;
             var packageId = document.GetFirstElementValue(ProjectXElement.PackageId) ?? assemblyName;
             var authors = document.GetFirstElementValue(ProjectXElement.Authors)?.SplitIgnoreEmpty(';');
@@ -860,49 +860,6 @@ namespace Cake.Incubator
                             ? null
                             : rootPath.CombineWithFilePath(packageElement.Value)
                     }).ToArray();
-        }
-
-        private static ProjectAssemblyReference[] GetNetFrameworkReferences(XDocument document, XNamespace ns, DirectoryPath rootPath)
-        {
-            return (from reference in document.Descendants(ns + ProjectXElement.Reference)
-                    from include in reference.Attributes("Include")
-                    let includeValue = include.Value
-                    let hintPathElement = reference.Element(ns + ProjectXElement.HintPath)
-                    let nameElement = reference.Element(ns + ProjectXElement.Name)
-                    let fusionNameElement = reference.Element(ns + ProjectXElement.FusionName)
-                    let specificVersionElement = reference.Element(ns + ProjectXElement.SpecificVersion)
-                    let aliasesElement = reference.Element(ns + ProjectXElement.Aliases)
-                    let privateElement = reference.Element(ns + ProjectXElement.Private)
-                    select new ProjectAssemblyReference
-                    {
-                        Include = includeValue,
-                        HintPath = string.IsNullOrEmpty(hintPathElement?.Value)
-                            ? null
-                            : hintPathElement.GetAbsolutePath(rootPath),
-                        Name = nameElement?.Value ?? includeValue?.Split(',')?.FirstOrDefault(),
-                        FusionName = fusionNameElement?.Value,
-                        SpecificVersion = specificVersionElement == null ? (bool?)null : bool.Parse(specificVersionElement.Value),
-                        Aliases = aliasesElement?.Value,
-                        Private = privateElement == null ? (bool?)null : bool.Parse(privateElement.Value)
-                    }).Distinct(x => x.Name).ToArray();
-        }
-
-        private static FilePath GetAbsolutePath(this XElement hintPathElement, DirectoryPath rootPath)
-        {
-
-            var hintPath = new FilePath(hintPathElement.Value).IsRelative;
-            Cake.Core.IO.FilePath absolutePath;
-            if (hintPath)
-            {
-                absolutePath = rootPath.CombineWithFilePath(hintPathElement.Value);
-            }
-            else
-            {
-                absolutePath = hintPathElement.Value;
-                Debug.WriteLine($"An absolute path {absolutePath} was used in a project reference. It is recommended that projects contain only relative paths for references");
-            }
-
-            return absolutePath;
         }
     }
 }

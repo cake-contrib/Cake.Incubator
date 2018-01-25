@@ -4,7 +4,9 @@
 namespace Cake.Incubator
 {
     using System;
+    using System.Diagnostics;
     using System.Text.RegularExpressions;
+    using Core.IO;
 
     /// <summary>
     /// Several extension methods when using String.
@@ -48,6 +50,24 @@ namespace Cake.Incubator
         internal static string GetConditionTargetFramework(this string condition)
         {
             return TargetframeworkCondition.Replace(condition, string.Empty).Trim().TrimStart('\'').TrimEnd('\'');
+        }
+
+        internal static FilePath GetAbsolutePath(this string relativePath, DirectoryPath rootPath)
+        {
+
+            var isRelative = new FilePath(relativePath).IsRelative;
+            Cake.Core.IO.FilePath absolutePath;
+            if (isRelative)
+            {
+                absolutePath = rootPath.CombineWithFilePath(relativePath);
+            }
+            else
+            {
+                absolutePath = relativePath;
+                Debug.WriteLine($"An absolute path {absolutePath} was used in a project reference. It is recommended that projects contain only relative paths for references");
+            }
+
+            return absolutePath;
         }
     }
 }

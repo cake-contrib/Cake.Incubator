@@ -42,6 +42,7 @@ namespace Cake.Incubator
         internal const string GenerateSerializationAssemblies = "GenerateSerializationAssemblies";
         internal const string HintPath = "HintPath";
         internal const string Import = "Import";
+        internal const string Include = "Include";
         internal const string IncludeAssets = "IncludeAssets";
         internal const string IncludeBuildOutput = "IncludeBuildOutput";
         internal const string IncludeContentInPack = "IncludeContentInPack";
