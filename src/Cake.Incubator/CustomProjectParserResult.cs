@@ -8,6 +8,11 @@
     /// <summary>Represents the content in an MSBuild project file.</summary>
     public class CustomProjectParserResult
     {
+        /// <summary>
+        /// The path for the parsed project file
+        /// </summary>
+        public FilePath ProjectFilePath { get; set; }
+
         /// <summary>Gets the build configuration.</summary>
         /// <value>The build configuration.</value>
         public string Configuration { get; set; }

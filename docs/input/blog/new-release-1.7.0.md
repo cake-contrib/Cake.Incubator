@@ -14,7 +14,7 @@ The main feature of this release is the improvement in project parsing and test 
 You can now detect the type of project using:
 
 ```csharp
-CustomProjectParserResult result = ParseProject("./some.csproj");
+CustomProjectParserResult result = ParseProject("./some.csproj", "Debug");
 
 result.IsNetStandard; // true | false
 result.IsNetCore; // true | false
@@ -30,14 +30,14 @@ result.IsWebApplication(); // true | false
 ```
 
 The flags are not mutually exclusive so support those projects with multi-targeting configured.
-The support for multi-targeting has also been improved with new Properties being added as follows
+The support for multi-targeting has also been improved with new methods being added as follows:
 
 ```csharp
 result.GetOutputPaths(); // uses target frameworks to generate all of the artifact output paths (dll's, exe's)
 result.GetAssemblyFilePaths(); // again will now include all possible artifact output paths (dll's, exe's)
 ```
 
-Checking packages and references has also improved
+Checking for packages and references in your projects has also improved
 
 ```csharp
 result.HasPackage("nunit"); // true | false 
@@ -57,7 +57,6 @@ result.IsFrameworkTestProject(); // true if project will require a non 'dotnet t
 ```
 
 There are a few more minor improvements also. Check the issues below for more details.
-
 
 __Bug__
 
