@@ -5,14 +5,15 @@
 namespace Cake.Incubator
 {
     using System;
-    using System.ComponentModel;
-    using System.Diagnostics;
+    using System.Collections.Generic;
     using System.Linq;
+    using System.Text.RegularExpressions;
     using System.Xml.Linq;
     using Cake.Common.Solution.Project;
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
+    using Common.Solution;
 
     /// <summary>
     /// Extension methods for parsing msbuild projects (csproj, vbproj, fsproj)
@@ -20,6 +21,10 @@ namespace Cake.Incubator
     [CakeAliasCategory("MSBuild Resource")]
     public static class ProjectParserExtensions
     {
+        private static readonly Regex NetCoreTargetFrameworkRegex = new Regex("([Nn][Ee][Tt])([Cc])\\w+", RegexOptions.Compiled);
+        private static readonly Regex NetStandardTargetFrameworkRegex = new Regex("([Nn][Ee][Tt])([Ss])\\w+", RegexOptions.Compiled);
+        private static readonly Regex NetFrameworkTargetFrameworkRegex = new Regex("([Nn][Ee][Tt][0-9*])\\w+", RegexOptions.Compiled);
+
         /// <summary>
         /// Checks if the project is a library
         /// </summary>
@@ -34,7 +39,83 @@ namespace Cake.Incubator
         /// </example>
         public static bool IsLibrary(this CustomProjectParserResult projectParserResult)
         {
-            return projectParserResult.OutputType.Equals("Library", StringComparison.OrdinalIgnoreCase);
+            return projectParserResult.OutputType.EqualsIgnoreCase("Library");
+        }
+
+        /// <summary>
+        /// Checks if the project is a `dotnet test` compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is a dotnet test compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is a dotnet test compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsDotNetCliTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsDotNetCliTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            // check for package reference 'Microsoft.NET.Test.Sdk' first
+            // in 2017 csproj format, it is located in package references
+            // in pre 2017 format, it is located in references
+            const string microsoftNetTestSdk = "Microsoft.NET.Test.Sdk";
+
+            if (projectParserResult.IsNetCore &&
+                projectParserResult.NetCore.PackageReferences.Any(
+                    x => x.Name.EqualsIgnoreCase(microsoftNetTestSdk)))
+                return true;
+
+            return projectParserResult.IsNetFramework &&
+                   !projectParserResult.PackageReferences.IsNullOrEmpty() &&
+                   projectParserResult.PackageReferences.Any(x => x.Name.EqualsIgnoreCase(microsoftNetTestSdk));
+        }
+
+        /// <summary>
+        /// Checks if the project is a pre `dotnet test` compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is a pre `dotnet test` compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is a pre `dotnet test` compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsFrameworkTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsFrameworkTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            // test libs should target a specific platform, standard does not so isn't recommended
+            if (projectParserResult.IsNetStandard) return false;
+
+            var testFrameworkPackageNames = new[] { "Xunit", "Nunit", "Microsoft.VisualStudio.TestPlatform", "fixie", "Expecto" };
+            var testFrameworkAssemblyNames = new[] { "xunit.core", "Nunit.framework", "Microsoft.VisualStudio.TestPlatform.TestFramework", "fixie", "Expecto" };
+            if (projectParserResult.IsNetFramework)
+            {
+                // check project guid or for common test package/assembly references
+                return projectParserResult.IsType(ProjectType.Test) ||
+                       projectParserResult.PackageReferences.Any(x => testFrameworkPackageNames.Contains(x.Name, StringComparer.OrdinalIgnoreCase)) ||
+                       projectParserResult.References.Any(x => testFrameworkAssemblyNames.Contains(x.Name, StringComparer.OrdinalIgnoreCase));
+            }
+
+            return false;
+        }
+
+        /// <summary>
+        /// Checks if the project is a test compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is a test compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is a test compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            return IsDotNetCliTestProject(projectParserResult) || IsFrameworkTestProject(projectParserResult);
         }
 
         /// <summary>
@@ -84,9 +165,13 @@ namespace Cake.Incubator
         /// </example>
         public static string GetExtension(this CustomProjectParserResult projectParserResult)
         {
+            // TODO this depends on the following hot mess: https://github.com/dotnet/cli/issues/6237
+            // More on runtime identifiers - https://github.com/dotnet/corefx/blob/master/pkg/Microsoft.NETCore.Platforms/readme.md
             return projectParserResult.IsLibrary()
                 ? ".dll"
-                : ".exe";
+                : projectParserResult.IsNetFramework
+                    ? ".exe"
+                    : ".dll";
         }
 
         /// <summary>
@@ -100,12 +185,34 @@ namespace Cake.Incubator
         /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
         /// project.GetAssemblyFilePath(); // returns '/root/project/bin/release/test.dll'
         /// </code>
+        /// <remarks>NOTE: This does not currently support how runtime identifiers affect outputs</remarks>
         /// </example>
         public static FilePath GetAssemblyFilePath(this CustomProjectParserResult projectParserResult)
         {
             return
                 projectParserResult.OutputPath.CombineWithFilePath(projectParserResult.AssemblyName +
                                                                    projectParserResult.GetExtension());
+        }
+
+        /// <summary>
+        /// Gets a parsed projects output assembly paths for mulit-targeting projects
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>the output assembly paths</returns>
+        /// <example>
+        /// Returns the absolute project assembly file paths, respects explicit project overrides, build config, platform settings and target frameworks
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// project.GetAssemblyFilePaths(); // returns [] { '/root/project/bin/release/net45/test.dll', '/root/project/bin/release/netstandard1.6'
+        /// </code>
+        /// </example>
+        /// <remarks>NOTE: This does not currently support how runtime identifiers affect outputs</remarks>
+        public static FilePath[] GetAssemblyFilePaths(this CustomProjectParserResult projectParserResult)
+        {
+            return
+                projectParserResult.OutputPaths.Select(x => x.Combine(x).CombineWithFilePath(
+                    projectParserResult.AssemblyName +
+                    projectParserResult.GetExtension())).ToArray();
         }
 
         /// <summary>
@@ -124,11 +231,111 @@ namespace Cake.Incubator
         /// </example>
         public static bool IsType(this CustomProjectParserResult projectParserResult, ProjectType projectType)
         {
-            return projectType.HasFlag(ProjectType.Unspecified) ? projectParserResult.ProjectTypeGuids.IsNullOrEmpty() : projectParserResult.ProjectTypeGuids.Any(x => x.EqualsIgnoreCase(SolutionParserExtensions.Types[projectType]));
+            if (projectType.HasFlag(ProjectType.Unspecified))
+            {
+                return projectParserResult.ProjectTypeGuids.IsNullOrEmpty();
+            }
+
+            return !projectParserResult.ProjectTypeGuids.IsNullOrEmpty() && projectParserResult.ProjectTypeGuids.Any(x => x.EqualsIgnoreCase(SolutionParserExtensions.Types[projectType]));
+        }
+
+        /// <summary>
+        /// Checks for a project package refernce by name and optional TargetFramework
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <param name="packageName">the package name</param>
+        /// <param name="targetFramework">the target framework, if not specified, checks all TargetFrameworks for the package</param>
+        /// <returns>True if package exists in project, otherwise false</returns>
+        /// <example>
+        /// Checks if the project has an NUnit package
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// bool ref = project.HasReference("NUnit"); // true
+        /// bool ref = project.HasReference("NUnit", "net45"); // false
+        /// </code>
+        /// </example>
+        public static bool HasPackage(this CustomProjectParserResult projectParserResult, string packageName, string targetFramework = null)
+        {
+            return (targetFramework == null)
+                ? projectParserResult.PackageReferences.Any(x => x.Name.EqualsIgnoreCase(packageName))
+                : projectParserResult.PackageReferences.Any(x =>
+                    x.Name.EqualsIgnoreCase(packageName) && x.TargetFramework == targetFramework);
+        }
+        
+        /// <summary>
+        /// Checks for a project assembly refernce by name or alias
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <param name="referenceAssemblyName">the assembly name</param>
+        /// <returns>True if reference exists in project, otherwise false</returns>
+        /// <example>
+        /// Checks for a System.Configuration assembly reference
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// bool hasConfig = project.GetReference("System.Configuration");
+        /// </code>
+        /// </example>
+        public static bool HasReference(this CustomProjectParserResult projectParserResult, string referenceAssemblyName)
+        {
+            return projectParserResult.References.Any(x =>
+                x.Name.EqualsIgnoreCase(referenceAssemblyName) ||
+                (x.Aliases != null && x.Aliases.EqualsIgnoreCase(referenceAssemblyName)));
+        }
+        
+        /// <summary>
+        /// Gets a project package reference
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <param name="packageName">the package name</param>
+        /// <param name="targetFramework">the specific targetframework, if not specified, returns the package for any TargetFramework</param>
+        /// <returns>The package reference if found</returns>
+        /// <example>
+        /// Get the NUnit package reference
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// 
+        /// PackageReference ref = project.GetReference("NUnit");
+        /// string nUnitVersion = ref.Version;
+        /// 
+        /// PackageReference ref = project.GetReference("NUnit", "netstandard2.0");
+        /// string nUnitVersion = ref.Version;
+        /// </code>
+        /// </example>
+        public static PackageReference GetPackage(this CustomProjectParserResult projectParserResult, string packageName, string targetFramework = null)
+        {
+            return (targetFramework == null)
+                ? projectParserResult.PackageReferences.FirstOrDefault(x => x.Name.EqualsIgnoreCase(packageName))
+                : projectParserResult.PackageReferences.FirstOrDefault(x =>
+                    x.Name.EqualsIgnoreCase(packageName) && x.TargetFramework == targetFramework);
+        }
+        
+        /// <summary>
+        /// Gets a project assembly reference by name or alias
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <param name="referenceAssemblyName">the assembly name</param>
+        /// <returns>the project assembly reference if found</returns>
+        /// <example>
+        /// Get the System.Configuration assembly reference
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// ProjectAssemblyReference ref = project.GetReference("System.Configuration");
+        /// string HintPath = ref.HintPath;
+        /// </code>
+        /// </example>
+        public static ProjectAssemblyReference GetReference(this CustomProjectParserResult projectParserResult, string referenceAssemblyName)
+        {
+            return projectParserResult.References.SingleOrDefault(x =>
+                x.Name.EqualsIgnoreCase(referenceAssemblyName) || (x.Aliases != null && x.Aliases.EqualsIgnoreCase(referenceAssemblyName)));
         }
 
         /// <summary>
         /// Parses a csproj file into a strongly typed <see cref="CustomProjectParserResult"/> object
+        /// using the specified build configuration and default platform (AnyCpu)
         /// </summary>
         /// <param name="context">the cake context</param>
         /// <param name="project">the project filepath</param>
@@ -149,6 +356,7 @@ namespace Cake.Incubator
 
         /// <summary>
         /// Parses a csproj file into a strongly typed <see cref="CustomProjectParserResult"/> object
+        /// using the specified build configuration and target platform
         /// </summary>
         /// <param name="context">the cake context</param>
         /// <param name="project">the project filepath</param>
@@ -179,6 +387,134 @@ namespace Cake.Incubator
             return result;
         }
 
+        /// <summary>
+        /// Gets the output assembly paths for solution or project files, for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the solution or project file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <returns>the list of output assembly paths</returns>
+        /// <exception cref="ArgumentException">Throws if the file is not a recognizable solution or project file</exception>
+        /// <example>
+        /// The project or solution's <see cref="FilePath"/> and the build configuration will 
+        /// return the output file/s (dll or exe) for the project and return as an <see cref="IEnumerable{T}"/>
+        /// The alias expects a valid `.sln` or a `csproj` file.
+        ///
+        /// For a solution
+        /// <code>
+        /// // Solution output dll/exe's FilePath[] for 'Release' configuration
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.sln"), "Release");
+        /// </code>
+        /// 
+        /// For a project
+        /// <code>
+        /// // Project output dll/exe as FilePath[] for 'Custom' configuration
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.csproj"), "Custom");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Projects")]
+        // ReSharper disable once UnusedMember.Global
+        public static IEnumerable<FilePath> GetOutputAssemblies(this ICakeContext context, FilePath target,
+            string configuration)
+        {
+            if (!target.IsProject() && !target.IsSolution())
+                throw new ArgumentException(
+                    $"Cannot get target assemblies, {target.FullPath} is not a project or solution file");
+
+            return target.IsSolution()
+                ? context.GetSolutionAssemblies(target, configuration)
+                : context.GetProjectAssemblies(target, configuration);
+        }
+
+        /// <summary>
+        /// Gets the output assembly paths for a solution file, for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the solution file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <returns>the list of output assembly paths</returns>
+        /// <exception cref="ArgumentException">Throws if the file is not a recognizable solution file</exception>
+        /// <example>
+        /// The Solution's <see cref="FilePath"/> and the build configuration will return the 
+        /// output files (dll or exe) for the projects and return as an <see cref="IEnumerable{FilePath}"/>
+        /// The alias expects a valid `.sln` file.
+        /// <code>
+        /// // Solution project's output dll/exe's for the 'Release' configuration
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.sln"), "Release");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Projects")]
+        public static IEnumerable<FilePath> GetSolutionAssemblies(this ICakeContext context, FilePath target,
+            string configuration)
+        {
+            if (!target.IsSolution())
+                throw new ArgumentException(
+                    $"Cannot get target assemblies, {target.FullPath} is not a solution file");
+
+            var result = context.ParseSolution(target);
+            return
+                result.GetProjects().SelectMany(x => context.GetProjectAssemblies(x.Path, configuration));
+        }
+
+        /// <summary>
+        /// Gets the output assembly path for a project file, for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the project file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <returns>the output assembly path</returns>
+        /// <exception cref="ArgumentException">Throws if the file is not a recognizable project file</exception>
+        /// <example>
+        /// The project's <see cref="FilePath"/> and the build configuration will return the 
+        /// output file (dll or exe) for the project and return as a <see cref="FilePath"/>
+        /// The alias expects a valid project file.
+        /// <code>
+        /// // Project output dll/exe as FilePath[] for 'Custom' configuration
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.csproj"), "Custom");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Projects")]
+        [Obsolete("Use GetProjectAssemblies instead which includes support for multi-targeting projects")]
+        // ReSharper disable once UnusedMember.Global
+        public static FilePath GetProjectAssembly(this ICakeContext context, FilePath target, string configuration)
+        {
+            if (!target.IsProject())
+                throw new ArgumentException($"Cannot get target assembly, {target.FullPath} is not a project file");
+
+            return context.ParseProject(target, configuration).GetAssemblyFilePath();
+        }
+
+        /// <summary>
+        /// Gets the output assembly path for a project file, for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the project file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <returns>the output assembly path</returns>
+        /// <exception cref="ArgumentException">Throws if the file is not a recognizable project file</exception>
+        /// <example>
+        /// The project's <see cref="FilePath"/> and the build configuration will return the 
+        /// output file (dll or exe) for the project and return as a <see cref="FilePath"/>
+        /// The alias expects a valid project file.
+        /// <code>
+        /// // Project output dll/exe as FilePath[] for 'Custom' configuration
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.csproj"), "Custom");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Projects")]
+        public static FilePath[] GetProjectAssemblies(this ICakeContext context, FilePath target, string configuration)
+        {
+            if (!target.IsProject())
+                throw new ArgumentException(
+                    $"Cannot get target assembly, {target.FullPath} is not a project file");
+
+            return context.ParseProject(target, configuration).GetAssemblyFilePaths();
+        }
+
 
         /// <summary>
         /// Parses a csproj file into a strongly typed <see cref="CustomProjectParserResult"/> object
@@ -203,25 +539,26 @@ namespace Cake.Incubator
             var document = projectFile.LoadXml();
 
             return document.IsDotNetSdk()
-                ? document.ParseNetcoreProjectFile(projectFile, configuration, platform)
-                : document.ParseNetFramework(projectFile, configuration, platform);
+                ? document.ParseVS2017ProjectFile(projectFile, configuration, platform)
+                : document.ParsePreVS2017ProjectFile(projectFile, configuration, platform);
         }
 
-        internal static CustomProjectParserResult ParseNetFramework(this XDocument document, IFile projectFile, string config, string platform)
+        internal static CustomProjectParserResult ParsePreVS2017ProjectFile(this XDocument document, IFile projectFile, string config, string platform)
         {
             var rootPath = projectFile.Path.GetDirectory();
 
-            var ns = document.Root.Name?.Namespace;
-            var projectProperties = GetNetFrameworkProjectProperties(document, config, platform, ns, rootPath);
+            var ns = document.Root?.Name?.Namespace;
+            var projectProperties = GetPreVS2017ProjectProperties(document, config, platform, ns, rootPath);
 
             if (projectProperties == null)
             {
-                throw new CakeException("Failed to parse .net framework project properties");
+                throw new CakeException("Failed to parse pre VS2017 project properties");
             }
 
             var projectFiles = GetNetFrameworkMSBuildProjects(document, ns, rootPath);
-            var references = GetNetFrameworkReferences(document, ns, rootPath);
+            var references = document.GetAssemblyReferences(rootPath);
             var projectReferences = GetNetFrameworkProjectReferences(document, ns, rootPath);
+            var packageReferences = document.GetPackageReferences();
 
             return new CustomProjectParserResult
             {
@@ -231,36 +568,42 @@ namespace Cake.Incubator
                 ProjectTypeGuids = projectProperties.ProjectTypeGuids,
                 OutputType = projectProperties.OutputType,
                 OutputPath = projectProperties.OutputPath,
+                OutputPaths = new[] { projectProperties.OutputPath },
                 RootNameSpace = projectProperties.RootNameSpace,
                 AssemblyName = projectProperties.AssemblyName,
-                TargetFrameworkVersion = projectProperties.TargetFrameworkVersion,
+                TargetFrameworkVersion = projectProperties.TargetFrameworkVersions.First(),
+                TargetFrameworkVersions = projectProperties.TargetFrameworkVersions,
                 TargetFrameworkProfile = projectProperties.TargetFrameworkProfile,
                 Files = projectFiles,
                 References = references,
                 ProjectReferences = projectReferences,
+                PackageReferences = packageReferences,
                 IsNetFramework = true
             };
         }
 
-        internal static CustomProjectParserResult ParseNetcoreProjectFile(this XDocument document, IFile projectFile, string config, string platform)
+        internal static CustomProjectParserResult ParseVS2017ProjectFile(this XDocument document, IFile projectFile, string config, string platform)
         {
+            var rootDirectoryPath = projectFile.Path.GetDirectory();
             var sdk = document.GetSdk();
             var version = document.GetVersion();
             var projectName = projectFile.Path.GetFilenameWithoutExtension().ToString();
             var rootnamespace = document.GetFirstElementValue(ProjectXElement.RootNamespace) ?? projectName;
             var targetFramework = document.GetFirstElementValue(ProjectXElement.TargetFramework);
+            var targetFrameworks =
+                document.GetFirstElementValue(ProjectXElement.TargetFrameworks)?.SplitIgnoreEmpty(';') ??
+                (targetFramework != null ? new[] { targetFramework } : new string[0]);
             var applicationIcon = document.GetFirstElementValue(ProjectXElement.ApplicationIcon);
             var assemblyVersion = document.GetFirstElementValue(ProjectXElement.AssemblyVersion) ?? "1.0.0.0";
             var fileVersion = document.GetFirstElementValue(ProjectXElement.FileVersion) ?? "1.0.0.0";
-            var targetFrameworks = document.GetFirstElementValue(ProjectXElement.TargetFrameworks)?.SplitIgnoreEmpty(';') ?? new[] { targetFramework };
             var outputType = document.GetFirstElementValue(ProjectXElement.OutputType) ?? "Library";
             var debugType = document.GetFirstElementValue(ProjectXElement.DebugType);
             var product = document.GetFirstElementValue(ProjectXElement.Product);
             var documentationFile = document.GetFirstElementValue(ProjectXElement.DocumentationFile, config, platform);
-            var defaultOutputPath = projectFile.GetDefaultOutputPath(config, platform, targetFramework);
-            var outputPath = document.GetOutputPath(config, platform) ?? defaultOutputPath;
+            var outputPaths = document.GetOutputPaths(config, targetFrameworks, rootDirectoryPath, platform);
             var packageReferences = document.GetPackageReferences();
-            var projectReferences = document.GetProjectReferences(projectFile.Path.GetDirectory());
+            var projectReferences = document.GetProjectReferences(rootDirectoryPath);
+            var assemblyReferences = document.GetAssemblyReferences(rootDirectoryPath);
             var assemblyName = document.GetFirstElementValue(ProjectXElement.AssemblyName) ?? projectName;
             var packageId = document.GetFirstElementValue(ProjectXElement.PackageId) ?? assemblyName;
             var authors = document.GetFirstElementValue(ProjectXElement.Authors)?.SplitIgnoreEmpty(';');
@@ -323,18 +666,27 @@ namespace Cake.Incubator
             var treatSpecificWarningsAsErrors = document.GetFirstElementValue(ProjectXElement.TreatSpecificWarningsAsErrors, config, platform)?.SplitIgnoreEmpty(';') ?? new string[0];
             var defineConstants = document.GetFirstElementValue(ProjectXElement.DefineConstants, config, platform)?.SplitIgnoreEmpty(';').Where(x => !x.StartsWith("$"))?.ToArray() ?? new string[0];
             var targets = document.GetTargets();
+            var isNetCore = targetFrameworks.Any(x => NetCoreTargetFrameworkRegex.IsMatch(x));
+            var isNetStandard = targetFrameworks.Any(x => NetStandardTargetFrameworkRegex.IsMatch(x));
+            var isNetFramework = targetFrameworks.Any(x => NetFrameworkTargetFrameworkRegex.IsMatch(x));
 
             return new CustomProjectParserResult
             {
                 AssemblyName = assemblyName,
                 Configuration = config,
                 OutputType = outputType,
-                OutputPath = outputPath,
+                OutputPath = outputPaths.FirstOrDefault(),
+                OutputPaths = outputPaths,
                 Platform = platform,
                 ProjectReferences = projectReferences,
+                References = assemblyReferences,
                 RootNameSpace = rootnamespace,
                 TargetFrameworkVersion = targetFramework,
-                IsNetCore = true,
+                TargetFrameworkVersions = targetFrameworks,
+                IsNetCore = isNetCore,
+                IsNetStandard = isNetStandard,
+                IsNetFramework = isNetFramework,
+                PackageReferences = packageReferences,
                 NetCore = new NetCoreProject
                 {
                     AllowUnsafeBlocks = allowUnsafeBlocks,
@@ -432,17 +784,7 @@ namespace Cake.Incubator
              * */
         }
 
-        private static DirectoryPath GetDefaultOutputPath(this IFile projectFile, string config, string platform, string targetFramework)
-        {
-            var template = "bin/";
-            if (!platform.IsNullOrEmpty() && !platform.EqualsIgnoreCase("AnyCPU")) template += $"{platform}/";
-            if (!config.IsNullOrEmpty()) template += $"{config}/";
-            if (!targetFramework.IsNullOrEmpty()) template += $"{targetFramework}/";
-
-            return projectFile.Path.GetDirectory()?.Combine(template);
-        }
-
-        private static NetFrameworkProjectProperties GetNetFrameworkProjectProperties(XDocument document, string config, string platform, XNamespace ns, DirectoryPath rootPath)
+        private static NetFrameworkProjectProperties GetPreVS2017ProjectProperties(XDocument document, string config, string platform, XNamespace ns, DirectoryPath rootPath)
         {
             return (from project in document.Elements(ns + ProjectXElement.Project)
                     from propertyGroup in project.GetPropertyGroups(ns)
@@ -469,6 +811,7 @@ namespace Cake.Incubator
                         RootNameSpace = propertyGroup.GetRootNamespace(ns),
                         AssemblyName = propertyGroup.GetAssemblyName(ns),
                         TargetFrameworkVersion = propertyGroup.GetTargetFrameworkVersion(ns),
+                        TargetFrameworkVersions = propertyGroup.GetTargetFrameworkVersions(ns)?.SplitIgnoreEmpty(';') ?? new[] { propertyGroup.GetTargetFrameworkVersion(ns) },
                         TargetFrameworkProfile = propertyGroup.GetTargetFrameworkProfile(ns)
                     }).FirstOrDefault();
         }
@@ -518,49 +861,6 @@ namespace Cake.Incubator
                             ? null
                             : rootPath.CombineWithFilePath(packageElement.Value)
                     }).ToArray();
-        }
-
-        private static ProjectAssemblyReference[] GetNetFrameworkReferences(XDocument document, XNamespace ns, DirectoryPath rootPath)
-        {
-            return (from reference in document.Descendants(ns + ProjectXElement.Reference)
-                    from include in reference.Attributes("Include")
-                    let includeValue = include.Value
-                    let hintPathElement = reference.Element(ns + ProjectXElement.HintPath)
-                    let nameElement = reference.Element(ns + ProjectXElement.Name)
-                    let fusionNameElement = reference.Element(ns + ProjectXElement.FusionName)
-                    let specificVersionElement = reference.Element(ns + ProjectXElement.SpecificVersion)
-                    let aliasesElement = reference.Element(ns + ProjectXElement.Aliases)
-                    let privateElement = reference.Element(ns + ProjectXElement.Private)
-                    select new ProjectAssemblyReference
-                    {
-                        Include = includeValue,
-                        HintPath = string.IsNullOrEmpty(hintPathElement?.Value)
-                            ? null
-                            : hintPathElement.GetAbsolutePath(rootPath),
-                        Name = nameElement?.Value ?? includeValue?.Split(',')?.FirstOrDefault(),
-                        FusionName = fusionNameElement?.Value,
-                        SpecificVersion = specificVersionElement == null ? (bool?)null : bool.Parse(specificVersionElement.Value),
-                        Aliases = aliasesElement?.Value,
-                        Private = privateElement == null ? (bool?)null : bool.Parse(privateElement.Value)
-                    }).Distinct(x => x.Name).ToArray();
-        }
-
-        private static FilePath GetAbsolutePath(this XElement hintPathElement, DirectoryPath rootPath)
-        {
-            
-            var hintPath = new FilePath(hintPathElement.Value).IsRelative;
-            Cake.Core.IO.FilePath absolutePath;
-            if (hintPath)
-            {
-                absolutePath = rootPath.CombineWithFilePath(hintPathElement.Value);
-            }
-            else
-            {
-                absolutePath = hintPathElement.Value;
-                Debug.WriteLine($"An absolute path {absolutePath} was used in a project reference. It is recommended that projects contain only relative paths for references");
-            }
-
-            return absolutePath;
         }
     }
 }

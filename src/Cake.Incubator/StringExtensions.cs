@@ -4,13 +4,16 @@
 namespace Cake.Incubator
 {
     using System;
+    using System.Diagnostics;
+    using System.Text.RegularExpressions;
+    using Core.IO;
 
     /// <summary>
     /// Several extension methods when using String.
     /// </summary>
     public static class StringExtensions
     {
-        private const string TargetframeworkCondition = "'$(TargetFramework)'==";
+        private static readonly Regex TargetframeworkCondition = new Regex("\\s*\\\'\\$\\(TargetFramework\\)\\\'\\s*==\\s*", RegexOptions.Compiled);
         private const string ConfigPlatformCondition = "'$(Configuration)|$(Platform)'==";
 
         /// <summary>
@@ -26,7 +29,7 @@ namespace Cake.Incubator
 
         internal static bool HasTargetFrameworkCondition(this string condition)
         {
-            return !condition.IsNullOrEmpty() && condition.StartsWith(TargetframeworkCondition);
+            return !condition.IsNullOrEmpty() && TargetframeworkCondition.IsMatch(condition);
         }
 
         internal static bool HasConfigPlatformCondition(this string condition, string config = null, string platform = null)
@@ -46,7 +49,25 @@ namespace Cake.Incubator
 
         internal static string GetConditionTargetFramework(this string condition)
         {
-            return condition.Substring(TargetframeworkCondition.Length).Trim().TrimStart('\'').TrimEnd('\'');
+            return TargetframeworkCondition.Replace(condition, string.Empty).Trim().TrimStart('\'').TrimEnd('\'');
+        }
+
+        internal static FilePath GetAbsolutePath(this string relativePath, DirectoryPath rootPath)
+        {
+
+            var isRelative = new FilePath(relativePath).IsRelative;
+            Cake.Core.IO.FilePath absolutePath;
+            if (isRelative)
+            {
+                absolutePath = rootPath.CombineWithFilePath(relativePath);
+            }
+            else
+            {
+                absolutePath = relativePath;
+                Debug.WriteLine($"An absolute path {absolutePath} was used in a project reference. It is recommended that projects contain only relative paths for references");
+            }
+
+            return absolutePath;
         }
     }
 }

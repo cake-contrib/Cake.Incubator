@@ -8,6 +8,7 @@ BuildParameters.SetParameters(context: Context,
                             title: "Cake.Incubator",
                             repositoryOwner: "cake-contrib",
                             repositoryName: "Cake.Incubator",
+							shouldRunCodecov: false,
                             appVeyorAccountName: "cakecontrib");
 
 BuildParameters.PrintParameters(Context);

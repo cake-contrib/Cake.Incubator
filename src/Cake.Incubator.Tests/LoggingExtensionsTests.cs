@@ -5,6 +5,7 @@ namespace Cake.Incubator.Tests
 {
     using System;
     using System.Collections.Generic;
+    using Core.IO;
     using FluentAssertions;
     using Xunit;
 
@@ -27,7 +28,7 @@ namespace Cake.Incubator.Tests
                 DateTimeProp = DateTime.Today
             };
 
-            var expected = $"StringProp: {test.StringProp}\r\nIntProp: {test.IntProp}\r\nDateTimeProp: {test.DateTimeProp}";
+            var expected = $"\tStringProp:\t{test.StringProp}\r\n\tIntProp:\t{test.IntProp}\r\n\tDateTimeProp:\t{test.DateTimeProp}\r\n";
 
             test.Dump().Should().Be(expected);
         }
@@ -37,9 +38,19 @@ namespace Cake.Incubator.Tests
         {
             var test = new ListTest { ListProp = new List<string> { "foo", "bar" }, IntListProp = new[] { 1, 2, 3, 5 } };
 
-            const string expected = "ListProp: foo, bar\r\nIntListProp: 1, 2, 3, 5";
+            const string expected = "\tListProp:\t[ \"foo\", \"bar\" ]\r\n\tIntListProp:\t[ \"1\", \"2\", \"3\", \"5\" ]\r\n";
 
-            test.Dump().Should().Be(expected);
+            var dump = test.Dump();
+            dump.Should().Be(expected);
+        }
+
+        [Fact]
+        public void Dump_OutputsCorrectString_IEnumerablePropsForFilePath()
+        {
+            var test = new[] {new FilePath("/Test1.a"), new FilePath("/Test2.a"),};
+
+            var dump = test.Dump();
+            dump.Should().Be("{\r\n\tHasExtension:\tTrue\r\n\tFullPath:\t/Test1.a\r\n\tIsRelative:\tFalse\r\n\tSegments:\t[ \"/Test1.a\" ]\r\n},\r\n{\r\n\tHasExtension:\tTrue\r\n\tFullPath:\t/Test2.a\r\n\tIsRelative:\tFalse\r\n\tSegments:\t[ \"/Test2.a\" ]\r\n}");
         }
 
         [Fact]
@@ -51,7 +62,7 @@ namespace Cake.Incubator.Tests
                 Children = new List<Person> { new Person("Toddler", 2), new Person("Teenager", 13) }
             };
 
-            const string expected = "Parent: Older person is 42\r\nChildren: Toddler is 2, Teenager is 13";
+            const string expected = "\tParent:\tOlder person is 42\r\n\tChildren:\t[ \"Toddler is 2\", \"Teenager is 13\" ]\r\n";
             test.Dump().Should().Be(expected);
         }
 

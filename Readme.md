@@ -16,7 +16,7 @@ This addin is designed to be used inside of cake scripts. To start using it, fir
 ```cs
 #addin "Cake.Incubator"
 // or
-#addin "nuget?package=Cake.Incubator"
+#addin "nuget:?package=Cake.Incubator"
 ```
 
 When the cake script is run, this will download the latest version of the `Cake.Incubator` nuget package and will now be available to use inside of the script.
