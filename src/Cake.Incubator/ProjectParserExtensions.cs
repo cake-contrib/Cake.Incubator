@@ -562,6 +562,7 @@ namespace Cake.Incubator
 
             return new CustomProjectParserResult
             {
+                ProjectFilePath = projectFile.Path,
                 Configuration = projectProperties.Configuration,
                 Platform = projectProperties.Platform,
                 ProjectGuid = projectProperties.ProjectGuid,
@@ -578,7 +579,7 @@ namespace Cake.Incubator
                 References = references,
                 ProjectReferences = projectReferences,
                 PackageReferences = packageReferences,
-                IsNetFramework = true
+                IsNetFramework = true,
             };
         }
 
@@ -672,6 +673,7 @@ namespace Cake.Incubator
 
             return new CustomProjectParserResult
             {
+                ProjectFilePath = projectFile.Path,
                 AssemblyName = assemblyName,
                 Configuration = config,
                 OutputType = outputType,
