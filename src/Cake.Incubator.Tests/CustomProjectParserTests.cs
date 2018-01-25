@@ -20,7 +20,8 @@ namespace Cake.Incubator.Tests
         private static readonly FakeFile validCsProjFSUnitTestFile = new FakeFile(Resources.CsProjValidFSUnitTestFile);
         private static readonly FakeFile validCsProjFixieTestFile = new FakeFile(Resources.CsProjValidFixieTestFile);
 
-        public static IEnumerable<object[]> TestData => new List<object[]>
+        // ReSharper disable once UnusedMember.Global
+        public static IEnumerable<object[]> TestData { get; } = new List<object[]>
         {
             new object[] {validCsProjMSTestFile},
             new object[] {validCsProjNUnitTestFile},
@@ -141,7 +142,7 @@ namespace Cake.Incubator.Tests
         {
             var result = validCsProjConditionalReferenceFile.ParseProject("debug");
 
-            result.References.Should().HaveCount(9).And.Contain(x => x.Name.Equals("Microsoft.VisualStudio.QualityTools.UnitTestFramework"));
+            result.References.Should().HaveCount(8).And.Contain(x => x.Name.Equals("Microsoft.VisualStudio.QualityTools.UnitTestFramework"));
         }
         
         [Fact]

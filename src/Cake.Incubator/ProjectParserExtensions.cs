@@ -478,6 +478,7 @@ namespace Cake.Incubator
         [CakeMethodAlias]
         [CakeAliasCategory("Projects")]
         [Obsolete("Use GetProjectAssemblies instead which includes support for multi-targeting projects")]
+        // ReSharper disable once UnusedMember.Global
         public static FilePath GetProjectAssembly(this ICakeContext context, FilePath target, string configuration)
         {
             if (!target.IsProject())
@@ -546,7 +547,7 @@ namespace Cake.Incubator
         {
             var rootPath = projectFile.Path.GetDirectory();
 
-            var ns = document.Root.Name?.Namespace;
+            var ns = document.Root?.Name?.Namespace;
             var projectProperties = GetPreVS2017ProjectProperties(document, config, platform, ns, rootPath);
 
             if (projectProperties == null)

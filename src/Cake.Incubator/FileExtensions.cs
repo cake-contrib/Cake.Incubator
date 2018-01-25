@@ -8,7 +8,6 @@ namespace Cake.Incubator
     using System.Collections.Generic;
     using System.Linq;
     using System.Xml.Linq;
-    using Cake.Common.Solution;
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;

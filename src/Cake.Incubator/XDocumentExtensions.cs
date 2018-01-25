@@ -21,7 +21,9 @@ namespace Cake.Incubator
         /// </summary>
         /// <param name="document">The xml document</param>
         /// <param name="config">the configuration</param>
+        /// <param name="rootDirectoryPath">the root directory for any relative assembly paths</param>
         /// <param name="platform">the platform</param>
+        /// <param name="targetFrameworks">the target frameworks expected (affects output paths)</param>
         /// <returns>the output path</returns>
         internal static DirectoryPath[] GetOutputPaths(this XDocument document, string config, string[] targetFrameworks, DirectoryPath rootDirectoryPath, string platform = "AnyCPU")
         {
@@ -213,7 +215,7 @@ namespace Cake.Incubator
                         Aliases = aliases,
                         Private = privateFlag == null ? (bool?) null : bool.Parse(privateFlag),
                     };
-                }).ToArray();
+                }).Distinct(x => x.Name).ToArray();
         }
 
         internal static ICollection<ProjectReference> GetProjectReferences(this XDocument document, DirectoryPath rootPath)
