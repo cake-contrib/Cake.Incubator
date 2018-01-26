@@ -19,6 +19,7 @@ CustomProjectParserResult result = ParseProject("./some.csproj", "Debug");
 result.IsNetStandard; // true | false
 result.IsNetCore; // true | false
 result.IsNetFramework; // true | false
+result.IsVS2017ProjectFormat; // true | false
 ```
 
 Combined with the existing methods below creates a powerful way to filter and route your projects during your build pipeline.
