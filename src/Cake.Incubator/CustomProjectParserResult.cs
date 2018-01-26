@@ -8,6 +8,11 @@
     /// <summary>Represents the content in an MSBuild project file.</summary>
     public class CustomProjectParserResult
     {
+        /// <summary>
+        /// The path for the parsed project file
+        /// </summary>
+        public FilePath ProjectFilePath { get; set; }
+
         /// <summary>Gets the build configuration.</summary>
         /// <value>The build configuration.</value>
         public string Configuration { get; set; }
@@ -100,5 +105,10 @@
         /// The project package references. A collection of <see cref="PackageReference"/>
         /// </summary>
         public ICollection<PackageReference> PackageReferences { get; set; }
+
+        /// <summary>
+        /// Whether the project parsed is in the newer VS2017 onwards format or the legacy pre 2017 format
+        /// </summary>
+        public bool IsVS2017ProjectFormat { get; set; }
     }
 }

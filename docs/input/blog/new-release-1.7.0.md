@@ -14,11 +14,12 @@ The main feature of this release is the improvement in project parsing and test 
 You can now detect the type of project using:
 
 ```csharp
-CustomProjectParserResult result = ParseProject("./some.csproj");
+CustomProjectParserResult result = ParseProject("./some.csproj", "Debug");
 
 result.IsNetStandard; // true | false
 result.IsNetCore; // true | false
 result.IsNetFramework; // true | false
+result.IsVS2017ProjectFormat; // true | false
 ```
 
 Combined with the existing methods below creates a powerful way to filter and route your projects during your build pipeline.
@@ -30,22 +31,28 @@ result.IsWebApplication(); // true | false
 ```
 
 The flags are not mutually exclusive so support those projects with multi-targeting configured.
-The support for multi-targeting has also been improved with new Properties being added as follows
+The support for multi-targeting has also been improved with new methods being added as follows:
 
 ```csharp
 result.GetOutputPaths(); // uses target frameworks to generate all of the artifact output paths (dll's, exe's)
 result.GetAssemblyFilePaths(); // again will now include all possible artifact output paths (dll's, exe's)
 ```
 
-Checking packages and references has also improved
+Checking for packages, references and cli tools in your projects has also improved
 
 ```csharp
+// packages
 result.HasPackage("nunit"); // true | false 
 result.HasPackage("nunit", "net45"); // also supports targetframework specific package lookups
 var pkg = result.GetPackage("nunit"); // returns PackageReference object or null
 
+// references
 result.HasReference("xunit.core"); // true | false
 result.GetReferemce("xunit.core"); // returns ProjectAssemblyReference object or null
+
+// dotnet cli tools
+result.HasDotNetCliToolReference("dotnet-xunit"); // true | false
+result.GetDotNetCliToolReference("dotnet-xunit"); // returns DotNetCliToolReference object or null
 ```
 
 The test detection makes the above even easier to work across a range of projects with the following new test extensions, especially if you are using `dotnet test` for running your tests.
@@ -57,7 +64,6 @@ result.IsFrameworkTestProject(); // true if project will require a non 'dotnet t
 ```
 
 There are a few more minor improvements also. Check the issues below for more details.
-
 
 __Bug__
 
