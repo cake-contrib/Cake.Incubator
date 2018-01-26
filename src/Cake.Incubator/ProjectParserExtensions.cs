@@ -602,6 +602,7 @@ namespace Cake.Incubator
 
             return new CustomProjectParserResult
             {
+                IsVS2017ProjectFormat = false,
                 ProjectFilePath = projectFile.Path,
                 Configuration = projectProperties.Configuration,
                 Platform = projectProperties.Platform,
@@ -713,6 +714,7 @@ namespace Cake.Incubator
 
             return new CustomProjectParserResult
             {
+                IsVS2017ProjectFormat = true,
                 ProjectFilePath = projectFile.Path,
                 AssemblyName = assemblyName,
                 Configuration = config,
