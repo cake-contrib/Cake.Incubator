@@ -57,19 +57,22 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_GetsMultiTargets()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;net462;netstandard1.6;netcoreapp1.0;"));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks",
+                "net45;net462;netstandard1.6;netcoreapp1.0;"));
             var result = file.ParseProject("test");
 
             result.IsNetStandard.Should().BeTrue();
             result.IsNetFramework.Should().BeTrue();
             result.IsNetCore.Should().BeTrue();
-            result.TargetFrameworkVersions.Should().HaveCount(4).And.BeEquivalentTo("net45", "net462", "netstandard1.6", "netcoreapp1.0");
+            result.TargetFrameworkVersions.Should().HaveCount(4).And
+                .BeEquivalentTo("net45", "net462", "netstandard1.6", "netcoreapp1.0");
         }
 
         [Fact]
         public void ParseProject_IsCoreTestProject()
         {
-            var testProject = "<PropertyGroup><TargetFramework>netcoreapp2.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
+            var testProject =
+                "<PropertyGroup><TargetFramework>netcoreapp2.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
             file.ParseProject("test").IsTestProject().Should().BeTrue();
             file.ParseProject("test").IsDotNetCliTestProject().Should().BeTrue();
@@ -78,7 +81,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_IsCoreTestProjectForNetFxWithPackage()
         {
-            var testProject = "<PropertyGroup><TargetFramework>net462</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
+            var testProject =
+                "<PropertyGroup><TargetFramework>net462</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
             file.ParseProject("test").IsTestProject().Should().BeTrue();
             file.ParseProject("test").IsDotNetCliTestProject().Should().BeTrue();
@@ -87,7 +91,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_IsTestProject_ReturnsFalseForNetStandard()
         {
-            var testProject = "<PropertyGroup><TargetFramework>netstandard1.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
+            var testProject =
+                "<PropertyGroup><TargetFramework>netstandard1.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
             file.ParseProject("test").IsTestProject().Should().BeFalse();
             file.ParseProject("test").IsDotNetCliTestProject().Should().BeFalse();
@@ -97,7 +102,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_SetsIsNetCoreForWebSdk()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<PropertyGroup><TargetFramework>netcoreapp2.0</TargetFramework></PropertyGroup>"));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(
+                "<PropertyGroup><TargetFramework>netcoreapp2.0</TargetFramework></PropertyGroup>"));
             file.ParseProject("test").IsNetCore.Should().BeTrue();
         }
 
@@ -139,14 +145,16 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_GetsCorrectDefaultOutputPath_WhenTargetFrameworksSpecified()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;netstandard1.6"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;netstandard1.6"));
             file.ParseProject("test").OutputPath.FullPath.Should().Be("bin/test/net45");
         }
 
         [Fact]
         public void ParseProject_GetsCorrectDefaultOutputPaths_WhenTargetFrameworksSpecified()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;netstandard1.6"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;netstandard1.6"));
             var paths = file.ParseProject("test").OutputPaths;
             paths.Should().HaveCount(2);
             paths.First().FullPath.Should().Be("bin/test/net45");
@@ -234,7 +242,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_TargetFrameworkVersion_ReturnsExpected()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFramework", "Netstandard1.1"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFramework", "Netstandard1.1"));
             file.ParseProject("test").TargetFrameworkVersion.Should().Be("Netstandard1.1");
         }
 
@@ -269,14 +278,16 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_AssemblyOriginatorKeyFile_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("AssemblyOriginatorKeyFile", "key.snk"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("AssemblyOriginatorKeyFile", "key.snk"));
             file.ParseProject("test").NetCore.AssemblyOriginatorKeyFile.Should().Be("key.snk");
         }
 
         [Fact]
         public void ParseProject_NetCore_BuildOutputTargetFolder_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("BuildOutputTargetFolder", "./oompa/loompa"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("BuildOutputTargetFolder", "./oompa/loompa"));
             file.ParseProject("test").NetCore.BuildOutputTargetFolder.Should().Be("./oompa/loompa");
         }
 
@@ -346,7 +357,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_NuspecBasePath_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("NuspecBasePath", "./all/about/the/base"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("NuspecBasePath", "./all/about/the/base"));
             file.ParseProject("test").NetCore.NuspecBasePath.Should().Be("./all/about/the/base");
         }
 
@@ -360,7 +372,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_NuspecProperties_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("NuspecProperties", "edgar=poe;jimmini=cricket;"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("NuspecProperties", "edgar=poe;jimmini=cricket;"));
             var props = file.ParseProject("test").NetCore.NuspecProperties;
             props.Should().HaveCount(2);
             props["edgar"].Should().Be("poe");
@@ -370,7 +383,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_PackageOutputPath_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageOutputPath", "./row/row/row/yerboat"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("PackageOutputPath", "./row/row/row/yerboat"));
             file.ParseProject("test").NetCore.PackageOutputPath.Should().Be("./row/row/row/yerboat");
         }
 
@@ -384,7 +398,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_ContentTargetFolders_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("ContentTargetFolders", "content;contentFiles;;"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("ContentTargetFolders", "content;contentFiles;;"));
             file.ParseProject("test").NetCore.ContentTargetFolders.Should().BeEquivalentTo("content", "contentFiles");
         }
 
@@ -398,14 +413,16 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_AssemblyTitle_OverridesAssemblyName()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<AssemblyName>original</AssemblyName><AssemblyTitle>my title</AssemblyTitle>"));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(
+                "<AssemblyName>original</AssemblyName><AssemblyTitle>my title</AssemblyTitle>"));
             file.ParseProject("test").NetCore.AssemblyTitle.Should().Be("my title");
         }
 
         [Fact]
         public void ParseProject_NetCore_AssemblyTitle_AssemblyNameFallback()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<AssemblyName>original</AssemblyName>"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithString("<AssemblyName>original</AssemblyName>"));
             file.ParseProject("test").NetCore.AssemblyTitle.Should().Be("original");
         }
 
@@ -456,28 +473,34 @@ namespace Cake.Incubator.Tests
         [InlineData("bananas", "shoes")]
         public void ParseProject_NetCore_DefineConstants_ReturnsEmptyIfNoConfigMatch(string config, string platform)
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectElementWithConfig("DefineConstants", "Birth;Death;Taxes;", config, platform));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectElementWithConfig("DefineConstants",
+                "Birth;Death;Taxes;", config, platform));
             file.ParseProject("test", "shoes").NetCore.DefineConstants.Should().BeEmpty();
         }
 
         [Fact]
         public void ParseProject_NetCore_DefineConstants_ReturnsCorrectConfigMatch()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectElementWithConfig("DefineConstants", "Birth;Death;Taxes;", "test", "shoes"));
-            file.ParseProject("test", "shoes").NetCore.DefineConstants.Should().BeEquivalentTo("Birth", "Death", "Taxes");
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectElementWithConfig("DefineConstants",
+                "Birth;Death;Taxes;", "test", "shoes"));
+            file.ParseProject("test", "shoes").NetCore.DefineConstants.Should()
+                .BeEquivalentTo("Birth", "Death", "Taxes");
         }
 
         [Fact]
         public void ParseProject_NetCore_DefineConstants_ReturnsCorrectParentConfigMatch()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectElementWithParentConfig("DefineConstants", "Birth;Death;Taxes;", "test", "shoes"));
-            file.ParseProject("test", "shoes").NetCore.DefineConstants.Should().BeEquivalentTo("Birth", "Death", "Taxes");
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectElementWithParentConfig("DefineConstants",
+                "Birth;Death;Taxes;", "test", "shoes"));
+            file.ParseProject("test", "shoes").NetCore.DefineConstants.Should()
+                .BeEquivalentTo("Birth", "Death", "Taxes");
         }
 
         [Fact]
         public void ParseProject_NetCore_DefineConstants_ReturnsCorrectFallbackIfConditionsDontMatch()
         {
-            var projString = @"<Project sdk=""Microsoft.NET.Sdk""><DefineConstants>Hoka;Loca;Moca;</DefineConstants><PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='test|shoes'""><DefineConstants>Birth;Death;Taxes;</DefineConstants></PropertyGroup></Project>";
+            var projString =
+                @"<Project sdk=""Microsoft.NET.Sdk""><DefineConstants>Hoka;Loca;Moca;</DefineConstants><PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='test|shoes'""><DefineConstants>Birth;Death;Taxes;</DefineConstants></PropertyGroup></Project>";
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(projString));
             file.ParseProject("Roca", "shoes").NetCore.DefineConstants.Should().BeEquivalentTo("Hoka", "Loca", "Moca");
         }
@@ -513,15 +536,18 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_GenerateDocumentationFile_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("GenerateDocumentationFile", "true"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("GenerateDocumentationFile", "true"));
             file.ParseProject("test").NetCore.GenerateDocumentationFile.Should().BeTrue();
         }
 
         [Fact]
         public void ParseProject_NetCore_NetStandardImplicitPackageVersion_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("NetStandardImplicitPackageVersion", "1.1.0-beta5-alpha3-preview6-final3"));
-            file.ParseProject("test").NetCore.NetStandardImplicitPackageVersion.Should().Be("1.1.0-beta5-alpha3-preview6-final3");
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("NetStandardImplicitPackageVersion",
+                "1.1.0-beta5-alpha3-preview6-final3"));
+            file.ParseProject("test").NetCore.NetStandardImplicitPackageVersion.Should()
+                .Be("1.1.0-beta5-alpha3-preview6-final3");
         }
 
         [Fact]
@@ -534,21 +560,24 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_NoWarn_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("NoWarn", "$(nowarn);CS3132;CS2534;"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("NoWarn", "$(nowarn);CS3132;CS2534;"));
             file.ParseProject("test").NetCore.NoWarn.Should().BeEquivalentTo("CS3132", "CS2534");
         }
 
         [Fact]
         public void ParseProject_NetCore_TreatSpecificWarningsAsErrors_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TreatSpecificWarningsAsErrors", ";CS3132;CS2534;"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("TreatSpecificWarningsAsErrors", ";CS3132;CS2534;"));
             file.ParseProject("test").NetCore.TreatSpecificWarningsAsErrors.Should().BeEquivalentTo("CS3132", "CS2534");
         }
 
         [Fact]
         public void ParseProject_NetCore_GenerateSerializationAssemblies_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("GenerateSerializationAssemblies", "autobots"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("GenerateSerializationAssemblies", "autobots"));
             file.ParseProject("test").NetCore.GenerateSerializationAssemblies.Should().Be("autobots");
         }
 
@@ -562,7 +591,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_PackageIconUrl_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageIconUrl", "http://acme.inc/fav.ico"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("PackageIconUrl", "http://acme.inc/fav.ico"));
             file.ParseProject("test").NetCore.PackageIconUrl.Should().Be("http://acme.inc/fav.ico");
         }
 
@@ -597,49 +627,58 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_PackageLicenseUrl_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageLicenseUrl", "http://death.star/legal"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("PackageLicenseUrl", "http://death.star/legal"));
             file.ParseProject("test").NetCore.PackageLicenseUrl.Should().Be("http://death.star/legal");
         }
 
         [Fact]
         public void ParseProject_NetCore_PackageProjectUrl_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageProjectUrl", "https://github.com/cake-contrib/Cake.Incubator"));
-            file.ParseProject("test").NetCore.PackageProjectUrl.Should().Be("https://github.com/cake-contrib/Cake.Incubator");
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageProjectUrl",
+                "https://github.com/cake-contrib/Cake.Incubator"));
+            file.ParseProject("test").NetCore.PackageProjectUrl.Should()
+                .Be("https://github.com/cake-contrib/Cake.Incubator");
         }
 
         [Fact]
         public void ParseProject_NetCore_PackageReleaseNotes_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageReleaseNotes", "Wery well, we shall weelesse wodger"));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageReleaseNotes",
+                "Wery well, we shall weelesse wodger"));
             file.ParseProject("test").NetCore.PackageReleaseNotes.Should().Be("Wery well, we shall weelesse wodger");
         }
 
         [Fact]
         public void ParseProject_NetCore_PackageRequireLicenseAcceptance_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageRequireLicenseAcceptance", "true"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("PackageRequireLicenseAcceptance", "true"));
             file.ParseProject("test").NetCore.PackageRequireLicenseAcceptance.Should().BeTrue();
         }
 
         [Fact]
         public void ParseProject_NetCore_PackageTags_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageTags", "Eenie;Meenie;Moe;"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("PackageTags", "Eenie;Meenie;Moe;"));
             file.ParseProject("test").NetCore.PackageTags.Should().BeEquivalentTo("Eenie", "Meenie", "Moe");
         }
 
         [Fact]
         public void ParseProject_NetCore_PackageTargetFallbacks_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageTargetFallback", "net45;net46;netunstandard-10.gamma.cheese;"));
-            file.ParseProject("test").NetCore.PackageTargetFallbacks.Should().BeEquivalentTo("net45", "net46", "netunstandard-10.gamma.cheese");
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackageTargetFallback",
+                "net45;net46;netunstandard-10.gamma.cheese;"));
+            file.ParseProject("test").NetCore.PackageTargetFallbacks.Should()
+                .BeEquivalentTo("net45", "net46", "netunstandard-10.gamma.cheese");
         }
 
         [Fact]
         public void ParseProject_NetCore_PreserveCompilationContext_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PreserveCompilationContext", "true"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("PreserveCompilationContext", "true"));
             file.ParseProject("test").NetCore.PreserveCompilationContext.Should().BeTrue();
         }
 
@@ -681,14 +720,16 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_RuntimeFrameworkVersion_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("RuntimeFrameworkVersion", "minustwentzillion.epsilonEcho.woof"));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("RuntimeFrameworkVersion",
+                "minustwentzillion.epsilonEcho.woof"));
             file.ParseProject("test").NetCore.RuntimeFrameworkVersion.Should().Be("minustwentzillion.epsilonEcho.woof");
         }
 
         [Fact]
         public void ParseProject_NetCore_RuntimeIdentifiers_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("RuntimeIdentifiers", "charlie;delta;echo;;"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("RuntimeIdentifiers", "charlie;delta;echo;;"));
             file.ParseProject("test").NetCore.RuntimeIdentifiers.Should().BeEquivalentTo("charlie", "delta", "echo");
         }
 
@@ -716,7 +757,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_TargetFrameworks_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;net46;12345;;"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks", "net45;net46;12345;;"));
             file.ParseProject("test").NetCore.TargetFrameworks.Should().BeEquivalentTo("net45", "net46", "12345");
         }
 
@@ -737,14 +779,16 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_Version_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<VersionPrefix>1.2.3</VersionPrefix><VersionSuffix>5813</VersionSuffix><Version>8.9.10</Version>"));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(
+                "<VersionPrefix>1.2.3</VersionPrefix><VersionSuffix>5813</VersionSuffix><Version>8.9.10</Version>"));
             file.ParseProject("test").NetCore.Version.Should().Be("1.2.3.5813");
         }
 
         [Fact]
         public void ParseProject_NetCore_Version_ReturnsIfSemver()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<VersionPrefix>1.2.3</VersionPrefix><VersionSuffix>alpha5813</VersionSuffix><Version>8.9.10</Version>"));
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(
+                "<VersionPrefix>1.2.3</VersionPrefix><VersionSuffix>alpha5813</VersionSuffix><Version>8.9.10</Version>"));
             file.ParseProject("test").NetCore.Version.Should().Be("1.2.3-alpha5813");
         }
 
@@ -793,14 +837,16 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_ConcurrentGarbageCollection_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("ConcurrentGarbageCollection", "true"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("ConcurrentGarbageCollection", "true"));
             file.ParseProject("test").NetCore.RuntimeOptions.ConcurrentGarbageCollection.Should().BeTrue();
         }
 
         [Fact]
         public void ParseProject_NetCore_RetainVMGarbageCollection_ReturnsIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("RetainVMGarbageCollection", "true"));
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithElement("RetainVMGarbageCollection", "true"));
             file.ParseProject("test").NetCore.RuntimeOptions.RetainVMGarbageCollection.Should().BeTrue();
         }
 
@@ -828,7 +874,10 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_ProjectReferences_ReturnIfSet()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString("<ProjectReference Include=\"..\\a\\b.csproj\" /><ProjectReference Include=\"..\\c\\d.csproj\" />"), "c:/project/src/x.csproj");
+            var file = new FakeFile(
+                ProjectFileHelpers.GetNetCoreProjectWithString(
+                    "<ProjectReference Include=\"..\\a\\b.csproj\" /><ProjectReference Include=\"..\\c\\d.csproj\" />"),
+                "c:/project/src/x.csproj");
             var references = file.ParseProject("test").NetCore.ProjectReferences;
 
             references.Should().HaveCount(2);
@@ -926,7 +975,8 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
-        public void ParseProject_NetCore_PackageReference_ReturnsDuplicatesWithDifferentTargetFrameworkInAttributeIfSet()
+        public void
+            ParseProject_NetCore_PackageReference_ReturnsDuplicatesWithDifferentTargetFrameworkInAttributeIfSet()
         {
             var packageRef =
                 @"<ItemGroup>
@@ -974,7 +1024,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_NetCore_Targets_ReturnsIfSet()
         {
-            var targetString = @"<Target Name=""Jogging"" BeforeTargets=""Stretch;Jump;;"" AfterTargets=""IceBath"" DependsOn=""Mood"">
+            var targetString =
+                @"<Target Name=""Jogging"" BeforeTargets=""Stretch;Jump;;"" AfterTargets=""IceBath"" DependsOn=""Mood"">
                                   <Exec Command=""hop.cmd"" />
                                   <Exec Command=""skip.cmd"" />
                                 </Target>";
@@ -1020,7 +1071,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_GetsCorrectOutputPath_UsesConditionOverrideWithDefaultPlatform()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(@"<PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='Test|AnyCPU'"">
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(
+                @"<PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='Test|AnyCPU'"">
                             <OutputPath>bin\wayhey\</OutputPath>
                           </PropertyGroup>"));
             file.ParseProject("test").OutputPath.ToString().Should().Be("bin/wayhey");
@@ -1029,7 +1081,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void ParseProject_GetsCorrectOutputPath_UsesConditionOverride()
         {
-            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(@"<PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='Test|x86'"">
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(
+                @"<PropertyGroup Condition=""'$(Configuration)|$(Platform)'=='Test|x86'"">
                             <OutputPath>bin\wayhey\</OutputPath>
                           </PropertyGroup>"));
             file.ParseProject("test", "x86").OutputPath.ToString().Should().Be("bin/wayhey");
@@ -1059,7 +1112,7 @@ namespace Cake.Incubator.Tests
             project.HasPackage("Moogli").Should().BeFalse();
             project.HasPackage("Moogli", "net452").Should().BeFalse();
         }
-        
+
         [Fact]
         public void HasPackage_ReturnsTrueWhenPackageFoundAndParentCondition()
         {
@@ -1089,7 +1142,7 @@ namespace Cake.Incubator.Tests
             project.GetPackage("System.Collections.Immutable", "net451").Should().NotBeNull();
             project.GetPackage("System.Collections.Immutable", "net452").Should().BeNull();
         }
-        
+
         [Fact]
         public void HasReference_ReturnsTrueWhenPackageFound()
         {
@@ -1115,7 +1168,8 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void HasDotNetCliToolReference_ReturnsTrueWhenPackageFound()
         {
-            var reference = @"<ItemGroup><DotNetCliToolReference Include=""dotnet-xunit"" Version=""2.3.1"" /></ItemGroup>";
+            var reference =
+                @"<ItemGroup><DotNetCliToolReference Include=""dotnet-xunit"" Version=""2.3.1"" /></ItemGroup>";
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(reference));
 
             var project = file.ParseProject("test");
@@ -1126,12 +1180,28 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void GetDotNetCliToolReference_ReturnsTrueWhenPackageFound()
         {
-            var reference = @"<ItemGroup><DotNetCliToolReference Include=""dotnet-xunit"" Version=""2.3.1"" /></ItemGroup>";
+            var reference =
+                @"<ItemGroup><DotNetCliToolReference Include=""dotnet-xunit"" Version=""2.3.1"" /></ItemGroup>";
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(reference));
 
             var project = file.ParseProject("test");
-            project.GetDotNetCliToolReference("dotnet-xunit").Should().BeOfType<DotNetCliToolReference>().Which.Version.Should().Be("2.3.1");
+            project.GetDotNetCliToolReference("dotnet-xunit").Should().BeOfType<DotNetCliToolReference>().Which.Version
+                .Should().Be("2.3.1");
             project.GetDotNetCliToolReference("Blerk").Should().BeNull();
+        }
+
+        [Fact]
+        public void GetProjectFormat_ReturnsTrueWhenVS2017Format()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(""));
+            file.ParseProject("test").IsVS2017ProjectFormat.Should().BeTrue();
+        }
+
+        [Fact]
+        public void GetProjectFormat_ReturnsFalseWhenVS2017Format()
+        {
+            var file = new FakeFile(Resources.CsProj_ValidFile);
+            file.ParseProject("test").IsVS2017ProjectFormat.Should().BeFalse();
         }
     }
 }

@@ -105,5 +105,10 @@
         /// The project package references. A collection of <see cref="PackageReference"/>
         /// </summary>
         public ICollection<PackageReference> PackageReferences { get; set; }
+
+        /// <summary>
+        /// Whether the project parsed is in the newer VS2017 onwards format or the legacy pre 2017 format
+        /// </summary>
+        public bool IsVS2017ProjectFormat { get; set; }
     }
 }
