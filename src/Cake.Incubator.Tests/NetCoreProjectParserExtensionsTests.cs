@@ -1111,5 +1111,27 @@ namespace Cake.Incubator.Tests
             project.GetReference("Microsoft.CSharp").Should().NotBeNull();
             project.GetReference("Blerk").Should().BeNull();
         }
+
+        [Fact]
+        public void HasDotNetCliToolReference_ReturnsTrueWhenPackageFound()
+        {
+            var reference = @"<ItemGroup><DotNetCliToolReference Include=""dotnet-xunit"" Version=""2.3.1"" /></ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(reference));
+
+            var project = file.ParseProject("test");
+            project.HasDotNetCliToolReference("dotnet-xunit").Should().BeTrue();
+            project.HasDotNetCliToolReference("Blerk").Should().BeFalse();
+        }
+
+        [Fact]
+        public void GetDotNetCliToolReference_ReturnsTrueWhenPackageFound()
+        {
+            var reference = @"<ItemGroup><DotNetCliToolReference Include=""dotnet-xunit"" Version=""2.3.1"" /></ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(reference));
+
+            var project = file.ParseProject("test");
+            project.GetDotNetCliToolReference("dotnet-xunit").Should().BeOfType<DotNetCliToolReference>().Which.Version.Should().Be("2.3.1");
+            project.GetDotNetCliToolReference("Blerk").Should().BeNull();
+        }
     }
 }

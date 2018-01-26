@@ -274,7 +274,7 @@ namespace Cake.Incubator
         /// <code>
         /// CustomParseProjectResult project 
         ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
-        /// bool hasConfig = project.GetReference("System.Configuration");
+        /// bool hasConfig = project.HasReference("System.Configuration");
         /// </code>
         /// </example>
         public static bool HasReference(this CustomProjectParserResult projectParserResult, string referenceAssemblyName)
@@ -310,6 +310,46 @@ namespace Cake.Incubator
                 ? projectParserResult.PackageReferences.FirstOrDefault(x => x.Name.EqualsIgnoreCase(packageName))
                 : projectParserResult.PackageReferences.FirstOrDefault(x =>
                     x.Name.EqualsIgnoreCase(packageName) && x.TargetFramework == targetFramework);
+        }
+
+        /// <summary>
+        /// Checks for a DotNet Cli Tool Reference by name
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <param name="cliToolReferenceName">the cli tool reference name</param>
+        /// <returns>True if reference exists in project, otherwise false</returns>
+        /// <example>
+        /// Checks for a dotnet-xunit cli tool reference
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// bool hasConfig = project.HasDotNetCliToolReference("dotnet-xunit");
+        /// </code>
+        /// </example>
+        public static bool HasDotNetCliToolReference(this CustomProjectParserResult projectParserResult, string cliToolReferenceName)
+        {
+            return projectParserResult.NetCore.DotNetCliToolReferences.Any(x => x.Name.EqualsIgnoreCase(cliToolReferenceName));
+        }
+        
+        /// <summary>
+        /// Gets a project DotNetCliToolReference
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <param name="cliToolReferenceName">the package name</param>
+        /// <returns>The dotnet cli tool reference if found</returns>
+        /// <example>
+        /// Get the XUnit Cli tool reference
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// 
+        /// DotNetCliToolReference ref = project.GetDotNetCliToolReference("dotnet-xunit");
+        /// string xUnitVersion = ref.Version;
+        /// </code>
+        /// </example>
+        public static DotNetCliToolReference GetDotNetCliToolReference(this CustomProjectParserResult projectParserResult, string cliToolReferenceName)
+        {
+            return projectParserResult.NetCore.DotNetCliToolReferences.FirstOrDefault(x => x.Name.EqualsIgnoreCase(cliToolReferenceName));
         }
         
         /// <summary>

@@ -37,15 +37,21 @@ result.GetOutputPaths(); // uses target frameworks to generate all of the artifa
 result.GetAssemblyFilePaths(); // again will now include all possible artifact output paths (dll's, exe's)
 ```
 
-Checking for packages and references in your projects has also improved
+Checking for packages, references and cli tools in your projects has also improved
 
 ```csharp
+// packages
 result.HasPackage("nunit"); // true | false 
 result.HasPackage("nunit", "net45"); // also supports targetframework specific package lookups
 var pkg = result.GetPackage("nunit"); // returns PackageReference object or null
 
+// references
 result.HasReference("xunit.core"); // true | false
 result.GetReferemce("xunit.core"); // returns ProjectAssemblyReference object or null
+
+// dotnet cli tools
+result.HasDotNetCliToolReference("dotnet-xunit"); // true | false
+result.GetDotNetCliToolReference("dotnet-xunit"); // returns DotNetCliToolReference object or null
 ```
 
 The test detection makes the above even easier to work across a range of projects with the following new test extensions, especially if you are using `dotnet test` for running your tests.
