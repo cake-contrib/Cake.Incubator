@@ -75,7 +75,7 @@ namespace Cake.Incubator.Tests
                 "net45;net462;netstandard1.6;netcoreapp1.0;"));
             var result = file.ParseProject("test");
 
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/test/net45/test.dll");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/test/net45/project.dll");
         }
         
         [Fact]
