@@ -67,6 +67,30 @@ namespace Cake.Incubator.Tests
             result.TargetFrameworkVersions.Should().HaveCount(4).And
                 .BeEquivalentTo("net45", "net462", "netstandard1.6", "netcoreapp1.0");
         }
+        
+        [Fact]
+        public void ParseProject_GetsFirstAssemblyForMultiTarget()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks",
+                "net45;net462;netstandard1.6;netcoreapp1.0;"));
+            var result = file.ParseProject("test");
+
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/test/net45/test.dll");
+        }
+        
+        [Fact]
+        public void ParseProject_GetsAllAssemblyPathsForMultiTarget()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFrameworks",
+                "net45;net462;netstandard1.6;"));
+            var result = file.ParseProject("test");
+
+            var assemblyFilePaths = result.GetAssemblyFilePaths();
+            assemblyFilePaths.Should().HaveCount(3);
+            assemblyFilePaths.First().FullPath.Should().Be("bin/test/net45/project.dll");
+            assemblyFilePaths.Skip(1).First().FullPath.Should().Be("bin/test/net462/project.dll");
+            assemblyFilePaths.Skip(2).First().FullPath.Should().Be("bin/test/netstandard1.6/project.dll");
+        }
 
         [Fact]
         public void ParseProject_IsCoreTestProject()

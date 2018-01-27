@@ -83,6 +83,20 @@ namespace Cake.Incubator.Tests
             result.OutputType.Should().Be("Exe");
             result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/netcoreapp1.1/project.dll");
         }
+        
+        [Fact]
+        public void CustomProjectParser_CanGetNetCoreProjectAssembly_ForDebugConfig()
+        {
+            var result = validCsProjFile.ParseProject("debug");
+
+            result.Configuration.Should().Be("debug");
+            result.OutputPath.ToString().Should().Be("bin/Debug");
+            result.OutputPaths.Should().ContainSingle(x => x.FullPath.EqualsIgnoreCase("bin/Debug"));
+            result.OutputType.Should().Be("Library");
+            var paths = result.GetAssemblyFilePaths();
+            paths.Should().ContainSingle(x => x.FullPath.EqualsIgnoreCase("bin/debug/cake.common.dll"));
+        }
+
 
         [Theory]
         [MemberData(memberName: "TestData", MemberType = typeof(TestProjects))]
