@@ -8,6 +8,8 @@ BuildParameters.SetParameters(context: Context,
                             title: "Cake.Incubator",
                             repositoryOwner: "cake-contrib",
                             repositoryName: "Cake.Incubator",
+							shouldRunCodecov: false,
+                            shouldGenerateDocumentation: false, // until wyam oin recipe is fixed
                             appVeyorAccountName: "cakecontrib");
 
 BuildParameters.PrintParameters(Context);

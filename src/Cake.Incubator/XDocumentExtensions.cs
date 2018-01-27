@@ -21,17 +21,37 @@ namespace Cake.Incubator
         /// </summary>
         /// <param name="document">The xml document</param>
         /// <param name="config">the configuration</param>
+        /// <param name="rootDirectoryPath">the root directory for any relative assembly paths</param>
         /// <param name="platform">the platform</param>
+        /// <param name="targetFrameworks">the target frameworks expected (affects output paths)</param>
         /// <returns>the output path</returns>
-        internal static string GetOutputPath(this XDocument document, string config, string platform = "AnyCPU")
+        internal static DirectoryPath[] GetOutputPaths(this XDocument document, string config, string[] targetFrameworks, DirectoryPath rootDirectoryPath, string platform = "AnyCPU")
         {
-            return document.Descendants("OutputPath")
+            var outputPathOverride = document.Descendants("OutputPath")
                 .FirstOrDefault(x =>
                 {
                     var condition = x.Parent?.Attribute("Condition")?.Value;
                     if (condition.IsNullOrEmpty() || !condition.HasConfigPlatformCondition()) return false;
                     return condition.GetConditionalConfigPlatform().EqualsIgnoreCase($"{config}|{platform}");
                 })?.Value;
+
+            // specific output path is specified in project, overrides convention
+            if (!string.IsNullOrWhiteSpace(outputPathOverride))
+            {
+                return targetFrameworks.IsNullOrEmpty()
+                    ? new[] {rootDirectoryPath.Combine(outputPathOverride)}
+                    : targetFrameworks.Select(
+                        x => rootDirectoryPath.Combine(outputPathOverride).Combine(x)).ToArray();
+            }
+
+            // use conventions, skip null or empty props
+            var template = "bin/";
+            if (!platform.IsNullOrEmpty() && !platform.EqualsIgnoreCase("AnyCPU")) template += $"{platform}/";
+            if (!config.IsNullOrEmpty()) template += $"{config}/";
+
+            return targetFrameworks.IsNullOrEmpty()
+                ? new[] {rootDirectoryPath.Combine(template)}
+                : targetFrameworks.Select(x => rootDirectoryPath.Combine(template).Combine(x)).ToArray();
         }
 
         /// <summary>
@@ -94,6 +114,12 @@ namespace Cake.Incubator
                 }).ToArray();
         }
 
+        internal static XName GetXNameWithNamespace(this XNamespace ns, string elementName)
+        {
+            var nsName = ns?.NamespaceName;
+            return nsName == null ? XName.Get(elementName) : XName.Get(elementName, nsName);
+        }
+
         internal static ICollection<PackageReference> GetPackageReferences(this XDocument document)
         {
             // NOTE: Conflicting docs: 
@@ -111,17 +137,27 @@ namespace Cake.Incubator
 
             <PackageReference Include="Newtonsoft.Json" Version="9.0.1" Condition="'$(TargetFramework)' == 'net452'" />
              */
-            return document.Descendants(ProjectXElement.PackageReference).Select(
+
+            // if we are querying a pre-2017 csproj file, we need the namespace in the xname queries
+            var ns = document.Root?.Name.Namespace;
+            var packageReferenceXName = ns.GetXNameWithNamespace(ProjectXElement.PackageReference);
+            var privateAssetsXName = ns.GetXNameWithNamespace(ProjectXElement.PrivateAssets);
+            var includeAssetsXName = ns.GetXNameWithNamespace(ProjectXElement.IncludeAssets);
+            var excludeAssetsXName = ns.GetXNameWithNamespace(ProjectXElement.ExcludeAssets);
+            var includeXName = ns.GetXNameWithNamespace("Include");
+            var versionXName = ns.GetXNameWithNamespace("Version");
+
+            return document.Descendants(packageReferenceXName).Select(
                 x =>
                 {
-                    var privateAssets = x.Element(ProjectXElement.PrivateAssets)?.Value.SplitIgnoreEmpty(';');
-                    var includeAssets = x.Element(ProjectXElement.IncludeAssets)?.Value.SplitIgnoreEmpty(';');
-                    var excludeAssets = x.Element(ProjectXElement.ExcludeAssets)?.Value.SplitIgnoreEmpty(';');
+                    var privateAssets = x.Element(privateAssetsXName)?.Value.SplitIgnoreEmpty(';');
+                    var includeAssets = x.Element(includeAssetsXName)?.Value.SplitIgnoreEmpty(';');
+                    var excludeAssets = x.Element(excludeAssetsXName)?.Value.SplitIgnoreEmpty(';');
                     var condition = x.GetAttributeValue("Condition") ?? x.Parent.GetAttributeValue("Condition");
                     return new PackageReference
                     {
-                        Name = x.GetAttributeValue("Include") ?? x.Element("Include")?.Value,
-                        Version = x.GetAttributeValue("Version") ?? x.Element("Version")?.Value,
+                        Name = x.GetAttributeValue("Include") ?? x.Element(includeXName)?.Value,
+                        Version = x.GetAttributeValue("Version") ?? x.Element(versionXName)?.Value,
                         PrivateAssets = x.GetAttributeValue(ProjectXElement.PrivateAssets)?.SplitIgnoreEmpty(';') ?? privateAssets,
                         IncludeAssets = x.GetAttributeValue(ProjectXElement.IncludeAssets)?.SplitIgnoreEmpty(';') ?? includeAssets,
                         ExcludeAssets = x.GetAttributeValue(ProjectXElement.ExcludeAssets)?.SplitIgnoreEmpty(';') ?? excludeAssets,
@@ -130,6 +166,56 @@ namespace Cake.Incubator
                             : null
                     };
                 }).ToArray();
+        }
+        
+        internal static ICollection<ProjectAssemblyReference> GetAssemblyReferences(this XDocument document, DirectoryPath rootPath)
+        {
+            /*
+                <Reference Include="Cake.Common, Version=0.22.0.0, Culture=neutral, PublicKeyToken=null">
+                  <HintPath>..\.nuget\packages\cake.common\0.22.0\lib\netstandard1.6\Cake.Common.dll</HintPath>
+                </Reference>
+             */
+
+            // if we are querying a pre-2017 csproj file, we need the namespace in the xname queries
+            var ns = document.Root?.Name.Namespace;
+            var referenceXName = ns.GetXNameWithNamespace(ProjectXElement.Reference);
+            var includeXName = ns.GetXNameWithNamespace(ProjectXElement.Include);
+            var hintPathXName = ns.GetXNameWithNamespace(ProjectXElement.HintPath);
+            var nameXName = ns.GetXNameWithNamespace(ProjectXElement.Name);
+            var fusionXName = ns.GetXNameWithNamespace(ProjectXElement.FusionName);
+            var specificVersionXName = ns.GetXNameWithNamespace(ProjectXElement.SpecificVersion);
+            var aliasesXName = ns.GetXNameWithNamespace(ProjectXElement.Aliases);
+            var privateXName = ns.GetXNameWithNamespace(ProjectXElement.Private);
+            
+            return document.Descendants(referenceXName).Select(
+                x =>
+                {
+                    var condition = x.GetAttributeValue("Condition") ?? x.Parent.GetAttributeValue("Condition");
+                    var include = x.GetAttributeValue(ProjectXElement.Include) ?? x.Element(includeXName)?.Value;
+                    var hintPath = x.GetAttributeValue(ProjectXElement.HintPath) ?? x.Element(hintPathXName)?.Value;
+                    var name = x.GetAttributeValue(ProjectXElement.Name) ?? x.Element(nameXName)?.Value;
+                    var fusionName = x.GetAttributeValue(ProjectXElement.FusionName) ?? x.Element(fusionXName)?.Value;
+                    var specificVersion = x.GetAttributeValue(ProjectXElement.SpecificVersion) ??
+                                          x.Element(specificVersionXName)?.Value;
+                    var aliases = x.GetAttributeValue(ProjectXElement.Aliases) ?? x.Element(aliasesXName)?.Value;
+                    var privateFlag = x.GetAttributeValue(ProjectXElement.Aliases) ?? x.Element(privateXName)?.Value;
+                    
+                    // TODO Can't set the target framework condition without changing the return type, no where to put it.
+                    var targetFramework = condition.HasTargetFrameworkCondition()
+                        ? condition.GetConditionTargetFramework()
+                        : null;
+
+                    return new ProjectAssemblyReference
+                    {
+                        Include = include,
+                        HintPath = string.IsNullOrWhiteSpace(hintPath) ? null : hintPath.GetAbsolutePath(rootPath),
+                        Name = name ?? include?.Split(',')?.FirstOrDefault(),
+                        FusionName = fusionName,
+                        SpecificVersion = specificVersion == null ? (bool?) null : bool.Parse(specificVersion),
+                        Aliases = aliases,
+                        Private = privateFlag == null ? (bool?) null : bool.Parse(privateFlag),
+                    };
+                }).Distinct(x => x.Name).ToArray();
         }
 
         internal static ICollection<ProjectReference> GetProjectReferences(this XDocument document, DirectoryPath rootPath)

@@ -4,6 +4,7 @@
 
 namespace Cake.Incubator
 {
+    using System;
     using Cake.Core.IO;
 
     /// <summary>
@@ -19,7 +20,9 @@ namespace Cake.Incubator
         public DirectoryPath OutputPath { get; set; }
         public string RootNameSpace { get; set; }
         public string AssemblyName { get; set; }
+        [Obsolete("Use TargetFrameworkVersions insead")]
         public string TargetFrameworkVersion { get; set; }
+        public string[] TargetFrameworkVersions { get; set; }
         public string TargetFrameworkProfile { get; set; }
     }
 }

@@ -4,12 +4,32 @@
 namespace Cake.Incubator.Tests
 {
     using System;
+    using System.Collections.Generic;
     using System.IO;
     using System.Text;
     using Cake.Core.IO;
     using FluentAssertions;
     using Xunit;
     using Path = Cake.Core.IO.Path;
+
+    public class TestProjects
+    {
+        private static readonly FakeFile validCsProjMSTestFile = new FakeFile(Resources.CsProj_ValidMSTestFile);
+        private static readonly FakeFile validCsProjXUnitTestFile = new FakeFile(Resources.CsProj_ValidXUnitTestFile);
+        private static readonly FakeFile validCsProjNUnitTestFile = new FakeFile(Resources.CsProjValidNUnitTestFile);
+        private static readonly FakeFile validCsProjFSUnitTestFile = new FakeFile(Resources.CsProjValidFSUnitTestFile);
+        private static readonly FakeFile validCsProjFixieTestFile = new FakeFile(Resources.CsProjValidFixieTestFile);
+
+        // ReSharper disable once UnusedMember.Global
+        public static IEnumerable<object[]> TestData { get; } = new List<object[]>
+        {
+            new object[] {validCsProjMSTestFile},
+            new object[] {validCsProjNUnitTestFile},
+            new object[] {validCsProjXUnitTestFile},
+            new object[] {validCsProjFSUnitTestFile},
+            new object[] {validCsProjFixieTestFile},
+        };
+    }
 
     public class CustomProjectParserTests
     {
@@ -21,6 +41,7 @@ namespace Cake.Incubator.Tests
         private readonly FakeFile valid2017CsProjNetstandardFile;
         private readonly FakeFile validCsProjConditionalReferenceFile;
         private readonly FakeFile validCsProjWithAbsoluteFilePaths;
+        
 
         public CustomProjectParserTests()
         {
@@ -58,10 +79,47 @@ namespace Cake.Incubator.Tests
             var result = valid2017CsProjNetcoreFile.ParseProject("debug");
 
             result.Configuration.Should().Be("debug");
-            result.OutputPath.ToString().Should().Be("bin/custom");
+            result.OutputPath.ToString().Should().Be("bin/custom/netcoreapp1.1");
             result.OutputType.Should().Be("Exe");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/project.exe");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/netcoreapp1.1/project.dll");
         }
+        
+        [Fact]
+        public void CustomProjectParser_CanGetNetCoreProjectAssembly_ForDebugConfig()
+        {
+            var result = validCsProjFile.ParseProject("debug");
+
+            result.Configuration.Should().Be("debug");
+            result.OutputPath.ToString().Should().Be("bin/Debug");
+            result.OutputPaths.Should().ContainSingle(x => x.FullPath.EqualsIgnoreCase("bin/Debug"));
+            result.OutputType.Should().Be("Library");
+            var paths = result.GetAssemblyFilePaths();
+            paths.Should().ContainSingle(x => x.FullPath.EqualsIgnoreCase("bin/debug/cake.common.dll"));
+        }
+
+
+        [Theory]
+        [MemberData(memberName: "TestData", MemberType = typeof(TestProjects))]
+        public void ParseProject_IsFrameworkTestProject(FakeFile testProject)
+        {
+            var result = testProject.ParseProject("test");
+            result.IsFrameworkTestProject().Should().BeTrue();
+        }
+
+        [Fact]
+        public void CustomProjectParser_IsFrameworkTestProject_ReturnsFalseForNonTestFrameworkProject()
+        {
+            var result = valid2017CsProjFile.ParseProject("debug");
+            result.IsFrameworkTestProject().Should().BeFalse();
+        }
+
+        [Fact]
+        public void CustomProjectParser_IsFrameworkTestProject_ReturnsFalseForNonTestCoreProject()
+        {
+            var result = valid2017CsProjNetcoreFile.ParseProject("debug");
+            result.IsFrameworkTestProject().Should().BeFalse();
+        }
+
 
         [Fact]
         public void CustomProjectParser_ShouldParseProjectWithAbsolutePaths()
@@ -79,7 +137,7 @@ namespace Cake.Incubator.Tests
             result.Configuration.Should().Be("release");
             result.OutputPath.ToString().Should().Be("bin/release/netcoreapp1.1");
             result.OutputType.Should().Be("Exe");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/release/netcoreapp1.1/project.exe");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/release/netcoreapp1.1/project.dll");
         }
 
         [Fact]
@@ -88,9 +146,9 @@ namespace Cake.Incubator.Tests
             var result = valid2017CsProjNetstandardFile.ParseProject("debug");
 
             result.Configuration.Should().Be("debug");
-            result.OutputPath.ToString().Should().Be("bin/wayhey");
+            result.OutputPath.ToString().Should().Be("bin/wayhey/netstandard1.6");
             result.OutputType.Should().Be("Library");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/wayhey/project.dll");
+            result.GetAssemblyFilePath().FullPath.Should().Be("bin/wayhey/netstandard1.6/project.dll");
         }
 
         [Fact]
@@ -184,7 +242,7 @@ namespace Cake.Incubator.Tests
         }
     }
 
-    internal class FakeFile : IFile
+    public class FakeFile : IFile
     {
         private readonly string content;
 
