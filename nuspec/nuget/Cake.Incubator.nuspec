@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/cake-contrib/Cake.Incubator</projectUrl>
     <licenseUrl>https://opensource.org/licenses/MPL-2.0</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>>Cake AddIn that provides useful extensions and additional aliases for Cake.Build scripts</description>
+    <description>Cake AddIn that provides useful extensions and additional aliases for Cake.Build scripts</description>
     <releaseNotes>https://github.com/cake-contrib/Cake.Incubator/releases</releaseNotes>
     <copyright>Copyright (c) Cake Contributions 2016 - Present</copyright>
     <tags>Cake Build Script Extensions Project Solution</tags>

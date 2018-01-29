@@ -210,7 +210,7 @@ namespace Cake.Incubator
         public static FilePath[] GetAssemblyFilePaths(this CustomProjectParserResult projectParserResult)
         {
             return
-                projectParserResult.OutputPaths.Select(x => x.Combine(x).CombineWithFilePath(
+                projectParserResult.OutputPaths.Select(x => x.CombineWithFilePath(
                     projectParserResult.AssemblyName +
                     projectParserResult.GetExtension())).ToArray();
         }
