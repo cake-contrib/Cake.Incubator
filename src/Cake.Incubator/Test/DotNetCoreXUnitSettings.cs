@@ -41,6 +41,12 @@
         public bool NoBuild { get; set; }
 
         /// <summary>
+        /// Whether to run dotnet restore on the xunit projects to obtain the cli tool reference (dotnet-xunit)
+        /// Default is true
+        /// </summary>
+        public bool RestoreCliTool { get; set; } = true;
+
+        /// <summary>
         /// Do not show the copyright message
         /// </summary>
         public bool NoLogo { get; set; }

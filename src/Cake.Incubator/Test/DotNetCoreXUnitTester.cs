@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.Diagnostics;
     using System.Linq;
     using Common.Tools.DotNetCore;
     using Common.Tools.XUnit;
@@ -29,6 +30,8 @@
 
         public void Test(FilePath[] projectFilePaths, DotNetCoreXUnitSettings dotNetCoreXUnitSettings)
         {
+            if(projectFilePaths.IsNullOrEmpty()) throw new CakeException("At least one project filepath must be specified");
+            
             dotNetCoreXUnitSettings.ThrowIfNull(nameof(dotNetCoreXUnitSettings));
             if (string.IsNullOrWhiteSpace(dotNetCoreXUnitSettings.OutputDirectory?.FullPath))
             {
@@ -39,7 +42,10 @@
                 if (dotNetCoreXUnitSettings.XmlReport || dotNetCoreXUnitSettings.NetFrameworkOptions.XmlReportV1)
                     throw new CakeException("Cannot generate XML report when no output directory has been set.");
             }
-            this.RunCommand(dotNetCoreXUnitSettings, GetArguments(projectFilePaths, dotNetCoreXUnitSettings));
+
+            // set the working directory to the first available project with dotnet-xunit in it
+            this.RunCommand(dotNetCoreXUnitSettings, GetArguments(projectFilePaths, dotNetCoreXUnitSettings),
+                processSettings: new ProcessSettings {WorkingDirectory = projectFilePaths.First().GetDirectory()});
         }
 
         private ProcessArgumentBuilder GetArguments(IEnumerable<FilePath> projectFilePaths,

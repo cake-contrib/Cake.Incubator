@@ -7,6 +7,7 @@
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
+    using Common.Tools.DotNetCore.Restore;
     using Test;
 
     /// <summary>
@@ -80,9 +81,17 @@
 
                 var project = context.ParseProject(x, settings.Configuration);
                 if (!project.IsDotNetCliTestProject()) throw new CakeException($"The project {x.FullPath} passed to DotNetCoreXUnitTest does not reference the `Microsoft.NET.Test.Sdk` package");
-                if (!project.HasPackage("dotnet-xunit")) throw new CakeException($"The project {x.FullPath} passed to DotNetCoreXUnitTest does not reference the `dotnet-xunit` package");
+                if (!project.HasDotNetCliToolReference("dotnet-xunit")) throw new CakeException($"The project {x.FullPath} passed to DotNetCoreXUnitTest does not reference the `dotnet-xunit` cli tool package");
                 return true;
             });
+
+            #if NETSTANDARD1_6
+            if(settings.RestoreCliTool) 
+                context.DotNetCoreRestore(projects.First().MakeAbsolute(context.Environment).GetDirectory().FullPath);
+            #elif NET45
+                context.DotNetCoreRestore(projects.First().MakeAbsolute(context.Environment).GetDirectory().FullPath);
+            #endif
+
             new DotNetCoreXUnitTester(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools).Test(projects, settings ?? new DotNetCoreXUnitSettings());
         }
 
