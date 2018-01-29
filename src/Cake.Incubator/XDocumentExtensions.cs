@@ -145,6 +145,7 @@ namespace Cake.Incubator
             var includeAssetsXName = ns.GetXNameWithNamespace(ProjectXElement.IncludeAssets);
             var excludeAssetsXName = ns.GetXNameWithNamespace(ProjectXElement.ExcludeAssets);
             var includeXName = ns.GetXNameWithNamespace("Include");
+            var updateXName = ns.GetXNameWithNamespace("Update");
             var versionXName = ns.GetXNameWithNamespace("Version");
 
             return document.Descendants(packageReferenceXName).Select(
@@ -156,7 +157,7 @@ namespace Cake.Incubator
                     var condition = x.GetAttributeValue("Condition") ?? x.Parent.GetAttributeValue("Condition");
                     return new PackageReference
                     {
-                        Name = x.GetAttributeValue("Include") ?? x.Element(includeXName)?.Value,
+                        Name = x.GetAttributeValue("Include") ?? (x.Element(includeXName)?.Value ?? x.Element(updateXName)?.Value),
                         Version = x.GetAttributeValue("Version") ?? x.Element(versionXName)?.Value,
                         PrivateAssets = x.GetAttributeValue(ProjectXElement.PrivateAssets)?.SplitIgnoreEmpty(';') ?? privateAssets,
                         IncludeAssets = x.GetAttributeValue(ProjectXElement.IncludeAssets)?.SplitIgnoreEmpty(';') ?? includeAssets,

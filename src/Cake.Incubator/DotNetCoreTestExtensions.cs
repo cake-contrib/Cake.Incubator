@@ -7,6 +7,7 @@
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
+    using Test;
 
     /// <summary>
     /// Several extension methods when using DotNetCoreTest.
@@ -50,6 +51,39 @@
         {
             settings.ArgumentCustomization = args => ProcessArguments(context, args, project, xunitSettings);
             context.DotNetCoreTest(project.FullPath, settings);
+        }
+
+        /// <summary>Tests `dotnet xunit` compatible project with settings.</summary>
+        /// <param name="context">The context.</param>
+        /// <param name="settings">The settings.</param>
+        /// <param name="projects">The project path/s.</param>
+        /// <example>
+        /// <code>
+        ///     var settings = new DotNetCoreXUnitSettings
+        ///     {
+        ///         Configuration = "Release"
+        ///     };
+        /// 
+        ///     DotNetCoreXUnitTest(settings, "./test/TestA/TestA.csproj", "./test/TestB/TestB.csproj");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Test")]
+        [CakeNamespaceImport("Cake.Incubator.Test")]
+        // ReSharper disable once UnusedMember.Global
+        public static void DotNetCoreXUnitTest(this ICakeContext context, DotNetCoreXUnitSettings settings, params FilePath[] projects)
+        {
+            context.ThrowIfNull(nameof(context));
+            var proj = projects.All(x =>
+            {
+                if (!x.IsProject()) throw new CakeException($"The projct {x.FullPath} passed to DotNetCoreXunitTest was not valid");
+
+                var project = context.ParseProject(x, settings.Configuration);
+                if (!project.IsDotNetCliTestProject()) throw new CakeException($"The project {x.FullPath} passed to DotNetCoreXUnitTest does not reference the `Microsoft.NET.Test.Sdk` package");
+                if (!project.HasPackage("dotnet-xunit")) throw new CakeException($"The project {x.FullPath} passed to DotNetCoreXUnitTest does not reference the `dotnet-xunit` package");
+                return true;
+            });
+            new DotNetCoreXUnitTester(context.FileSystem, context.Environment, context.ProcessRunner, context.Tools).Test(projects, settings ?? new DotNetCoreXUnitSettings());
         }
 
         private static ProcessArgumentBuilder ProcessArguments(

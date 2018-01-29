@@ -725,7 +725,7 @@ namespace Cake.Incubator
                 ProjectReferences = projectReferences,
                 References = assemblyReferences,
                 RootNameSpace = rootnamespace,
-                TargetFrameworkVersion = targetFramework,
+                TargetFrameworkVersion = targetFrameworks.FirstOrDefault(),
                 TargetFrameworkVersions = targetFrameworks,
                 IsNetCore = isNetCore,
                 IsNetStandard = isNetStandard,
