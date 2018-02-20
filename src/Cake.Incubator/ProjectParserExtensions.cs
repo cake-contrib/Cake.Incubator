@@ -423,7 +423,7 @@ namespace Cake.Incubator
             }
 
             var projectFile = context.FileSystem.GetProjectFile(project);
-            var result = projectFile.ParseProject(configuration, platform);
+            var result = projectFile.ParseProjectFile(configuration, platform);
             return result;
         }
 
@@ -571,7 +571,7 @@ namespace Cake.Incubator
         ///         = new File("./test.csproj").ParseProject(configuration: "Release", platform: "x86");
         /// </code>
         /// </example>
-        public static CustomProjectParserResult ParseProject(this IFile projectFile, string configuration, string platform = "AnyCPU")
+        public static CustomProjectParserResult ParseProjectFile(this IFile projectFile, string configuration, string platform = "AnyCPU")
         {
             projectFile.ThrowIfNull(nameof(projectFile));
             configuration.ThrowIfNullOrEmpty(nameof(configuration));

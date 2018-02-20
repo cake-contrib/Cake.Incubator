@@ -11,7 +11,7 @@ namespace Cake.Incubator.Tests
         {
             var fileSystem = new Cake.Core.IO.FileSystem();
             var file = fileSystem.GetFile(new FilePath("../../../Cake.Incubator/Cake.Incubator.csproj"));
-            var project = file.ParseProject("Release");
+            var project = file.ParseProjectFile("Release");
 
             project.AssemblyName.Should().Be("Cake.Incubator");
             project.Configuration.Should().Be("Release");
