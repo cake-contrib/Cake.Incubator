@@ -58,7 +58,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void CustomProjectParser_CanParseSampleCsProjFile_ForDebugConfig()
         {
-            var result = validCsProjFile.ParseProject("debug");
+            var result = validCsProjFile.ParseProjectFile("debug");
 
             result.Configuration.Should().Be("debug");
             result.OutputPath.ToString().Should().Be("bin/Debug");
@@ -67,7 +67,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void CustomProjectParser_CanParseSample2017CsProjFile_ForDebugConfig()
         {
-            var result = valid2017CsProjFile.ParseProject("debug");
+            var result = valid2017CsProjFile.ParseProjectFile("debug");
 
             result.Configuration.Should().Be("debug");
             result.OutputPath.ToString().Should().Be("bin/Debug");
@@ -76,7 +76,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void CustomProjectParser_CanParseSample2017CsProjNetCoreFile_ForDebugConfig()
         {
-            var result = valid2017CsProjNetcoreFile.ParseProject("debug");
+            var result = valid2017CsProjNetcoreFile.ParseProjectFile("debug");
 
             result.Configuration.Should().Be("debug");
             result.OutputPath.ToString().Should().Be("bin/custom/netcoreapp1.1");
@@ -87,7 +87,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void CustomProjectParser_CanGetNetCoreProjectAssembly_ForDebugConfig()
         {
-            var result = validCsProjFile.ParseProject("debug");
+            var result = validCsProjFile.ParseProjectFile("debug");
 
             result.Configuration.Should().Be("debug");
             result.OutputPath.ToString().Should().Be("bin/Debug");
@@ -102,21 +102,21 @@ namespace Cake.Incubator.Tests
         [MemberData(memberName: "TestData", MemberType = typeof(TestProjects))]
         public void ParseProject_IsFrameworkTestProject(FakeFile testProject)
         {
-            var result = testProject.ParseProject("test");
+            var result = testProject.ParseProjectFile("test");
             result.IsFrameworkTestProject().Should().BeTrue();
         }
 
         [Fact]
         public void CustomProjectParser_IsFrameworkTestProject_ReturnsFalseForNonTestFrameworkProject()
         {
-            var result = valid2017CsProjFile.ParseProject("debug");
+            var result = valid2017CsProjFile.ParseProjectFile("debug");
             result.IsFrameworkTestProject().Should().BeFalse();
         }
 
         [Fact]
         public void CustomProjectParser_IsFrameworkTestProject_ReturnsFalseForNonTestCoreProject()
         {
-            var result = valid2017CsProjNetcoreFile.ParseProject("debug");
+            var result = valid2017CsProjNetcoreFile.ParseProjectFile("debug");
             result.IsFrameworkTestProject().Should().BeFalse();
         }
 
@@ -124,7 +124,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void CustomProjectParser_ShouldParseProjectWithAbsolutePaths()
         {
-            var result = validCsProjWithAbsoluteFilePaths.ParseProject("debug");
+            var result = validCsProjWithAbsoluteFilePaths.ParseProjectFile("debug");
 
             result.References.Should().Contain(x => x.HintPath.FullPath == "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5.2/System.dll");
         }
@@ -132,7 +132,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void CustomProjectParser_CanParseSample2017CsProjNetCoreFile_ForReleaseConfig()
         {
-            var result = valid2017CsProjNetcoreFile.ParseProject("release");
+            var result = valid2017CsProjNetcoreFile.ParseProjectFile("release");
 
             result.Configuration.Should().Be("release");
             result.OutputPath.ToString().Should().Be("bin/release/netcoreapp1.1");
@@ -143,7 +143,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void CustomProjectParser_CanParseSample2017CsProjNetStandardFile_ForReleaseConfig()
         {
-            var result = valid2017CsProjNetstandardFile.ParseProject("debug");
+            var result = valid2017CsProjNetstandardFile.ParseProjectFile("debug");
 
             result.Configuration.Should().Be("debug");
             result.OutputPath.ToString().Should().Be("bin/wayhey/netstandard1.6");
@@ -154,7 +154,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void CustomProjectParser_CanParseCsProjWithConditionalReferences()
         {
-            var result = validCsProjConditionalReferenceFile.ParseProject("debug");
+            var result = validCsProjConditionalReferenceFile.ParseProjectFile("debug");
 
             result.References.Should().HaveCount(8).And.Contain(x => x.Name.Equals("Microsoft.VisualStudio.QualityTools.UnitTestFramework"));
         }
@@ -162,7 +162,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void CustomProjectParser_CanParseSampleCsProjFile_ForReleaseConfig()
         {
-            var result = validCsProjFile.ParseProject("reLEAse");
+            var result = validCsProjFile.ParseProjectFile("reLEAse");
 
             result.Configuration.Should().Be("reLEAse");
             result.OutputPath.ToString().Should().Be("bin/Release");
@@ -171,7 +171,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void CustomProjectParser_CanParseSampleCsProjProjectTypeGuids()
         {
-            var result = validCsProjFile.ParseProject("Debug");
+            var result = validCsProjFile.ParseProjectFile("Debug");
 
             result.IsType(ProjectType.CSharp).Should().BeTrue();
             result.IsType(ProjectType.PortableClassLibrary).Should().BeTrue();
@@ -203,7 +203,7 @@ namespace Cake.Incubator.Tests
         public void IsWebApplication_ReturnsFalse_WhenProjectIsOfTypeLibrary()
         {
             // arrange
-            var sut = validCsProjFile.ParseProject("debug");
+            var sut = validCsProjFile.ParseProjectFile("debug");
 
             // act
             var webApp = sut.IsWebApplication();
@@ -216,7 +216,7 @@ namespace Cake.Incubator.Tests
         public void IsWebApplication_ReturnsTrue_WhenProjectIsOfTypeWebApplication()
         {
             // arrange
-            var sut = validCsProjWebApplicationFile.ParseProject("debug");
+            var sut = validCsProjWebApplicationFile.ParseProjectFile("debug");
 
             // act
             var webApp = sut.IsWebApplication();
