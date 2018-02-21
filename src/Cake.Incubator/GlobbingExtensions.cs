@@ -24,7 +24,7 @@ namespace Cake.Incubator
         /// <returns>a list of matching files</returns>
         /// <example>
         /// Locates files with the same name in the same directory, but different extensions.
-        /// The .pdb to your .dll as it were.
+        /// The .pdb to your .dll as it were. If found, returns the original file as well.
         /// <code>
         /// // /output/file.dll
         /// // /output/file.xml
@@ -35,6 +35,8 @@ namespace Cake.Incubator
         ///
         /// matchingFiles[0]; // /output/file.xml
         /// matchingFiles[1]; // /output/file.pdb
+        /// matchingFiles[2]; // /output/file.dll
+        /// 
         /// </code>
         /// </example>
         [CakeMethodAlias]
