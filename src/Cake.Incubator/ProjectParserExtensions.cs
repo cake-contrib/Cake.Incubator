@@ -134,7 +134,7 @@ namespace Cake.Incubator
         {
             if (projectParserResult.IsNetFramework)
             {
-                if (!projectParserResult.ProjectTypeGuids.Any())
+                if (projectParserResult.ProjectTypeGuids.IsNullOrEmpty())
                 {
                     return false;
                 }
