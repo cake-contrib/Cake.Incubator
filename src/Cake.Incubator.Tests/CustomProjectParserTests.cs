@@ -211,6 +211,19 @@ namespace Cake.Incubator.Tests
             // assert
             webApp.Should().BeFalse();
         }
+        
+        [Fact]
+        public void IsWebApplication_ReturnsFalse_When2017ProjectIsOfTypeLibrary()
+        {
+            // arrange
+            var sut = valid2017CsProjFile.ParseProjectFile("debug");
+
+            // act
+            var webApp = sut.IsWebApplication();
+
+            // assert
+            webApp.Should().BeFalse();
+        }
 
         [Fact]
         public void IsWebApplication_ReturnsTrue_WhenProjectIsOfTypeWebApplication()
