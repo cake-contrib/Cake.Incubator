@@ -15,7 +15,7 @@ namespace Cake.Incubator.Tests
             object obj = null;
 
             Action action = () => obj.ThrowIfNull(nameof(obj), "This is required");
-            action.ShouldThrow<ArgumentNullException>().WithMessage(
+            action.Should().Throw<ArgumentNullException>().WithMessage(
                 "This is required\r\nParameter name: obj");
         }
     
@@ -25,7 +25,7 @@ namespace Cake.Incubator.Tests
             string a = null;
             Action action = () => a.ThrowIfNull(nameof(a));
 
-            action.ShouldThrow<ArgumentNullException>().And.ParamName.Should().Be("a");
+            action.Should().Throw<ArgumentNullException>().And.ParamName.Should().Be("a");
         }
 
         [Fact]
