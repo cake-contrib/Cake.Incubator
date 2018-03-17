@@ -1268,7 +1268,7 @@ namespace Cake.Incubator.Tests
             result.OutputPath.FullPath.Should().Be("bin/Release/netstandard1.6");
             result.OutputPaths.Should().Contain(x => x.FullPath.EqualsIgnoreCase("bin/Release/netstandard1.6"));
             result.OutputPaths.Should().Contain(x => x.FullPath.EqualsIgnoreCase("bin/Release/net46"));
-            result.NetCore.TargetFrameworks.ShouldBeEquivalentTo(new []{ "netstandard1.6", "net46"});
+            result.NetCore.TargetFrameworks.Should().BeEquivalentTo(new []{ "netstandard1.6", "net46"});
             result.RootNameSpace.Should().Be("Cake.Kudu");
             result.IsLibrary().Should().BeTrue();
         }

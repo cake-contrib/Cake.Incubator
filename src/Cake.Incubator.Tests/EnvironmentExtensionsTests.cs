@@ -39,7 +39,7 @@ namespace Cake.Incubator.Tests
         public void EnvironmentVariable_Throws_IfNotFound()
         {
             Action action = () => cakeContext.EnvironmentVariable<string>($"__{TestVariableName}");
-            action.ShouldThrow<CakeException>().WithMessage(
+            action.Should().Throw<CakeException>().WithMessage(
                 $"Environment variable '__{TestVariableName}' was not found.");
         }
 
