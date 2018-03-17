@@ -7,10 +7,10 @@
     <PackageReference Include="FluentAssertions" Version="4.19.4" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0" />
     <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="Cake.Common" Version="0.22.0">
+    <PackageReference Include="Cake.Common" Version="0.26.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="Cake.Core" Version="0.22.0">
+    <PackageReference Include="Cake.Core" Version="0.26.0">
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
