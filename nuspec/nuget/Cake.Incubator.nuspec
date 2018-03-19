@@ -16,12 +16,6 @@
     <tags>Cake Build Script Extensions Project Solution</tags>
   </metadata>
   <files>
-    <file src="net45\Cake.Incubator.dll" target="lib/net45" />
-    <file src="net45\Cake.Incubator.xml" target="lib/net45" />
-    <file src="net45\Cake.Incubator.pdb" target="lib/net45" />
-    <file src="net46\Cake.Incubator.dll" target="lib/net46" />
-    <file src="net46\Cake.Incubator.xml" target="lib/net46" />
-    <file src="net46\Cake.Incubator.pdb" target="lib/net46" />
     <file src="netstandard1.6\Cake.Incubator.dll" target="lib/netstandard1.6" />
     <file src="netstandard1.6\Cake.Incubator.xml" target="lib/netstandard1.6" />
     <file src="netstandard1.6\Cake.Incubator.pdb" target="lib/netstandard1.6" />
