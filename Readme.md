@@ -7,7 +7,7 @@ This project contains various experimental but useful extension methods and alia
 
 * Repository: [https://github.com/cake-contrib/cake.incubator](https://github.com/cake-contrib/cake.incubator)
 * Docs: [http://cakebuild.net/api/Cake.Incubator/](http://cakebuild.net/api/Cake.Incubator/)
-* Release Notes [https://github.com/cake-contrib/Cake.Incubator/blob/master/ReleaseNotes.md](https://github.com/cake-contrib/Cake.Incubator/blob/master/ReleaseNotes.md)
+* [Release Notes](https://github.com/cake-contrib/Cake.Incubator/releases)
 
 ### Usage: inside build.cake
 

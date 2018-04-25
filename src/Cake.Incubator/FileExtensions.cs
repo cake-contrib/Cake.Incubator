@@ -86,7 +86,7 @@ namespace Cake.Incubator
         /// <returns>An XDocument</returns>
         /// <example>Load an xml document
         /// <code>
-        /// XDocument doc = new File("./proj.csproj").LoadXml();
+        /// XDocument doc = GetFile("./proj.csproj").LoadXml();
         /// </code>
         /// </example>
         public static XDocument LoadXml(this IFile xmlFile)

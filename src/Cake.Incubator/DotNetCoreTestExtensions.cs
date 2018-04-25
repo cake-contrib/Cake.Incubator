@@ -43,7 +43,7 @@
         [CakeMethodAlias]
         [CakeAliasCategory("Test")]
         public static void DotNetCoreTest(
-            this ICakeContext context,            
+            this ICakeContext context,
             DotNetCoreTestSettings settings,
             FilePath project,
             XUnit2Settings xunitSettings)
@@ -55,7 +55,7 @@
         private static ProcessArgumentBuilder ProcessArguments(
             ICakeContext cakeContext,
             ProcessArgumentBuilder builder,
-            FilePath project, 
+            FilePath project,
             XUnit2Settings settings)
         {
             // No shadow copy?
@@ -79,9 +79,10 @@
             // Generate NUnit Style XML report?
             if (settings.NUnitReport)
             {
-                var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());                
+                var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());
                 var assemblyFilename = reportFileName.AppendExtension(".xml");
-                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment).GetFilePath(assemblyFilename);
+                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment)
+                    .GetFilePath(assemblyFilename);
 
                 builder.Append("-nunit");
                 builder.AppendQuoted(outputPath.FullPath);
@@ -92,7 +93,8 @@
             {
                 var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());
                 var assemblyFilename = reportFileName.AppendExtension(".html");
-                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment).GetFilePath(assemblyFilename);
+                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment)
+                    .GetFilePath(assemblyFilename);
 
                 builder.Append("-html");
                 builder.AppendQuoted(outputPath.FullPath);
@@ -108,16 +110,17 @@
             {
                 var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());
                 var assemblyFilename = reportFileName.AppendExtension(".xml");
-                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment).GetFilePath(assemblyFilename);
+                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment)
+                    .GetFilePath(assemblyFilename);
 
                 builder.Append("-xml");
                 builder.AppendQuoted(outputPath.FullPath);
             }
 
             // parallelize test execution?
-            if (settings.Parallelism != ParallelismOption.None)
+            if (settings.Parallelism != null && settings.Parallelism != ParallelismOption.None)
             {
-                builder.Append("-parallel " + settings.Parallelism.ToString().ToLowerInvariant());
+                builder.Append($"-parallel {settings.Parallelism.ToString().ToLowerInvariant()}");
             }
 
             // max thread count for collection parallelization
@@ -129,7 +132,7 @@
                 }
                 else
                 {
-                    builder.Append("-maxthreads " + settings.MaxThreads.Value);
+                    builder.Append($"-maxthreads {settings.MaxThreads.Value}");
                 }
             }
 
@@ -142,7 +145,7 @@
             foreach (var trait in settings.TraitsToExclude
                 .SelectMany(pair => pair.Value.Select(v => new { Name = pair.Key, Value = v })))
             {
-                builder.Append("-notrait \"{0}={1}\"", trait.Name, trait.Value);
+                builder.Append($"-notrait \"{trait.Name}={trait.Value}\"");
             }
 
             return builder;

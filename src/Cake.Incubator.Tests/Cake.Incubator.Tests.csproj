@@ -1,18 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Fakeiteasy" Version="4.0.0" />
-    <PackageReference Include="FluentAssertions" Version="5.1.2" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.6.0" />
+    <PackageReference Include="Cake.Common" Version="0.27.1" />
+    <PackageReference Include="Cake.Core" Version="0.27.1" />
+    <PackageReference Include="FakeItEasy" Version="4.5.1" />
+    <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="4.5.1" />
+    <PackageReference Include="FluentAssertions" Version="5.3.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
     <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="Cake.Common" Version="0.26.0">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
-    <PackageReference Include="Cake.Core" Version="0.26.0">
-      <PrivateAssets>all</PrivateAssets>
-    </PackageReference>
     <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
   </ItemGroup>
   <ItemGroup>
