@@ -5,6 +5,7 @@
 namespace Cake.Incubator
 {
     using System;
+    using System.Collections.Generic;
     using Cake.Core.Annotations;
 
     /// <summary>
@@ -106,6 +107,18 @@ namespace Cake.Incubator
                 throw new ArgumentNullException(varName ?? "string");
 
             return value;
+        }
+        
+        [CakeAliasCategory("Guard Clauses")]
+        public static bool IsNullOrEmpty(this string value)
+        {
+            return string.IsNullOrEmpty(value);
+        }
+        
+        [CakeAliasCategory("Guard Clauses")]
+        public static bool IsNullOrEmpty<T>(this ICollection<T> value)
+        {
+            return (value == null || value.Count == 0);
         }
     }
 }

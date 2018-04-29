@@ -4,6 +4,7 @@
 namespace Cake.Incubator.Tests
 {
     using System;
+    using System.Collections.Generic;
     using FluentAssertions;
     using Xunit;
 
@@ -33,6 +34,27 @@ namespace Cake.Incubator.Tests
         {
             var a = "";
             a.ThrowIfNull(nameof(a));
+        }
+        
+        [Fact]
+        public void IsNullOrEmpty_ReturnsTrue_ForNull()
+        {
+            IEnumerable<string> a = null;
+            a.IsNullOrEmpty().Should().BeTrue();
+        }
+        
+        [Fact]
+        public void IsNullOrEmpty_ReturnsTrue_ForEmpty()
+        {
+            IEnumerable<string> a = new string[0];
+            a.IsNullOrEmpty().Should().BeTrue();
+        }
+        
+        [Fact]
+        public void IsNullOrEmpty_ReturnsFalse_ForNotEmpty()
+        {
+            IEnumerable<string> a = new[] { "a" };
+            a.IsNullOrEmpty().Should().BeFalse();
         }
     }
 }
