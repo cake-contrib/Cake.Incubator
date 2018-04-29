@@ -62,5 +62,22 @@ namespace Cake.Incubator.Tests
         {
             new FilePath(expected).HasFileName(fileName).Should().BeFalse();
         }
+        
+        [Theory]
+        [InlineData("file", ".cs")]
+        [InlineData("file.cs", ".txt")]
+        public void HasFileExtension_ReturnsFalse_ForNonMatch(string fileName, string expected)
+        {
+            new FilePath(expected).HasFileExtension(fileName).Should().BeFalse();
+        }
+        
+        [Theory]
+        [InlineData("file.cs", ".CS")]
+        [InlineData("file.cs", "Cs")]
+        [InlineData("filE.cs", ".cs")]
+        public void HasFileExtension_ReturnsTrue_ForMatch(string expected, string fileName)
+        {
+            new FilePath(expected).HasFileExtension(fileName).Should().BeTrue();
+        }
     }
 }

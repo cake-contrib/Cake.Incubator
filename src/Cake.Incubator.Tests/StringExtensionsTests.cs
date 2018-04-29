@@ -19,34 +19,29 @@ namespace Cake.Incubator.Tests
         {
             "A".EqualsIgnoreCase("B").Should().BeFalse();
         }
+        
+        [Fact]
+        public void StartsWithIgnoreCase_MatchesCorrectly()
+        {
+            "Abcsd".StartsWithIgnoreCase("a").Should().BeTrue();
+        }
 
-        //[Theory]
-        //[InlineData(null)]
-        //[InlineData("")]
-        //[InlineData(" ")]
-        //public void HasCondition_ReturnsFalseIfNullOrEmpty(string condition)
-        //{
-        //    condition.HasTargetFrameworkCondition().Should().BeFalse();
-        //}
+        [Fact]
+        public void StartsWithIgnoreCase_DoesNotMatchCorrectly()
+        {
+            "Adas".StartsWithIgnoreCase("AB").Should().BeFalse();
+        }
 
-        //[Theory]
-        //[InlineData("'$(TargetFramework)'==")]
-        //[InlineData("'$(TargetFramework)' ==")]
-        //[InlineData("'$(TargetFramework)'  ==")]
-        //[InlineData(" '$(TargetFramework)'==  ")]
-        //public void HasCondition_ReturnsTrue(string condition)
-        //{
-        //    condition.HasTargetFrameworkCondition().Should().BeTrue();
-        //}
+        [Fact]
+        public void EndsWithIgnoreCase_MatchesCorrectly()
+        {
+            "Abcsd".EndsWithIgnoreCase("SD").Should().BeTrue();
+        }
 
-        //[Theory]
-        //[InlineData("'$(TargetFramework)'=='net45' ", "net45")]
-        //[InlineData("'$(TargetFramework)' =='net462'", "net462")]
-        //[InlineData("'$(TargetFramework)'  == 'netstandard1_6' ", "netstandard1_6")]
-        //[InlineData(" '$(TargetFramework)'==  'bobbins'  ", "bobbins")]
-        //public void GetCondition_ReturnsExpected(string condition, string expected)
-        //{
-        //    condition.GetConditionTargetFramework().Should().Be(expected);
-        //}
+        [Fact]
+        public void EndsWithIgnoreCase_DoesNotMatchCorrectly()
+        {
+            "Adas".EndsWithIgnoreCase("AB").Should().BeFalse();
+        }
     }
 }

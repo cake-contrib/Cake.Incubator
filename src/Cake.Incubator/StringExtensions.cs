@@ -26,6 +26,28 @@ namespace Cake.Incubator
         {
             return source.Equals(value, StringComparison.OrdinalIgnoreCase);
         }
+        
+        /// <summary>
+        /// Case-insensitive String.StartsWith
+        /// </summary>
+        /// <param name="source">the source string</param>
+        /// <param name="value">the string to compare</param>
+        /// <returns>true if string starts with the value to check</returns>
+        public static bool StartsWithIgnoreCase(this string source, string value)
+        {
+            return source.StartsWith(value, StringComparison.OrdinalIgnoreCase);
+        }
+        
+        /// <summary>
+        /// Case-insensitive String.EndsWith
+        /// </summary>
+        /// <param name="source">the source string</param>
+        /// <param name="value">the string to compare</param>
+        /// <returns>true if string ends with the value to check</returns>
+        public static bool EndsWithIgnoreCase(this string source, string value)
+        {
+            return source.EndsWith(value, StringComparison.OrdinalIgnoreCase);
+        }
 
         internal static bool HasTargetFrameworkCondition(this string condition)
         {
