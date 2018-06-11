@@ -24,7 +24,8 @@ namespace Cake.Incubator
         private static readonly Regex NetCoreTargetFrameworkRegex = new Regex("([Nn][Ee][Tt])([Cc])\\w+", RegexOptions.Compiled);
         private static readonly Regex NetStandardTargetFrameworkRegex = new Regex("([Nn][Ee][Tt])([Ss])\\w+", RegexOptions.Compiled);
         private static readonly Regex NetFrameworkTargetFrameworkRegex = new Regex("([Nn][Ee][Tt][0-9*])\\w+", RegexOptions.Compiled);
-
+        private static readonly Regex WildcardPathCharactersRegex = new Regex("[*?]", RegexOptions.Compiled);
+        
         /// <summary>
         /// Checks if the project is a library
         /// </summary>
@@ -423,7 +424,7 @@ namespace Cake.Incubator
             }
 
             var projectFile = context.FileSystem.GetProjectFile(project);
-            var result = projectFile.ParseProjectFile(configuration, platform);
+            var result = projectFile.ParseProjectFile(configuration, platform, context.FileSystem, context.Environment);
             return result;
         }
 
@@ -571,19 +572,19 @@ namespace Cake.Incubator
         ///         = new File("./test.csproj").ParseProject(configuration: "Release", platform: "x86");
         /// </code>
         /// </example>
-        public static CustomProjectParserResult ParseProjectFile(this IFile projectFile, string configuration, string platform = "AnyCPU")
+        public static CustomProjectParserResult ParseProjectFile(this IFile projectFile, string configuration, string platform = "AnyCPU", IFileSystem fileSystem = null, ICakeEnvironment environment = null)
         {
             projectFile.ThrowIfNull(nameof(projectFile));
             configuration.ThrowIfNullOrEmpty(nameof(configuration));
 
             var document = projectFile.LoadXml();
-
+            var globber  = fileSystem != null && environment != null ? new Globber(fileSystem, environment) : null;
             return document.IsDotNetSdk()
                 ? document.ParseVS2017ProjectFile(projectFile, configuration, platform)
-                : document.ParsePreVS2017ProjectFile(projectFile, configuration, platform);
+                : document.ParsePreVS2017ProjectFile(projectFile, configuration, platform, globber);
         }
 
-        internal static CustomProjectParserResult ParsePreVS2017ProjectFile(this XDocument document, IFile projectFile, string config, string platform)
+        internal static CustomProjectParserResult ParsePreVS2017ProjectFile(this XDocument document, IFile projectFile, string config, string platform, IGlobber globber)
         {
             var rootPath = projectFile.Path.GetDirectory();
 
@@ -595,7 +596,7 @@ namespace Cake.Incubator
                 throw new CakeException("Failed to parse pre VS2017 project properties");
             }
 
-            var projectFiles = GetNetFrameworkMSBuildProjects(document, ns, rootPath);
+            var projectFiles = GetNetFrameworkMSBuildProjects(document, ns, rootPath, globber);
             var references = document.GetAssemblyReferences(rootPath);
             var projectReferences = GetNetFrameworkProjectReferences(document, ns, rootPath);
             var packageReferences = document.GetPackageReferences();
@@ -860,8 +861,9 @@ namespace Cake.Incubator
                     }).FirstOrDefault();
         }
 
-        private static CustomProjectFile[] GetNetFrameworkMSBuildProjects(XDocument document, XNamespace ns, DirectoryPath rootPath)
+        private static CustomProjectFile[] GetNetFrameworkMSBuildProjects(XDocument document, XNamespace ns, DirectoryPath rootPath, IGlobber globber)
         {
+
             return (from project in document.Elements(ns + ProjectXElement.Project)
                     from itemGroup in project.Elements(ns + ProjectXElement.ItemGroup)
                     from element in itemGroup.Elements()
@@ -873,14 +875,23 @@ namespace Cake.Incubator
                     from include in element.Attributes("Include")
                     let value = include.Value
                     where !string.IsNullOrEmpty(value)
-                    let filePath = rootPath.CombineWithProjectPath(value)
+                    let projectFilePaths = WildcardPathCharactersRegex.IsMatch(value) && globber != null ?  globber.GetGlobbedProjectFiles(value, rootPath) 
+                                                : new List<ProjectPath>() { new ProjectPath(System.IO.Path.Combine(rootPath.FullPath, value)) }
+                    from projectFilePath in projectFilePaths
                     select new CustomProjectFile
                     {
-                        FilePath = filePath,
-                        RelativePath = value,
+                        FilePath = projectFilePath,
+                        RelativePath = projectFilePath.GetRelativeProjectFilePath(rootPath),
                         Compile = element.Name == ns + ProjectXElement.Compile
                     }).ToArray();
         }
+
+        private static IEnumerable<ProjectPath> GetGlobbedProjectFiles(this IGlobber globber, string globPattern, DirectoryPath rootPath)
+            {
+            var files =  System.IO.Path.IsPathRooted(globPattern) ? globber.GetFiles(globPattern.Replace('\\', '/'))
+                                        : globber.GetFiles(String.Format("{0}/{1}", rootPath, globPattern.Replace('\\', '/')));
+            return files.Select(f => new ProjectPath(f.FullPath));           
+            }
 
         private static ProjectReference[] GetNetFrameworkProjectReferences(XDocument document, XNamespace ns, DirectoryPath rootPath)
         {
