@@ -870,8 +870,9 @@ namespace Cake.Incubator
                           element.Name != ns + ProjectXElement.BootstrapperPackage &&
                           element.Name != ns + ProjectXElement.ProjectReference &&
                           element.Name != ns + ProjectXElement.Service
-                    from include in element.Attributes("Include")
-                    let value = include.Value
+                    from attribute in element.Attributes("Include")
+                        .Union( from update in element.Attributes("Update") select update)
+                    let value = attribute.Value
                     where !string.IsNullOrEmpty(value)
                     let filePath = rootPath.CombineWithProjectPath(value)
                     select new CustomProjectFile
