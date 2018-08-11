@@ -14,9 +14,10 @@ This project contains various experimental but useful extension methods and alia
 This addin is designed to be used inside of cake scripts. To start using it, first you must add a cake [preprocessor directive](http://cakebuild.net/docs/fundamentals/preprocessor-directives) to your script as below.
 
 ```cs
-#addin "Cake.Incubator"
+// NB: always pin your version to avoid breaking changes in newer releases 
+#addin "Cake.Incubator&version=x.x.x"
 // or
-#addin "nuget:?package=Cake.Incubator"
+#addin "nuget:?package=Cake.Incubator&version=x.x.x"
 ```
 
 When the cake script is run, this will download the latest version of the `Cake.Incubator` nuget package and will now be available to use inside of the script.
