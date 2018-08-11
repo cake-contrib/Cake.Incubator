@@ -19,10 +19,10 @@ namespace Cake.Incubator.Tests {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Cake.Incubator.Tests {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cake.Incubator.Tests.Resources", typeof(Resources).Assembly);
@@ -51,29 +51,12 @@ namespace Cake.Incubator.Tests {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
             set {
                 resourceCulture = value;
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///&lt;Project DefaultTargets=&quot;Build&quot; ToolsVersion=&quot;12.0&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///    &lt;PropertyGroup&gt;
-        ///        &lt;ProjectType&gt;local&lt;/ProjectType&gt;
-        ///        &lt;SchemaVersion&gt;2.0&lt;/SchemaVersion&gt;
-        ///        &lt;ProjectGuid&gt;{B4254183-F002-4D3A-A512-0918B2D830C4}&lt;/ProjectGuid&gt;
-        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
-        ///        &lt;AssemblyNam [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string AnotherCSProj {
-            get {
-                return ResourceManager.GetString("AnotherCSProj", resourceCulture);
             }
         }
         
@@ -86,7 +69,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
         ///        &lt;Proje [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_AbsolutePath {
+        public static string CsProj_AbsolutePath {
             get {
                 return ResourceManager.GetString("CsProj_AbsolutePath", resourceCulture);
             }
@@ -103,7 +86,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;AppDesignerFolder&gt;Properties&lt;/AppDesignerFolder&gt;
         ///      [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_ConditionReference_ValidFile {
+        public static string CsProj_ConditionReference_ValidFile {
             get {
                 return ResourceManager.GetString("CsProj_ConditionReference_ValidFile", resourceCulture);
             }
@@ -117,7 +100,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
         ///        &lt;Platform Condition=&quot; &apos; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_InvalidFile {
+        public static string CsProj_InvalidFile {
             get {
                 return ResourceManager.GetString("CsProj_InvalidFile", resourceCulture);
             }
@@ -131,7 +114,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
         ///        &lt;Platform Condition=&quot; &apos; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_ValidFile {
+        public static string CsProj_ValidFile {
             get {
                 return ResourceManager.GetString("CsProj_ValidFile", resourceCulture);
             }
@@ -145,7 +128,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
         ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyC [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_ValidMSTestFile {
+        public static string CsProj_ValidMSTestFile {
             get {
                 return ResourceManager.GetString("CsProj_ValidMSTestFile", resourceCulture);
             }
@@ -159,7 +142,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
         ///        &lt;Platform Condition=&quot; &apos; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_ValidWebApplication {
+        public static string CsProj_ValidWebApplication {
             get {
                 return ResourceManager.GetString("CsProj_ValidWebApplication", resourceCulture);
             }
@@ -174,7 +157,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
         ///        &lt;Proje [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_ValidXUnitTestFile {
+        public static string CsProj_ValidXUnitTestFile {
             get {
                 return ResourceManager.GetString("CsProj_ValidXUnitTestFile", resourceCulture);
             }
@@ -189,7 +172,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
         ///        &lt;Proje [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProjValidFixieTestFile {
+        public static string CsProjValidFixieTestFile {
             get {
                 return ResourceManager.GetString("CsProjValidFixieTestFile", resourceCulture);
             }
@@ -206,7 +189,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;ProjectGuid&gt;{f2cc41fd-6b5a-487b-a2c8-f301add68d22}&lt;/ProjectGuid&gt;
         ///        &lt;Ou [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProjValidFSUnitTestFile {
+        public static string CsProjValidFSUnitTestFile {
             get {
                 return ResourceManager.GetString("CsProjValidFSUnitTestFile", resourceCulture);
             }
@@ -221,7 +204,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
         ///        &lt;Proje [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProjValidNUnitTestFile {
+        public static string CsProjValidNUnitTestFile {
             get {
                 return ResourceManager.GetString("CsProjValidNUnitTestFile", resourceCulture);
             }
@@ -247,7 +230,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;Content Include=&quot;TextFile1.txt&quot;&gt;
         ///            &lt;CopyToOutputDirectory&gt;PreserveNew [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string VS2017_CsProj_NetCoreDefault {
+        public static string VS2017_CsProj_NetCoreDefault {
             get {
                 return ResourceManager.GetString("VS2017_CsProj_NetCoreDefault", resourceCulture);
             }
@@ -268,7 +251,7 @@ namespace Cake.Incubator.Tests {
         ///
         ///&lt;/Project&gt;.
         /// </summary>
-        internal static string VS2017_CsProj_NetStandard_ValidFile {
+        public static string VS2017_CsProj_NetStandard_ValidFile {
             get {
                 return ResourceManager.GetString("VS2017_CsProj_NetStandard_ValidFile", resourceCulture);
             }
@@ -283,7 +266,7 @@ namespace Cake.Incubator.Tests {
         ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
         ///        &lt;Proje [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string VS2017_CsProj_ValidFile {
+        public static string VS2017_CsProj_ValidFile {
             get {
                 return ResourceManager.GetString("VS2017_CsProj_ValidFile", resourceCulture);
             }

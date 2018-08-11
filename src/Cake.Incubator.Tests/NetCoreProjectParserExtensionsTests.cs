@@ -1224,7 +1224,7 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void GetProjectFormat_ReturnsFalseWhenVS2017Format()
         {
-            var file = new FakeFile(Resources.CsProj_ValidFile);
+            var file = new FakeFile("CsProj_ValidFile".SafeLoad());
             file.ParseProjectFile("test").IsVS2017ProjectFormat.Should().BeFalse();
         }
 

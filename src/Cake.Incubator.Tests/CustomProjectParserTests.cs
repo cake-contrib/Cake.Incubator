@@ -14,11 +14,11 @@ namespace Cake.Incubator.Tests
 
     public class TestProjects
     {
-        private static readonly FakeFile validCsProjMSTestFile = new FakeFile(Resources.CsProj_ValidMSTestFile);
-        private static readonly FakeFile validCsProjXUnitTestFile = new FakeFile(Resources.CsProj_ValidXUnitTestFile);
-        private static readonly FakeFile validCsProjNUnitTestFile = new FakeFile(Resources.CsProjValidNUnitTestFile);
-        private static readonly FakeFile validCsProjFSUnitTestFile = new FakeFile(Resources.CsProjValidFSUnitTestFile);
-        private static readonly FakeFile validCsProjFixieTestFile = new FakeFile(Resources.CsProjValidFixieTestFile);
+        private static readonly FakeFile validCsProjMSTestFile = new FakeFile("CsProj_ValidMSTestFile".SafeLoad());
+        private static readonly FakeFile validCsProjXUnitTestFile = new FakeFile("CsProj_ValidXUnitTestFile".SafeLoad());
+        private static readonly FakeFile validCsProjNUnitTestFile = new FakeFile("CsProjValidNUnitTestFile".SafeLoad());
+        private static readonly FakeFile validCsProjFSUnitTestFile = new FakeFile("CsProjValidFSUnitTestFile".SafeLoad());
+        private static readonly FakeFile validCsProjFixieTestFile = new FakeFile("CsProjValidFixieTestFile".SafeLoad());
 
         // ReSharper disable once UnusedMember.Global
         public static IEnumerable<object[]> TestData { get; } = new List<object[]>
@@ -34,7 +34,6 @@ namespace Cake.Incubator.Tests
     public class CustomProjectParserTests
     {
         private readonly FakeFile validCsProjFile;
-        private readonly FakeFile anotherValidFile;
         private readonly FakeFile validCsProjWebApplicationFile;
         private readonly FakeFile valid2017CsProjFile;
         private readonly FakeFile valid2017CsProjNetcoreFile;
@@ -45,14 +44,13 @@ namespace Cake.Incubator.Tests
 
         public CustomProjectParserTests()
         {
-            validCsProjFile = new FakeFile(Resources.CsProj_ValidFile);
-            valid2017CsProjFile = new FakeFile(Resources.VS2017_CsProj_ValidFile);
-            valid2017CsProjNetcoreFile = new FakeFile(Resources.VS2017_CsProj_NetCoreDefault);
-            valid2017CsProjNetstandardFile = new FakeFile(Resources.VS2017_CsProj_NetStandard_ValidFile);
-            validCsProjConditionalReferenceFile = new FakeFile(Resources.CsProj_ConditionReference_ValidFile);
-            anotherValidFile = new FakeFile(Resources.AnotherCSProj);
-            validCsProjWebApplicationFile = new FakeFile(Resources.CsProj_ValidWebApplication);
-            validCsProjWithAbsoluteFilePaths = new FakeFile(Resources.CsProj_AbsolutePath);
+            validCsProjFile = new FakeFile("CsProj_ValidFile".SafeLoad());
+            valid2017CsProjFile = new FakeFile("VS2017_CsProj_ValidFile".SafeLoad());
+            valid2017CsProjNetcoreFile = new FakeFile("VS2017_CsProj_NetCoreDefault".SafeLoad());
+            valid2017CsProjNetstandardFile = new FakeFile("VS2017_CsProj_NetStandard_ValidFile".SafeLoad());
+            validCsProjConditionalReferenceFile = new FakeFile("CsProj_ConditionReference_ValidFile".SafeLoad());
+            validCsProjWebApplicationFile = new FakeFile("CsProj_ValidWebApplication".SafeLoad());
+            validCsProjWithAbsoluteFilePaths = new FakeFile("CsProj_AbsolutePath".SafeLoad());
         }
 
         [Fact]
