@@ -67,5 +67,24 @@ namespace Cake.Incubator
                     .ToString()
                     .EqualsIgnoreCase(System.IO.Path.GetFileNameWithoutExtension(fileName));
         }
+        
+        /// <summary>
+        /// Checks if the path has a specific file extension (case-insensitive)
+        /// </summary>
+        /// <param name="path">the path to check</param>
+        /// <param name="fileExtension">the file extension name</param>
+        /// <returns>true if file extension matches</returns>
+        /// <example>
+        /// Check the file extension with or without the period ignoring case
+        /// <code>
+        /// new FilePath("/folder/testing.cs").HasExtension(".cs"); // true
+        /// new FilePath("/folder/testing.odd").HasExtension("ODD"); // true
+        /// </code>
+        /// </example>
+        public static bool HasFileExtension(this FilePath path, string fileExtension)
+        {    
+            fileExtension.ThrowIfNullOrEmpty(nameof(fileExtension));
+            return path.HasExtension && path.GetFilename().GetExtension().EndsWithIgnoreCase(fileExtension);
+        }
     }
 }

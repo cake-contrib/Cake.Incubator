@@ -16,7 +16,7 @@ BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(context: Context,
                             dupFinderExcludePattern: new string[] { 
-								BuildParameters.RootDirectoryPath + "/src/Cake.Incubator/**/*.AssemblyInfo.cs",								
+								BuildParameters.RootDirectoryPath + "/src/**/*.AssemblyInfo.cs",								
                                 BuildParameters.RootDirectoryPath + "/src/Cake.Incubator.Tests/*.cs",
                                 BuildParameters.RootDirectoryPath + "/src/Cake.Incubator/CustomProjectParser.cs",
                                 BuildParameters.RootDirectoryPath + "/src/Cake.Incubator/DotNetCoreTestExtensions.cs" },
