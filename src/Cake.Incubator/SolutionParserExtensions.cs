@@ -99,6 +99,7 @@ namespace Cake.Incubator
             { ProjectType.DeploymentMergeModule, ProjectTypes.DeploymentMergeModule },
             { ProjectType.DeploymentSetup, ProjectTypes.DeploymentSetup },
             { ProjectType.DeploymentSmartDeviceCab, ProjectTypes.DeploymentSmartDeviceCab },
+            { ProjectType.DotNetCore, ProjectTypes.DotNetCore },
             { ProjectType.DistributedSystem, ProjectTypes.DistributedSystem },
             { ProjectType.Dynamics2012AxCsharpInAot, ProjectTypes.Dynamics2012AxCsharpInAot },
             { ProjectType.FSharp, ProjectTypes.FSharp },

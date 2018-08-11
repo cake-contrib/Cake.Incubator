@@ -27,6 +27,7 @@ namespace Cake.Incubator
         DeploymentSetup,
         DeploymentSmartDeviceCab,
         DistributedSystem,
+        DotNetCore,
         Dynamics2012AxCsharpInAot,
         FSharp,
         JSharp,
@@ -97,6 +98,7 @@ namespace Cake.Incubator
         public const string DeploymentSetup = "{978C614F-708E-4E1A-B201-565925725DBA}";
         public const string DeploymentSmartDeviceCab = "{AB322303-2255-48EF-A496-5904EB18DA55}";
         public const string DistributedSystem = "{F135691A-BF7E-435D-8960-F99683D2D49C}";
+        public const string DotNetCore = "{9A19103F-16F7-4668-BE54-9A1E7A4F7556}";
         public const string Dynamics2012AxCsharpInAot = "{BF6F8E12-879D-49E7-ADF0-5503146B24B8}";
         public const string FSharp = "{F2A71F9B-5D33-465A-A702-920D77279786}";
         public const string JSharp = "{E6FDF86B-F3D1-11D4-8576-0002A516ECE8}";
