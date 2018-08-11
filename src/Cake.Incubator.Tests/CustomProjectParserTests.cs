@@ -99,7 +99,7 @@ namespace Cake.Incubator.Tests
 
 
         [Theory]
-        [MemberData(memberName: "TestData", MemberType = typeof(TestProjects))]
+        [MemberData(memberName: nameof(TestProjects.TestData), MemberType = typeof(TestProjects))]
         public void ParseProject_IsFrameworkTestProject(FakeFile testProject)
         {
             var result = testProject.ParseProjectFile("test");

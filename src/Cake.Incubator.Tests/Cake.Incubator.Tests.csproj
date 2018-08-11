@@ -3,6 +3,38 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
+    <None Remove="sampleprojects\AnotherCSProj.xml" />
+    <None Remove="sampleprojects\CsProjValidFixieTestFile.xml" />
+    <None Remove="sampleprojects\CsProjValidFSUnitTestFile.xml" />
+    <None Remove="sampleprojects\CsProjValidNUnitTestFile.xml" />
+    <None Remove="sampleprojects\CsProj_AbsolutePath.xml" />
+    <None Remove="sampleprojects\CsProj_ConditionReference_ValidFile.xml" />
+    <None Remove="sampleprojects\CsProj_InvalidFile.xml" />
+    <None Remove="sampleprojects\CsProj_ValidFile.xml" />
+    <None Remove="sampleprojects\CsProj_ValidMSTestFile.xml" />
+    <None Remove="sampleprojects\CsProj_ValidWebApplication.xml" />
+    <None Remove="sampleprojects\CsProj_ValidXUnitTestFile.xml" />
+    <None Remove="sampleprojects\VS2017_CsProj_NetCoreDefault.xml" />
+    <None Remove="sampleprojects\VS2017_CsProj_NetStandard_ValidFile.xml" />
+    <None Remove="sampleprojects\VS2017_CsProj_ValidFile.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="sampleprojects\AnotherCSProj.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProjValidFixieTestFile.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProjValidFSUnitTestFile.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProjValidNUnitTestFile.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProj_AbsolutePath.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProj_ConditionReference_ValidFile.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProj_InvalidFile.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProj_ValidFile.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProj_ValidMSTestFile.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProj_ValidWebApplication.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProj_ValidXUnitTestFile.xml" />
+    <EmbeddedResource Include="sampleprojects\VS2017_CsProj_NetCoreDefault.xml" />
+    <EmbeddedResource Include="sampleprojects\VS2017_CsProj_NetStandard_ValidFile.xml" />
+    <EmbeddedResource Include="sampleprojects\VS2017_CsProj_ValidFile.xml" />
+  </ItemGroup>
+  <ItemGroup>
     <PackageReference Include="Cake.Common" Version="0.28.0" />
     <PackageReference Include="Cake.Core" Version="0.28.0" />
     <PackageReference Include="FakeItEasy" Version="4.5.1" />
