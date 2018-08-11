@@ -19,10 +19,10 @@ namespace Cake.Incubator.Tests {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "4.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace Cake.Incubator.Tests {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("Cake.Incubator.Tests.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace Cake.Incubator.Tests {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -62,31 +62,14 @@ namespace Cake.Incubator.Tests {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
-        ///&lt;Project DefaultTargets=&quot;Build&quot; ToolsVersion=&quot;12.0&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;ProjectType&gt;local&lt;/ProjectType&gt;
-        ///    &lt;ProjectVersion&gt;7.10.3077&lt;/ProjectVersion&gt;
-        ///    &lt;SchemaVersion&gt;2.0&lt;/SchemaVersion&gt;
-        ///    &lt;ProjectGuid&gt;{B4254183-F002-4D3A-A512-0918B2D830C4}&lt;/ProjectGuid&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platf [rest of string was truncated]&quot;;.
-        /// </summary>
-        internal static string AnotherCSProj {
-            get {
-                return ResourceManager.GetString("AnotherCSProj", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Project ToolsVersion=&quot;15.0&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
-        ///    &lt;ProjectGuid&gt;{D3E3AADD [rest of string was truncated]&quot;;.
+        ///    &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///        &lt;Proje [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_AbsolutePath {
+        public static string CsProj_AbsolutePath {
             get {
                 return ResourceManager.GetString("CsProj_AbsolutePath", resourceCulture);
             }
@@ -95,15 +78,15 @@ namespace Cake.Incubator.Tests {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Project ToolsVersion=&quot;14.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
-        ///    &lt;ProjectGuid&gt;{8BB3C584-CA27-4CC1-84E8-512EF6A2851D}&lt;/ProjectGuid&gt;
-        ///    &lt;OutputType&gt;Library&lt;/OutputType&gt;
-        ///    &lt;AppDesignerFolder&gt;Properties&lt;/AppDesignerFolder&gt;
-        ///    &lt;RootNamespace&gt;Cake.VsM [rest of string was truncated]&quot;;.
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///        &lt;ProjectGuid&gt;{8BB3C584-CA27-4CC1-84E8-512EF6A2851D}&lt;/ProjectGuid&gt;
+        ///        &lt;OutputType&gt;Library&lt;/OutputType&gt;
+        ///        &lt;AppDesignerFolder&gt;Properties&lt;/AppDesignerFolder&gt;
+        ///      [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_ConditionReference_ValidFile {
+        public static string CsProj_ConditionReference_ValidFile {
             get {
                 return ResourceManager.GetString("CsProj_ConditionReference_ValidFile", resourceCulture);
             }
@@ -111,13 +94,13 @@ namespace Cake.Incubator.Tests {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Project ToolsVersion=&quot;12.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;MinimumVisualStudioVersion&gt;11.0&lt;/MinimumVisualStudioVersion&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; ==  [rest of string was truncated]&quot;;.
+        ///    &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;MinimumVisualStudioVersion&gt;11.0&lt;/MinimumVisualStudioVersion&gt;
+        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///        &lt;Platform Condition=&quot; &apos; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_InvalidFile {
+        public static string CsProj_InvalidFile {
             get {
                 return ResourceManager.GetString("CsProj_InvalidFile", resourceCulture);
             }
@@ -125,13 +108,13 @@ namespace Cake.Incubator.Tests {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Project ToolsVersion=&quot;12.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;MinimumVisualStudioVersion&gt;11.0&lt;/MinimumVisualStudioVersion&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; ==  [rest of string was truncated]&quot;;.
+        ///    &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;MinimumVisualStudioVersion&gt;11.0&lt;/MinimumVisualStudioVersion&gt;
+        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///        &lt;Platform Condition=&quot; &apos; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_ValidFile {
+        public static string CsProj_ValidFile {
             get {
                 return ResourceManager.GetString("CsProj_ValidFile", resourceCulture);
             }
@@ -140,12 +123,12 @@ namespace Cake.Incubator.Tests {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Project ToolsVersion=&quot;15.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;Import Project=&quot;..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props&quot; Condition=&quot;Exists(&apos;..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props&apos;)&quot; /&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform [rest of string was truncated]&quot;;.
+        ///    &lt;Import Project=&quot;..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props&quot; Condition=&quot;Exists(&apos;..\packages\MSTest.TestAdapter.1.2.0\build\net45\MSTest.TestAdapter.props&apos;)&quot; /&gt;
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyC [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_ValidMSTestFile {
+        public static string CsProj_ValidMSTestFile {
             get {
                 return ResourceManager.GetString("CsProj_ValidMSTestFile", resourceCulture);
             }
@@ -153,13 +136,13 @@ namespace Cake.Incubator.Tests {
         
         /// <summary>
         ///   Looks up a localized string similar to &lt;Project ToolsVersion=&quot;12.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;MinimumVisualStudioVersion&gt;11.0&lt;/MinimumVisualStudioVersion&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; ==  [rest of string was truncated]&quot;;.
+        ///    &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;MinimumVisualStudioVersion&gt;11.0&lt;/MinimumVisualStudioVersion&gt;
+        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///        &lt;Platform Condition=&quot; &apos; [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_ValidWebApplication {
+        public static string CsProj_ValidWebApplication {
             get {
                 return ResourceManager.GetString("CsProj_ValidWebApplication", resourceCulture);
             }
@@ -168,13 +151,13 @@ namespace Cake.Incubator.Tests {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Project ToolsVersion=&quot;15.0&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
-        ///    &lt;ProjectGuid&gt;{177E5C80 [rest of string was truncated]&quot;;.
+        ///    &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///        &lt;Proje [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProj_ValidXUnitTestFile {
+        public static string CsProj_ValidXUnitTestFile {
             get {
                 return ResourceManager.GetString("CsProj_ValidXUnitTestFile", resourceCulture);
             }
@@ -183,13 +166,13 @@ namespace Cake.Incubator.Tests {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Project ToolsVersion=&quot;15.0&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
-        ///    &lt;ProjectGuid&gt;{E91B2461 [rest of string was truncated]&quot;;.
+        ///    &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///        &lt;Proje [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProjValidFixieTestFile {
+        public static string CsProjValidFixieTestFile {
             get {
                 return ResourceManager.GetString("CsProjValidFixieTestFile", resourceCulture);
             }
@@ -198,15 +181,15 @@ namespace Cake.Incubator.Tests {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Project ToolsVersion=&quot;4.0&quot; DefaultTargets=&quot;Build&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
-        ///    &lt;ProductVersion&gt;8.0.30703&lt;/ProductVersion&gt;
-        ///    &lt;SchemaVersion&gt;2.0&lt;/SchemaVersion&gt;
-        ///    &lt;ProjectGuid&gt;{f2cc41fd-6b5a-487b-a2c8-f301add68d22}&lt;/ProjectGuid&gt;
-        ///    &lt;OutputType&gt;Library&lt;/OutputTy [rest of string was truncated]&quot;;.
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///        &lt;ProductVersion&gt;8.0.30703&lt;/ProductVersion&gt;
+        ///        &lt;SchemaVersion&gt;2.0&lt;/SchemaVersion&gt;
+        ///        &lt;ProjectGuid&gt;{f2cc41fd-6b5a-487b-a2c8-f301add68d22}&lt;/ProjectGuid&gt;
+        ///        &lt;Ou [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProjValidFSUnitTestFile {
+        public static string CsProjValidFSUnitTestFile {
             get {
                 return ResourceManager.GetString("CsProjValidFSUnitTestFile", resourceCulture);
             }
@@ -215,13 +198,13 @@ namespace Cake.Incubator.Tests {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Project ToolsVersion=&quot;15.0&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
-        ///    &lt;ProjectGuid&gt;{D9456DD9 [rest of string was truncated]&quot;;.
+        ///    &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///        &lt;Proje [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string CsProjValidNUnitTestFile {
+        public static string CsProjValidNUnitTestFile {
             get {
                 return ResourceManager.GetString("CsProjValidNUnitTestFile", resourceCulture);
             }
@@ -230,25 +213,24 @@ namespace Cake.Incubator.Tests {
         /// <summary>
         ///   Looks up a localized string similar to &lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
         ///
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;OutputType&gt;Exe&lt;/OutputType&gt;
-        ///    &lt;TargetFramework&gt;netcoreapp1.1&lt;/TargetFramework&gt;
-        ///  &lt;/PropertyGroup&gt;
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;OutputType&gt;Exe&lt;/OutputType&gt;
+        ///        &lt;TargetFramework&gt;netcoreapp1.1&lt;/TargetFramework&gt;
+        ///    &lt;/PropertyGroup&gt;
         ///
-        ///  &lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|AnyCPU&apos;&quot;&gt;
-        ///    &lt;OutputPath&gt;bin\custom\&lt;/OutputPath&gt;
-        ///  &lt;/PropertyGroup&gt;
+        ///    &lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|AnyCPU&apos;&quot;&gt;
+        ///        &lt;OutputPath&gt;bin\custom\&lt;/OutputPath&gt;
+        ///    &lt;/PropertyGroup&gt;
         ///
-        ///  &lt;ItemGroup&gt;
-        ///    &lt;None Remove=&quot;TextFile1.txt&quot; /&gt;
-        ///  &lt;/ItemGroup&gt;
+        ///    &lt;ItemGroup&gt;
+        ///        &lt;None Remove=&quot;TextFile1.txt&quot; /&gt;
+        ///    &lt;/ItemGroup&gt;
         ///
-        ///  &lt;ItemGroup&gt;
-        ///    &lt;Content Include=&quot;TextFile1.txt&quot;&gt;
-        ///      &lt;CopyToOutputDirectory&gt;PreserveNewest&lt;/CopyToOutputDirectory&gt;
-        ///    &lt;/Conte [rest of string was truncated]&quot;;.
+        ///    &lt;ItemGroup&gt;
+        ///        &lt;Content Include=&quot;TextFile1.txt&quot;&gt;
+        ///            &lt;CopyToOutputDirectory&gt;PreserveNew [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string VS2017_CsProj_NetCoreDefault {
+        public static string VS2017_CsProj_NetCoreDefault {
             get {
                 return ResourceManager.GetString("VS2017_CsProj_NetCoreDefault", resourceCulture);
             }
@@ -257,19 +239,19 @@ namespace Cake.Incubator.Tests {
         /// <summary>
         ///   Looks up a localized string similar to &lt;Project Sdk=&quot;Microsoft.NET.Sdk&quot;&gt;
         ///
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;TargetFramework&gt;netstandard1.6&lt;/TargetFramework&gt;
-        ///  &lt;/PropertyGroup&gt;
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;TargetFramework&gt;netstandard1.6&lt;/TargetFramework&gt;
+        ///    &lt;/PropertyGroup&gt;
         ///
-        ///  &lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;&quot; /&gt;
+        ///    &lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Release|x64&apos;&quot; /&gt;
         ///
-        ///  &lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|AnyCPU&apos;&quot;&gt;
-        ///    &lt;OutputPath&gt;bin\wayhey\&lt;/OutputPath&gt;
-        ///  &lt;/PropertyGroup&gt;
+        ///    &lt;PropertyGroup Condition=&quot;&apos;$(Configuration)|$(Platform)&apos;==&apos;Debug|AnyCPU&apos;&quot;&gt;
+        ///        &lt;OutputPath&gt;bin\wayhey\&lt;/OutputPath&gt;
+        ///    &lt;/PropertyGroup&gt;
         ///
         ///&lt;/Project&gt;.
         /// </summary>
-        internal static string VS2017_CsProj_NetStandard_ValidFile {
+        public static string VS2017_CsProj_NetStandard_ValidFile {
             get {
                 return ResourceManager.GetString("VS2017_CsProj_NetStandard_ValidFile", resourceCulture);
             }
@@ -278,13 +260,13 @@ namespace Cake.Incubator.Tests {
         /// <summary>
         ///   Looks up a localized string similar to &lt;?xml version=&quot;1.0&quot; encoding=&quot;utf-8&quot;?&gt;
         ///&lt;Project ToolsVersion=&quot;15.0&quot; xmlns=&quot;http://schemas.microsoft.com/developer/msbuild/2003&quot;&gt;
-        ///  &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
-        ///  &lt;PropertyGroup&gt;
-        ///    &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
-        ///    &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
-        ///    &lt;ProjectGuid&gt;{B544B360 [rest of string was truncated]&quot;;.
+        ///    &lt;Import Project=&quot;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&quot; Condition=&quot;Exists(&apos;$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props&apos;)&quot; /&gt;
+        ///    &lt;PropertyGroup&gt;
+        ///        &lt;Configuration Condition=&quot; &apos;$(Configuration)&apos; == &apos;&apos; &quot;&gt;Debug&lt;/Configuration&gt;
+        ///        &lt;Platform Condition=&quot; &apos;$(Platform)&apos; == &apos;&apos; &quot;&gt;AnyCPU&lt;/Platform&gt;
+        ///        &lt;Proje [rest of string was truncated]&quot;;.
         /// </summary>
-        internal static string VS2017_CsProj_ValidFile {
+        public static string VS2017_CsProj_ValidFile {
             get {
                 return ResourceManager.GetString("VS2017_CsProj_ValidFile", resourceCulture);
             }

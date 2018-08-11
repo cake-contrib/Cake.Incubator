@@ -31,24 +31,26 @@ namespace Cake.Incubator
         /// // /output/file.pdb
         /// // /output/another.dll
         ///
-        /// IEnumerable&lt;FilePath&gt; matchingFiles = GetMatchingFiles(new FilePath("/output/file.dll"));
+        /// FilePathCollection matchingFiles = GetMatchingFiles(new FilePath("/output/file.dll"));
         ///
-        /// matchingFiles[0]; // /output/file.xml
-        /// matchingFiles[1]; // /output/file.pdb
-        /// matchingFiles[2]; // /output/file.dll
+        /// matchingFiles.First(); // /output/file.xml
+        /// matchingFiles.Skip(1).First(); // /output/file.pdb
+        /// matchingFiles.Last(); // /output/file.dll
         /// 
         /// </code>
         /// </example>
         [CakeMethodAlias]
         [CakeAliasCategory("Files")]
         // ReSharper disable once UnusedMember.Global
-        public static IEnumerable<IFile> GetMatchingFiles(this ICakeContext context, IEnumerable<FilePath> files)
+        public static FilePathCollection GetMatchingFiles(this ICakeContext context, IEnumerable<FilePath> files)
         {
-            return files.SelectMany(
-                x =>
-                    context.FileSystem.GetDirectory(x.GetDirectory())
-                        .GetFiles($"{x.GetFilenameWithoutExtension()}.*", SearchScope.Current)
-                        .Where(f => !f.Path.Equals(x)));
+            var results = files.SelectMany(
+                    x =>
+                        context.FileSystem.GetDirectory(x.GetDirectory())
+                            .GetFiles($"{x.GetFilenameWithoutExtension()}.*", SearchScope.Current)
+                            .Where(f => !f.Path.Equals(x)))
+                            .Select(x => x.Path);
+            return new FilePathCollection(results, new PathComparer(context.Environment));
         }
 
         /// <summary>

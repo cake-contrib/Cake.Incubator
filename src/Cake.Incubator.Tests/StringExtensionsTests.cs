@@ -19,5 +19,29 @@ namespace Cake.Incubator.Tests
         {
             "A".EqualsIgnoreCase("B").Should().BeFalse();
         }
+        
+        [Fact]
+        public void StartsWithIgnoreCase_MatchesCorrectly()
+        {
+            "Abcsd".StartsWithIgnoreCase("a").Should().BeTrue();
+        }
+
+        [Fact]
+        public void StartsWithIgnoreCase_DoesNotMatchCorrectly()
+        {
+            "Adas".StartsWithIgnoreCase("AB").Should().BeFalse();
+        }
+
+        [Fact]
+        public void EndsWithIgnoreCase_MatchesCorrectly()
+        {
+            "Abcsd".EndsWithIgnoreCase("SD").Should().BeTrue();
+        }
+
+        [Fact]
+        public void EndsWithIgnoreCase_DoesNotMatchCorrectly()
+        {
+            "Adas".EndsWithIgnoreCase("AB").Should().BeFalse();
+        }
     }
 }
