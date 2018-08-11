@@ -27,7 +27,7 @@ namespace Cake.Incubator.Tests
             environment = new FakeCakeEnvironment();
             globber = new Globber(fileSystem, environment);
             context = new CakeContext(fileSystem, environment, globber, new NullLog(), A.Dummy<ICakeArguments>(),
-                A.Dummy<IProcessRunner>(), A.Dummy<IRegistry>(), A.Dummy<IToolLocator>());
+                A.Dummy<IProcessRunner>(), A.Dummy<IRegistry>(), A.Dummy<IToolLocator>(), A.Dummy<ICakeDataService>());
         }
 
         [Fact(Skip = "FakeEnvironment needs fixed")]
