@@ -118,7 +118,7 @@ namespace Cake.Incubator
         [CakeAliasCategory("Guard Clauses")]
         public static bool IsNullOrEmpty<T>(this ICollection<T> value)
         {
-            return (value == null || value.Count == 0);
+            return (value is null || value.Count == 0);
         }
     }
 }
