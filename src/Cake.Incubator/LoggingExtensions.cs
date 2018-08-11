@@ -84,11 +84,9 @@ namespace Cake.Incubator
             {
                 var propertyType = descriptor.PropertyType;
                 var value = descriptor.GetValue(obj);
-#if NETSTANDARD1_6
-                var enumerableType = propertyType.GetTypeInfo().GetInterface("IEnumerable");
-#else
+
                 var enumerableType = propertyType.GetInterface("IEnumerable");
-#endif
+
                 if (enumerableType != null && propertyType != typeof(string))
                 {
                     ProcessEnumerable(value, dump, descriptor);
