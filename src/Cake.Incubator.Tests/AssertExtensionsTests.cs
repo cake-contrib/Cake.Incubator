@@ -5,6 +5,7 @@ namespace Cake.Incubator.Tests
 {
     using System;
     using System.Collections.Generic;
+    using System.Runtime.InteropServices;
     using FluentAssertions;
     using Xunit;
 
@@ -55,6 +56,23 @@ namespace Cake.Incubator.Tests
         {
             IEnumerable<string> a = new[] { "a" };
             a.IsNullOrEmpty().Should().BeFalse();
+        }
+        
+        [Theory]
+        [InlineData("")]
+        [InlineData(" ")]
+        [InlineData(null)]
+        public void ThrowIfNullOrWhiteSpace_ThrowsException(string value)
+        {
+            Action a = () => value.ThrowIfNullOrWhiteSpace(nameof(value));
+            a.Should().Throw<ArgumentNullException>().Which.ParamName.Should().Be(nameof(value));
+        }
+        
+        [Fact]
+        public void ThrowIfNullOrWhiteSpace_ReturnsValue()
+        {
+            var result = "a".ThrowIfNullOrWhiteSpace("paramName");
+            result.Should().Be("a");
         }
     }
 }
