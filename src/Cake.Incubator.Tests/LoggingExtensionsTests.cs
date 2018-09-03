@@ -18,7 +18,7 @@ namespace Cake.Incubator.Tests
             o.Dump().Should().BeNullOrEmpty();
         }
 
-        [Fact(Skip = "Test failing after moving to netstandard 2.0, need to update dump method")]
+        [Fact()]
         public void Dump_OutputsCorrectString_BasicProps()
         {
             var test = new DumpTest
@@ -28,7 +28,7 @@ namespace Cake.Incubator.Tests
                 DateTimeProp = DateTime.Today
             };
 
-            var expected = $"\tStringProp:\t{test.StringProp}\r\n\tIntProp:\t{test.IntProp}\r\n\tDateTimeProp:\t{test.DateTimeProp}\r\n";
+            var expected = $"\tStringProp:\t{test.StringProp}\r\n\tIntProp:\t{test.IntProp}\r\n\tDateTimeProp:\t{test.DateTimeProp}\r\n\tUnreadable:\t180\r\n";
 
             test.Dump().Should().Be(expected);
         }
