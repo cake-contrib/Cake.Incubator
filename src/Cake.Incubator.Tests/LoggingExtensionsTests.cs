@@ -66,6 +66,13 @@ namespace Cake.Incubator.Tests
             test.Dump().Should().Be(expected);
         }
 
+        [Fact(Skip = "Testing complex object output")]
+        public void Dump_ProjectParserResult()
+        {
+            var file = new FakeFile("CsProj_ValidFile".SafeLoad());
+            file.ParseProjectFile("test").Dump().Should().Be("");
+        }
+
         private class DumpTest
         {
             public string StringProp { get; set; }

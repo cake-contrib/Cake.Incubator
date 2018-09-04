@@ -3,8 +3,10 @@
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 namespace Cake.Incubator
 {
+    using System;
     using System.Collections;
     using System.ComponentModel;
+    using System.Linq;
     using System.Reflection;
     using System.Text;
 
@@ -108,15 +110,37 @@ namespace Cake.Incubator
             sb.Append($"\t{descriptor.Name}:\t[ ");
             foreach (var val in enumerable)
             {
+                if (val == null) continue;
+                var printVal = IsSimpleType(val.GetType()) ? $"\"{val}\"" : val.Dump().Replace("\r\n", "\r\n\t");
                 if (first)
                 {
-                    sb.Append($"\"{val}\"");
+                    sb.Append(printVal);
                     first = false;
                 }
                 else
-                    sb.Append($", \"{val}\"");
+                    sb.Append($", {printVal}");
             }
+
             sb.AppendLine(" ]");
        }
+        
+        private static bool IsSimpleType(Type type)
+        {
+            return
+                type.IsPrimitive ||
+                new Type[]
+                {
+                    typeof(Enum),
+                    typeof(String),
+                    typeof(Decimal),
+                    typeof(DateTime),
+                    typeof(DateTimeOffset),
+                    typeof(TimeSpan),
+                    typeof(Guid)
+                }.Contains(type) ||
+                Convert.GetTypeCode(type) != TypeCode.Object ||
+                (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Nullable<>) &&
+                 IsSimpleType(type.GetGenericArguments()[0]));
+        }
     }
 }
