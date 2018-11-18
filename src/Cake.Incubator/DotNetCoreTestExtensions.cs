@@ -32,7 +32,6 @@
             DotNetCoreTest(context, new DotNetCoreTestSettings(), project, xunitSettings);
         }
 
-
         /// <summary>
         /// Appends <see cref="XUnit2Settings"/> to an <see cref="DotNetCoreTestSettings"/> instance
         /// </summary>

@@ -117,6 +117,91 @@ namespace Cake.Incubator
         {
             return IsDotNetCliTestProject(projectParserResult) || IsFrameworkTestProject(projectParserResult);
         }
+        
+        /// <summary>
+        /// Checks if the project is an xunit test compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is an xunit test compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is an xunit test compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsXUnitTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsXUnitTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            return projectParserResult.IsTestProjectOfType("xunit", "xunit.core");
+        }
+        
+        /// <summary>
+        /// Checks if the project is an NUnit test compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is an NUnit test compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is an NUnit test compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsNUnitTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsNUnitTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            return projectParserResult.IsTestProjectOfType("nunit", "nunit.framework");
+        }
+        
+        /// <summary>
+        /// Checks if the project is an Expecto test compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is an Expecto test compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is an Expecto test compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsExpectoTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsExpectoTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            return projectParserResult.IsTestProjectOfType("Expecto", "Expecto");
+        }
+        
+        /// <summary>
+        /// Checks if the project is an fixie test compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is a fixie test compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is an fixie test compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsFixieTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsFixieTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            return projectParserResult.IsTestProjectOfType("fixie", "fixie");
+        }
+        
+        /// <summary>
+        /// Checks if the project is an MSTest compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is an MSTest compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is an MSTest compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsMSTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsMSTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            return projectParserResult.IsTestProjectOfType("Microsoft.VisualStudio.TestPlatform", "Microsoft.VisualStudio.TestPlatform.TestFramework");
+        }
 
         /// <summary>
         /// Checks if the project is a web application.
@@ -187,6 +272,7 @@ namespace Cake.Incubator
         /// </code>
         /// <remarks>NOTE: This does not currently support how runtime identifiers affect outputs</remarks>
         /// </example>
+        [Obsolete("Use GetAssemblyFilePaths instead for multi-targeting support")]
         public static FilePath GetAssemblyFilePath(this CustomProjectParserResult projectParserResult)
         {
             return
@@ -240,7 +326,7 @@ namespace Cake.Incubator
         }
 
         /// <summary>
-        /// Checks for a project package refernce by name and optional TargetFramework
+        /// Checks for a project package reference by name and optional TargetFramework
         /// </summary>
         /// <param name="projectParserResult">the parsed project</param>
         /// <param name="packageName">the package name</param>
@@ -264,7 +350,7 @@ namespace Cake.Incubator
         }
         
         /// <summary>
-        /// Checks for a project assembly refernce by name or alias
+        /// Checks for a project assembly reference by name or alias
         /// </summary>
         /// <param name="projectParserResult">the parsed project</param>
         /// <param name="referenceAssemblyName">the assembly name</param>
@@ -905,6 +991,17 @@ namespace Cake.Incubator
                             ? null
                             : rootPath.CombineWithFilePath(packageElement.Value)
                     }).ToArray();
+        }
+        
+        private static bool IsTestProjectOfType(this CustomProjectParserResult projectParserResult, string packageId, string referenceId)
+        {
+            // test libs should target a specific platform, standard does not so isn't a runnable test project
+            if (projectParserResult.IsNetStandard) return false;
+
+            // check project guid or for common test package/assembly references
+            return projectParserResult.IsType(ProjectType.Test) ||
+                   projectParserResult.HasPackage(packageId) ||
+                   projectParserResult.HasReference(referenceId);
         }
     }
 }
