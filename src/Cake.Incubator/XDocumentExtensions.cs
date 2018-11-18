@@ -146,13 +146,32 @@ namespace Cake.Incubator
             var excludeAssetsXName = ns.GetXNameWithNamespace(ProjectXElement.ExcludeAssets);
             var includeXName = ns.GetXNameWithNamespace("Include");
             var versionXName = ns.GetXNameWithNamespace("Version");
+            
+            // get default/empty reference
+            var global = document
+                .Descendants(packageReferenceXName)
+                .LastOrDefault(x => x.Element(includeXName)?.Value == null || x.GetAttributeValue("Include") == null);
+            
+            string[] globalPrivate = null;
+            string[] globalInclude = null;    
+            string[] globalExclude = null;
+            
+            if (global != null)
+            {
+                globalPrivate = global.GetAttributeValue(ProjectXElement.PrivateAssets)?.SplitIgnoreEmpty(';') ??
+                                global.Element(privateAssetsXName)?.Value.SplitIgnoreEmpty(';');
+                globalInclude = global.GetAttributeValue(ProjectXElement.IncludeAssets)?.SplitIgnoreEmpty(';') ??
+                                global.Element(includeAssetsXName)?.Value.SplitIgnoreEmpty(';');
+                globalExclude = global.GetAttributeValue(ProjectXElement.ExcludeAssets)?.SplitIgnoreEmpty(';') ??
+                                global.Element(excludeAssetsXName)?.Value.SplitIgnoreEmpty(';');
+            }
 
             return document.Descendants(packageReferenceXName).Select(
                 x =>
                 {
-                    var privateAssets = x.Element(privateAssetsXName)?.Value.SplitIgnoreEmpty(';');
-                    var includeAssets = x.Element(includeAssetsXName)?.Value.SplitIgnoreEmpty(';');
-                    var excludeAssets = x.Element(excludeAssetsXName)?.Value.SplitIgnoreEmpty(';');
+                    var privateAssets = x.Element(privateAssetsXName)?.Value.SplitIgnoreEmpty(';') ?? globalPrivate;
+                    var includeAssets = x.Element(includeAssetsXName)?.Value.SplitIgnoreEmpty(';') ?? globalInclude;
+                    var excludeAssets = x.Element(excludeAssetsXName)?.Value.SplitIgnoreEmpty(';') ?? globalExclude;
                     var condition = x.GetAttributeValue("Condition") ?? x.Parent.GetAttributeValue("Condition");
                     return new PackageReference
                     {
