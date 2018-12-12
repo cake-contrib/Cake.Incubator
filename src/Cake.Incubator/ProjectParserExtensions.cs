@@ -43,6 +43,23 @@ namespace Cake.Incubator
         }
 
         /// <summary>
+        /// Checks if the project is for a global tool
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is a global tool</returns>
+        /// <example>
+        /// Check if a parsed project is a global tool
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsGlobalTool()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsGlobalTool(this CustomProjectParserResult projectParserResult)
+        {
+            return projectParserResult.NetCore.PackAsTool;
+        }
+
+        /// <summary>
         /// Checks if the project is a `dotnet test` compatible project
         /// </summary>
         /// <param name="projectParserResult">the parsed project</param>
@@ -763,6 +780,7 @@ namespace Cake.Incubator
                 isPackable = true;
             }
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.IsTool), out var isTool);
+            bool.TryParse(document.GetFirstElementValue(ProjectXElement.PackAsTool), out var packAsTool);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.NoPackageAnalysis), out var noPackageAnalysis);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.PublicSign), out var publicSign);
             bool.TryParse(document.GetFirstElementValue(ProjectXElement.TreatWarningsAsErrors, config, platform), out var treatWarningsAsErrors);
@@ -848,6 +866,7 @@ namespace Cake.Incubator
                     IncludeSymbols = includeSymbols,
                     IsPackable = isPackable,
                     IsTool = isTool,
+                    PackAsTool = packAsTool,
                     IsWeb = sdk.EqualsIgnoreCase("Microsoft.NET.Sdk.Web"),
                     LangVersion = langVersion,
                     MinClientVersion = minClientVersion,
