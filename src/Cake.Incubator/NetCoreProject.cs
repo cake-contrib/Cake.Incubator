@@ -351,5 +351,10 @@ namespace Cake.Incubator
         /// Compiler warning level
         /// </summary>
         public string WarningLevel { get; set; }
+
+        /// <summary>
+        /// True if it should pack it as global tool
+        /// </summary>
+        public bool PackAsTool { get; set; }
     }
 }

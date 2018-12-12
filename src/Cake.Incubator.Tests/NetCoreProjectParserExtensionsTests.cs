@@ -1332,5 +1332,12 @@ namespace Cake.Incubator.Tests
             result.RootNameSpace.Should().Be("Cake.Kudu");
             result.IsLibrary().Should().BeTrue();
         }
+
+        [Fact]
+        public void ParseProject_ReturnsGlobalTool_WhenExeSpecified()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackAsTool", "true"));
+            file.ParseProjectFile("test").IsGlobalTool().Should().BeTrue();
+        }
     }
 }

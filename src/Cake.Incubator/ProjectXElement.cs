@@ -64,6 +64,7 @@ namespace Cake.Incubator
         internal const string Optimize = "Optimize";
         internal const string OutputPath = "OutputPath";
         internal const string OutputType = "OutputType";
+        internal const string PackAsTool = "PackAsTool";
         internal const string Package = "Package";
         internal const string PackageId = "PackageId";
         internal const string PackageIconUrl = "PackageIconUrl";
