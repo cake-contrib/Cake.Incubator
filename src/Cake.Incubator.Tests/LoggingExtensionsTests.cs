@@ -62,14 +62,10 @@ namespace Cake.Incubator.Tests
                 Children = new List<Person> { new Person("Toddler", 2), new Person("Teenager", 13) }
             };
 
-            const string expected = @"	Parent:	Older person is 42
-	Children:	[ 	Name:	Toddler
-		Age:	2
-	, 	Name:	Teenager
-		Age:	13
-	 ]
-";
-            test.Dump().Should().Be(expected);
+            const string expected = "\tParent:\tOlder person is 42\r\n\tChildren:\t[ \tName:\tToddler\r\n\t\tAge:\t2\r\n\t, \tName:\tTeenager\r\n\t\tAge:\t13\r\n\t ]\r\n";
+
+            var dump = test.Dump();
+            dump.Should().Be(expected);
         }
 
         [Fact(Skip = "Testing complex object output")]
