@@ -1,4 +1,6 @@
-﻿namespace Cake.Incubator
+﻿using System.Xml.Linq;
+
+namespace Cake.Incubator
 {
     using System;
     using System.Collections.Generic;
@@ -110,5 +112,10 @@
         /// Whether the project parsed is in the newer VS2017 onwards format or the legacy pre 2017 format
         /// </summary>
         public bool IsVS2017ProjectFormat { get; set; }
+
+        /// <summary>
+        /// The project file xml source
+        /// </summary>
+        public XDocument ProjectXml { get; set; }
     }
 }

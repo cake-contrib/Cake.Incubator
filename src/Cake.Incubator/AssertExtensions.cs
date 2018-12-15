@@ -78,6 +78,38 @@ namespace Cake.Incubator
         }
 
         /// <summary>
+        /// Throws a <see cref="ArgumentNullException"/> if a string is null or white space, otherwise returns the value
+        /// </summary>
+        /// <param name="value">The object to check</param>
+        /// <param name="varName">The name of the variable</param>
+        /// <exception cref="ArgumentNullException">value is null.</exception>
+        /// <returns>The non-null value</returns>
+        /// <example>
+        /// replace the following
+        /// <code>
+        /// string myArg = "";
+        /// if (string.IsNullOrWhiteSpace(myArg)) 
+        /// {
+        ///   throw new ArgumentNullException(nameof(myArg));
+        /// }
+        /// var arg1 = myArg;
+        /// </code>
+        /// with 
+        /// <code>
+        /// string myArg = "";
+        /// var arg1 = myArg.ThrowIfNullOrWhiteSpace(nameof(myArg));
+        /// </code>
+        /// </example>
+        [CakeAliasCategory("Guard Clauses")]
+        public static string ThrowIfNullOrWhiteSpace(this string value, string varName)
+        {
+            if (string.IsNullOrWhiteSpace(value))
+                throw new ArgumentNullException(varName ?? "string");
+
+            return value;
+        }
+        
+        /// <summary>
         /// Throws a <see cref="ArgumentNullException"/> if a string is null or empty, otherwise returns the value
         /// </summary>
         /// <param name="value">The object to check</param>
@@ -118,7 +150,7 @@ namespace Cake.Incubator
         [CakeAliasCategory("Guard Clauses")]
         public static bool IsNullOrEmpty<T>(this ICollection<T> value)
         {
-            return (value == null || value.Count == 0);
+            return (value is null || value.Count == 0);
         }
     }
 }

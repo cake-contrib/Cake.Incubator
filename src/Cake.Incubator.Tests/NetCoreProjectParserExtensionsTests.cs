@@ -121,6 +121,66 @@ namespace Cake.Incubator.Tests
             file.ParseProjectFile("test").IsTestProject().Should().BeFalse();
             file.ParseProjectFile("test").IsDotNetCliTestProject().Should().BeFalse();
             file.ParseProjectFile("test").IsFrameworkTestProject().Should().BeFalse();
+            file.ParseProjectFile("test").IsXUnitTestProject().Should().BeFalse();
+            file.ParseProjectFile("test").IsNUnitTestProject().Should().BeFalse();
+            file.ParseProjectFile("test").IsMSTestProject().Should().BeFalse();
+            file.ParseProjectFile("test").IsFixieTestProject().Should().BeFalse();
+            file.ParseProjectFile("test").IsExpectoTestProject().Should().BeFalse();
+        }
+        
+        [Fact]
+        public void ParseProject_IsCoreXUnitTestProject()
+        {
+            var testProject =
+                "<PropertyGroup><TargetFramework>netcoreapp2.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"xunit\" Version=\"2.0.0\" /><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
+            file.ParseProjectFile("test").IsTestProject().Should().BeTrue();
+            file.ParseProjectFile("test").IsDotNetCliTestProject().Should().BeTrue();
+            file.ParseProjectFile("test").IsXUnitTestProject().Should().BeTrue();
+        }
+        
+        [Fact]
+        public void ParseProject_IsCoreNUnitTestProject()
+        {
+            var testProject =
+                "<PropertyGroup><TargetFramework>netcoreapp2.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"nunit\" Version=\"2.0.0\" /><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
+            file.ParseProjectFile("test").IsTestProject().Should().BeTrue();
+            file.ParseProjectFile("test").IsDotNetCliTestProject().Should().BeTrue();
+            file.ParseProjectFile("test").IsNUnitTestProject().Should().BeTrue();
+        }
+        
+        [Fact]
+        public void ParseProject_IsCoreMSTestProject()
+        {
+            var testProject =
+                "<PropertyGroup><TargetFramework>netcoreapp2.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Microsoft.VisualStudio.TestPlatform\" Version=\"2.0.0\" /><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
+            file.ParseProjectFile("test").IsTestProject().Should().BeTrue();
+            file.ParseProjectFile("test").IsDotNetCliTestProject().Should().BeTrue();
+            file.ParseProjectFile("test").IsMSTestProject().Should().BeTrue();
+        }
+        
+        [Fact]
+        public void ParseProject_IsCoreFixieTestProject()
+        {
+            var testProject =
+                "<PropertyGroup><TargetFramework>netcoreapp2.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Fixie\" Version=\"2.0.0\" /><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
+            file.ParseProjectFile("test").IsTestProject().Should().BeTrue();
+            file.ParseProjectFile("test").IsDotNetCliTestProject().Should().BeTrue();
+            file.ParseProjectFile("test").IsFixieTestProject().Should().BeTrue();
+        }
+        
+        [Fact]
+        public void ParseProject_IsCoreExpectoTestProject()
+        {
+            var testProject =
+                "<PropertyGroup><TargetFramework>netcoreapp2.0</TargetFramework></PropertyGroup><ItemGroup><PackageReference Include=\"Expecto\" Version=\"2.0.0\" /><PackageReference Include=\"Microsoft.NET.Test.Sdk\" Version=\"15.5.0\" /></ItemGroup>";
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
+            file.ParseProjectFile("test").IsTestProject().Should().BeTrue();
+            file.ParseProjectFile("test").IsDotNetCliTestProject().Should().BeTrue();
+            file.ParseProjectFile("test").IsExpectoTestProject().Should().BeTrue();
         }
 
         [Fact]
@@ -1271,6 +1331,13 @@ namespace Cake.Incubator.Tests
             result.NetCore.TargetFrameworks.Should().BeEquivalentTo(new []{ "netstandard1.6", "net46"});
             result.RootNameSpace.Should().Be("Cake.Kudu");
             result.IsLibrary().Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_ReturnsGlobalTool_WhenExeSpecified()
+        {
+            var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("PackAsTool", "true"));
+            file.ParseProjectFile("test").IsGlobalTool().Should().BeTrue();
         }
     }
 }

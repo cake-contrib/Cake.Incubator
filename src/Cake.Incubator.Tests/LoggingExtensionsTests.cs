@@ -18,7 +18,7 @@ namespace Cake.Incubator.Tests
             o.Dump().Should().BeNullOrEmpty();
         }
 
-        [Fact(Skip = "Test failing after moving to netstandard 2.0, need to update dump method")]
+        [Fact()]
         public void Dump_OutputsCorrectString_BasicProps()
         {
             var test = new DumpTest
@@ -28,7 +28,7 @@ namespace Cake.Incubator.Tests
                 DateTimeProp = DateTime.Today
             };
 
-            var expected = $"\tStringProp:\t{test.StringProp}\r\n\tIntProp:\t{test.IntProp}\r\n\tDateTimeProp:\t{test.DateTimeProp}\r\n";
+            var expected = $"\tStringProp:\t{test.StringProp}\r\n\tIntProp:\t{test.IntProp}\r\n\tDateTimeProp:\t{test.DateTimeProp}\r\n\tUnreadable:\t180\r\n";
 
             test.Dump().Should().Be(expected);
         }
@@ -62,8 +62,21 @@ namespace Cake.Incubator.Tests
                 Children = new List<Person> { new Person("Toddler", 2), new Person("Teenager", 13) }
             };
 
-            const string expected = "\tParent:\tOlder person is 42\r\n\tChildren:\t[ \"Toddler is 2\", \"Teenager is 13\" ]\r\n";
+            const string expected = @"	Parent:	Older person is 42
+	Children:	[ 	Name:	Toddler
+		Age:	2
+	, 	Name:	Teenager
+		Age:	13
+	 ]
+";
             test.Dump().Should().Be(expected);
+        }
+
+        [Fact(Skip = "Testing complex object output")]
+        public void Dump_ProjectParserResult()
+        {
+            var file = new FakeFile("CsProj_ValidFile".SafeLoad());
+            file.ParseProjectFile("test").Dump().Should().Be("");
         }
 
         private class DumpTest
