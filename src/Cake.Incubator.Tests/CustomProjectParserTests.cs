@@ -1,4 +1,4 @@
-// This Source Code Form is subject to the terms of the Mozilla Public
+﻿// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 namespace Cake.Incubator.Tests
@@ -238,6 +238,45 @@ namespace Cake.Incubator.Tests
 
             // assert
             webApp.Should().BeTrue();
+        }
+
+        [Fact]
+        public void GetProjectProperty_ReturnsNull_ForMissingProperty()
+        {
+            // arrange
+            var sut = validCsProjWebApplicationFile.ParseProjectFile("debug");
+
+            // act
+            var webApp = sut.GetProjectProperty("any");
+
+            // assert
+            webApp.Should().BeNull();
+        }
+
+        [Fact]
+        public void GetProjectProperty_ReturnsValue_ForExistingProperty()
+        {
+            // arrange
+            var sut = validCsProjWebApplicationFile.ParseProjectFile("debug");
+
+            // act
+            var webApp = sut.GetProjectProperty("AppDesignerFolder");
+
+            // assert
+            webApp.Should().Be("Properties");
+        }
+
+        [Fact]
+        public void GetProjectProperty2017_ReturnsValue_ForExistingProperty()
+        {
+            // arrange
+            var sut = valid2017CsProjNetcoreFile.ParseProjectFile("debug");
+
+            // act
+            var webApp = sut.GetProjectProperty("OutputPath");
+
+            // assert
+            webApp.Should().Be(@"bin\custom\");
         }
     }
 

@@ -1,4 +1,4 @@
-// This Source Code Form is subject to the terms of the Mozilla Public
+﻿// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
@@ -474,6 +474,26 @@ namespace Cake.Incubator
         {
             return projectParserResult.References.SingleOrDefault(x =>
                 x.Name.EqualsIgnoreCase(referenceAssemblyName) || (x.Aliases != null && x.Aliases.EqualsIgnoreCase(referenceAssemblyName)));
+        }
+
+        /// <summary>
+        /// Gets any project property by name. Useful for getting non-standard properties in the CustomProjectParserResult type
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <param name="propertyName">the project propertyName</param>
+        /// <returns>the project property value if found</returns>
+        /// <example>
+        /// Gets a project property by name, will return any config/platform specific values if they exist 
+        /// <code>
+        /// CustomParseProjectResult project 
+        ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
+        /// string propValue = project.GetProjectProperty("DocumentationFile");
+        /// </code>
+        /// </example>
+        public static string GetProjectProperty(this CustomProjectParserResult projectParserResult, string propertyName)
+        {
+            var name = projectParserResult.ProjectXml.Root?.Name.Namespace.GetXNameWithNamespace(propertyName);
+            return projectParserResult.ProjectXml.GetFirstElementValue(name, projectParserResult.Configuration, projectParserResult.Platform);
         }
 
         /// <summary>
