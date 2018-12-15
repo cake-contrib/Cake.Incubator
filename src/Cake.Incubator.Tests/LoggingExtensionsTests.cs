@@ -62,7 +62,13 @@ namespace Cake.Incubator.Tests
                 Children = new List<Person> { new Person("Toddler", 2), new Person("Teenager", 13) }
             };
 
-            const string expected = "\tParent:\tOlder person is 42\r\n\tChildren:\t[ \"Toddler is 2\", \"Teenager is 13\" ]\r\n";
+            const string expected = @"	Parent:	Older person is 42
+	Children:	[ 	Name:	Toddler
+		Age:	2
+	, 	Name:	Teenager
+		Age:	13
+	 ]
+";
             test.Dump().Should().Be(expected);
         }
 

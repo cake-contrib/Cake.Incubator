@@ -12,6 +12,8 @@
     <PackageIconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
     <Authors>Scott Mackay (@wwwlicious),cake-contrib</Authors>
     <ReleaseNotes>https://github.com/cake-contrib/Cake.Incubator/releases</ReleaseNotes>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
+    <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
   </PropertyGroup>
   <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
     <DefineConstants>NETSTANDARD2_0;</DefineConstants>
@@ -25,7 +27,7 @@
   <ItemGroup>
     <PackageReference Include="Cake.Common" Version="0.28.0" PrivateAssets="All" />
     <PackageReference Include="Cake.Core" Version="0.28.0" PrivateAssets="All" />
-    <PackageReference Include="GitLink" Version="3.1.0" PrivateAssets="All" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All" />
     <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
     <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
   </ItemGroup>
