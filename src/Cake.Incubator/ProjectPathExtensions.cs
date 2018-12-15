@@ -21,5 +21,17 @@ namespace Cake.Incubator
         {
             return new ProjectPath(System.IO.Path.Combine(basePath.FullPath, path));
         }
+
+        public static string GetRelativeProjectFilePath(this ProjectPath filePath, DirectoryPath projectRootDirectoryPath)
+        {
+            
+            if (filePath == null || string.IsNullOrEmpty(filePath.Path))
+                return string.Empty;
+
+            if ((projectRootDirectoryPath == null || string.IsNullOrEmpty(projectRootDirectoryPath.FullPath)))
+                return filePath.Path;
+
+            return filePath.Path.Replace(projectRootDirectoryPath.FullPath, string.Empty).TrimStart(new char[] { '\\', '/' });
+        }
     }
 }
