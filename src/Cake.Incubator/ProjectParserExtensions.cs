@@ -1,4 +1,4 @@
-﻿// This Source Code Form is subject to the terms of the Mozilla Public
+// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
@@ -545,13 +545,13 @@ namespace Cake.Incubator
         ///
         /// For a solution
         /// <code>
-        /// // Solution output dll/exe's FilePath[] for 'Release' configuration
+        /// // Solution output dll/exe's FilePath[] for 'Release' configuration for platform 'AnyCPU'
         /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.sln"), "Release");
         /// </code>
         /// 
         /// For a project
         /// <code>
-        /// // Project output dll/exe as FilePath[] for 'Custom' configuration
+        /// // Project output dll/exe as FilePath[] for 'Custom' configuration for platform 'AnyCPU'
         /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.csproj"), "Custom");
         /// </code>
         /// </example>
@@ -561,13 +561,48 @@ namespace Cake.Incubator
         public static IEnumerable<FilePath> GetOutputAssemblies(this ICakeContext context, FilePath target,
             string configuration)
         {
+            return context.GetOutputAssemblies(target, configuration, "AnyCPU");
+        }
+
+        ///  <summary>
+        ///  Gets the output assembly paths for solution or project files, for a specific build configuration
+        ///  </summary>
+        ///  <param name="context">the cake context</param>
+        ///  <param name="target">the solution or project file</param>
+        ///  <param name="configuration">the build configuration</param>
+        /// <param name="platform">the platform</param>
+        /// <returns>the list of output assembly paths</returns>
+        ///  <exception cref="ArgumentException">Throws if the file is not a recognizable solution or project file</exception>
+        ///  <example>
+        ///  The project or solution's <see cref="FilePath"/> and the build configuration will 
+        ///  return the output file/s (dll or exe) for the project and return as an <see cref="IEnumerable{T}"/>
+        ///  The alias expects a valid `.sln` or a `csproj` file.
+        /// 
+        ///  For a solution
+        ///  <code>
+        ///  // Solution output dll/exe's FilePath[] for 'Release' configuration for 'x86' platform
+        ///  IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.sln"), "Release", "x86");
+        ///  </code>
+        ///  
+        ///  For a project
+        ///  <code>
+        ///  // Project output dll/exe as FilePath[] for 'Custom' configuration for 'x64' platform
+        ///  IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.csproj"), "Custom", "x64");
+        ///  </code>
+        ///  </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Projects")]
+        // ReSharper disable once UnusedMember.Global
+        public static IEnumerable<FilePath> GetOutputAssemblies(this ICakeContext context, FilePath target,
+            string configuration, string platform)
+        {
             if (!target.IsProject() && !target.IsSolution())
                 throw new ArgumentException(
                     $"Cannot get target assemblies, {target.FullPath} is not a project or solution file");
 
             return target.IsSolution()
-                ? context.GetSolutionAssemblies(target, configuration)
-                : context.GetProjectAssemblies(target, configuration);
+                ? context.GetSolutionAssemblies(target, configuration, platform)
+                : context.GetProjectAssemblies(target, configuration, platform);
         }
 
         /// <summary>
@@ -583,7 +618,7 @@ namespace Cake.Incubator
         /// output files (dll or exe) for the projects and return as an <see cref="IEnumerable{FilePath}"/>
         /// The alias expects a valid `.sln` file.
         /// <code>
-        /// // Solution project's output dll/exe's for the 'Release' configuration
+        /// // Solution project's output dll/exe's for the 'Release' configuration and 'AnyCPU' platform
         /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.sln"), "Release");
         /// </code>
         /// </example>
@@ -592,13 +627,39 @@ namespace Cake.Incubator
         public static IEnumerable<FilePath> GetSolutionAssemblies(this ICakeContext context, FilePath target,
             string configuration)
         {
+            return context.GetSolutionAssemblies(target, configuration, "AnyCPU");
+        }
+
+        /// <summary>
+        /// Gets the output assembly paths for a solution file, for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the solution file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <param name="platform">the platform</param>
+        /// <returns>the list of output assembly paths</returns>
+        /// <exception cref="ArgumentException">Throws if the file is not a recognizable solution file</exception>
+        /// <example>
+        /// The Solution's <see cref="FilePath"/> and the build configuration will return the 
+        /// output files (dll or exe) for the projects and return as an <see cref="IEnumerable{FilePath}"/>
+        /// The alias expects a valid `.sln` file.
+        /// <code>
+        /// // Solution project's output dll/exe's for the 'Release' configuration and 'x64' platform
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.sln"), "Release", "x64");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Projects")]
+        public static IEnumerable<FilePath> GetSolutionAssemblies(this ICakeContext context, FilePath target,
+            string configuration, string platform)
+        {
             if (!target.IsSolution())
                 throw new ArgumentException(
                     $"Cannot get target assemblies, {target.FullPath} is not a solution file");
 
             var result = context.ParseSolution(target);
             return
-                result.GetProjects().SelectMany(x => context.GetProjectAssemblies(x.Path, configuration));
+                result.GetProjects().SelectMany(x => context.GetProjectAssemblies(x.Path, configuration, platform));
         }
 
         /// <summary>
@@ -643,7 +704,7 @@ namespace Cake.Incubator
         /// output file (dll or exe) for the project and return as a <see cref="FilePath"/>
         /// The alias expects a valid project file.
         /// <code>
-        /// // Project output dll/exe as FilePath[] for 'Custom' configuration
+        /// // Project output dll/exe as FilePath[] for 'Custom' configuration for AnyCPU platform
         /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.csproj"), "Custom");
         /// </code>
         /// </example>
@@ -651,11 +712,36 @@ namespace Cake.Incubator
         [CakeAliasCategory("Projects")]
         public static FilePath[] GetProjectAssemblies(this ICakeContext context, FilePath target, string configuration)
         {
+            return context.GetProjectAssemblies(target, configuration, "AnyCPU");
+        }
+
+        /// <summary>
+        /// Gets the output assembly path for a project file, for a specific build configuration
+        /// </summary>
+        /// <param name="context">the cake context</param>
+        /// <param name="target">the project file</param>
+        /// <param name="configuration">the build configuration</param>
+        /// <param name="platform">the platform</param>
+        /// <returns>the output assembly path</returns>
+        /// <exception cref="ArgumentException">Throws if the file is not a recognizable project file</exception>
+        /// <example>
+        /// The project's <see cref="FilePath"/> and the build configuration will return the 
+        /// output file (dll or exe) for the project and return as a <see cref="FilePath"/>
+        /// The alias expects a valid project file.
+        /// <code>
+        /// // Project output dll/exe as FilePath[] for 'Debug' configuration and AnyCPU platform
+        /// IEnumerable&lt;FilePath&gt; filePaths = GetOutputAssemblies(new FilePath("test.csproj"), "Custom", "AnyCPU");
+        /// </code>
+        /// </example>
+        [CakeMethodAlias]
+        [CakeAliasCategory("Projects")]
+        public static FilePath[] GetProjectAssemblies(this ICakeContext context, FilePath target, string configuration, string platform)
+        {
             if (!target.IsProject())
                 throw new ArgumentException(
                     $"Cannot get target assembly, {target.FullPath} is not a project file");
 
-            return context.ParseProject(target, configuration).GetAssemblyFilePaths();
+            return context.ParseProject(target, configuration, platform).GetAssemblyFilePaths();
         }
 
 

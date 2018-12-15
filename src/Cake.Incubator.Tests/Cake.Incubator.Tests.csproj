@@ -36,12 +36,12 @@
   <ItemGroup>
     <PackageReference Include="Cake.Common" Version="0.28.0" />
     <PackageReference Include="Cake.Core" Version="0.28.0" />
-    <PackageReference Include="FakeItEasy" Version="4.5.1" />
-    <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="4.5.1" />
-    <PackageReference Include="FluentAssertions" Version="5.3.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.0" />
-    <PackageReference Include="xunit" Version="2.3.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.3.1" />
+    <PackageReference Include="FakeItEasy" Version="4.9.1" />
+    <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="4.9.1" />
+    <PackageReference Include="FluentAssertions" Version="5.5.3" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.9.0" />
+    <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cake.Incubator\Cake.Incubator.csproj" />

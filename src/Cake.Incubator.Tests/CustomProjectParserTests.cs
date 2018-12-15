@@ -1,33 +1,35 @@
-﻿// This Source Code Form is subject to the terms of the Mozilla Public
+// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 namespace Cake.Incubator.Tests
 {
     using System;
     using System.Collections.Generic;
-    using System.IO;
-    using System.Text;
-    using Cake.Core.IO;
     using FluentAssertions;
     using Xunit;
-    using Path = Cake.Core.IO.Path;
 
     public class TestProjects
     {
         private static readonly FakeFile validCsProjMSTestFile = new FakeFile("CsProj_ValidMSTestFile".SafeLoad());
-        private static readonly FakeFile validCsProjXUnitTestFile = new FakeFile("CsProj_ValidXUnitTestFile".SafeLoad());
+
+        private static readonly FakeFile
+            validCsProjXUnitTestFile = new FakeFile("CsProj_ValidXUnitTestFile".SafeLoad());
+
         private static readonly FakeFile validCsProjNUnitTestFile = new FakeFile("CsProjValidNUnitTestFile".SafeLoad());
-        private static readonly FakeFile validCsProjFSUnitTestFile = new FakeFile("CsProjValidFSUnitTestFile".SafeLoad());
+
+        private static readonly FakeFile validCsProjFSUnitTestFile =
+            new FakeFile("CsProjValidFSUnitTestFile".SafeLoad());
+
         private static readonly FakeFile validCsProjFixieTestFile = new FakeFile("CsProjValidFixieTestFile".SafeLoad());
 
         // ReSharper disable once UnusedMember.Global
         public static IEnumerable<object[]> TestData { get; } = new List<object[]>
         {
-            new object[] {validCsProjMSTestFile},
-            new object[] {validCsProjNUnitTestFile},
-            new object[] {validCsProjXUnitTestFile},
-            new object[] {validCsProjFSUnitTestFile},
-            new object[] {validCsProjFixieTestFile},
+            new object[] { validCsProjMSTestFile },
+            new object[] { validCsProjNUnitTestFile },
+            new object[] { validCsProjXUnitTestFile },
+            new object[] { validCsProjFSUnitTestFile },
+            new object[] { validCsProjFixieTestFile },
         };
     }
 
@@ -40,7 +42,6 @@ namespace Cake.Incubator.Tests
         private readonly FakeFile valid2017CsProjNetstandardFile;
         private readonly FakeFile validCsProjConditionalReferenceFile;
         private readonly FakeFile validCsProjWithAbsoluteFilePaths;
-        
 
         public CustomProjectParserTests()
         {
@@ -81,7 +82,7 @@ namespace Cake.Incubator.Tests
             result.OutputType.Should().Be("Exe");
             result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/netcoreapp1.1/project.dll");
         }
-        
+
         [Fact]
         public void CustomProjectParser_CanGetNetCoreProjectAssembly_ForDebugConfig()
         {
@@ -124,7 +125,9 @@ namespace Cake.Incubator.Tests
         {
             var result = validCsProjWithAbsoluteFilePaths.ParseProjectFile("debug");
 
-            result.References.Should().Contain(x => x.HintPath.FullPath == "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5.2/System.dll");
+            result.References.Should().Contain(x =>
+                x.HintPath.FullPath ==
+                "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5.2/System.dll");
         }
 
         [Fact]
@@ -154,9 +157,10 @@ namespace Cake.Incubator.Tests
         {
             var result = validCsProjConditionalReferenceFile.ParseProjectFile("debug");
 
-            result.References.Should().HaveCount(8).And.Contain(x => x.Name.Equals("Microsoft.VisualStudio.QualityTools.UnitTestFramework"));
+            result.References.Should().HaveCount(8).And.Contain(x =>
+                x.Name.Equals("Microsoft.VisualStudio.QualityTools.UnitTestFramework"));
         }
-        
+
         [Fact]
         public void CustomProjectParser_CanParseSampleCsProjFile_ForReleaseConfig()
         {
@@ -187,10 +191,10 @@ namespace Cake.Incubator.Tests
         public void CanGetProjectTypeFromMultiple()
         {
             var result = new TestProjectParserResult()
-                             {
-                                 ProjectTypeGuids =
-                                     new[] { ProjectTypes.CSharp, ProjectTypes.AspNetMvc1 }
-                             };
+            {
+                ProjectTypeGuids =
+                    new[] { ProjectTypes.CSharp, ProjectTypes.AspNetMvc1 }
+            };
 
             result.IsType(ProjectType.Unspecified).Should().BeFalse();
             result.IsType(ProjectType.CSharp).Should().BeTrue();
@@ -209,7 +213,7 @@ namespace Cake.Incubator.Tests
             // assert
             webApp.Should().BeFalse();
         }
-        
+
         [Fact]
         public void IsWebApplication_ReturnsFalse_When2017ProjectIsOfTypeLibrary()
         {
@@ -251,51 +255,5 @@ namespace Cake.Incubator.Tests
             AssemblyName = "AssemblyName";
             TargetFrameworkVersion = "v4.5";
         }
-    }
-
-    public class FakeFile : IFile
-    {
-        private readonly string content;
-
-        public FakeFile(string content, string path = "./project.csproj")
-        {
-            this.content = content;
-            Path = path;
-        }
-
-        public void Copy(FilePath destination, bool overwrite)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Move(FilePath destination)
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public void Delete()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public Stream Open(FileMode fileMode, FileAccess fileAccess, FileShare fileShare)
-        {
-            return new MemoryStream(Encoding.UTF8.GetBytes(content));
-        }
-
-        public FilePath Path { get; }
-
-        public long Length => throw new NotImplementedException();
-
-        public FileAttributes Attributes
-        {
-            get => throw new NotImplementedException();
-            set => throw new NotImplementedException();
-        }
-
-        Path IFileSystemInfo.Path => Path;
-
-        public bool Exists => throw new NotImplementedException();
-        public bool Hidden => throw new NotImplementedException();
     }
 }

@@ -1,0 +1,63 @@
+// This Source Code Form is subject to the terms of the Mozilla Public
+// License, v. 2.0. If a copy of the MPL was not distributed with this
+// file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+namespace Cake.Incubator.Tests
+{
+    using System;
+    using System.Collections.Generic;
+    using Cake.Core;
+    using Cake.Core.Configuration;
+    using Cake.Core.Diagnostics;
+    using Cake.Core.IO;
+    using Cake.Core.Tooling;
+
+    public class CakeFixture
+    {
+        public FakeFileSystem FileSystem { get; }
+
+        public CakeContext Context { get; }
+
+        public CakeFixture()
+        {
+            var env = new FakeCakeEnvironment();
+            FileSystem = new FakeFileSystem(env);
+            var globber = new Globber(FileSystem, env);
+            var log = new NullLog();
+            var runner = new ProcessRunner(env, log);
+            var reg = new WindowsRegistry();
+            var strategy = new ToolResolutionStrategy(FileSystem, env, globber,
+                new CakeConfiguration(new Dictionary<string, string>()));
+            var toolLocator = new ToolLocator(env, new ToolRepository(env), strategy);
+            var cakeDataService = new FakeDataService();
+            var args = new FakeArguments();
+            Context = new CakeContext(FileSystem, env, globber, log, args, runner, reg, toolLocator, cakeDataService);
+        }
+        
+        public class FakeDataService : ICakeDataService
+        {
+            public TData Get<TData>() where TData : class
+            {
+                throw new NotImplementedException();
+            }
+
+            public void Add<TData>(TData value) where TData : class
+            {
+                throw new NotImplementedException();
+            }
+        }
+
+        public class FakeArguments : ICakeArguments
+        {
+            public bool HasArgument(string name)
+            {
+                throw new NotImplementedException();
+            }
+
+            public string GetArgument(string name)
+            {
+                throw new NotImplementedException();
+            }
+        }
+        
+    }
+}
