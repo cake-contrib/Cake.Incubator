@@ -24,7 +24,7 @@ branches:
 #---------------------------------#
 cache:
 - src\packages -> src\**\packages.config
-- tools -> setup.cake
+#- tools -> setup.cake
 
 #---------------------------------#
 #    environment configuration    #
