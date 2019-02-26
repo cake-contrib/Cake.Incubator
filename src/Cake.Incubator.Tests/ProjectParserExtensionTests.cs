@@ -41,6 +41,17 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
+        public void NullRefException_For_VS2017FSProjFile()
+        {
+            var file = new FakeFile("Cake_Unity_FSharp_Tests_fsproj".SafeLoad(), "c:/tmp/abc.fsproj");
+            fs.AddFile(file);
+
+            var project = cakeContext.ParseProject(file.Path, "Release", "AnyCPU");
+
+            project.IsFsUnitTestProject().Should().BeTrue();
+        }
+
+        [Fact]
         public void CanGetOutputAssemblies_For_VS2017CSProjFile_MultiTarget()
         {
             var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(

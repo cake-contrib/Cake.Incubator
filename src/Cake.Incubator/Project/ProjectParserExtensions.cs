@@ -161,6 +161,23 @@ namespace Cake.Incubator.Project
         {
             return projectParserResult.IsTestProjectOfType("xunit", "xunit.core");
         }
+
+        /// <summary>
+        /// Checks if the project is an fsunit test compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is an fsunit test compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is an fsunit test compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsFsUnitTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsFsUnitTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            return projectParserResult.IsTestProjectOfType("fsunit", "fsunit");
+        }
         
         /// <summary>
         /// Checks if the project is an NUnit test compatible project
@@ -371,9 +388,10 @@ namespace Cake.Incubator.Project
         public static bool HasPackage(this CustomProjectParserResult projectParserResult, string packageName, string targetFramework = null)
         {
             return (targetFramework == null)
-                ? projectParserResult.PackageReferences.Any(x => x.Name.EqualsIgnoreCase(packageName))
-                : projectParserResult.PackageReferences.Any(x =>
-                    x.Name.EqualsIgnoreCase(packageName) && x.TargetFramework == targetFramework);
+                ? projectParserResult.PackageReferences.Where(x => x.Name != null).Any(x => x.Name.EqualsIgnoreCase(packageName))
+                : projectParserResult.PackageReferences.
+                    Where(x => x.Name != null && x.TargetFramework != null).
+                    Any(x => x.Name.EqualsIgnoreCase(packageName) && x.TargetFramework == targetFramework);
         }
         
         /// <summary>
@@ -392,8 +410,9 @@ namespace Cake.Incubator.Project
         /// </example>
         public static bool HasReference(this CustomProjectParserResult projectParserResult, string referenceAssemblyName)
         {
-            return projectParserResult.References.Any(x =>
-                x.Name.EqualsIgnoreCase(referenceAssemblyName) ||
+            return projectParserResult.References
+                .Where(x => x.Name != null)
+                .Any(x => x.Name.EqualsIgnoreCase(referenceAssemblyName) ||
                 (x.Aliases != null && x.Aliases.EqualsIgnoreCase(referenceAssemblyName)));
         }
         
