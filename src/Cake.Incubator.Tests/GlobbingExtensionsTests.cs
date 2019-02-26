@@ -8,6 +8,7 @@ namespace Cake.Incubator.Tests
     using Cake.Core.Diagnostics;
     using Cake.Core.IO;
     using Cake.Core.Tooling;
+    using Cake.Incubator.GlobbingExtensions;
     using FakeItEasy;
     using FluentAssertions;
     using Xunit;

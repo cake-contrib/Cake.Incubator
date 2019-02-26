@@ -1,6 +1,7 @@
 namespace Cake.Incubator.Tests
 {
     using Cake.Core.IO;
+    using Cake.Incubator.Project;
     using FluentAssertions;
     using Xunit;
 

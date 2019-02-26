@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.0</TargetFramework>
+    <TargetFrameworks>netcoreapp2.0;net462</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="sampleprojects\AnotherCSProj.xml" />
@@ -17,6 +17,7 @@
     <None Remove="sampleprojects\VS2017_CsProj_NetCoreDefault.xml" />
     <None Remove="sampleprojects\VS2017_CsProj_NetStandard_ValidFile.xml" />
     <None Remove="sampleprojects\VS2017_CsProj_ValidFile.xml" />
+    <None Remove="sampleprojects\Cake_Unity_FSharp_Tests_fsproj.xml" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="sampleprojects\CsProjValidFixieTestFile.xml" />
@@ -32,6 +33,7 @@
     <EmbeddedResource Include="sampleprojects\VS2017_CsProj_NetCoreDefault.xml" />
     <EmbeddedResource Include="sampleprojects\VS2017_CsProj_NetStandard_ValidFile.xml" />
     <EmbeddedResource Include="sampleprojects\VS2017_CsProj_ValidFile.xml" />
+    <EmbeddedResource Include="sampleprojects\Cake_Unity_FSharp_Tests_fsproj.xml" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Cake.Common" Version="0.28.0" />

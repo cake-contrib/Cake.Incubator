@@ -1,4 +1,4 @@
-﻿namespace Cake.Incubator
+﻿namespace Cake.Incubator.DotNetCoreTestExtensions
 {
     using System.Linq;
     using Cake.Common.Tools.DotNetCore;

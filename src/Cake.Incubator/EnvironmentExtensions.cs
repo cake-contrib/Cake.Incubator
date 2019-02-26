@@ -2,8 +2,9 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 
-namespace Cake.Incubator
+namespace Cake.Incubator.EnvironmentExtensions
 {
+    using System;
     using System.ComponentModel;
     using System.Globalization;
     using Common;
@@ -31,6 +32,7 @@ namespace Cake.Incubator
         /// </example>
         [CakeMethodAlias]
         [CakeAliasCategory("Environment Variables")]
+        [Obsolete("Moved to Cake core project from [v0.33.0](https://github.com/cake-build/cake/pull/2455)")]
         public static T EnvironmentVariable<T>(this ICakeContext context, string variable)
         {
             var value = context.EnvironmentVariable(variable);
@@ -61,6 +63,7 @@ namespace Cake.Incubator
         /// </example>
         [CakeMethodAlias]
         [CakeAliasCategory("Environment Variables")]
+        [Obsolete("Moved to Cake core project from [v0.33.0](https://github.com/cake-build/cake/pull/2455)")]
         public static T EnvironmentVariable<T>(this ICakeContext context, string variable, T defaultValue)
         {
             var value = context.EnvironmentVariable(variable);

@@ -1,19 +1,29 @@
-﻿// This Source Code Form is subject to the terms of the Mozilla Public
+// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-namespace Cake.Incubator
+namespace Cake.Incubator.Project
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Xml.Linq;
+    using Cake.Common.Solution;
     using Cake.Common.Solution.Project;
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
-    using Common.Solution;
+    using Cake.Incubator.AssertExtensions;
+    using Cake.Incubator.EnumerableExtensions;
+    using Cake.Incubator.FileExtensions;
+    using Cake.Incubator.FilePathExtensions;
+    using Cake.Incubator.FileSystemExtensions;
+    using Cake.Incubator.ProjectPathExtensions;
+    using Cake.Incubator.SolutionParserExtensions;
+    using Cake.Incubator.StringExtensions;
+    using Cake.Incubator.XDocumentExtensions;
+    using Cake.Incubator.XElementExtensions;
 
     /// <summary>
     /// Extension methods for parsing msbuild projects (csproj, vbproj, fsproj)
@@ -150,6 +160,23 @@ namespace Cake.Incubator
         public static bool IsXUnitTestProject(this CustomProjectParserResult projectParserResult)
         {
             return projectParserResult.IsTestProjectOfType("xunit", "xunit.core");
+        }
+
+        /// <summary>
+        /// Checks if the project is an fsunit test compatible project
+        /// </summary>
+        /// <param name="projectParserResult">the parsed project</param>
+        /// <returns>true if the project is an fsunit test compatible project</returns>
+        /// <example>
+        /// Check if a parsed project is an fsunit test compatible project
+        /// <code>
+        /// CustomParseProjectResult project = ParseProject(new FilePath("test.csproj"), "Release");
+        /// if (project.IsFsUnitTestProject()) { ... }
+        /// </code>
+        /// </example>
+        public static bool IsFsUnitTestProject(this CustomProjectParserResult projectParserResult)
+        {
+            return projectParserResult.IsTestProjectOfType("fsunit", "fsunit");
         }
         
         /// <summary>
@@ -361,9 +388,10 @@ namespace Cake.Incubator
         public static bool HasPackage(this CustomProjectParserResult projectParserResult, string packageName, string targetFramework = null)
         {
             return (targetFramework == null)
-                ? projectParserResult.PackageReferences.Any(x => x.Name.EqualsIgnoreCase(packageName))
-                : projectParserResult.PackageReferences.Any(x =>
-                    x.Name.EqualsIgnoreCase(packageName) && x.TargetFramework == targetFramework);
+                ? projectParserResult.PackageReferences.Where(x => x.Name != null).Any(x => x.Name.EqualsIgnoreCase(packageName))
+                : projectParserResult.PackageReferences.
+                    Where(x => x.Name != null && x.TargetFramework != null).
+                    Any(x => x.Name.EqualsIgnoreCase(packageName) && x.TargetFramework == targetFramework);
         }
         
         /// <summary>
@@ -382,8 +410,9 @@ namespace Cake.Incubator
         /// </example>
         public static bool HasReference(this CustomProjectParserResult projectParserResult, string referenceAssemblyName)
         {
-            return projectParserResult.References.Any(x =>
-                x.Name.EqualsIgnoreCase(referenceAssemblyName) ||
+            return projectParserResult.References
+                .Where(x => x.Name != null)
+                .Any(x => x.Name.EqualsIgnoreCase(referenceAssemblyName) ||
                 (x.Aliases != null && x.Aliases.EqualsIgnoreCase(referenceAssemblyName)));
         }
         

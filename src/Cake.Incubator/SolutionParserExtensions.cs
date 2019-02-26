@@ -2,12 +2,15 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 
-namespace Cake.Incubator
+namespace Cake.Incubator.SolutionParserExtensions
 {
     using System.Collections.Generic;
     using System.Linq;
     using Cake.Common.Solution;
     using Cake.Core.IO;
+    using Cake.Incubator.AssertExtensions;
+    using Cake.Incubator.Project;
+    using Cake.Incubator.StringExtensions;
 
     /// <summary>
     /// Several extension methods when using SolutionParser.

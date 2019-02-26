@@ -6,6 +6,8 @@ namespace Cake.Incubator.Tests
     using System.Linq;
     using Cake.Common.Solution;
     using Cake.Core.IO;
+    using Cake.Incubator.Project;
+    using Cake.Incubator.SolutionParserExtensions;
     using FluentAssertions;
     using Xunit;
 

@@ -5,6 +5,7 @@ namespace Cake.Incubator.Tests
 {
     using Cake.Core;
     using Cake.Core.IO;
+    using Cake.Incubator.Project;
     using FluentAssertions;
     using Xunit;
 
@@ -37,6 +38,17 @@ namespace Cake.Incubator.Tests
 
             var result = cakeContext.GetOutputAssemblies(file.Path, "Debug", "AnyCPU");
             result.Should().ContainSingle().Which.FullPath.Should().Be("bin/custom/netcoreapp1.1/abc.dll");
+        }
+
+        [Fact]
+        public void NullRefException_For_VS2017FSProjFile()
+        {
+            var file = new FakeFile("Cake_Unity_FSharp_Tests_fsproj".SafeLoad(), "c:/tmp/abc.fsproj");
+            fs.AddFile(file);
+
+            var project = cakeContext.ParseProject(file.Path, "Release", "AnyCPU");
+
+            project.IsFsUnitTestProject().Should().BeTrue();
         }
 
         [Fact]

@@ -5,6 +5,8 @@ namespace Cake.Incubator.Tests
 {
     using System;
     using System.Collections.Generic;
+    using Cake.Incubator.LoggingExtensions;
+    using Cake.Incubator.Project;
     using Core.IO;
     using FluentAssertions;
     using Xunit;
@@ -18,7 +20,7 @@ namespace Cake.Incubator.Tests
             o.Dump().Should().BeNullOrEmpty();
         }
 
-        [Fact()]
+        [Fact]
         public void Dump_OutputsCorrectString_BasicProps()
         {
             var test = new DumpTest
@@ -28,8 +30,11 @@ namespace Cake.Incubator.Tests
                 DateTimeProp = DateTime.Today
             };
 
+#if NETFRAMEWORK
+            var expected = $"\tStringProp:\t{test.StringProp}\r\n\tIntProp:\t{test.IntProp}\r\n\tDateTimeProp:\t{test.DateTimeProp}\r\n";
+#else
             var expected = $"\tStringProp:\t{test.StringProp}\r\n\tIntProp:\t{test.IntProp}\r\n\tDateTimeProp:\t{test.DateTimeProp}\r\n\tUnreadable:\t180\r\n";
-
+#endif
             test.Dump().Should().Be(expected);
         }
 
