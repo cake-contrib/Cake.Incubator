@@ -2,7 +2,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 
-namespace Cake.Incubator
+namespace Cake.Incubator.XDocumentExtensions
 {
     using System.Collections.Generic;
     using System.Collections.Specialized;
@@ -10,6 +10,10 @@ namespace Cake.Incubator
     using System.Xml.Linq;
     using Cake.Common.Solution.Project;
     using Cake.Core.IO;
+    using Cake.Incubator.EnumerableExtensions;
+    using Cake.Incubator.Project;
+    using Cake.Incubator.StringExtensions;
+    using Cake.Incubator.XElementExtensions;
 
     /// <summary>
     /// Several extension methods when using XDocument.
@@ -31,7 +35,7 @@ namespace Cake.Incubator
                 .FirstOrDefault(x =>
                 {
                     var condition = x.Parent?.Attribute("Condition")?.Value;
-                    if (condition.IsNullOrEmpty() || !condition.HasConfigPlatformCondition()) return false;
+                    if (AssertExtensions.AssertExtensions.IsNullOrEmpty(condition) || !condition.HasConfigPlatformCondition()) return false;
                     return condition.GetConditionalConfigPlatform().EqualsIgnoreCase($"{config}|{platform}");
                 })?.Value;
 
@@ -46,8 +50,8 @@ namespace Cake.Incubator
 
             // use conventions, skip null or empty props
             var template = "bin/";
-            if (!platform.IsNullOrEmpty() && !platform.EqualsIgnoreCase("AnyCPU")) template += $"{platform}/";
-            if (!config.IsNullOrEmpty()) template += $"{config}/";
+            if (!AssertExtensions.AssertExtensions.IsNullOrEmpty(platform) && !platform.EqualsIgnoreCase("AnyCPU")) template += $"{platform}/";
+            if (!AssertExtensions.AssertExtensions.IsNullOrEmpty(config)) template += $"{config}/";
 
             return targetFrameworks.IsNullOrEmpty()
                 ? new[] {rootDirectoryPath.Combine(template)}
@@ -76,7 +80,7 @@ namespace Cake.Incubator
             var suffix = document.GetFirstElementValue(ProjectXElement.VersionSuffix);
             var version = document.GetFirstElementValue(ProjectXElement.Version);
 
-            if (prefix.IsNullOrEmpty() || suffix.IsNullOrEmpty()) return version ?? "1.0.0";
+            if (AssertExtensions.AssertExtensions.IsNullOrEmpty(prefix) || AssertExtensions.AssertExtensions.IsNullOrEmpty(suffix)) return version ?? "1.0.0";
 
             return char.IsDigit(suffix[0]) ? $"{prefix}.{suffix}" : $"{prefix}-{suffix}";
         }
@@ -96,7 +100,7 @@ namespace Cake.Incubator
             if (!elements.Any()) return null;
 
             // if no config specified, return first value without config condition
-            if (config.IsNullOrEmpty()) return elements.FirstOrDefault(x => !x.WithConfigCondition())?.Value;
+            if (AssertExtensions.AssertExtensions.IsNullOrEmpty(config)) return elements.FirstOrDefault(x => !x.WithConfigCondition())?.Value;
 
             // next will look to match the config|platform condition of an element or it's parent, if that fails, 
             // will fallback to grab the first matching value without a condition on the element or it's parent.

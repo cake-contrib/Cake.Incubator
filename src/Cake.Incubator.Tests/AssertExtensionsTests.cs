@@ -6,6 +6,8 @@ namespace Cake.Incubator.Tests
     using System;
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
+    using Cake.Incubator.AssertExtensions;
+    using Cake.Incubator.EnumerableExtensions;
     using FluentAssertions;
     using Xunit;
 

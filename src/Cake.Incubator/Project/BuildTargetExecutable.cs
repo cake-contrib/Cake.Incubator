@@ -2,21 +2,16 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 
-namespace Cake.Incubator
+namespace Cake.Incubator.Project
 {
     /// <summary>
-    /// A dotnet cli tool referenceS
+    /// A executable build target 
     /// </summary>
-    public class DotNetCliToolReference
+    public class BuildTargetExecutable
     {
         /// <summary>
-        /// The dotnet cli tool name
+        /// The executable command
         /// </summary>
-        public string Name { get; set; }
-
-        /// <summary>
-        /// The tool version
-        /// </summary>
-        public string Version { get; set; }
+        public string Command { get; set; }
     }
 }

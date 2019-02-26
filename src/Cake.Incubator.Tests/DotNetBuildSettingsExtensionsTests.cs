@@ -4,6 +4,7 @@
 namespace Cake.Incubator.Tests
 {
     using Cake.Common.Tools;
+    using Cake.Incubator.DotNetBuildExtensions;
     using FluentAssertions;
     using Xunit;
 

@@ -5,6 +5,7 @@
 namespace Cake.Incubator.Tests
 {
     using Cake.Core.IO;
+    using Cake.Incubator.FilePathExtensions;
     using FluentAssertions;
     using Xunit;
 

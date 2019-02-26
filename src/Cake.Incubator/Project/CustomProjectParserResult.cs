@@ -1,9 +1,8 @@
-﻿using System.Xml.Linq;
-
-namespace Cake.Incubator
+namespace Cake.Incubator.Project
 {
     using System;
     using System.Collections.Generic;
+    using System.Xml.Linq;
     using Cake.Common.Solution.Project;
     using Cake.Core.IO;
 

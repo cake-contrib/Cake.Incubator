@@ -5,6 +5,7 @@
 namespace Cake.Incubator.Tests
 {
     using System;
+    using Cake.Incubator.EnvironmentExtensions;
     using Core;
     using FakeItEasy;
     using FluentAssertions;

@@ -4,6 +4,8 @@
 namespace Cake.Incubator.Tests
 {
     using System.Linq;
+    using Cake.Incubator.Project;
+    using Cake.Incubator.StringExtensions;
     using FluentAssertions;
     using Xunit;
 

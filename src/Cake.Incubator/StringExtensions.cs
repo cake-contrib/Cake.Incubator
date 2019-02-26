@@ -1,11 +1,12 @@
 ﻿// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
-namespace Cake.Incubator
+namespace Cake.Incubator.StringExtensions
 {
     using System;
     using System.Diagnostics;
     using System.Text.RegularExpressions;
+    using Cake.Incubator.AssertExtensions;
     using Core.IO;
 
     /// <summary>

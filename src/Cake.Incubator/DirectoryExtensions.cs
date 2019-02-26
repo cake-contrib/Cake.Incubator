@@ -1,13 +1,14 @@
 ﻿// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
-namespace Cake.Incubator
+namespace Cake.Incubator.DirectoryExtensions
 {
     using System;
     using Cake.Common.IO;
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
+    using Cake.Incubator.AssertExtensions;
 
     /// <summary>
     /// Several extension methods when operating on a Directory.
@@ -26,7 +27,7 @@ namespace Cake.Incubator
         /// <exception cref="CakeException">Throws if destination directory does exist</exception>
         [CakeMethodAlias]
         [CakeAliasCategory("Copy")]
-        [Obsolete("Use Cake.Common.IO.CopyDirectory instead")]
+        [Obsolete("Use Cake.Common.IO.CopyDirectory instead", true)]
         // ReSharper disable once UnusedMember.Global
         public static void TransferDirectory(this ICakeContext context, DirectoryPath source, DirectoryPath destination)
         {

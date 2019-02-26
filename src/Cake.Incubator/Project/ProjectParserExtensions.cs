@@ -1,19 +1,29 @@
-﻿// This Source Code Form is subject to the terms of the Mozilla Public
+// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
-namespace Cake.Incubator
+namespace Cake.Incubator.Project
 {
     using System;
     using System.Collections.Generic;
     using System.Linq;
     using System.Text.RegularExpressions;
     using System.Xml.Linq;
+    using Cake.Common.Solution;
     using Cake.Common.Solution.Project;
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
-    using Common.Solution;
+    using Cake.Incubator.AssertExtensions;
+    using Cake.Incubator.EnumerableExtensions;
+    using Cake.Incubator.FileExtensions;
+    using Cake.Incubator.FilePathExtensions;
+    using Cake.Incubator.FileSystemExtensions;
+    using Cake.Incubator.ProjectPathExtensions;
+    using Cake.Incubator.SolutionParserExtensions;
+    using Cake.Incubator.StringExtensions;
+    using Cake.Incubator.XDocumentExtensions;
+    using Cake.Incubator.XElementExtensions;
 
     /// <summary>
     /// Extension methods for parsing msbuild projects (csproj, vbproj, fsproj)
