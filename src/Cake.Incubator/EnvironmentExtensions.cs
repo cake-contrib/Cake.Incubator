@@ -4,6 +4,7 @@
 
 namespace Cake.Incubator.EnvironmentExtensions
 {
+    using System;
     using System.ComponentModel;
     using System.Globalization;
     using Common;
@@ -31,6 +32,7 @@ namespace Cake.Incubator.EnvironmentExtensions
         /// </example>
         [CakeMethodAlias]
         [CakeAliasCategory("Environment Variables")]
+        [Obsolete("Moved to Cake core project from [v0.33.0](https://github.com/cake-build/cake/pull/2455)")]
         public static T EnvironmentVariable<T>(this ICakeContext context, string variable)
         {
             var value = context.EnvironmentVariable(variable);
@@ -61,6 +63,7 @@ namespace Cake.Incubator.EnvironmentExtensions
         /// </example>
         [CakeMethodAlias]
         [CakeAliasCategory("Environment Variables")]
+        [Obsolete("Moved to Cake core project from [v0.33.0](https://github.com/cake-build/cake/pull/2455)")]
         public static T EnvironmentVariable<T>(this ICakeContext context, string variable, T defaultValue)
         {
             var value = context.EnvironmentVariable(variable);
