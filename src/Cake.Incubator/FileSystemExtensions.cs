@@ -6,11 +6,13 @@ namespace Cake.Incubator.FileSystemExtensions
 {
     using System.Globalization;
     using Cake.Core;
+    using Cake.Core.Annotations;
     using Cake.Core.IO;
 
     /// <summary>
     /// Contains extension methods for working with cakes <see cref="IFileSystem"/>
     /// </summary>
+    [CakeNamespaceImport("Cake.Incubator.FileSystemExtensions")]
     internal static class FileSystemExtensions
     {
         /// <summary>

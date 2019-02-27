@@ -4,12 +4,14 @@
 
 namespace Cake.Incubator.ProjectPathExtensions
 {
+    using Cake.Core.Annotations;
     using Cake.Core.IO;
     using Cake.Incubator.Project;
 
     /// <summary>
     /// Several extension methods when using ProjectPath.
     /// </summary>
+    [CakeNamespaceImport("Cake.Incubator.ProjectPathExtensions")]
     public static class ProjectPathExtensions
     {
         /// <summary>

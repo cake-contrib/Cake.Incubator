@@ -14,6 +14,7 @@ namespace Cake.Incubator.FileExtensions
     /// <summary>
     /// Extension methods when using Files.
     /// </summary>
+    [CakeNamespaceImport("Cake.Incubator.FileExtensions")]
     public static class FileExtensions
     {
         /// <summary>

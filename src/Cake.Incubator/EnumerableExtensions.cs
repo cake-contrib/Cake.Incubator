@@ -7,11 +7,13 @@ namespace Cake.Incubator.EnumerableExtensions
     using System;
     using System.Collections.Generic;
     using System.Linq;
+    using Cake.Core.Annotations;
     using Cake.Incubator.AssertExtensions;
 
     /// <summary>
     /// Several extension methods when using IEnumerable.
     /// </summary>
+    [CakeNamespaceImport("Cake.Incubator.EnumerableExtensions")]
     public static class EnumerableExtensions
     {
         /// <summary>

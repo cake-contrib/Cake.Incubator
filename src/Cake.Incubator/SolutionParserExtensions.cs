@@ -7,6 +7,7 @@ namespace Cake.Incubator.SolutionParserExtensions
     using System.Collections.Generic;
     using System.Linq;
     using Cake.Common.Solution;
+    using Cake.Core.Annotations;
     using Cake.Core.IO;
     using Cake.Incubator.AssertExtensions;
     using Cake.Incubator.Project;
@@ -15,6 +16,7 @@ namespace Cake.Incubator.SolutionParserExtensions
     /// <summary>
     /// Several extension methods when using SolutionParser.
     /// </summary>
+    [CakeNamespaceImport("Cake.Incubator.SolutionParserExtensions")]
     public static class SolutionParserExtensions
     {
         /// <summary>
