@@ -9,10 +9,12 @@ namespace Cake.Incubator.LoggingExtensions
     using System.Linq;
     using System.Reflection;
     using System.Text;
+    using Cake.Core.Annotations;
 
     /// <summary>
     /// Several extension methods when using Logging.
     /// </summary>
+    [CakeNamespaceImport("Cake.Incubator.LoggingExtensions")]
     public static class LoggingExtensions
     {
         /// <summary>

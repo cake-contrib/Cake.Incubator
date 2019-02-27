@@ -4,6 +4,7 @@
 
 namespace Cake.Incubator.FilePathExtensions
 {
+    using Cake.Core.Annotations;
     using Cake.Core.IO;
     using Cake.Incubator.AssertExtensions;
     using Cake.Incubator.StringExtensions;
@@ -11,6 +12,7 @@ namespace Cake.Incubator.FilePathExtensions
     /// <summary>
     /// Contains extension methods for working with <see cref="FilePath"/>'s
     /// </summary>
+    [CakeNamespaceImport("Cake.Incubator.FilePathExtensions")]
     public static class FilePathExtensions
     {
         /// <summary>

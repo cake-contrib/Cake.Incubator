@@ -6,12 +6,14 @@ namespace Cake.Incubator.StringExtensions
     using System;
     using System.Diagnostics;
     using System.Text.RegularExpressions;
+    using Cake.Core.Annotations;
     using Cake.Incubator.AssertExtensions;
     using Core.IO;
 
     /// <summary>
     /// Several extension methods when using String.
     /// </summary>
+    [CakeNamespaceImport("Cake.Incubator.StringExtensions")]
     public static class StringExtensions
     {
         private static readonly Regex TargetframeworkCondition = new Regex("\\s*\\\'\\$\\(TargetFramework\\)\\\'\\s*==\\s*", RegexOptions.Compiled);

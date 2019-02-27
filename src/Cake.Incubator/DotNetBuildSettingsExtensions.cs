@@ -6,12 +6,14 @@ namespace Cake.Incubator.DotNetBuildExtensions
 {
     using System.Collections.Generic;
     using Cake.Common.Tools;
+    using Cake.Core.Annotations;
     using Cake.Incubator.AssertExtensions;
     using Cake.Incubator.EnumerableExtensions;
 
     /// <summary>
     /// Several extension methods when using DotNetBuildSettings.
     /// </summary>
+    [CakeNamespaceImport("Cake.Incubator.DotNetBuildExtensions")]
     public static class DotNetBuildSettingsExtensions
     {
         /// <summary>
