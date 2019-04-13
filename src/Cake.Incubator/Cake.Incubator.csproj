@@ -25,11 +25,11 @@
         <Optimize>false</Optimize>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cake.Common" Version="0.33.0" PrivateAssets="All"/>
-        <PackageReference Include="Cake.Core" Version="0.33.0" PrivateAssets="All"/>
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta-63127-02" PrivateAssets="All"/>
-        <PackageReference Include="System.Collections.Specialized" Version="4.3.0"/>
-        <PackageReference Include="System.Xml.XDocument" Version="4.3.0"/>
+        <PackageReference Include="Cake.Common" Version="0.33.0" PrivateAssets="All" />
+        <PackageReference Include="Cake.Core" Version="0.33.0" PrivateAssets="All" />
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0-beta2-18618-05" PrivateAssets="All" />
+        <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
+        <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
     </ItemGroup>
     <ItemGroup>
         <AssemblyAttribute Include="Cake.Core.Annotations.CakeNamespaceImportAttribute">
