@@ -50,7 +50,7 @@ namespace Cake.Incubator.Tests
             var result = GetSolutionParserResult().Projects.First();
             var parserResult = new CustomProjectParserResult { AssemblyName = "a", OutputPath = "./b", OutputType = "library" };
 
-            result.GetAssemblyFilePath(parserResult).ToString().Should().Be("b/a.dll");
+            result.GetAssemblyFilePath(parserResult).ToString().Should().Be("/b/a.dll");
         }
 
         private SolutionParserResult GetSolutionParserResult()

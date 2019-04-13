@@ -55,7 +55,7 @@ namespace Cake.Incubator.Tests
             var test = new[] {new FilePath("/Test1.a"), new FilePath("/Test2.a"),};
 
             var dump = test.Dump();
-            dump.Should().Be("{\r\n\tHasExtension:\tTrue\r\n\tFullPath:\t/Test1.a\r\n\tIsRelative:\tFalse\r\n\tSegments:\t[ \"/Test1.a\" ]\r\n},\r\n{\r\n\tHasExtension:\tTrue\r\n\tFullPath:\t/Test2.a\r\n\tIsRelative:\tFalse\r\n\tSegments:\t[ \"/Test2.a\" ]\r\n}");
+            dump.Should().Be("{\r\n\tHasExtension:\tTrue\r\n\tFullPath:\t/Test1.a\r\n\tIsRelative:\tFalse\r\n\tIsUNC:\tFalse\r\n\tSeparator:\t/\r\n\tSegments:\t[ \"/Test1.a\" ]\r\n},\r\n{\r\n\tHasExtension:\tTrue\r\n\tFullPath:\t/Test2.a\r\n\tIsRelative:\tFalse\r\n\tIsUNC:\tFalse\r\n\tSeparator:\t/\r\n\tSegments:\t[ \"/Test2.a\" ]\r\n}");
         }
 
         [Fact]
