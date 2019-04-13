@@ -23,14 +23,14 @@ namespace Cake.Incubator.Tests
             FileSystem = new FakeFileSystem(env);
             var globber = new Globber(FileSystem, env);
             var log = new NullLog();
-            var runner = new ProcessRunner(env, log);
             var reg = new WindowsRegistry();
-            var strategy = new ToolResolutionStrategy(FileSystem, env, globber,
-                new CakeConfiguration(new Dictionary<string, string>()));
+            var config = new CakeConfiguration(new Dictionary<string, string>());
+            var strategy = new ToolResolutionStrategy(FileSystem, env, globber, config);
             var toolLocator = new ToolLocator(env, new ToolRepository(env), strategy);
             var cakeDataService = new FakeDataService();
+            var runner = new ProcessRunner(FileSystem, env, log, toolLocator, config);
             var args = new FakeArguments();
-            Context = new CakeContext(FileSystem, env, globber, log, args, runner, reg, toolLocator, cakeDataService);
+            Context = new CakeContext(FileSystem, env, globber, log, args, runner, reg, toolLocator, cakeDataService, config);
         }
         
         public class FakeDataService : ICakeDataService
