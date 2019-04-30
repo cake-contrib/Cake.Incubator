@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="utf-8"?>
 <package>
   <metadata>
     <id>Cake.Incubator</id>
@@ -6,7 +6,7 @@
     <title>Cake.Incubator</title>
     <authors>Scott Mackay (@wwwlicious)</authors>
     <owners>Scott Mackay (@wwwlicious), cake-contrib</owners>
-    <iconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</iconUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</iconUrl>
     <projectUrl>https://github.com/cake-contrib/Cake.Incubator</projectUrl>
     <licenseUrl>https://opensource.org/licenses/MPL-2.0</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
