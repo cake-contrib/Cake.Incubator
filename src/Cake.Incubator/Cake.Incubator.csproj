@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
         <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
@@ -9,7 +9,7 @@
         <RepositoryUrl>https://github.com/cake-contrib/Cake.Incubator</RepositoryUrl>
         <PackageProjectUrl>https://github.com/cake-contrib/Cake.Incubator</PackageProjectUrl>
         <PackageLicenseUrl>https://opensource.org/licenses/MPL-2.0</PackageLicenseUrl>
-        <PackageIconUrl>https://cdn.rawgit.com/cake-contrib/graphics/a5cf0f881c390650144b2243ae551d5b9f836196/png/cake-contrib-medium.png</PackageIconUrl>
+        <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
         <Authors>Scott Mackay (@wwwlicious),cake-contrib</Authors>
         <ReleaseNotes>https://github.com/cake-contrib/Cake.Incubator/releases</ReleaseNotes>
         <PublishRepositoryUrl>true</PublishRepositoryUrl>
