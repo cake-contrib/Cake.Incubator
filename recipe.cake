@@ -1,8 +1,8 @@
-#load nuget:https://www.myget.org/F/cake-contrib/api/v2?package=Cake.Recipe&prerelease
+#load nuget:?package=Cake.Recipe&version=1.0.0
 
 Environment.SetVariableNames();
 
-BuildParameters.SetParameters(context: Context, 
+BuildParameters.SetParameters(context: Context,
                             buildSystem: BuildSystem,
                             sourceDirectoryPath: "./src",
                             title: "Cake.Incubator",
@@ -10,13 +10,14 @@ BuildParameters.SetParameters(context: Context,
                             repositoryName: "Cake.Incubator",
 							shouldRunCodecov: false,
                             shouldGenerateDocumentation: false, // until wyam oin recipe is fixed
-                            appVeyorAccountName: "cakecontrib");
+                            appVeyorAccountName: "cakecontrib",
+                            shouldRunGitVersion: true);
 
 BuildParameters.PrintParameters(Context);
 
 ToolSettings.SetToolSettings(context: Context,
-                            dupFinderExcludePattern: new string[] { 
-								BuildParameters.RootDirectoryPath + "/src/**/*.AssemblyInfo.cs",								
+                            dupFinderExcludePattern: new string[] {
+								BuildParameters.RootDirectoryPath + "/src/**/*.AssemblyInfo.cs",
                                 BuildParameters.RootDirectoryPath + "/src/Cake.Incubator.Tests/*.cs",
                                 BuildParameters.RootDirectoryPath + "/src/Cake.Incubator/CustomProjectParser.cs",
                                 BuildParameters.RootDirectoryPath + "/src/Cake.Incubator/DotNetCoreTestExtensions.cs" },
