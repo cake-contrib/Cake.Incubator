@@ -8,11 +8,12 @@
     <owners>Scott Mackay (@wwwlicious), cake-contrib</owners>
     <iconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</iconUrl>
     <projectUrl>https://github.com/cake-contrib/Cake.Incubator</projectUrl>
-    <licenseUrl>https://opensource.org/licenses/MPL-2.0</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>Cake AddIn that provides useful extensions and additional aliases for Cake.Build scripts</description>
     <releaseNotes>https://github.com/cake-contrib/Cake.Incubator/releases</releaseNotes>
     <copyright>Copyright (c) Cake Contributions 2016 - Present</copyright>
+    <license type="expression">MIT</license>
+    <repository type="git" url="https://github.com/cake-contrib/Cake.Incubator.git"/>
     <tags>Cake Build Script Extensions Project Solution</tags>
   </metadata>
   <files>
