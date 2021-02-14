@@ -25,7 +25,7 @@ namespace Cake.Incubator.Tests
             var log = new NullLog();
             var reg = new WindowsRegistry();
             var config = new CakeConfiguration(new Dictionary<string, string>());
-            var strategy = new ToolResolutionStrategy(FileSystem, env, globber, config);
+            var strategy = new ToolResolutionStrategy(FileSystem, env, globber, config, log);
             var toolLocator = new ToolLocator(env, new ToolRepository(env), strategy);
             var cakeDataService = new FakeDataService();
             var runner = new ProcessRunner(FileSystem, env, log, toolLocator, config);
@@ -49,6 +49,11 @@ namespace Cake.Incubator.Tests
         public class FakeArguments : ICakeArguments
         {
             public bool HasArgument(string name)
+            {
+                throw new NotImplementedException();
+            }
+
+            public ICollection<string> GetArguments(string name)
             {
                 throw new NotImplementedException();
             }

@@ -1,9 +1,11 @@
 ﻿// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/.
+
+
 namespace Cake.Incubator.Tests
 {
-    using Cake.Common.Tools;
+    using Cake.Common.Tools.DotNetCore.MSBuild;
     using Cake.Incubator.DotNetBuildExtensions;
     using FluentAssertions;
     using Xunit;
@@ -15,7 +17,7 @@ namespace Cake.Incubator.Tests
         {
             var targets = new[] { "One", "Two" };
 
-            var settings = new DotNetBuildSettings("a.sln");
+            var settings = new DotNetCoreMSBuildSettings();
             settings.WithTargets(targets);
 
             settings.Targets.Should().HaveCount(2).And.Contain(targets);
