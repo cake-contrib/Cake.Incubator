@@ -5,7 +5,7 @@
 namespace Cake.Incubator.DotNetBuildExtensions
 {
     using System.Collections.Generic;
-    using Cake.Common.Tools;
+    using Cake.Common.Tools.DotNetCore.MSBuild;
     using Cake.Core.Annotations;
     using Cake.Incubator.AssertExtensions;
     using Cake.Incubator.EnumerableExtensions;
@@ -21,14 +21,14 @@ namespace Cake.Incubator.DotNetBuildExtensions
         /// </summary>
         /// <param name="settings">The settings.</param>
         /// <param name="targets">The .NET build targets.</param>
-        /// <returns>The same <see cref="DotNetBuildSettings"/> instance so that multiple calls can be chained.</returns>
+        /// <returns>The same <see cref="DotNetCoreMSBuildSettings"/> instance so that multiple calls can be chained.</returns>
         /// <example>
         /// Add many targets to the build settings
         /// <code>
-        /// var settings = new DotNetBuildSettings().WithTargets(new[] { "Clean", "Build", "Publish" });
+        /// var settings = new DotNetCoreMSBuildSettings().WithTargets(new[] { "Clean", "Build", "Publish" });
         /// </code>
         /// </example>
-        public static DotNetBuildSettings WithTargets(this DotNetBuildSettings settings, IEnumerable<string> targets)
+        public static DotNetCoreMSBuildSettings WithTargets(this DotNetCoreMSBuildSettings settings, IEnumerable<string> targets)
         {
             settings.ThrowIfNull(nameof(settings));
             targets.Each(target => settings.Targets.Add(target));
