@@ -11,6 +11,7 @@ BuildParameters.SetParameters(context: Context,
 							shouldRunCodecov: false,
                             shouldGenerateDocumentation: false, // until wyam oin recipe is fixed
                             appVeyorAccountName: "cakecontrib",
+                            shouldRunDotNetCorePack: true,
                             preferredBuildProviderType: BuildProviderType.GitHubActions);
 
 BuildParameters.PrintParameters(Context);

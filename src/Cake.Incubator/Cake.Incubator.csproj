@@ -1,14 +1,16 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <TargetFramework>netstandard2.0</TargetFramework>
-        <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-        <Version>0.1.0</Version>
+        <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    </PropertyGroup>
+    <PropertyGroup>
         <Description>Provides useful extensions and additional aliases for Cake.Build scripts</Description>
         <Copyright>Copyright © Cake Contributions 2017 - Present</Copyright>
         <PackageTags>Cake Build Script Extensions Project Solution</PackageTags>
         <RepositoryUrl>https://github.com/cake-contrib/Cake.Incubator</RepositoryUrl>
         <PackageProjectUrl>https://github.com/cake-contrib/Cake.Incubator</PackageProjectUrl>
-        <PackageLicenseUrl>https://opensource.org/licenses/MPL-2.0</PackageLicenseUrl>
+        <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
+        <PackageIcon>icon.png</PackageIcon>
         <PackageIconUrl>https://cdn.jsdelivr.net/gh/cake-contrib/graphics/png/cake-contrib-medium.png</PackageIconUrl>
         <Authors>Scott Mackay (@wwwlicious),cake-contrib</Authors>
         <ReleaseNotes>https://github.com/cake-contrib/Cake.Incubator/releases</ReleaseNotes>
@@ -18,17 +20,19 @@
     <PropertyGroup Condition="'$(TargetFramework)'=='netstandard2.0'">
         <DefineConstants>NETSTANDARD2_0;</DefineConstants>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(Configuration)|$(TargetFramework)|$(Platform)'=='Release|netstandard2.0|AnyCPU'">
-        <DocumentationFile>bin\Release\netstandard2.0\Cake.Incubator.xml</DocumentationFile>
-        <DebugType>full</DebugType>
-        <DebugSymbols>true</DebugSymbols>
-        <Optimize>false</Optimize>
-    </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Cake.Common" Version="0.33.0" PrivateAssets="All" />
         <PackageReference Include="Cake.Core" Version="0.33.0" PrivateAssets="All" />
         <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
         <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
+        <PackageReference Include="Cake.Addin.Analyzer" Version="0.1.1">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
+        <PackageReference Include="CakeContrib.Guidelines" Version="0.5.0">
+            <PrivateAssets>all</PrivateAssets>
+            <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+        </PackageReference>
     </ItemGroup>
     <ItemGroup>
         <AssemblyAttribute Include="Cake.Core.Annotations.CakeNamespaceImportAttribute">
