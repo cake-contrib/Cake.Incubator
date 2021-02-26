@@ -1,4 +1,4 @@
-#load nuget:?package=Cake.Recipe&version=1.0.0
+#load nuget:?package=Cake.Recipe&version=2.2.0
 
 Environment.SetVariableNames();
 
@@ -10,8 +10,7 @@ BuildParameters.SetParameters(context: Context,
                             repositoryName: "Cake.Incubator",
 							shouldRunCodecov: false,
                             shouldGenerateDocumentation: false, // until wyam oin recipe is fixed
-                            appVeyorAccountName: "cakecontrib",
-                            shouldRunGitVersion: true);
+                            appVeyorAccountName: "cakecontrib");
 
 BuildParameters.PrintParameters(Context);
 
