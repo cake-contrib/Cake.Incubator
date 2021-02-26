@@ -31,7 +31,7 @@
         </PackageReference>
         <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
         <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
-        <PackageReference Include="Cake.Addin.Analyzer" Version="0.1.1">
+        <PackageReference Include="Cake.Addin.Analyzer" Version="0.1.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
