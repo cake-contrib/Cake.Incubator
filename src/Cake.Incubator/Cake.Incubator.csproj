@@ -8,7 +8,7 @@
     <PropertyGroup>
         <Description>Provides useful extensions and additional aliases for Cake.Build scripts</Description>
         <Copyright>Copyright © Cake Contributions 2017 - Present</Copyright>
-        <PackageTags>Cake Build Script Extensions Project Solution</PackageTags>
+        <PackageTags>Cake;Build;Script;Extensions;Project;Solution;addin;cake-addin;cake-build</PackageTags>
         <RepositoryUrl>https://github.com/cake-contrib/Cake.Incubator</RepositoryUrl>
         <PackageProjectUrl>https://github.com/cake-contrib/Cake.Incubator</PackageProjectUrl>
         <PackageLicenseExpression>MPL-2.0</PackageLicenseExpression>
