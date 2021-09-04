@@ -38,7 +38,6 @@ namespace Cake.Incubator.Tests
         [InlineData("netcoreapp1.0")]
         [InlineData("netcoreapp1.1")]
         [InlineData("netcoreapp2.0")]
-        [InlineData("netcoreappX.X")]
         public void ParseProject_SetsIsNetCore(string coreTarget)
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFramework", coreTarget));
@@ -49,7 +48,6 @@ namespace Cake.Incubator.Tests
         [InlineData("netstandard1.0")]
         [InlineData("netstandard1.1")]
         [InlineData("netstandard2.0")]
-        [InlineData("netstandardX.X")]
         public void ParseProject_SetsIsNetStandard(string coreTarget)
         {
             var file = new FakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("TargetFramework", coreTarget));

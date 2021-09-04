@@ -319,6 +319,32 @@ namespace Cake.Incubator.Tests
             project.IsNetCore.Should().BeFalse();
             project.IsNetStandard.Should().BeTrue();
         }
+        
+        [Fact]
+        public void ForTfm_net50_IsNetCore_IsSet()
+        {
+            var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
+                "<PropertyGroup><TargetFramework>net5.0</TargetFramework></PropertyGroup>");
+            var file = new FakeFile(projectString);
+
+            var project = file.ParseProjectFile("Release");
+            project.IsNetFramework.Should().BeFalse();
+            project.IsNetCore.Should().BeTrue();
+            project.IsNetStandard.Should().BeFalse();
+        }
+        
+        [Fact]
+        public void ForTfm_net50windows_IsNetCore_IsSet()
+        {
+            var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
+                "<PropertyGroup><TargetFramework>net5.0-windows</TargetFramework></PropertyGroup>");
+            var file = new FakeFile(projectString);
+
+            var project = file.ParseProjectFile("Release");
+            project.IsNetFramework.Should().BeFalse();
+            project.IsNetCore.Should().BeTrue();
+            project.IsNetStandard.Should().BeFalse();
+        }
     }
 
     internal class TestProjectParserResult : CustomProjectParserResult
