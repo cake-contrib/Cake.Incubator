@@ -280,6 +280,45 @@ namespace Cake.Incubator.Tests
             // assert
             webApp.Should().Be(@"bin\custom\");
         }
+        
+        [Fact]
+        public void ForTfm_net451_IsNetFramework_IsSet()
+        {
+            var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
+                "<PropertyGroup><TargetFramework>net451</TargetFramework></PropertyGroup>");
+            var file = new FakeFile(projectString);
+
+            var project = file.ParseProjectFile("Release");
+            project.IsNetFramework.Should().BeTrue();
+            project.IsNetCore.Should().BeFalse();
+            project.IsNetStandard.Should().BeFalse();
+        }
+
+        [Fact]
+        public void ForTfm_netcoreapp31_IsNetCore_IsSet()
+        {
+            var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
+                "<PropertyGroup><TargetFramework>netcoreapp3.1</TargetFramework></PropertyGroup>");
+            var file = new FakeFile(projectString);
+
+            var project = file.ParseProjectFile("Release");
+            project.IsNetFramework.Should().BeFalse();
+            project.IsNetCore.Should().BeTrue();
+            project.IsNetStandard.Should().BeFalse();
+        }
+        
+        [Fact]
+        public void ForTfm_netstandard20_IsNetStandard_IsSet()
+        {
+            var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
+                "<PropertyGroup><TargetFramework>netstandard2.0</TargetFramework></PropertyGroup>");
+            var file = new FakeFile(projectString);
+
+            var project = file.ParseProjectFile("Release");
+            project.IsNetFramework.Should().BeFalse();
+            project.IsNetCore.Should().BeFalse();
+            project.IsNetStandard.Should().BeTrue();
+        }
     }
 
     internal class TestProjectParserResult : CustomProjectParserResult
