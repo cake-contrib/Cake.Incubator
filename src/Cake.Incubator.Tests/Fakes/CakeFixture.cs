@@ -1,6 +1,9 @@
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+
+using Cake.Testing;
+
 namespace Cake.Incubator.Tests
 {
     using System;
@@ -19,7 +22,7 @@ namespace Cake.Incubator.Tests
 
         public CakeFixture()
         {
-            var env = new FakeCakeEnvironment();
+            var env = FakeEnvironment.CreateUnixEnvironment();
             FileSystem = new FakeFileSystem(env);
             var globber = new Globber(FileSystem, env);
             var log = new NullLog();

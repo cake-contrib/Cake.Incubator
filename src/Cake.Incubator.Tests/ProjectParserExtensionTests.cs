@@ -1,6 +1,9 @@
 // This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+
+using Cake.Testing;
+
 namespace Cake.Incubator.Tests
 {
     using Cake.Core;
@@ -23,28 +26,27 @@ namespace Cake.Incubator.Tests
         [Fact]
         public void CanGetOutputAssemblies_For_CSProjFile()
         {
-            var file = new FakeFile("CsProj_ValidFile".SafeLoad());
-            fs.AddFile(file);
+            var file = fs.CreateFakeFile("CsProj_ValidFile".SafeLoad());
+            var workDir = cakeContext.Environment.WorkingDirectory.FullPath;
 
             var result = cakeContext.GetOutputAssemblies(file.Path, "Debug", "AnyCPU");
-            result.Should().ContainSingle().Which.FullPath.Should().Be("bin/Debug/Cake.Common.dll");
+            result.Should().ContainSingle().Which.FullPath.Should().Be($"{workDir}/bin/Debug/Cake.Common.dll");
         }
 
         [Fact]
         public void CanGetOutputAssemblies_For_VS2017CSProjFile()
         {
-            var file = new FakeFile("VS2017_CsProj_NetCoreDefault".SafeLoad(), "./abc.csproj");
-            fs.AddFile(file);
+            var file = fs.CreateFakeFile("VS2017_CsProj_NetCoreDefault".SafeLoad(), "./abc.csproj");
+            var workDir = cakeContext.Environment.WorkingDirectory.FullPath;
 
             var result = cakeContext.GetOutputAssemblies(file.Path, "Debug", "AnyCPU");
-            result.Should().ContainSingle().Which.FullPath.Should().Be("bin/custom/netcoreapp1.1/abc.dll");
+            result.Should().ContainSingle().Which.FullPath.Should().Be($"{workDir}/bin/custom/netcoreapp1.1/abc.dll");
         }
 
         [Fact]
         public void NullRefException_For_VS2017FSProjFile()
         {
-            var file = new FakeFile("Cake_Unity_FSharp_Tests_fsproj".SafeLoad(), "c:/tmp/abc.fsproj");
-            fs.AddFile(file);
+            var file = fs.CreateFakeFile("Cake_Unity_FSharp_Tests_fsproj".SafeLoad(), "/tmp/abc.fsproj");
 
             var project = cakeContext.ParseProject(file.Path, "Release", "AnyCPU");
 
@@ -56,13 +58,13 @@ namespace Cake.Incubator.Tests
         {
             var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
                 "<PropertyGroup><OutputType>Exe</OutputType><TargetFrameworks>netstandard2.0;net45</TargetFrameworks></PropertyGroup>");
-            var file = new FakeFile(projectString, "./def.csproj");
-            fs.AddFile(file);
+            var file = fs.CreateFakeFile(projectString, "./def.csproj");
+            var workDir = cakeContext.Environment.WorkingDirectory.FullPath;
 
             var result = cakeContext.GetOutputAssemblies(file.Path, "Release", "x64");
             result.Should().HaveCount(2).And
-                .BeEquivalentTo(new FilePath("bin/x64/Release/netstandard2.0/def.exe"),
-                    new FilePath("bin/x64/Release/net45/def.exe"));
+                .BeEquivalentTo(new FilePath($"{workDir}/bin/x64/Release/netstandard2.0/def.exe"),
+                    new FilePath($"{workDir}/bin/x64/Release/net45/def.exe"));
         }
 
         [Fact]
@@ -70,12 +72,13 @@ namespace Cake.Incubator.Tests
         {
             var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
                 "<PropertyGroup><OutputType>Exe</OutputType><TargetFrameworks>netstandard2.0;net45</TargetFrameworks></PropertyGroup>");
-            var file = new FakeFile(projectString, "./ghj.csproj");
-            fs.AddFile(file);
+            var file = fs.CreateFakeFile(projectString, "./ghj.csproj");
+            var workDir = cakeContext.Environment.WorkingDirectory.FullPath;
 
             var result = cakeContext.GetOutputAssemblies(file.Path, "Release");
-            result.Should().HaveCount(2).And.BeEquivalentTo(new FilePath("bin/Release/netstandard2.0/ghj.exe"),
-                new FilePath("bin/Release/net45/ghj.exe"));
+            result.Should().HaveCount(2).And.BeEquivalentTo(
+                new FilePath($"{workDir}/bin/Release/netstandard2.0/ghj.exe"),
+                new FilePath($"{workDir}/bin/Release/net45/ghj.exe"));
         }
 
         [Fact]
@@ -83,12 +86,13 @@ namespace Cake.Incubator.Tests
         {
             var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
                 "<PropertyGroup><OutputType>Exe</OutputType><TargetFrameworks>netstandard2.0;net45</TargetFrameworks></PropertyGroup>");
-            var file = new FakeFile(projectString, "./klm.csproj");
-            fs.AddFile(file);
+            var file = fs.CreateFakeFile(projectString, "./klm.csproj");
+            var workDir = cakeContext.Environment.WorkingDirectory.FullPath;
 
             var result = cakeContext.GetProjectAssemblies(file.Path, "Release");
-            result.Should().HaveCount(2).And.BeEquivalentTo(new FilePath("bin/Release/netstandard2.0/klm.exe"),
-                new FilePath("bin/Release/net45/klm.exe"));
+            result.Should().HaveCount(2).And.BeEquivalentTo(
+                new FilePath($"{workDir}/bin/Release/netstandard2.0/klm.exe"),
+                new FilePath($"{workDir}/bin/Release/net45/klm.exe"));
         }
 
         [Fact]
@@ -96,12 +100,13 @@ namespace Cake.Incubator.Tests
         {
             var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
                 "<PropertyGroup><OutputType>Exe</OutputType><TargetFrameworks>netstandard2.0;net45</TargetFrameworks></PropertyGroup>");
-            var file = new FakeFile(projectString, "./nop.csproj");
-            fs.AddFile(file);
+            var file = fs.CreateFakeFile(projectString, "./nop.csproj");
+            var workDir = cakeContext.Environment.WorkingDirectory.FullPath;
 
             var result = cakeContext.GetProjectAssemblies(file.Path, "Release", "x86");
-            result.Should().HaveCount(2).And.BeEquivalentTo(new FilePath("bin/x86/Release/netstandard2.0/nop.exe"),
-                new FilePath("bin/x86/Release/net45/nop.exe"));
+            result.Should().HaveCount(2).And.BeEquivalentTo(
+                new FilePath($"{workDir}/bin/x86/Release/netstandard2.0/nop.exe"),
+                new FilePath($"{workDir}/bin/x86/Release/net45/nop.exe"));
         }
     }
 }

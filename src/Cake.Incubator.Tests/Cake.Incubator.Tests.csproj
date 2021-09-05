@@ -1,6 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;net462</TargetFrameworks>
+    <TargetFrameworks>netcoreapp2.1</TargetFrameworks>
+    <TargetFrameworks Condition="'$(OS)'!='Unix'">$(TargetFrameworks);net462</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="sampleprojects\AnotherCSProj.xml" />
@@ -38,6 +39,7 @@
   <ItemGroup>
     <PackageReference Include="Cake.Common" Version="1.0.0" />
     <PackageReference Include="Cake.Core" Version="1.0.0" />
+    <PackageReference Include="Cake.Testing" Version="1.0.0" />
     <PackageReference Include="coverlet.msbuild" Version="3.0.3">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
@@ -55,18 +57,5 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cake.Incubator\Cake.Incubator.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Resources.resx">
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>
