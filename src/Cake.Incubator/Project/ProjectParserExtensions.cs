@@ -35,7 +35,7 @@ namespace Cake.Incubator.Project
         private static readonly Regex NetCoreTargetFrameworkRegex = new Regex("^netcoreapp\\d+\\.\\d+$", parseOptions);
         private static readonly Regex NetStandardTargetFrameworkRegex = new Regex("^netstandard\\d+\\.\\d+$", parseOptions);
         private static readonly Regex NetFrameworkTargetFrameworkRegex = new Regex("^net\\d+$", parseOptions);
-        private static readonly Regex Net5PlusTargetFrameworkRegex = new Regex("^net\\d+\\.\\d+(-\\w+)?$", parseOptions);
+        private static readonly Regex Net5PlusTargetFrameworkRegex = new Regex("^net\\d+\\.\\d+(-[\\w.]+)?$", parseOptions);
         
         /// <summary>
         /// Checks if the project is a library

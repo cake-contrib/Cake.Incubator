@@ -345,6 +345,19 @@ namespace Cake.Incubator.Tests
             project.IsNetCore.Should().BeTrue();
             project.IsNetStandard.Should().BeFalse();
         }
+        
+        [Fact]
+        public void ForTfm_net60ios_With_Version_IsNetCore_IsSet()
+        {
+            var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
+                "<PropertyGroup><TargetFramework>net6.0-ios14.0</TargetFramework></PropertyGroup>");
+            var file = new FakeFile(projectString);
+
+            var project = file.ParseProjectFile("Release");
+            project.IsNetFramework.Should().BeFalse();
+            project.IsNetCore.Should().BeTrue();
+            project.IsNetStandard.Should().BeFalse();
+        }
     }
 
     internal class TestProjectParserResult : CustomProjectParserResult
