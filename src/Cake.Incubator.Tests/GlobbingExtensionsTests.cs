@@ -19,9 +19,9 @@ namespace Cake.Incubator.Tests
 
         public GlobbingExtensionsTests(CakeFixture fixture)
         {
-            fixture.FileSystem.AddFile(new FakeFile("", "c:/a.txt"));
-            fixture.FileSystem.AddFile(new FakeFile("", "c:/a/c.txt"));
-            fixture.FileSystem.AddFile(new FakeFile("", "c:/c/a.txt"));
+            fixture.FileSystem.CreateFakeFile("", fixture.Context.Environment.WorkingDirectory + "/a.txt");
+            fixture.FileSystem.CreateFakeFile("", fixture.Context.Environment.WorkingDirectory + "/a/c.txt");
+            fixture.FileSystem.CreateFakeFile("", fixture.Context.Environment.WorkingDirectory + "/c/a.txt");
             context = fixture.Context;
         }
 

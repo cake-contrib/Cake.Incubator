@@ -1,6 +1,10 @@
 ﻿// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+
+using Cake.Core;
+using Cake.Testing;
+
 namespace Cake.Incubator.Tests
 {
     using System;
@@ -13,6 +17,8 @@ namespace Cake.Incubator.Tests
 
     public class LoggingExtensionsTests
     {
+        private static  readonly FakeFileSystem fs = new FakeFileSystem(FakeEnvironment.CreateUnixEnvironment());
+        
         [Fact]
         public void Dump_ReturnsNull_IfObjectNull()
         {
@@ -35,7 +41,7 @@ namespace Cake.Incubator.Tests
 #else
             var expected = $"\tStringProp:\t{test.StringProp}\r\n\tIntProp:\t{test.IntProp}\r\n\tDateTimeProp:\t{test.DateTimeProp}\r\n\tUnreadable:\t180\r\n";
 #endif
-            test.Dump().Should().Be(expected);
+            test.Dump().Should().Be(expected.Replace("\r\n", Environment.NewLine));
         }
 
         [Fact]
@@ -46,7 +52,7 @@ namespace Cake.Incubator.Tests
             const string expected = "\tListProp:\t[ \"foo\", \"bar\" ]\r\n\tIntListProp:\t[ \"1\", \"2\", \"3\", \"5\" ]\r\n";
 
             var dump = test.Dump();
-            dump.Should().Be(expected);
+            dump.Should().Be(expected.Replace("\r\n", Environment.NewLine));
         }
 
         [Fact]
@@ -55,7 +61,7 @@ namespace Cake.Incubator.Tests
             var test = new[] {new FilePath("/Test1.a"), new FilePath("/Test2.a"),};
 
             var dump = test.Dump();
-            dump.Should().Be("{\r\n\tHasExtension:\tTrue\r\n\tFullPath:\t/Test1.a\r\n\tIsRelative:\tFalse\r\n\tIsUNC:\tFalse\r\n\tSeparator:\t/\r\n\tSegments:\t[ \"/Test1.a\" ]\r\n},\r\n{\r\n\tHasExtension:\tTrue\r\n\tFullPath:\t/Test2.a\r\n\tIsRelative:\tFalse\r\n\tIsUNC:\tFalse\r\n\tSeparator:\t/\r\n\tSegments:\t[ \"/Test2.a\" ]\r\n}");
+            dump.Should().Be("{\r\n\tHasExtension:\tTrue\r\n\tFullPath:\t/Test1.a\r\n\tIsRelative:\tFalse\r\n\tIsUNC:\tFalse\r\n\tSeparator:\t/\r\n\tSegments:\t[ \"/Test1.a\" ]\r\n},\r\n{\r\n\tHasExtension:\tTrue\r\n\tFullPath:\t/Test2.a\r\n\tIsRelative:\tFalse\r\n\tIsUNC:\tFalse\r\n\tSeparator:\t/\r\n\tSegments:\t[ \"/Test2.a\" ]\r\n}".Replace("\r\n", Environment.NewLine));
         }
 
         [Fact]
@@ -70,13 +76,13 @@ namespace Cake.Incubator.Tests
             const string expected = "\tParent:\tOlder person is 42\r\n\tChildren:\t[ \tName:\tToddler\r\n\t\tAge:\t2\r\n\t, \tName:\tTeenager\r\n\t\tAge:\t13\r\n\t ]\r\n";
 
             var dump = test.Dump();
-            dump.Should().Be(expected);
+            dump.Should().Be(expected.Replace("\r\n", Environment.NewLine));
         }
 
         [Fact(Skip = "Testing complex object output")]
         public void Dump_ProjectParserResult()
         {
-            var file = new FakeFile("CsProj_ValidFile".SafeLoad());
+            var file = fs.CreateFakeFile("CsProj_ValidFile".SafeLoad());
             file.ParseProjectFile("test").Dump().Should().Be("");
         }
 

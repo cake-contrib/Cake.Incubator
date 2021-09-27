@@ -1,6 +1,11 @@
 ﻿// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+
+using System.Linq;
+using Cake.Core;
+using Cake.Testing;
+
 namespace Cake.Incubator.Tests
 {
     using System;
@@ -12,27 +17,29 @@ namespace Cake.Incubator.Tests
 
     public class TestProjects
     {
-        private static readonly FakeFile validCsProjMSTestFile = new FakeFile("CsProj_ValidMSTestFile".SafeLoad());
-
-        private static readonly FakeFile
-            validCsProjXUnitTestFile = new FakeFile("CsProj_ValidXUnitTestFile".SafeLoad());
-
-        private static readonly FakeFile validCsProjNUnitTestFile = new FakeFile("CsProjValidNUnitTestFile".SafeLoad());
-
-        private static readonly FakeFile validCsProjFSUnitTestFile =
-            new FakeFile("CsProjValidFSUnitTestFile".SafeLoad());
-
-        private static readonly FakeFile validCsProjFixieTestFile = new FakeFile("CsProjValidFixieTestFile".SafeLoad());
-
         // ReSharper disable once UnusedMember.Global
-        public static IEnumerable<object[]> TestData { get; } = new List<object[]>
+        public static IEnumerable<object[]> TestData
         {
-            new object[] { validCsProjMSTestFile },
-            new object[] { validCsProjNUnitTestFile },
-            new object[] { validCsProjXUnitTestFile },
-            new object[] { validCsProjFSUnitTestFile },
-            new object[] { validCsProjFixieTestFile },
-        };
+            get
+            {
+                var env = FakeEnvironment.CreateUnixEnvironment();
+                var fs = new FakeFileSystem(env);
+                var validCsProjMSTestFile = fs.CreateFakeFile("CsProj_ValidMSTestFile".SafeLoad());
+                var validCsProjXUnitTestFile = fs.CreateFakeFile("CsProj_ValidXUnitTestFile".SafeLoad());
+                var validCsProjNUnitTestFile = fs.CreateFakeFile("CsProjValidNUnitTestFile".SafeLoad());
+                var validCsProjFSUnitTestFile = fs.CreateFakeFile("CsProjValidFSUnitTestFile".SafeLoad());
+                var validCsProjFixieTestFile = fs.CreateFakeFile("CsProjValidFixieTestFile".SafeLoad());
+            
+                return new List<object[]>
+                {
+                    new object[] { validCsProjMSTestFile },
+                    new object[] { validCsProjNUnitTestFile },
+                    new object[] { validCsProjXUnitTestFile },
+                    new object[] { validCsProjFSUnitTestFile },
+                    new object[] { validCsProjFixieTestFile },
+                };
+            }
+        }
     }
 
     public class CustomProjectParserTests
@@ -44,16 +51,18 @@ namespace Cake.Incubator.Tests
         private readonly FakeFile valid2017CsProjNetstandardFile;
         private readonly FakeFile validCsProjConditionalReferenceFile;
         private readonly FakeFile validCsProjWithAbsoluteFilePaths;
+        private readonly FakeFileSystem fs;
 
         public CustomProjectParserTests()
         {
-            validCsProjFile = new FakeFile("CsProj_ValidFile".SafeLoad());
-            valid2017CsProjFile = new FakeFile("VS2017_CsProj_ValidFile".SafeLoad());
-            valid2017CsProjNetcoreFile = new FakeFile("VS2017_CsProj_NetCoreDefault".SafeLoad());
-            valid2017CsProjNetstandardFile = new FakeFile("VS2017_CsProj_NetStandard_ValidFile".SafeLoad());
-            validCsProjConditionalReferenceFile = new FakeFile("CsProj_ConditionReference_ValidFile".SafeLoad());
-            validCsProjWebApplicationFile = new FakeFile("CsProj_ValidWebApplication".SafeLoad());
-            validCsProjWithAbsoluteFilePaths = new FakeFile("CsProj_AbsolutePath".SafeLoad());
+            fs = new FakeFileSystem(FakeEnvironment.CreateUnixEnvironment());
+            validCsProjFile = fs.CreateFakeFile("CsProj_ValidFile".SafeLoad());
+            valid2017CsProjFile = fs.CreateFakeFile("VS2017_CsProj_ValidFile".SafeLoad());
+            valid2017CsProjNetcoreFile = fs.CreateFakeFile("VS2017_CsProj_NetCoreDefault".SafeLoad());
+            valid2017CsProjNetstandardFile = fs.CreateFakeFile("VS2017_CsProj_NetStandard_ValidFile".SafeLoad());
+            validCsProjConditionalReferenceFile = fs.CreateFakeFile("CsProj_ConditionReference_ValidFile".SafeLoad());
+            validCsProjWebApplicationFile = fs.CreateFakeFile("CsProj_ValidWebApplication".SafeLoad());
+            validCsProjWithAbsoluteFilePaths = fs.CreateFakeFile("CsProj_AbsolutePath".SafeLoad());
         }
 
         [Fact]
@@ -78,11 +87,12 @@ namespace Cake.Incubator.Tests
         public void CustomProjectParser_CanParseSample2017CsProjNetCoreFile_ForDebugConfig()
         {
             var result = valid2017CsProjNetcoreFile.ParseProjectFile("debug");
-
+            var fileName = valid2017CsProjNetcoreFile.Path.GetFilenameWithoutExtension().FullPath;
+            
             result.Configuration.Should().Be("debug");
             result.OutputPath.ToString().Should().Be("bin/custom/netcoreapp1.1");
             result.OutputType.Should().Be("Exe");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/custom/netcoreapp1.1/project.dll");
+            result.GetAssemblyFilePath().FullPath.Should().Be($"bin/custom/netcoreapp1.1/{fileName}.dll");
         }
 
         [Fact]
@@ -127,31 +137,34 @@ namespace Cake.Incubator.Tests
         {
             var result = validCsProjWithAbsoluteFilePaths.ParseProjectFile("debug");
 
-            result.References.Should().Contain(x =>
-                x.HintPath.FullPath ==
-                "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5.2/System.dll");
+            result.References.FirstOrDefault(x =>
+                x.HintPath?.FullPath ==
+                    "C:/Program Files (x86)/Reference Assemblies/Microsoft/Framework/.NETFramework/v4.5.2/System.dll"
+            ).Should().NotBeNull();
         }
 
         [Fact]
         public void CustomProjectParser_CanParseSample2017CsProjNetCoreFile_ForReleaseConfig()
         {
             var result = valid2017CsProjNetcoreFile.ParseProjectFile("release");
+            var fileName = valid2017CsProjNetcoreFile.Path.GetFilenameWithoutExtension().FullPath;
 
             result.Configuration.Should().Be("release");
             result.OutputPath.ToString().Should().Be("bin/release/netcoreapp1.1");
             result.OutputType.Should().Be("Exe");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/release/netcoreapp1.1/project.dll");
+            result.GetAssemblyFilePath().FullPath.Should().Be($"bin/release/netcoreapp1.1/{fileName}.dll");
         }
 
         [Fact]
         public void CustomProjectParser_CanParseSample2017CsProjNetStandardFile_ForReleaseConfig()
         {
             var result = valid2017CsProjNetstandardFile.ParseProjectFile("debug");
-
+            var fileName = valid2017CsProjNetstandardFile.Path.GetFilenameWithoutExtension().FullPath;
+            
             result.Configuration.Should().Be("debug");
             result.OutputPath.ToString().Should().Be("bin/wayhey/netstandard1.6");
             result.OutputType.Should().Be("Library");
-            result.GetAssemblyFilePath().FullPath.Should().Be("bin/wayhey/netstandard1.6/project.dll");
+            result.GetAssemblyFilePath().FullPath.Should().Be($"bin/wayhey/netstandard1.6/{fileName}.dll");
         }
 
         [Fact]
@@ -286,7 +299,7 @@ namespace Cake.Incubator.Tests
         {
             var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
                 "<PropertyGroup><TargetFramework>net451</TargetFramework></PropertyGroup>");
-            var file = new FakeFile(projectString);
+            var file = fs.CreateFakeFile(projectString);
 
             var project = file.ParseProjectFile("Release");
             project.IsNetFramework.Should().BeTrue();
@@ -299,7 +312,7 @@ namespace Cake.Incubator.Tests
         {
             var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
                 "<PropertyGroup><TargetFramework>netcoreapp3.1</TargetFramework></PropertyGroup>");
-            var file = new FakeFile(projectString);
+            var file = fs.CreateFakeFile(projectString);
 
             var project = file.ParseProjectFile("Release");
             project.IsNetFramework.Should().BeFalse();
@@ -312,7 +325,7 @@ namespace Cake.Incubator.Tests
         {
             var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
                 "<PropertyGroup><TargetFramework>netstandard2.0</TargetFramework></PropertyGroup>");
-            var file = new FakeFile(projectString);
+            var file = fs.CreateFakeFile(projectString);
 
             var project = file.ParseProjectFile("Release");
             project.IsNetFramework.Should().BeFalse();
@@ -325,7 +338,7 @@ namespace Cake.Incubator.Tests
         {
             var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
                 "<PropertyGroup><TargetFramework>net5.0</TargetFramework></PropertyGroup>");
-            var file = new FakeFile(projectString);
+            var file = fs.CreateFakeFile(projectString);
 
             var project = file.ParseProjectFile("Release");
             project.IsNetFramework.Should().BeFalse();
@@ -338,7 +351,7 @@ namespace Cake.Incubator.Tests
         {
             var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
                 "<PropertyGroup><TargetFramework>net5.0-windows</TargetFramework></PropertyGroup>");
-            var file = new FakeFile(projectString);
+            var file = fs.CreateFakeFile(projectString);
 
             var project = file.ParseProjectFile("Release");
             project.IsNetFramework.Should().BeFalse();
@@ -351,7 +364,7 @@ namespace Cake.Incubator.Tests
         {
             var projectString = ProjectFileHelpers.GetNetCoreProjectWithString(
                 "<PropertyGroup><TargetFramework>net6.0-ios14.0</TargetFramework></PropertyGroup>");
-            var file = new FakeFile(projectString);
+            var file = fs.CreateFakeFile(projectString);
 
             var project = file.ParseProjectFile("Release");
             project.IsNetFramework.Should().BeFalse();
