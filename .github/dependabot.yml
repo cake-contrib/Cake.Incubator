@@ -10,6 +10,7 @@ updates:
     ignore:
       - dependency-name: "Cake.Core"
       - dependency-name: "Cake.Common"
+      - dependency-name: "Cake.Testing"
     labels: [ ]
   - package-ecosystem: "github-actions"
     directory: "/"
