@@ -2,6 +2,7 @@
 // License, v. 2.0. If a copy of the MPL was not distributed with this
 // file, You can obtain one at http://mozilla.org/MPL/2.0/. 
 
+using System.Linq;
 using Cake.Testing;
 
 namespace Cake.Incubator.Tests
@@ -63,8 +64,12 @@ namespace Cake.Incubator.Tests
 
             var result = cakeContext.GetOutputAssemblies(file.Path, "Release", "x64");
             result.Should().HaveCount(2).And
-                .BeEquivalentTo(new FilePath($"{workDir}/bin/x64/Release/netstandard2.0/def.exe"),
-                    new FilePath($"{workDir}/bin/x64/Release/net45/def.exe"));
+                .BeEquivalentTo(
+                    new[]
+                    {
+                        new FilePath($"{workDir}/bin/x64/Release/netstandard2.0/def.exe"),
+                        new FilePath($"{workDir}/bin/x64/Release/net45/def.exe")   
+                    });
         }
 
         [Fact]
@@ -77,8 +82,11 @@ namespace Cake.Incubator.Tests
 
             var result = cakeContext.GetOutputAssemblies(file.Path, "Release");
             result.Should().HaveCount(2).And.BeEquivalentTo(
-                new FilePath($"{workDir}/bin/Release/netstandard2.0/ghj.exe"),
-                new FilePath($"{workDir}/bin/Release/net45/ghj.exe"));
+                new[]
+                {
+                    new FilePath($"{workDir}/bin/Release/netstandard2.0/ghj.exe"),
+                    new FilePath($"{workDir}/bin/Release/net45/ghj.exe")
+                });
         }
 
         [Fact]
@@ -91,8 +99,11 @@ namespace Cake.Incubator.Tests
 
             var result = cakeContext.GetProjectAssemblies(file.Path, "Release");
             result.Should().HaveCount(2).And.BeEquivalentTo(
-                new FilePath($"{workDir}/bin/Release/netstandard2.0/klm.exe"),
-                new FilePath($"{workDir}/bin/Release/net45/klm.exe"));
+                new[]
+                {
+                    new FilePath($"{workDir}/bin/Release/netstandard2.0/klm.exe"),
+                    new FilePath($"{workDir}/bin/Release/net45/klm.exe")    
+                });
         }
 
         [Fact]
@@ -105,8 +116,11 @@ namespace Cake.Incubator.Tests
 
             var result = cakeContext.GetProjectAssemblies(file.Path, "Release", "x86");
             result.Should().HaveCount(2).And.BeEquivalentTo(
-                new FilePath($"{workDir}/bin/x86/Release/netstandard2.0/nop.exe"),
-                new FilePath($"{workDir}/bin/x86/Release/net45/nop.exe"));
+                new[]
+                {
+                    new FilePath($"{workDir}/bin/x86/Release/netstandard2.0/nop.exe"),
+                    new FilePath($"{workDir}/bin/x86/Release/net45/nop.exe")
+                });
         }
     }
 }
