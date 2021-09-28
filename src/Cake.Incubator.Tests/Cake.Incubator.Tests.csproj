@@ -37,7 +37,7 @@
     <EmbeddedResource Include="sampleprojects\Cake_Unity_FSharp_Tests_fsproj.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="1.0.0" />
+    <PackageReference Include="Cake.Common" Version="1.2.0" />
     <PackageReference Include="Cake.Core" Version="1.0.0" />
     <PackageReference Include="Cake.Testing" Version="1.0.0" />
     <PackageReference Include="coverlet.msbuild" Version="3.0.3">

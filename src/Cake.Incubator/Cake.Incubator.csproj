@@ -21,7 +21,7 @@
         <DefineConstants>NETSTANDARD2_0;</DefineConstants>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cake.Common" Version="1.0.0" PrivateAssets="All" />
+        <PackageReference Include="Cake.Common" Version="1.2.0" PrivateAssets="All" />
         <PackageReference Include="Cake.Core" Version="1.0.0" PrivateAssets="All" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
