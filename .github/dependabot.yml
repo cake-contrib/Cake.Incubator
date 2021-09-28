@@ -9,6 +9,9 @@ updates:
     target-branch: "develop"
     ignore:
       - dependency-name: "Cake.Core"
+      - dependency-name: "Cake.Common"
+      - dependency-name: "Cake.Testing"
+    labels: [ ]
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
@@ -16,3 +19,4 @@ updates:
     commit-message:
       prefix: "(maint)"
     target-branch: "develop"
+    labels: [ "Build" ]
