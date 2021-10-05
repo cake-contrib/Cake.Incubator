@@ -469,7 +469,7 @@ namespace Cake.Incubator.Tests
             var file = fs.CreateFakeFile(
                 ProjectFileHelpers.GetNetCoreProjectWithElement("NuspecProperties", "edgar=poe;jimmini=cricket;"));
             var props = file.ParseProjectFile("test").NetCore.NuspecProperties;
-            props.Should().HaveCount(2);
+            props.Cast<object>().Should().HaveCount(2);
             props["edgar"].Should().Be("poe");
             props["jimmini"].Should().Be("cricket");
         }
