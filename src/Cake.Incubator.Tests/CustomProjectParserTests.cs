@@ -51,6 +51,8 @@ namespace Cake.Incubator.Tests
         private readonly FakeFile valid2017CsProjNetstandardFile;
         private readonly FakeFile validCsProjConditionalReferenceFile;
         private readonly FakeFile validCsProjWithAbsoluteFilePaths;
+        private readonly FakeFile validCsProjAppendTargetFrameworkFile;
+        private readonly FakeFile validCsProjNoAppendTargetFrameworkFile;
         private readonly FakeFileSystem fs;
 
         public CustomProjectParserTests()
@@ -63,6 +65,8 @@ namespace Cake.Incubator.Tests
             validCsProjConditionalReferenceFile = fs.CreateFakeFile("CsProj_ConditionReference_ValidFile".SafeLoad());
             validCsProjWebApplicationFile = fs.CreateFakeFile("CsProj_ValidWebApplication".SafeLoad());
             validCsProjWithAbsoluteFilePaths = fs.CreateFakeFile("CsProj_AbsolutePath".SafeLoad());
+            validCsProjAppendTargetFrameworkFile = fs.CreateFakeFile("CsProj_AppendTargetFramework".SafeLoad());
+            validCsProjNoAppendTargetFrameworkFile = fs.CreateFakeFile("CsProj_NoAppendTargetFramework".SafeLoad());
         }
 
         [Fact]
@@ -106,6 +110,24 @@ namespace Cake.Incubator.Tests
             result.OutputType.Should().Be("Library");
             var paths = result.GetAssemblyFilePaths();
             paths.Should().ContainSingle(x => x.FullPath.EqualsIgnoreCase("bin/debug/cake.common.dll"));
+        }
+
+        [Fact]
+        public void CustomProjectParser_RespectNoAppendTargetFrameworkToOutputPath_ForDebugConfig()
+        {
+            var result = validCsProjNoAppendTargetFrameworkFile.ParseProjectFile("debug");
+
+            result.Configuration.Should().Be("debug");
+            result.OutputPath.ToString().Should().Be("bin/debug");
+        }
+
+        [Fact]
+        public void CustomProjectParser_RespectAppendTargetFrameworkToOutputPath_ForDebugConfig()
+        {
+            var result = validCsProjAppendTargetFrameworkFile.ParseProjectFile("debug");
+
+            result.Configuration.Should().Be("debug");
+            result.OutputPath.ToString().Should().Be("bin/debug/net48");
         }
 
 

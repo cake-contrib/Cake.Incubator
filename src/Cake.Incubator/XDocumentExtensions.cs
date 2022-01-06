@@ -53,9 +53,11 @@ namespace Cake.Incubator.XDocumentExtensions
             if (!AssertExtensions.AssertExtensions.IsNullOrEmpty(platform) && !platform.EqualsIgnoreCase("AnyCPU")) template += $"{platform}/";
             if (!AssertExtensions.AssertExtensions.IsNullOrEmpty(config)) template += $"{config}/";
 
-            return targetFrameworks.IsNullOrEmpty()
-                ? new[] {rootDirectoryPath.Combine(template)}
-                : targetFrameworks.Select(x => rootDirectoryPath.Combine(template).Combine(x)).ToArray();
+            var shouldAppendTargetFramework = !targetFrameworks.IsNullOrEmpty() && (document.GetFirstElementValue(ProjectXElement.AppendTargetFrameworkToOutputPath) ?? "true") == "true";
+
+            return shouldAppendTargetFramework
+                ? targetFrameworks.Select(x => rootDirectoryPath.Combine(template).Combine(x)).ToArray()
+                : new[] { rootDirectoryPath.Combine(template) };
         }
 
         /// <summary>
