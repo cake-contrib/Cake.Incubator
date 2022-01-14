@@ -8,7 +8,7 @@ BuildParameters.SetParameters(context: Context,
                             title: "Cake.Incubator",
                             repositoryOwner: "cake-contrib",
                             repositoryName: "Cake.Incubator",
-							shouldRunCodecov: false,
+                            shouldRunCodecov: false,
                             shouldGenerateDocumentation: false, // until wyam oin recipe is fixed
                             appVeyorAccountName: "cakecontrib",
                             shouldRunDotNetCorePack: true,
@@ -16,9 +16,15 @@ BuildParameters.SetParameters(context: Context,
 
 BuildParameters.PrintParameters(Context);
 
+ToolSettings.SetToolPreprocessorDirectives(
+                            gitVersionTool: "#tool nuget:?package=GitVersion.CommandLine&version=5.8.1",
+                            gitVersionGlobalTool: "#tool dotnet:?package=GitVersion.Tool&version=5.8.1",
+                            reSharperTools: "#tool nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2021.2.2"
+);
+
 ToolSettings.SetToolSettings(context: Context,
                             dupFinderExcludePattern: new string[] {
-								BuildParameters.RootDirectoryPath + "/src/**/*.AssemblyInfo.cs",
+                                BuildParameters.RootDirectoryPath + "/src/**/*.AssemblyInfo.cs",
                                 BuildParameters.RootDirectoryPath + "/src/Cake.Incubator.Tests/*.cs",
                                 BuildParameters.RootDirectoryPath + "/src/Cake.Incubator/CustomProjectParser.cs",
                                 BuildParameters.RootDirectoryPath + "/src/Cake.Incubator/DotNetCoreTestExtensions.cs" },

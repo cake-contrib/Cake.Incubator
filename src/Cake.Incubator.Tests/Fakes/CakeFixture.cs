@@ -61,7 +61,7 @@ namespace Cake.Incubator.Tests
                 throw new NotImplementedException();
             }
 
-            public string GetArgument(string name)
+            public IDictionary<string, ICollection<string>> GetArguments()
             {
                 throw new NotImplementedException();
             }
