@@ -12,6 +12,7 @@ namespace Cake.Incubator.Project
     {
         internal const string Aliases = "Aliases";
         internal const string AllowUnsafeBlocks = "AllowUnsafeBlocks";
+        internal const string AppendTargetFrameworkToOutputPath = "AppendTargetFrameworkToOutputPath";
         internal const string ApplicationIcon = "ApplicationIcon";
         internal const string AssemblyName = "AssemblyName";
         internal const string AssemblyOriginatorKeyFile = "AssemblyOriginatorKeyFile";

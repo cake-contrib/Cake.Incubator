@@ -113,7 +113,7 @@ namespace Cake.Incubator.LoggingExtensions
             foreach (var val in enumerable)
             {
                 if (val == null) continue;
-                var printVal = IsSimpleType(val.GetType()) ? $"\"{val}\"" : val.Dump().Replace("\r\n", "\r\n\t");
+                var printVal = IsSimpleType(val.GetType()) ? $"\"{val}\"" : val.Dump().Replace(Environment.NewLine, Environment.NewLine+"\t");
                 if (first)
                 {
                     sb.Append(printVal);

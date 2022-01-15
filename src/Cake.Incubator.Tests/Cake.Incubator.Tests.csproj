@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>netcoreapp2.1;net462</TargetFrameworks>
+    <TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="sampleprojects\AnotherCSProj.xml" />
@@ -10,10 +10,12 @@
     <None Remove="sampleprojects\CsProj_AbsolutePath.xml" />
     <None Remove="sampleprojects\CsProj_ConditionReference_ValidFile.xml" />
     <None Remove="sampleprojects\CsProj_InvalidFile.xml" />
+    <None Remove="sampleprojects\CsProj_NoAppendTargetFramework.xml" />
     <None Remove="sampleprojects\CsProj_ValidFile.xml" />
     <None Remove="sampleprojects\CsProj_ValidMSTestFile.xml" />
     <None Remove="sampleprojects\CsProj_ValidWebApplication.xml" />
     <None Remove="sampleprojects\CsProj_ValidXUnitTestFile.xml" />
+    <None Remove="sampleprojects\CsProj_AppendTargetFramework.xml" />
     <None Remove="sampleprojects\VS2017_CsProj_NetCoreDefault.xml" />
     <None Remove="sampleprojects\VS2017_CsProj_NetStandard_ValidFile.xml" />
     <None Remove="sampleprojects\VS2017_CsProj_ValidFile.xml" />
@@ -24,49 +26,39 @@
     <EmbeddedResource Include="sampleprojects\CsProjValidFSUnitTestFile.xml" />
     <EmbeddedResource Include="sampleprojects\CsProjValidNUnitTestFile.xml" />
     <EmbeddedResource Include="sampleprojects\CsProj_AbsolutePath.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProj_NoAppendTargetFramework.xml" />
     <EmbeddedResource Include="sampleprojects\CsProj_ConditionReference_ValidFile.xml" />
     <EmbeddedResource Include="sampleprojects\CsProj_InvalidFile.xml" />
     <EmbeddedResource Include="sampleprojects\CsProj_ValidFile.xml" />
     <EmbeddedResource Include="sampleprojects\CsProj_ValidMSTestFile.xml" />
     <EmbeddedResource Include="sampleprojects\CsProj_ValidWebApplication.xml" />
     <EmbeddedResource Include="sampleprojects\CsProj_ValidXUnitTestFile.xml" />
+    <EmbeddedResource Include="sampleprojects\CsProj_AppendTargetFramework.xml" />
     <EmbeddedResource Include="sampleprojects\VS2017_CsProj_NetCoreDefault.xml" />
     <EmbeddedResource Include="sampleprojects\VS2017_CsProj_NetStandard_ValidFile.xml" />
     <EmbeddedResource Include="sampleprojects\VS2017_CsProj_ValidFile.xml" />
     <EmbeddedResource Include="sampleprojects\Cake_Unity_FSharp_Tests_fsproj.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="1.0.0" />
-    <PackageReference Include="Cake.Core" Version="1.0.0" />
-    <PackageReference Include="coverlet.msbuild" Version="3.0.3">
+    <PackageReference Include="Cake.Common" Version="2.0.0" />
+    <PackageReference Include="Cake.Core" Version="2.0.0" />
+    <PackageReference Include="Cake.Testing" Version="2.0.0" />
+    <PackageReference Include="coverlet.msbuild" Version="3.1.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="FakeItEasy" Version="5.1.0" />
-    <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="5.1.0" />
-    <PackageReference Include="FluentAssertions" Version="5.6.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.0.1" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.0.0">
+    <PackageReference Include="FakeItEasy" Version="7.2.0" />
+    <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="6.1.0" />
+    <PackageReference Include="FluentAssertions" Version="6.3.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="xunit" Version="2.4.1" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.3" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cake.Incubator\Cake.Incubator.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Resources.Designer.cs">
-      <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Update="Resources.resx">
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <Generator>PublicResXFileCodeGenerator</Generator>
-    </EmbeddedResource>
   </ItemGroup>
 </Project>

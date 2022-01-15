@@ -31,10 +31,12 @@ namespace Cake.Incubator.Project
     [CakeAliasCategory("MSBuild Resource")]
     public static class ProjectParserExtensions
     {
-        private static readonly Regex NetCoreTargetFrameworkRegex = new Regex("([Nn][Ee][Tt])([Cc])\\w+", RegexOptions.Compiled);
-        private static readonly Regex NetStandardTargetFrameworkRegex = new Regex("([Nn][Ee][Tt])([Ss])\\w+", RegexOptions.Compiled);
-        private static readonly Regex NetFrameworkTargetFrameworkRegex = new Regex("([Nn][Ee][Tt][0-9*])\\w+", RegexOptions.Compiled);
-
+        private const RegexOptions parseOptions = RegexOptions.Compiled | RegexOptions.IgnoreCase;
+        private static readonly Regex NetCoreTargetFrameworkRegex = new Regex("^netcoreapp\\d+\\.\\d+$", parseOptions);
+        private static readonly Regex NetStandardTargetFrameworkRegex = new Regex("^netstandard\\d+\\.\\d+$", parseOptions);
+        private static readonly Regex NetFrameworkTargetFrameworkRegex = new Regex("^net\\d+$", parseOptions);
+        private static readonly Regex Net5PlusTargetFrameworkRegex = new Regex("^net\\d+\\.\\d+(-[\\w.]+)?$", parseOptions);
+        
         /// <summary>
         /// Checks if the project is a library
         /// </summary>
@@ -948,7 +950,7 @@ namespace Cake.Incubator.Project
             var treatSpecificWarningsAsErrors = document.GetFirstElementValue(ProjectXElement.TreatSpecificWarningsAsErrors, config, platform)?.SplitIgnoreEmpty(';') ?? new string[0];
             var defineConstants = document.GetFirstElementValue(ProjectXElement.DefineConstants, config, platform)?.SplitIgnoreEmpty(';').Where(x => !x.StartsWith("$"))?.ToArray() ?? new string[0];
             var targets = document.GetTargets();
-            var isNetCore = targetFrameworks.Any(x => NetCoreTargetFrameworkRegex.IsMatch(x));
+            var isNetCore = targetFrameworks.Any(x => NetCoreTargetFrameworkRegex.IsMatch(x) || Net5PlusTargetFrameworkRegex.IsMatch(x));
             var isNetStandard = targetFrameworks.Any(x => NetStandardTargetFrameworkRegex.IsMatch(x));
             var isNetFramework = targetFrameworks.Any(x => NetFrameworkTargetFrameworkRegex.IsMatch(x));
 
