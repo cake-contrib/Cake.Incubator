@@ -1,6 +1,6 @@
 ﻿// This Source Code Form is subject to the terms of the Mozilla Public
 // License, v. 2.0. If a copy of the MPL was not distributed with this
-// file, You can obtain one at http://mozilla.org/MPL/2.0/. 
+// file, You can obtain one at http://mozilla.org/MPL/2.0/.
 
 using Cake.Core;
 using Cake.Testing;
@@ -18,7 +18,7 @@ namespace Cake.Incubator.Tests
     public class LoggingExtensionsTests
     {
         private static  readonly FakeFileSystem fs = new FakeFileSystem(FakeEnvironment.CreateUnixEnvironment());
-        
+
         [Fact]
         public void Dump_ReturnsNull_IfObjectNull()
         {
@@ -36,11 +36,8 @@ namespace Cake.Incubator.Tests
                 DateTimeProp = DateTime.Today
             };
 
-#if NETFRAMEWORK
             var expected = $"\tStringProp:\t{test.StringProp}\r\n\tIntProp:\t{test.IntProp}\r\n\tDateTimeProp:\t{test.DateTimeProp}\r\n";
-#else
-            var expected = $"\tStringProp:\t{test.StringProp}\r\n\tIntProp:\t{test.IntProp}\r\n\tDateTimeProp:\t{test.DateTimeProp}\r\n\tUnreadable:\t180\r\n";
-#endif
+
             test.Dump().Should().Be(expected.Replace("\r\n", Environment.NewLine));
         }
 

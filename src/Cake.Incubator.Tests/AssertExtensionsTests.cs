@@ -20,7 +20,7 @@ namespace Cake.Incubator.Tests
 
             Action action = () => obj.ThrowIfNull(nameof(obj), "This is required");
             action.Should().Throw<ArgumentNullException>().WithMessage(
-                "This is required\r\nParameter name: obj");
+                "This is required (Parameter 'obj')");
         }
     
         [Fact]
