@@ -49,7 +49,7 @@
     </PackageReference>
     <PackageReference Include="FakeItEasy" Version="7.3.0" />
     <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="6.1.0" />
-    <PackageReference Include="FluentAssertions" Version="6.4.0" />
+    <PackageReference Include="FluentAssertions" Version="6.5.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.1.0" />
     <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
