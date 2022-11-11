@@ -43,9 +43,6 @@
             <_Parameter1>Cake.Incubator.DotNetBuildExtensions</_Parameter1>
         </AssemblyAttribute>
         <AssemblyAttribute Include="Cake.Core.Annotations.CakeNamespaceImportAttribute">
-            <_Parameter1>Cake.Incubator.DotNetCoreTestExtensions</_Parameter1>
-        </AssemblyAttribute>
-        <AssemblyAttribute Include="Cake.Core.Annotations.CakeNamespaceImportAttribute">
             <_Parameter1>Cake.Incubator.EnumerableExtensions</_Parameter1>
         </AssemblyAttribute>
         <AssemblyAttribute Include="Cake.Core.Annotations.CakeNamespaceImportAttribute">
