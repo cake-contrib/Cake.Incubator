@@ -5,7 +5,7 @@
 
 namespace Cake.Incubator.Tests
 {
-    using Cake.Common.Tools.DotNetCore.MSBuild;
+    using Cake.Common.Tools.DotNet.MSBuild;
     using Cake.Incubator.DotNetBuildExtensions;
     using FluentAssertions;
     using Xunit;
@@ -17,7 +17,7 @@ namespace Cake.Incubator.Tests
         {
             var targets = new[] { "One", "Two" };
 
-            var settings = new DotNetCoreMSBuildSettings();
+            var settings = new DotNetMSBuildSettings();
             settings.WithTargets(targets);
 
             settings.Targets.Should().HaveCount(2).And.Contain(targets);
