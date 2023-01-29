@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
-        <TargetFrameworks>netcoreapp3.1;net5.0;net6.0</TargetFrameworks>
+        <TargetFrameworks>net6.0;net7.0</TargetFrameworks>
         <GenerateDocumentationFile>true</GenerateDocumentationFile>
         <IncludeSymbols>true</IncludeSymbols>
         <SymbolPackageFormat>snupkg</SymbolPackageFormat>
@@ -18,8 +18,8 @@
         <AllowedOutputExtensionsInPackageBuildOutputFolder>$(AllowedOutputExtensionsInPackageBuildOutputFolder);.pdb</AllowedOutputExtensionsInPackageBuildOutputFolder>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Cake.Common" Version="2.0.0" PrivateAssets="All" />
-        <PackageReference Include="Cake.Core" Version="2.0.0" PrivateAssets="All" />
+        <PackageReference Include="Cake.Common" Version="3.0.0" PrivateAssets="All" />
+        <PackageReference Include="Cake.Core" Version="3.0.0" PrivateAssets="All" />
         <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
@@ -30,7 +30,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="CakeContrib.Guidelines" Version="1.3.0">
+        <PackageReference Include="CakeContrib.Guidelines" Version="1.4.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
@@ -43,7 +43,7 @@
             <_Parameter1>Cake.Incubator.DotNetBuildExtensions</_Parameter1>
         </AssemblyAttribute>
         <AssemblyAttribute Include="Cake.Core.Annotations.CakeNamespaceImportAttribute">
-            <_Parameter1>Cake.Incubator.DotNetCoreTestExtensions</_Parameter1>
+            <_Parameter1>Cake.Incubator.DotNetTestExtensions</_Parameter1>
         </AssemblyAttribute>
         <AssemblyAttribute Include="Cake.Core.Annotations.CakeNamespaceImportAttribute">
             <_Parameter1>Cake.Incubator.EnumerableExtensions</_Parameter1>
