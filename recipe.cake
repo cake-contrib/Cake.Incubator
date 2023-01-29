@@ -1,4 +1,4 @@
-#load nuget:?package=Cake.Recipe&version=2.2.1
+#load nuget:?package=Cake.Recipe&version=3.0.1
 
 Environment.SetVariableNames();
 
@@ -23,11 +23,6 @@ ToolSettings.SetToolPreprocessorDirectives(
 );
 
 ToolSettings.SetToolSettings(context: Context,
-                            dupFinderExcludePattern: new string[] {
-                                BuildParameters.RootDirectoryPath + "/src/**/*.AssemblyInfo.cs",
-                                BuildParameters.RootDirectoryPath + "/src/Cake.Incubator.Tests/*.cs",
-                                BuildParameters.RootDirectoryPath + "/src/Cake.Incubator/CustomProjectParser.cs",
-                                BuildParameters.RootDirectoryPath + "/src/Cake.Incubator/DotNetCoreTestExtensions.cs" },
                             testCoverageFilter: "+[*]* -[xunit.*]* -[Cake.Core]* -[Cake.Testing]* -[*.Tests]* -[FakeItEasy]* -[FluentAssertions]* -[FluentAssertions.Core]*",
                             testCoverageExcludeByAttribute: "*.ExcludeFromCodeCoverage*",
                             testCoverageExcludeByFile: "*/*Designer.cs;*/*.g.cs;*/*.g.i.cs");
