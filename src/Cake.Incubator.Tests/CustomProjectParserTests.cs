@@ -53,6 +53,8 @@ namespace Cake.Incubator.Tests
         private readonly FakeFile validCsProjWithAbsoluteFilePaths;
         private readonly FakeFile validCsProjAppendTargetFrameworkFile;
         private readonly FakeFile validCsProjNoAppendTargetFrameworkFile;
+        private readonly FakeFile validCsProjAppendTargetFrameworkOutputPathFile;
+        private readonly FakeFile validCsProjNoAppendTargetFrameworkOutputPathFile;
         private readonly FakeFileSystem fs;
 
         public CustomProjectParserTests()
@@ -67,6 +69,8 @@ namespace Cake.Incubator.Tests
             validCsProjWithAbsoluteFilePaths = fs.CreateFakeFile("CsProj_AbsolutePath".SafeLoad());
             validCsProjAppendTargetFrameworkFile = fs.CreateFakeFile("CsProj_AppendTargetFramework".SafeLoad());
             validCsProjNoAppendTargetFrameworkFile = fs.CreateFakeFile("CsProj_NoAppendTargetFramework".SafeLoad());
+            validCsProjAppendTargetFrameworkOutputPathFile = fs.CreateFakeFile("CsProj_AppendTargetFrameworkWithOutputPath".SafeLoad());
+            validCsProjNoAppendTargetFrameworkOutputPathFile = fs.CreateFakeFile("CsProj_NoAppendTargetFrameworkWithOutputPath".SafeLoad());
         }
 
         [Fact]
@@ -116,6 +120,24 @@ namespace Cake.Incubator.Tests
         public void CustomProjectParser_RespectNoAppendTargetFrameworkToOutputPath_ForDebugConfig()
         {
             var result = validCsProjNoAppendTargetFrameworkFile.ParseProjectFile("debug");
+
+            result.Configuration.Should().Be("debug");
+            result.OutputPath.ToString().Should().Be("bin/debug");
+        }
+
+        [Fact]
+        public void CustomProjectParser_RespectAppendTargetFrameworkOutputPathToOutputPath_ForDebugConfig()
+        {
+            var result = validCsProjAppendTargetFrameworkOutputPathFile.ParseProjectFile("debug");
+
+            result.Configuration.Should().Be("debug");
+            result.OutputPath.ToString().Should().Be("bin/debug/net48");
+        }
+
+        [Fact]
+        public void CustomProjectParser_RespectNoAppendTargetFrameworkOutputPathToOutputPath_ForDebugConfig()
+        {
+            var result = validCsProjNoAppendTargetFrameworkOutputPathFile.ParseProjectFile("debug");
 
             result.Configuration.Should().Be("debug");
             result.OutputPath.ToString().Should().Be("bin/debug");

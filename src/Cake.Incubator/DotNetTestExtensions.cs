@@ -1,54 +1,54 @@
-﻿namespace Cake.Incubator.DotNetCoreTestExtensions
+﻿namespace Cake.Incubator.DotNetTestExtensions
 {
     using System.Linq;
-    using Cake.Common.Tools.DotNetCore;
-    using Cake.Common.Tools.DotNetCore.Test;
+    using Cake.Common.Tools.DotNet;
+    using Cake.Common.Tools.DotNet.Test;
     using Cake.Common.Tools.XUnit;
     using Cake.Core;
     using Cake.Core.Annotations;
     using Cake.Core.IO;
 
     /// <summary>
-    /// Several extension methods when using DotNetCoreTest.
+    /// Several extension methods when using DotNetTest.
     /// </summary>
-    [CakeAliasCategory("DotNetCore")]
+    [CakeAliasCategory("DotNet")]
     // ReSharper disable once UnusedMember.Global
-    public static class DotNetCoreTestExtensions
+    public static class DotNetTestExtensions
     {
         /// <summary>
-        /// Runs DotNetCoreTest using the given <see cref="XUnit2Settings"/>
+        /// Runs DotNetTest using the given <see cref="XUnit2Settings"/>
         /// </summary>
         /// <param name="context">The Cake Context</param>
-        /// <param name="project">DotNetCore Test Project File Path</param>
-        /// <param name="xunitSettings">XUnit2 DotNetCore Test Settings Configurer</param>
+        /// <param name="project">DotNet Test Project File Path</param>
+        /// <param name="xunitSettings">XUnit2 DotNet Test Settings Configurer</param>
         [CakeAliasCategory("Test")]
         [CakeMethodAlias]
         // ReSharper disable once UnusedMember.Global
-        public static void DotNetCoreTest(
+        public static void DotNetTest(
             this ICakeContext context,
             FilePath project,
             XUnit2Settings xunitSettings)
         {
-            DotNetCoreTest(context, new DotNetCoreTestSettings(), project, xunitSettings);
+            DotNetTest(context, new DotNetTestSettings(), project, xunitSettings);
         }
 
         /// <summary>
-        /// Appends <see cref="XUnit2Settings"/> to an <see cref="DotNetCoreTestSettings"/> instance
+        /// Appends <see cref="XUnit2Settings"/> to an <see cref="DotNetTestSettings"/> instance
         /// </summary>
         /// <param name="context">The Cake Context</param>
-        /// <param name="settings">DotNetCore Test Settings</param>
-        /// <param name="project">DotNetCore Test Project Path</param>
-        /// <param name="xunitSettings">XUnit2 DotNetCore Test Settings Configurer</param>
+        /// <param name="settings">DotNet Test Settings</param>
+        /// <param name="project">DotNet Test Project Path</param>
+        /// <param name="xunitSettings">XUnit2 DotNet Test Settings Configurer</param>
         [CakeMethodAlias]
         [CakeAliasCategory("Test")]
-        public static void DotNetCoreTest(
+        public static void DotNetTest(
             this ICakeContext context,
-            DotNetCoreTestSettings settings,
+            DotNetTestSettings settings,
             FilePath project,
             XUnit2Settings xunitSettings)
         {
             settings.ArgumentCustomization = args => ProcessArguments(context, args, project, xunitSettings);
-            context.DotNetCoreTest(project.FullPath, settings);
+            context.DotNetTest(project.FullPath, settings);
         }
 
         private static ProcessArgumentBuilder ProcessArguments(
@@ -78,25 +78,13 @@
             // Generate NUnit Style XML report?
             if (settings.NUnitReport)
             {
-                var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());
-                var assemblyFilename = reportFileName.AppendExtension(".xml");
-                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment)
-                    .GetFilePath(assemblyFilename);
-
-                builder.Append("-nunit");
-                builder.AppendQuoted(outputPath.FullPath);
+                AddOutputArgument(builder, cakeContext, project, settings, ".xml", "-nunit");
             }
 
             // Generate HTML report?
             if (settings.HtmlReport)
             {
-                var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());
-                var assemblyFilename = reportFileName.AppendExtension(".html");
-                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment)
-                    .GetFilePath(assemblyFilename);
-
-                builder.Append("-html");
-                builder.AppendQuoted(outputPath.FullPath);
+                AddOutputArgument(builder, cakeContext, project, settings, ".html", "-html");
             }
 
             if (settings.XmlReportV1)
@@ -107,13 +95,7 @@
             // Generate XML report?
             if (settings.XmlReport)
             {
-                var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());
-                var assemblyFilename = reportFileName.AppendExtension(".xml");
-                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment)
-                    .GetFilePath(assemblyFilename);
-
-                builder.Append("-xml");
-                builder.AppendQuoted(outputPath.FullPath);
+                AddOutputArgument(builder, cakeContext, project, settings, ".xml", "-xml");
             }
 
             // parallelize test execution?
@@ -148,6 +130,23 @@
             }
 
             return builder;
+        }
+
+        private static void AddOutputArgument(
+            ProcessArgumentBuilder builder,
+            ICakeContext cakeContext,
+            FilePath project,
+            XUnit2Settings settings,
+            string fileExtension,
+            string argumentName)
+        {
+            var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());
+            var assemblyFilename = reportFileName.AppendExtension(fileExtension);
+            var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment)
+                .GetFilePath(assemblyFilename);
+
+            builder.Append(argumentName);
+            builder.AppendQuoted(outputPath.FullPath);
         }
     }
 }

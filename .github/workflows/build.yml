@@ -32,22 +32,22 @@ jobs:
       WYAM_ACCESS_TOKEN: ${{ secrets.WYAM_ACCESS_TOKEN }}
       WYAM_DEPLOY_BRANCH: "gh-pages"
       WYAM_DEPLOY_REMOTE: ${{ github.event.repository.html_url }}
+      COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v2.3.4
+        uses: actions/checkout@v3
         with:
           fetch-depth: 0
 
       - name: Install dotnet
-        uses: actions/setup-dotnet@v1.9.0
+        uses: actions/setup-dotnet@v3
         with:
           dotnet-version: |
-            3.1.x
-            5.0.x
             6.0.x
+            7.0.x
 
       - name: Cache Tools
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: tools
           key: ${{ runner.os }}-tools-${{ hashFiles('recipe.cake') }}
@@ -58,18 +58,17 @@ jobs:
           script-path: recipe.cake
           target: CI
           verbosity: Normal
-          cake-version: 0.38.5
-          cake-bootstrap: true
+          cake-version: tool-manifest
 
       - name: Upload Issues-Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           if-no-files-found: warn
           name: issues
           path: BuildArtifacts/report.html
 
       - name: Upload Packages
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           if-no-files-found: warn
           name: package

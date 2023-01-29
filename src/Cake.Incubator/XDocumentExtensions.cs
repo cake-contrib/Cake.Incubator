@@ -39,21 +39,20 @@ namespace Cake.Incubator.XDocumentExtensions
                     return condition.GetConditionalConfigPlatform().EqualsIgnoreCase($"{config}|{platform}");
                 })?.Value;
 
+            var shouldAppendTargetFramework = !targetFrameworks.IsNullOrEmpty() && (document.GetFirstElementValue(ProjectXElement.AppendTargetFrameworkToOutputPath) ?? "true") == "true";
+
             // specific output path is specified in project, overrides convention
             if (!string.IsNullOrWhiteSpace(outputPathOverride))
             {
-                return targetFrameworks.IsNullOrEmpty()
-                    ? new[] {rootDirectoryPath.Combine(outputPathOverride)}
-                    : targetFrameworks.Select(
-                        x => rootDirectoryPath.Combine(outputPathOverride).Combine(x)).ToArray();
+                return shouldAppendTargetFramework
+                    ? targetFrameworks.Select(x => rootDirectoryPath.Combine(outputPathOverride).Combine(x)).ToArray()
+                    : new[] {rootDirectoryPath.Combine(outputPathOverride)};
             }
 
             // use conventions, skip null or empty props
             var template = "bin/";
             if (!AssertExtensions.AssertExtensions.IsNullOrEmpty(platform) && !platform.EqualsIgnoreCase("AnyCPU")) template += $"{platform}/";
             if (!AssertExtensions.AssertExtensions.IsNullOrEmpty(config)) template += $"{config}/";
-
-            var shouldAppendTargetFramework = !targetFrameworks.IsNullOrEmpty() && (document.GetFirstElementValue(ProjectXElement.AppendTargetFrameworkToOutputPath) ?? "true") == "true";
 
             return shouldAppendTargetFramework
                 ? targetFrameworks.Select(x => rootDirectoryPath.Combine(template).Combine(x)).ToArray()

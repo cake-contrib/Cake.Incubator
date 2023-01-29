@@ -1,0 +1,9 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>net48</TargetFramework>
+		<Deterministic>False</Deterministic>
+		<AppendTargetFrameworkToOutputPath>true</AppendTargetFrameworkToOutputPath>
+		<OutputPath>Local</OutputPath>
+		<OutputType>Exe</OutputType>
+	</PropertyGroup>
+</Project>
