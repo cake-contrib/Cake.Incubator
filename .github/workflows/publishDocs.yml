@@ -32,5 +32,4 @@ jobs:
         script-path: recipe.cake
         target: Force-Publish-Documentation
         verbosity: Diagnostic
-        cake-version: 0.38.5
-        cake-bootstrap: true
+        cake-version: tool-manifest
