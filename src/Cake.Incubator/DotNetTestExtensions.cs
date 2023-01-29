@@ -78,25 +78,13 @@
             // Generate NUnit Style XML report?
             if (settings.NUnitReport)
             {
-                var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());
-                var assemblyFilename = reportFileName.AppendExtension(".xml");
-                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment)
-                    .GetFilePath(assemblyFilename);
-
-                builder.Append("-nunit");
-                builder.AppendQuoted(outputPath.FullPath);
+                AddOutputArgument(builder, cakeContext, project, settings, ".xml", "-nunit");
             }
 
             // Generate HTML report?
             if (settings.HtmlReport)
             {
-                var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());
-                var assemblyFilename = reportFileName.AppendExtension(".html");
-                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment)
-                    .GetFilePath(assemblyFilename);
-
-                builder.Append("-html");
-                builder.AppendQuoted(outputPath.FullPath);
+                AddOutputArgument(builder, cakeContext, project, settings, ".html", "-html");
             }
 
             if (settings.XmlReportV1)
@@ -107,13 +95,7 @@
             // Generate XML report?
             if (settings.XmlReport)
             {
-                var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());
-                var assemblyFilename = reportFileName.AppendExtension(".xml");
-                var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment)
-                    .GetFilePath(assemblyFilename);
-
-                builder.Append("-xml");
-                builder.AppendQuoted(outputPath.FullPath);
+                AddOutputArgument(builder, cakeContext, project, settings, ".xml", "-xml");
             }
 
             // parallelize test execution?
@@ -148,6 +130,23 @@
             }
 
             return builder;
+        }
+
+        private static void AddOutputArgument(
+            ProcessArgumentBuilder builder,
+            ICakeContext cakeContext,
+            FilePath project,
+            XUnit2Settings settings,
+            string fileExtension,
+            string argumentName)
+        {
+            var reportFileName = new FilePath(project.GetDirectory().GetDirectoryName());
+            var assemblyFilename = reportFileName.AppendExtension(fileExtension);
+            var outputPath = settings.OutputDirectory.MakeAbsolute(cakeContext.Environment)
+                .GetFilePath(assemblyFilename);
+
+            builder.Append(argumentName);
+            builder.AppendQuoted(outputPath.FullPath);
         }
     }
 }
