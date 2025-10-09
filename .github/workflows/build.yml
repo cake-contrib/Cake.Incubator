@@ -76,10 +76,11 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           if-no-files-found: warn
-          name: issues
+          name: ${{ matrix.os }} issues
           path: BuildArtifacts/report.html
 
       - name: Upload Packages
+        if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
           if-no-files-found: warn
