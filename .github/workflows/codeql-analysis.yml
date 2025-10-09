@@ -38,9 +38,16 @@ jobs:
     - name: Install dotnet
       uses: actions/setup-dotnet@v3
       with:
+        # codecov needs 2.1
+        # unittests needs 3.1
+        # gitversion needs 5.0
         dotnet-version: |
+          2.1.x
+          3.1.x
+          5.0.x
           6.0.x
           7.0.x
+          8.0.x
 
     - name: Cache Tools
       uses: actions/cache@v3
