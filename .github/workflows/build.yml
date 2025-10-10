@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ windows-2019, ubuntu-18.04, macos-10.15 ]
+        os: [ windows-2025, ubuntu-24.04, macos-13 ]
 
     env:
       AZURE_PASSWORD: ${{ secrets.AZURE_PASSWORD }}
@@ -35,16 +35,29 @@ jobs:
       COVERALLS_REPO_TOKEN: ${{ secrets.COVERALLS_REPO_TOKEN }}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v5
         with:
           fetch-depth: 0
 
       - name: Install dotnet
-        uses: actions/setup-dotnet@v3
+        uses: actions/setup-dotnet@v5
         with:
           dotnet-version: |
             6.0.x
             7.0.x
+            8.0.x
+
+      - name: Install mono
+        if: runner.os == 'Linux'
+        # check https://www.mono-project.com/download/stable/#download-lin
+        run: |
+            sudo apt install ca-certificates gnupg
+            sudo gpg --homedir /tmp --no-default-keyring --keyring gnupg-ring:/usr/share/keyrings/mono-official-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
+            sudo chmod +r /usr/share/keyrings/mono-official-archive-keyring.gpg
+            echo "deb [signed-by=/usr/share/keyrings/mono-official-archive-keyring.gpg] https://download.mono-project.com/repo/ubuntu stable-focal main" | sudo tee /etc/apt/sources.list.d/mono-official-stable.list
+            sudo apt update
+            sudo apt install -y mono-complete
+            mono --version
 
       - name: Cache Tools
         uses: actions/cache@v3
@@ -53,7 +66,7 @@ jobs:
           key: ${{ runner.os }}-tools-${{ hashFiles('recipe.cake') }}
 
       - name: Build project
-        uses: cake-build/cake-action@v1
+        uses: cake-build/cake-action@v3
         with:
           script-path: recipe.cake
           target: CI
@@ -61,14 +74,15 @@ jobs:
           cake-version: tool-manifest
 
       - name: Upload Issues-Report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           if-no-files-found: warn
-          name: issues
+          name: ${{ matrix.os }} issues
           path: BuildArtifacts/report.html
 
       - name: Upload Packages
-        uses: actions/upload-artifact@v3
+        if: runner.os == 'Windows'
+        uses: actions/upload-artifact@v4
         with:
           if-no-files-found: warn
           name: package

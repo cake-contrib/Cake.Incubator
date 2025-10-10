@@ -1,4 +1,4 @@
-#load nuget:?package=Cake.Recipe&version=3.0.1
+#load nuget:?package=Cake.Recipe&version=4.0.0
 
 Environment.SetVariableNames();
 
@@ -15,12 +15,6 @@ BuildParameters.SetParameters(context: Context,
                             preferredBuildProviderType: BuildProviderType.GitHubActions);
 
 BuildParameters.PrintParameters(Context);
-
-ToolSettings.SetToolPreprocessorDirectives(
-                            gitVersionTool: "#tool nuget:?package=GitVersion.CommandLine&version=5.8.1",
-                            gitVersionGlobalTool: "#tool dotnet:?package=GitVersion.Tool&version=5.8.1",
-                            reSharperTools: "#tool nuget:?package=JetBrains.ReSharper.CommandLineTools&version=2021.2.2"
-);
 
 ToolSettings.SetToolSettings(context: Context,
                             testCoverageFilter: "+[*]* -[xunit.*]* -[Cake.Core]* -[Cake.Testing]* -[*.Tests]* -[FakeItEasy]* -[FluentAssertions]* -[FluentAssertions.Core]*",
