@@ -36,7 +36,7 @@ jobs:
         fetch-depth: 0
 
     - name: Install dotnet
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v5
       with:
         # codecov needs 2.1
         # unittests needs 3.1
