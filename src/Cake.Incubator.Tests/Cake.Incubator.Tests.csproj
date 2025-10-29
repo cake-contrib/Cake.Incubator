@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net6.0;net7.0;net8.0</TargetFrameworks>
+    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="sampleprojects\AnotherCSProj.xml" />
@@ -44,9 +44,9 @@
     <EmbeddedResource Include="sampleprojects\Cake_Unity_FSharp_Tests_fsproj.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="4.0.0" />
-    <PackageReference Include="Cake.Core" Version="4.0.0" />
-    <PackageReference Include="Cake.Testing" Version="4.0.0" />
+    <PackageReference Include="Cake.Common" Version="5.0.0" />
+    <PackageReference Include="Cake.Core" Version="5.0.0" />
+    <PackageReference Include="Cake.Testing" Version="5.0.0" />
     <PackageReference Include="coverlet.msbuild" Version="3.2.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
