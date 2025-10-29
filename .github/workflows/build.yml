@@ -60,7 +60,7 @@ jobs:
             mono --version
 
       - name: Cache Tools
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: tools
           key: ${{ runner.os }}-tools-${{ hashFiles('recipe.cake') }}
@@ -74,7 +74,7 @@ jobs:
           cake-version: tool-manifest
 
       - name: Upload Issues-Report
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           if-no-files-found: warn
           name: ${{ matrix.os }} issues
@@ -82,7 +82,7 @@ jobs:
 
       - name: Upload Packages
         if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           if-no-files-found: warn
           name: package

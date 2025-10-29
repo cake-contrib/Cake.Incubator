@@ -50,7 +50,7 @@ jobs:
           8.0.x
 
     - name: Cache Tools
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       with:
         path: tools
         key: ${{ runner.os }}-tools-${{ hashFiles('recipe.cake') }}
@@ -92,7 +92,7 @@ jobs:
       uses: github/codeql-action/analyze@v4
 
     - name: Upload CoreDump
-      uses: actions/upload-artifact@v4
+      uses: actions/upload-artifact@v5
       if: failure()
       with:
         if-no-files-found: warn
