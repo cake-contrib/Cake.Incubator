@@ -33,7 +33,7 @@ jobs:
           mono --version
 
     - name: Cache Tools
-      uses: actions/cache@v4
+      uses: actions/cache@v5
       with:
         path: tools
         key: ${{ runner.os }}-doc-tools-${{ hashFiles('recipe.cake') }}
