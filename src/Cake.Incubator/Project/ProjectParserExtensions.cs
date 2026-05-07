@@ -85,19 +85,49 @@ namespace Cake.Incubator.Project
         /// </example>
         public static bool IsDotNetCliTestProject(this CustomProjectParserResult projectParserResult)
         {
-            // check for package reference 'Microsoft.NET.Test.Sdk' first
-            // in 2017 csproj format, it is located in package references
-            // in pre 2017 format, it is located in references
+            // Established VSTest-runner heuristic: a project carrying a
+            // Microsoft.NET.Test.Sdk package reference is `dotnet test`-compatible.
+            // In 2017+ csproj format the reference sits in PackageReferences; in
+            // pre-2017 format it's in package references too (Reference items are
+            // for assembly refs only).
             const string microsoftNetTestSdk = "Microsoft.NET.Test.Sdk";
 
             if (projectParserResult.IsNetCore &&
                 projectParserResult.NetCore.PackageReferences.Any(
                     x => x.Name.EqualsIgnoreCase(microsoftNetTestSdk)))
+            {
                 return true;
+            }
 
-            return projectParserResult.IsNetFramework &&
-                   !projectParserResult.PackageReferences.IsNullOrEmpty() &&
-                   projectParserResult.PackageReferences.Any(x => x.Name.EqualsIgnoreCase(microsoftNetTestSdk));
+            if (projectParserResult.IsNetFramework &&
+                !projectParserResult.PackageReferences.IsNullOrEmpty() &&
+                projectParserResult.PackageReferences.Any(x => x.Name.EqualsIgnoreCase(microsoftNetTestSdk)))
+            {
+                return true;
+            }
+
+            // Microsoft.Testing.Platform-native test projects (per #266) run via
+            // `dotnet test` without a Microsoft.NET.Test.Sdk reference. Detect them
+            // either by their MSBuild Sdk attribute (Sdk="MSTest.Sdk", Microsoft's
+            // MTP-native template) or by package references to known MTP-only test
+            // frameworks (TUnit, xunit.v3 — both run exclusively on MTP and do not
+            // ship a Microsoft.NET.Test.Sdk dependency). MSTest projects opting into
+            // MTP via <EnableMSTestRunner> still need Microsoft.NET.Test.Sdk to run
+            // and are caught by the established check above.
+            if (!projectParserResult.IsNetCore || projectParserResult.NetCore?.PackageReferences == null)
+            {
+                return false;
+            }
+
+            if (projectParserResult.NetCore.Sdk != null &&
+                projectParserResult.NetCore.Sdk.EqualsIgnoreCase("MSTest.Sdk"))
+            {
+                return true;
+            }
+
+            var mtpNativeTestPackages = new[] { "TUnit", "xunit.v3", "xunit.v3.core" };
+            return projectParserResult.NetCore.PackageReferences.Any(
+                x => mtpNativeTestPackages.Contains(x.Name, StringComparer.OrdinalIgnoreCase));
         }
 
         /// <summary>

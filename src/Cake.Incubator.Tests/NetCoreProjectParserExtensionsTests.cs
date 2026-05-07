@@ -193,6 +193,39 @@ namespace Cake.Incubator.Tests
             file.ParseProjectFile("test").IsExpectoTestProject().Should().BeTrue();
         }
 
+        [Theory]
+        [InlineData("TUnit")]
+        [InlineData("xunit.v3")]
+        [InlineData("xunit.v3.core")]
+        public void ParseProject_IsDotNetCliTestProject_ForMicrosoftTestingPlatformNativeFrameworks(string packageName)
+        {
+            // Per #266 — Microsoft.Testing.Platform-native test frameworks (TUnit,
+            // xunit.v3) run via `dotnet test` without a Microsoft.NET.Test.Sdk
+            // reference. Pre-v11.0.0 IsDotNetCliTestProject only checked for
+            // Microsoft.NET.Test.Sdk and missed these projects entirely.
+            var testProject =
+                $"<PropertyGroup><TargetFramework>net8.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup>" +
+                $"<ItemGroup><PackageReference Include=\"{packageName}\" Version=\"1.0.0\" /></ItemGroup>";
+            var file = fs.CreateFakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
+            file.ParseProjectFile("test").IsDotNetCliTestProject().Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_IsDotNetCliTestProject_ForMSTestSdk()
+        {
+            // Per #266 — Microsoft's MSTest.Sdk template uses Sdk="MSTest.Sdk" to
+            // opt into MTP-native test execution and does not require a
+            // Microsoft.NET.Test.Sdk reference.
+            const string projectXml =
+                @"<Project Sdk=""MSTest.Sdk"">
+                    <PropertyGroup>
+                      <TargetFramework>net8.0</TargetFramework>
+                    </PropertyGroup>
+                  </Project>";
+            var file = fs.CreateFakeFile(projectXml);
+            file.ParseProjectFile("test").IsDotNetCliTestProject().Should().BeTrue();
+        }
+
         [Fact]
         public void ParseProject_SetsIsNetCoreForWebSdk()
         {
