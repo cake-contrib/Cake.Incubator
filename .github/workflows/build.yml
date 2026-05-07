@@ -11,7 +11,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ windows-2025, ubuntu-24.04, macos-13 ]
+        os: [ windows-2025, ubuntu-24.04 ]
 
     env:
       AZURE_PASSWORD: ${{ secrets.AZURE_PASSWORD }}
@@ -46,6 +46,8 @@ jobs:
             6.0.x
             7.0.x
             8.0.x
+            9.0.x
+            10.0.x
 
       - name: Install mono
         if: runner.os == 'Linux'
@@ -72,6 +74,31 @@ jobs:
           target: CI
           verbosity: Normal
           cake-version: tool-manifest
+
+      # The demo/ folders exercise the just-built addin DLL under
+      # Cake-major-matching cake.tool / Cake.Frosting / Cake.Sdk
+      # versions. They run in their OWN tool/package context
+      # (independent of recipe.cake's cake.tool, which is constrained
+      # by Cake.Recipe's runtime). demo/script and demo/frosting
+      # consume the addin from BuildArtifacts/temp/_PublishedLibraries/
+      # populated by DotNetCore-Pack; demo/sdk builds the addin from
+      # source via the #:project directive in cake.cs.
+
+      - name: Run demo/script
+        if: success()
+        shell: pwsh
+        run: ./demo/script/build.ps1
+
+      - name: Run demo/frosting
+        if: success()
+        shell: pwsh
+        run: ./demo/frosting/build.ps1
+
+      - name: Run demo/sdk
+        if: success()
+        shell: pwsh
+        working-directory: ./demo/sdk
+        run: dotnet cake.cs
 
       - name: Upload Issues-Report
         uses: actions/upload-artifact@v5

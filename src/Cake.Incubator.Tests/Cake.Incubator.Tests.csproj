@@ -1,6 +1,6 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFrameworks>net8.0;net9.0</TargetFrameworks>
+    <TargetFramework>net8.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
     <None Remove="sampleprojects\AnotherCSProj.xml" />
@@ -44,23 +44,26 @@
     <EmbeddedResource Include="sampleprojects\Cake_Unity_FSharp_Tests_fsproj.xml" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Cake.Common" Version="5.0.0" />
-    <PackageReference Include="Cake.Core" Version="5.0.0" />
-    <PackageReference Include="Cake.Testing" Version="5.0.0" />
-    <PackageReference Include="coverlet.msbuild" Version="3.2.0">
+    <PackageReference Include="Cake.Common" Version="6.0.0" />
+    <PackageReference Include="Cake.Core" Version="6.0.0" />
+    <PackageReference Include="Cake.Testing" Version="6.0.0" />
+    <PackageReference Include="coverlet.msbuild" Version="6.0.4">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="FakeItEasy" Version="7.3.1" />
     <PackageReference Include="FakeItEasy.Analyzer.CSharp" Version="6.1.1" />
-    <PackageReference Include="FluentAssertions" Version="6.9.0" />
-    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.4.1" />
-    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+    <PackageReference Include="FluentAssertions" Version="6.12.2" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="18.0.1" />
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
-    <PackageReference Include="xunit" Version="2.4.2" />
-    <PackageReference Include="xunit.runner.visualstudio" Version="2.4.5" />
+    <PackageReference Include="xunit" Version="2.9.3" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="3.1.5">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cake.Incubator\Cake.Incubator.csproj" />

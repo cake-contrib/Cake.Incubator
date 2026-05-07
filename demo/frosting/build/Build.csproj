@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RunWorkingDirectory>$(MSBuildProjectDirectory)\</RunWorkingDirectory>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Cake.Incubator">
+      <HintPath>$(MSBuildProjectDirectory)\..\..\..\BuildArtifacts\temp\_PublishedLibraries\Cake.Incubator\net8.0\Cake.Incubator.dll</HintPath>
+    </Reference>
+    <PackageReference Include="Cake.Frosting" Version="6.1.0" />
+  </ItemGroup>
+</Project>

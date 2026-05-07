@@ -273,3 +273,6 @@ __pycache__/
 # Cake - Uncomment if you are using it
 tools/**
 BuildArtifacts/
+
+# Language service cache files (e.g. Roslyn / IDE language servers)
+*.lscache

@@ -18,7 +18,7 @@ namespace Cake.Incubator.XDocumentExtensions
     /// <summary>
     /// Several extension methods when using XDocument.
     /// </summary>
-    internal static class XDocumentExtensions
+    public static class XDocumentExtensions
     {
         /// <summary>
         /// Gets the first output path value for a specific config from an xml document
@@ -29,7 +29,7 @@ namespace Cake.Incubator.XDocumentExtensions
         /// <param name="platform">the platform</param>
         /// <param name="targetFrameworks">the target frameworks expected (affects output paths)</param>
         /// <returns>the output path</returns>
-        internal static DirectoryPath[] GetOutputPaths(this XDocument document, string config, string[] targetFrameworks, DirectoryPath rootDirectoryPath, string platform = "AnyCPU")
+        public static DirectoryPath[] GetOutputPaths(this XDocument document, string config, string[] targetFrameworks, DirectoryPath rootDirectoryPath, string platform = "AnyCPU")
         {
             var outputPathOverride = document.Descendants("OutputPath")
                 .FirstOrDefault(x =>
@@ -64,17 +64,43 @@ namespace Cake.Incubator.XDocumentExtensions
         /// </summary>
         /// <param name="document">The xml document</param>
         /// <returns>True if attribute was found</returns>
-        internal static bool IsDotNetSdk(this XDocument document)
+        public static bool IsDotNetSdk(this XDocument document)
         {
             return document.GetSdk() != null;
         }
 
-        internal static string GetSdk(this XDocument document)
+        /// <summary>
+        /// Returns the SDK identifier from the project's root element, supporting both
+        /// the &lt;Project Sdk="..."&gt; attribute form and the &lt;Project&gt;&lt;Sdk Name="..." /&gt;&lt;/Project&gt;
+        /// child-element form (per #267 — common in monorepos that hide reusable SDK
+        /// configuration in Directory.Build.props).
+        /// </summary>
+        /// <param name="document">the document</param>
+        /// <returns>the SDK identifier or null if no Sdk attribute or element is set</returns>
+        public static string GetSdk(this XDocument document)
         {
-            return document.Root?.Attribute("Sdk", true)?.Value;
+            var attribute = document.Root?.Attribute("Sdk", true)?.Value;
+            if (attribute != null)
+            {
+                return attribute;
+            }
+
+            // <Project>
+            //   <Sdk Name="Microsoft.NET.Sdk" />
+            // </Project>
+            var sdkElement = document.Root?
+                .Elements()
+                .FirstOrDefault(e => e.Name.LocalName.EqualsIgnoreCase("Sdk"));
+            return sdkElement?.GetAttributeValue("Name");
         }
 
-        internal static string GetVersion(this XDocument document)
+        /// <summary>
+        /// Returns the project version, combining VersionPrefix and VersionSuffix when both are
+        /// present, falling back to Version, and ultimately "1.0.0" when nothing is set.
+        /// </summary>
+        /// <param name="document">the document</param>
+        /// <returns>the resolved version string</returns>
+        public static string GetVersion(this XDocument document)
         {
             // prefix and suffix take precidence, fallback is version if both are not specified
             var prefix = document.GetFirstElementValue(ProjectXElement.VersionPrefix);
@@ -95,7 +121,7 @@ namespace Cake.Incubator.XDocumentExtensions
         /// <param name="config">the configuration to match</param>
         /// <param name="platform">the platform to match, default is AnyCPU</param>
         /// <returns>the matching element value if found</returns>
-        internal static string GetFirstElementValue(this XDocument document, XName elementName, string config = null, string platform = "AnyCPU")
+        public static string GetFirstElementValue(this XDocument document, XName elementName, string config = null, string platform = "AnyCPU")
         {
             var elements = document.Descendants(elementName);
             if (!elements.Any()) return null;
@@ -109,7 +135,12 @@ namespace Cake.Incubator.XDocumentExtensions
                        ?.Value ?? elements.FirstOrDefault(x => !x.WithConfigCondition())?.Value;
         }
 
-        internal static ICollection<DotNetCliToolReference> GetDotNetCliToolReferences(this XDocument document)
+        /// <summary>
+        /// Returns all &lt;DotNetCliToolReference&gt; entries declared in the project.
+        /// </summary>
+        /// <param name="document">the document</param>
+        /// <returns>the collection of CLI tool references (empty array if none)</returns>
+        public static ICollection<DotNetCliToolReference> GetDotNetCliToolReferences(this XDocument document)
         {
             return document.Descendants(ProjectXElement.DotNetCliToolReference).Select(x =>
                 new DotNetCliToolReference
@@ -119,13 +150,28 @@ namespace Cake.Incubator.XDocumentExtensions
                 }).ToArray();
         }
 
-        internal static XName GetXNameWithNamespace(this XNamespace ns, string elementName)
+        /// <summary>
+        /// Combines an XNamespace with an element name into an XName, handling the case where
+        /// the namespace is null (pre-VS2017 csproj files use a default namespace; modern
+        /// SDK-style projects don't).
+        /// </summary>
+        /// <param name="ns">the namespace (or null)</param>
+        /// <param name="elementName">the element name</param>
+        /// <returns>an XName scoped to the namespace when provided</returns>
+        public static XName GetXNameWithNamespace(this XNamespace ns, string elementName)
         {
             var nsName = ns?.NamespaceName;
             return nsName == null ? XName.Get(elementName) : XName.Get(elementName, nsName);
         }
 
-        internal static ICollection<PackageReference> GetPackageReferences(this XDocument document)
+        /// <summary>
+        /// Returns all &lt;PackageReference&gt; entries declared in the project, resolving
+        /// PrivateAssets / IncludeAssets / ExcludeAssets attributes or child elements and any
+        /// TargetFramework condition on the element or its parent ItemGroup.
+        /// </summary>
+        /// <param name="document">the document</param>
+        /// <returns>the collection of parsed package references</returns>
+        public static ICollection<ParsedPackageReference> GetPackageReferences(this XDocument document)
         {
             // NOTE: Conflicting docs: 
             // https://docs.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files
@@ -178,7 +224,7 @@ namespace Cake.Incubator.XDocumentExtensions
                     var includeAssets = x.Element(includeAssetsXName)?.Value.SplitIgnoreEmpty(';') ?? globalInclude;
                     var excludeAssets = x.Element(excludeAssetsXName)?.Value.SplitIgnoreEmpty(';') ?? globalExclude;
                     var condition = x.GetAttributeValue("Condition") ?? x.Parent.GetAttributeValue("Condition");
-                    return new PackageReference
+                    return new ParsedPackageReference
                     {
                         Name = x.GetAttributeValue("Include") ?? x.Element(includeXName)?.Value,
                         Version = x.GetAttributeValue("Version") ?? x.Element(versionXName)?.Value,
@@ -192,7 +238,14 @@ namespace Cake.Incubator.XDocumentExtensions
                 }).ToArray();
         }
         
-        internal static ICollection<ProjectAssemblyReference> GetAssemblyReferences(this XDocument document, DirectoryPath rootPath)
+        /// <summary>
+        /// Returns all &lt;Reference&gt; entries declared in the project, resolving HintPath
+        /// values relative to <paramref name="rootPath"/>.
+        /// </summary>
+        /// <param name="document">the document</param>
+        /// <param name="rootPath">the project root directory used for HintPath resolution</param>
+        /// <returns>the collection of assembly references</returns>
+        public static ICollection<ProjectAssemblyReference> GetAssemblyReferences(this XDocument document, DirectoryPath rootPath)
         {
             /*
                 <Reference Include="Cake.Common, Version=0.22.0.0, Culture=neutral, PublicKeyToken=null">
@@ -242,7 +295,14 @@ namespace Cake.Incubator.XDocumentExtensions
                 }).Distinct(x => x.Name).ToArray();
         }
 
-        internal static ICollection<ProjectReference> GetProjectReferences(this XDocument document, DirectoryPath rootPath)
+        /// <summary>
+        /// Returns all &lt;ProjectReference&gt; entries, resolving Include paths relative to
+        /// <paramref name="rootPath"/>.
+        /// </summary>
+        /// <param name="document">the document</param>
+        /// <param name="rootPath">the project root directory used for path resolution</param>
+        /// <returns>the collection of project references</returns>
+        public static ICollection<ProjectReference> GetProjectReferences(this XDocument document, DirectoryPath rootPath)
         {
             return document.Descendants(ProjectXElement.ProjectReference).Select(x =>
             {
@@ -256,7 +316,13 @@ namespace Cake.Incubator.XDocumentExtensions
             }).ToArray();
         }
 
-        internal static ICollection<BuildTarget> GetTargets(this XDocument document)
+        /// <summary>
+        /// Returns all &lt;Target&gt; build targets declared in the project (with their
+        /// BeforeTargets / AfterTargets attributes and nested &lt;Exec&gt; commands).
+        /// </summary>
+        /// <param name="document">the document</param>
+        /// <returns>the collection of build targets</returns>
+        public static ICollection<BuildTarget> GetTargets(this XDocument document)
         {
             /*
              <Target Name="MyPreCompileTarget" BeforeTargets="Build">
@@ -283,7 +349,13 @@ namespace Cake.Incubator.XDocumentExtensions
                 }).ToArray();
         }
 
-        internal static NameValueCollection GetNuspecProps(this XDocument document)
+        /// <summary>
+        /// Returns the project's nuspec-relevant property values (PackageId, Title, Authors,
+        /// Description, Copyright, etc.) keyed by element name.
+        /// </summary>
+        /// <param name="document">the document</param>
+        /// <returns>a name-value collection of nuspec property values</returns>
+        public static NameValueCollection GetNuspecProps(this XDocument document)
         {
             var nuspecProps = document.GetFirstElementValue(ProjectXElement.NuspecProperties).SplitIgnoreEmpty(';');
             var nuspecProperties = new NameValueCollection(nuspecProps.Length);

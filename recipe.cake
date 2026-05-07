@@ -9,7 +9,7 @@ BuildParameters.SetParameters(context: Context,
                             repositoryOwner: "cake-contrib",
                             repositoryName: "Cake.Incubator",
                             shouldRunCodecov: false,
-                            shouldGenerateDocumentation: false, // until wyam oin recipe is fixed
+                            shouldGenerateDocumentation: false,
                             appVeyorAccountName: "cakecontrib",
                             shouldRunDotNetCorePack: true,
                             preferredBuildProviderType: BuildProviderType.GitHubActions);
