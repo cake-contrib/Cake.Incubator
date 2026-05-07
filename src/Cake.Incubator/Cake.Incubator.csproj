@@ -20,20 +20,24 @@
     <ItemGroup>
         <PackageReference Include="Cake.Common" Version="6.0.0" PrivateAssets="All" />
         <PackageReference Include="Cake.Core" Version="6.0.0" PrivateAssets="All" />
-        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1">
+        <PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
           <PrivateAssets>all</PrivateAssets>
         </PackageReference>
-        <PackageReference Include="System.Collections.Specialized" Version="4.3.0" />
-        <PackageReference Include="System.Xml.XDocument" Version="4.3.0" />
         <PackageReference Include="Cake.Addin.Analyzer" Version="0.1.3">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="CakeContrib.Guidelines" Version="1.6.1">
+        <PackageReference Include="CakeContrib.Guidelines" Version="1.7.0">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
+    </ItemGroup>
+    <ItemGroup>
+        <CakeContribGuidelinesOmitRecommendedReference Include="StyleCop.Analyzers" />
+        <CakeContribGuidelinesOmitRecommendedConfigFile Include="stylecop.json" />
+        <CakeContribGuidelinesOmitTargetFramework Include="net6.0" />
+        <CakeContribGuidelinesOmitTargetFramework Include="net7.0" />
     </ItemGroup>
     <ItemGroup>
         <AssemblyAttribute Include="Cake.Core.Annotations.CakeNamespaceImportAttribute">
