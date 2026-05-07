@@ -70,13 +70,28 @@ namespace Cake.Incubator.XDocumentExtensions
         }
 
         /// <summary>
-        /// Returns the SDK identifier from the root &lt;Project Sdk="..."&gt; attribute, if present.
+        /// Returns the SDK identifier from the project's root element, supporting both
+        /// the &lt;Project Sdk="..."&gt; attribute form and the &lt;Project&gt;&lt;Sdk Name="..." /&gt;&lt;/Project&gt;
+        /// child-element form (per #267 — common in monorepos that hide reusable SDK
+        /// configuration in Directory.Build.props).
         /// </summary>
         /// <param name="document">the document</param>
-        /// <returns>the SDK identifier or null if no Sdk attribute is set</returns>
+        /// <returns>the SDK identifier or null if no Sdk attribute or element is set</returns>
         public static string GetSdk(this XDocument document)
         {
-            return document.Root?.Attribute("Sdk", true)?.Value;
+            var attribute = document.Root?.Attribute("Sdk", true)?.Value;
+            if (attribute != null)
+            {
+                return attribute;
+            }
+
+            // <Project>
+            //   <Sdk Name="Microsoft.NET.Sdk" />
+            // </Project>
+            var sdkElement = document.Root?
+                .Elements()
+                .FirstOrDefault(e => e.Name.LocalName.EqualsIgnoreCase("Sdk"));
+            return sdkElement?.GetAttributeValue("Name");
         }
 
         /// <summary>

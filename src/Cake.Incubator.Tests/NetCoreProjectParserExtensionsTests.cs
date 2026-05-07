@@ -288,6 +288,34 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
+        public void ParseProject_AcceptsAlternativeSdkElementSyntax()
+        {
+            // Per #267 — both forms must parse equivalently:
+            //   <Project Sdk="Microsoft.NET.Sdk"> ... </Project>          (attribute form)
+            //   <Project><Sdk Name="Microsoft.NET.Sdk" /> ... </Project>  (element form)
+            // The element form is common in monorepos that hide reusable SDK config in
+            // Directory.Build.props. Pre-v11.0.0 the parser only recognised the
+            // attribute form and errored with "Failed to parse pre VS2017 project
+            // properties" on the element form.
+            const string projectXml =
+                @"<Project>
+                    <Sdk Name=""Microsoft.NET.Sdk"" />
+                    <PropertyGroup>
+                      <TargetFramework>net8.0</TargetFramework>
+                      <OutputType>Library</OutputType>
+                      <AssemblyName>SampleAddin</AssemblyName>
+                    </PropertyGroup>
+                  </Project>";
+
+            var file = fs.CreateFakeFile(projectXml);
+            var result = file.ParseProjectFile("test");
+
+            result.IsVS2017ProjectFormat.Should().BeTrue();
+            result.OutputType.Should().Be("Library");
+            result.AssemblyName.Should().Be("SampleAddin");
+        }
+
+        [Fact]
         public void ParseProject_ApplicationIcons_ReturnsIfSet()
         {
             var file = fs.CreateFakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("ApplicationIcon", "fav.ico"));
