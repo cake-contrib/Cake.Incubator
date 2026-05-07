@@ -278,6 +278,16 @@ namespace Cake.Incubator.Tests
         }
 
         [Fact]
+        public void ParseProject_DefaultsOutputType_ToExe_ForWebSdk_WhenNoneSpecified()
+        {
+            // Per #201 — Microsoft.NET.Sdk.Web's targets set OutputType to Exe so an
+            // ASP.NET Core web app with no explicit <OutputType> still produces an
+            // executable. Pre-v11.0.0 the parser hardcoded "Library" regardless of SDK.
+            var file = fs.CreateFakeFile(ProjectFileHelpers.GetNetCoreWebProjectWithString(null));
+            file.ParseProjectFile("test").OutputType.Should().Be("Exe");
+        }
+
+        [Fact]
         public void ParseProject_ApplicationIcons_ReturnsIfSet()
         {
             var file = fs.CreateFakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("ApplicationIcon", "fav.ico"));

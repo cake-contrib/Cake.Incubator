@@ -879,7 +879,7 @@ namespace Cake.Incubator.Project
             var applicationIcon = document.GetFirstElementValue(ProjectXElement.ApplicationIcon);
             var assemblyVersion = document.GetFirstElementValue(ProjectXElement.AssemblyVersion) ?? "1.0.0.0";
             var fileVersion = document.GetFirstElementValue(ProjectXElement.FileVersion) ?? "1.0.0.0";
-            var outputType = document.GetFirstElementValue(ProjectXElement.OutputType) ?? "Library";
+            var outputType = document.GetFirstElementValue(ProjectXElement.OutputType) ?? GetDefaultOutputType(sdk);
             var debugType = document.GetFirstElementValue(ProjectXElement.DebugType);
             var product = document.GetFirstElementValue(ProjectXElement.Product);
             var documentationFile = document.GetFirstElementValue(ProjectXElement.DocumentationFile, config, platform);
@@ -1160,6 +1160,23 @@ namespace Cake.Incubator.Project
             return projectParserResult.IsType(ProjectType.Test) ||
                    projectParserResult.HasPackage(packageId) ||
                    projectParserResult.HasReference(referenceId);
+        }
+
+        // Per #201: when <OutputType> isn't set explicitly, the MSBuild default depends
+        // on the SDK. Microsoft.NET.Sdk.Web's targets set OutputType to Exe (so e.g. an
+        // ASP.NET Core web app csproj with no <OutputType> still produces an executable).
+        // Microsoft.NET.Sdk and unrecognised SDKs default to Library, matching the
+        // historical hard-coded behaviour. Worker / BlazorWebAssembly / WindowsDesktop
+        // templates set OutputType explicitly so the missing-element path doesn't apply
+        // to them — only Microsoft.NET.Sdk.Web is special-cased here.
+        private static string GetDefaultOutputType(string sdk)
+        {
+            if (sdk != null && sdk.EqualsIgnoreCase("Microsoft.NET.Sdk.Web"))
+            {
+                return "Exe";
+            }
+
+            return "Library";
         }
     }
 }
