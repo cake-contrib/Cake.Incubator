@@ -193,6 +193,39 @@ namespace Cake.Incubator.Tests
             file.ParseProjectFile("test").IsExpectoTestProject().Should().BeTrue();
         }
 
+        [Theory]
+        [InlineData("TUnit")]
+        [InlineData("xunit.v3")]
+        [InlineData("xunit.v3.core")]
+        public void ParseProject_IsDotNetCliTestProject_ForMicrosoftTestingPlatformNativeFrameworks(string packageName)
+        {
+            // Per #266 — Microsoft.Testing.Platform-native test frameworks (TUnit,
+            // xunit.v3) run via `dotnet test` without a Microsoft.NET.Test.Sdk
+            // reference. Pre-v11.0.0 IsDotNetCliTestProject only checked for
+            // Microsoft.NET.Test.Sdk and missed these projects entirely.
+            var testProject =
+                $"<PropertyGroup><TargetFramework>net8.0</TargetFramework><OutputType>Exe</OutputType></PropertyGroup>" +
+                $"<ItemGroup><PackageReference Include=\"{packageName}\" Version=\"1.0.0\" /></ItemGroup>";
+            var file = fs.CreateFakeFile(ProjectFileHelpers.GetNetCoreProjectWithString(testProject));
+            file.ParseProjectFile("test").IsDotNetCliTestProject().Should().BeTrue();
+        }
+
+        [Fact]
+        public void ParseProject_IsDotNetCliTestProject_ForMSTestSdk()
+        {
+            // Per #266 — Microsoft's MSTest.Sdk template uses Sdk="MSTest.Sdk" to
+            // opt into MTP-native test execution and does not require a
+            // Microsoft.NET.Test.Sdk reference.
+            const string projectXml =
+                @"<Project Sdk=""MSTest.Sdk"">
+                    <PropertyGroup>
+                      <TargetFramework>net8.0</TargetFramework>
+                    </PropertyGroup>
+                  </Project>";
+            var file = fs.CreateFakeFile(projectXml);
+            file.ParseProjectFile("test").IsDotNetCliTestProject().Should().BeTrue();
+        }
+
         [Fact]
         public void ParseProject_SetsIsNetCoreForWebSdk()
         {
@@ -275,6 +308,44 @@ namespace Cake.Incubator.Tests
         {
             var file = fs.CreateFakeFile(ProjectFileHelpers.GetNetCoreProjectWithElement("OutputType", "Exe"));
             file.ParseProjectFile("test").OutputType.Should().Be("Exe");
+        }
+
+        [Fact]
+        public void ParseProject_DefaultsOutputType_ToExe_ForWebSdk_WhenNoneSpecified()
+        {
+            // Per #201 — Microsoft.NET.Sdk.Web's targets set OutputType to Exe so an
+            // ASP.NET Core web app with no explicit <OutputType> still produces an
+            // executable. Pre-v11.0.0 the parser hardcoded "Library" regardless of SDK.
+            var file = fs.CreateFakeFile(ProjectFileHelpers.GetNetCoreWebProjectWithString(null));
+            file.ParseProjectFile("test").OutputType.Should().Be("Exe");
+        }
+
+        [Fact]
+        public void ParseProject_AcceptsAlternativeSdkElementSyntax()
+        {
+            // Per #267 — both forms must parse equivalently:
+            //   <Project Sdk="Microsoft.NET.Sdk"> ... </Project>          (attribute form)
+            //   <Project><Sdk Name="Microsoft.NET.Sdk" /> ... </Project>  (element form)
+            // The element form is common in monorepos that hide reusable SDK config in
+            // Directory.Build.props. Pre-v11.0.0 the parser only recognised the
+            // attribute form and errored with "Failed to parse pre VS2017 project
+            // properties" on the element form.
+            const string projectXml =
+                @"<Project>
+                    <Sdk Name=""Microsoft.NET.Sdk"" />
+                    <PropertyGroup>
+                      <TargetFramework>net8.0</TargetFramework>
+                      <OutputType>Library</OutputType>
+                      <AssemblyName>SampleAddin</AssemblyName>
+                    </PropertyGroup>
+                  </Project>";
+
+            var file = fs.CreateFakeFile(projectXml);
+            var result = file.ParseProjectFile("test");
+
+            result.IsVS2017ProjectFormat.Should().BeTrue();
+            result.OutputType.Should().Be("Library");
+            result.AssemblyName.Should().Be("SampleAddin");
         }
 
         [Fact]
