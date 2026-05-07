@@ -103,9 +103,9 @@ namespace Cake.Incubator.Project
         public NetCoreProject NetCore { get; set; }
 
         /// <summary>
-        /// The project package references. A collection of <see cref="PackageReference"/>
+        /// The project package references. A collection of <see cref="ParsedPackageReference"/>
         /// </summary>
-        public ICollection<PackageReference> PackageReferences { get; set; }
+        public ICollection<ParsedPackageReference> PackageReferences { get; set; }
 
         /// <summary>
         /// Whether the project parsed is in the newer VS2017 onwards format or the legacy pre 2017 format

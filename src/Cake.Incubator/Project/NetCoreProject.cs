@@ -236,9 +236,9 @@ namespace Cake.Incubator.Project
         public string PackageProjectUrl { get; set; }
 
         /// <summary>
-        /// The project package references. A collection of <see cref="PackageReference"/>
+        /// The project package references. A collection of <see cref="ParsedPackageReference"/>
         /// </summary>
-        public ICollection<PackageReference> PackageReferences { get; set; }
+        public ICollection<ParsedPackageReference> PackageReferences { get; set; }
 
         /// <summary>
         /// dotnet pack: A Boolean value that specifies whether the client must prompt the consumer to accept the package license before installing the package. 

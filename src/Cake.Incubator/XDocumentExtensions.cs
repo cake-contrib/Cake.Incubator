@@ -125,7 +125,7 @@ namespace Cake.Incubator.XDocumentExtensions
             return nsName == null ? XName.Get(elementName) : XName.Get(elementName, nsName);
         }
 
-        internal static ICollection<PackageReference> GetPackageReferences(this XDocument document)
+        internal static ICollection<ParsedPackageReference> GetPackageReferences(this XDocument document)
         {
             // NOTE: Conflicting docs: 
             // https://docs.microsoft.com/en-us/nuget/consume-packages/package-references-in-project-files
@@ -178,7 +178,7 @@ namespace Cake.Incubator.XDocumentExtensions
                     var includeAssets = x.Element(includeAssetsXName)?.Value.SplitIgnoreEmpty(';') ?? globalInclude;
                     var excludeAssets = x.Element(excludeAssetsXName)?.Value.SplitIgnoreEmpty(';') ?? globalExclude;
                     var condition = x.GetAttributeValue("Condition") ?? x.Parent.GetAttributeValue("Condition");
-                    return new PackageReference
+                    return new ParsedPackageReference
                     {
                         Name = x.GetAttributeValue("Include") ?? x.Element(includeXName)?.Value,
                         Version = x.GetAttributeValue("Version") ?? x.Element(versionXName)?.Value,

@@ -431,14 +431,14 @@ namespace Cake.Incubator.Project
         /// CustomParseProjectResult project 
         ///         = ParseProject(new FilePath("test.csproj"), configuration: "Release", platform: "x86");
         /// 
-        /// PackageReference ref = project.GetReference("NUnit");
+        /// ParsedPackageReference ref = project.GetReference("NUnit");
         /// string nUnitVersion = ref.Version;
-        /// 
-        /// PackageReference ref = project.GetReference("NUnit", "netstandard2.0");
+        ///
+        /// ParsedPackageReference ref = project.GetReference("NUnit", "netstandard2.0");
         /// string nUnitVersion = ref.Version;
         /// </code>
         /// </example>
-        public static PackageReference GetPackage(this CustomProjectParserResult projectParserResult, string packageName, string targetFramework = null)
+        public static ParsedPackageReference GetPackage(this CustomProjectParserResult projectParserResult, string packageName, string targetFramework = null)
         {
             return (targetFramework == null)
                 ? projectParserResult.PackageReferences.FirstOrDefault(x => x.Name.EqualsIgnoreCase(packageName))
