@@ -180,6 +180,27 @@ namespace Cake.Incubator.XDocumentExtensions
         }
 
         /// <summary>
+        /// Removes the first element with the specified name from the XML document, using optional configuration and
+        /// platform filters.
+        /// </summary>
+        /// <remarks>This method only removes the first matching element. If no element matches the
+        /// specified name, configuration, and platform, the document remains unchanged.</remarks>
+        /// <param name="document">The XML document from which to remove the element. Cannot be null.</param>
+        /// <param name="elementName">The name of the element to remove. Cannot be null.</param>
+        /// <param name="config">An optional configuration value used to filter the element selection. If null, no configuration filtering is
+        /// applied.</param>
+        /// <param name="platform">An optional platform value used to filter the element selection. Defaults to "AnyCPU" if not specified.</param>
+        /// <returns>true if an element matching the specified criteria was found and removed; otherwise, false.</returns>
+        public static bool RemoveElement(this XDocument document, XName elementName, string config = null, string platform = "AnyCPU")
+        {
+            var element = document.GetFirstElement(elementName, config, platform);
+            if (element == null) return false;
+
+            element.Remove();
+            return true;
+        }
+
+        /// <summary>
         /// Returns all &lt;DotNetCliToolReference&gt; entries declared in the project.
         /// </summary>
         /// <param name="document">the document</param>
