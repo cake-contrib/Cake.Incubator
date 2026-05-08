@@ -113,6 +113,37 @@ namespace Cake.Incubator.XDocumentExtensions
         }
 
         /// <summary>
+        /// Gets the first matching element.
+        /// If a config is passed, it will only match an element with the specified config and platform condition.
+        /// The platform defaults to AnyCPU.
+        /// </summary>
+        /// <param name="document">the document</param>
+        /// <param name="elementName">the element name to match</param>
+        /// <param name="config">the configuration to match</param>
+        /// <param name="platform">the platform to match, default is AnyCPU</param>
+        /// <returns>the matching element if found</returns>
+        public static XElement GetFirstElement(this XDocument document, XName elementName, string config = null, string platform = "AnyCPU")
+        {
+            var elements = document.Descendants(elementName);
+            if (!elements.Any()) return null;
+
+            XElement element = null;
+
+            if (AssertExtensions.AssertExtensions.IsNullOrEmpty(config))
+            {
+                // No config specified. Get the first element without config condition
+                element = elements.FirstOrDefault((XElement x) => !x.WithConfigCondition());
+            }
+            else
+            {
+                // Config specified. Get the first element with matching config and platform condition, or fallback to element without config condition
+                element = elements.FirstOrDefault((XElement x) => x.WithConfigCondition(config, platform)) ?? elements.FirstOrDefault((XElement x) => !x.WithConfigCondition());
+            }
+
+            return element;
+        }
+
+        /// <summary>
         /// gets the first matching element value, if a config is passed, it will only match an element with the specified config and platform condition.
         /// the platform defaults to AnyCPU
         /// </summary>
@@ -123,16 +154,50 @@ namespace Cake.Incubator.XDocumentExtensions
         /// <returns>the matching element value if found</returns>
         public static string GetFirstElementValue(this XDocument document, XName elementName, string config = null, string platform = "AnyCPU")
         {
-            var elements = document.Descendants(elementName);
-            if (!elements.Any()) return null;
+            return document.GetFirstElement(elementName, config, platform)?.Value;
+        }
 
-            // if no config specified, return first value without config condition
-            if (AssertExtensions.AssertExtensions.IsNullOrEmpty(config)) return elements.FirstOrDefault(x => !x.WithConfigCondition())?.Value;
+        /// <summary>
+        /// Sets the value of the first element with the specified name in the XML document, using optional
+        /// configuration and platform filters.
+        /// </summary>
+        /// <remarks>If no element matching the specified criteria is found, the method returns false and
+        /// no changes are made to the document.</remarks>
+        /// <param name="document">The XML document to search for the element. Cannot be null.</param>
+        /// <param name="elementName">The name of the element whose value is to be set. Cannot be null.</param>
+        /// <param name="newValue">The new value to assign to the first matching element.</param>
+        /// <param name="config">An optional configuration name used to filter the search for the element. If null, no configuration
+        /// filtering is applied.</param>
+        /// <param name="platform">An optional platform name used to filter the search for the element. Defaults to "AnyCPU" if not specified.</param>
+        /// <returns>true if the value of the first matching element was set; otherwise, false.</returns>
+        public static bool SetFirstElementValue(this XDocument document, XName elementName, string newValue, string config = null, string platform = "AnyCPU")
+        {
+            var element = document.GetFirstElement(elementName, config, platform);
+            if (element == null) return false;
 
-            // next will look to match the config|platform condition of an element or it's parent, if that fails, 
-            // will fallback to grab the first matching value without a condition on the element or it's parent.
-            return elements.FirstOrDefault(x => x.WithConfigCondition(config, platform))
-                       ?.Value ?? elements.FirstOrDefault(x => !x.WithConfigCondition())?.Value;
+            element.SetValue(newValue);
+            return true;
+        }
+
+        /// <summary>
+        /// Removes the first element with the specified name from the XML document, using optional configuration and
+        /// platform filters.
+        /// </summary>
+        /// <remarks>This method only removes the first matching element. If no element matches the
+        /// specified name, configuration, and platform, the document remains unchanged.</remarks>
+        /// <param name="document">The XML document from which to remove the element. Cannot be null.</param>
+        /// <param name="elementName">The name of the element to remove. Cannot be null.</param>
+        /// <param name="config">An optional configuration value used to filter the element selection. If null, no configuration filtering is
+        /// applied.</param>
+        /// <param name="platform">An optional platform value used to filter the element selection. Defaults to "AnyCPU" if not specified.</param>
+        /// <returns>true if an element matching the specified criteria was found and removed; otherwise, false.</returns>
+        public static bool RemoveElement(this XDocument document, XName elementName, string config = null, string platform = "AnyCPU")
+        {
+            var element = document.GetFirstElement(elementName, config, platform);
+            if (element == null) return false;
+
+            element.Remove();
+            return true;
         }
 
         /// <summary>
